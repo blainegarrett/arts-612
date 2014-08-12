@@ -15,7 +15,6 @@
 # limitations under the License.
 #
 import webapp2
-
 from google.appengine.api import search
 import datetime
 
@@ -24,7 +23,6 @@ class MainHandler(webapp2.RequestHandler):
     def get(self):
         self.response.write('Hello world!')
 
-
 app = webapp2.WSGIApplication([
-    ('/', MainHandler),
+    ('/', MainHandler)
 ], debug=True)

@@ -1,17 +1,26 @@
 application: arts-612
-version: 1
+version: xo
 runtime: python27
 api_version: 1
 threadsafe: yes
 
+# index files
 handlers:
-- url: /favicon\.ico
-  static_files: favicon.ico
-  upload: favicon\.ico
+- url: /(.+)/
+  static_files: www/\1/index.html
+  upload: www/(.+)/index.html
 
-- url: .*
-  script: main.app
+# site root
+- url: /
+  static_files: www/index.html
+  upload: www/index.html
 
-libraries:
-- name: webapp2
-  version: "2.5.2"
+# For folders without trailing slashes - ideally a 301 redirect, but we're static & it isn't 2004
+- url: /([^\.]+)([^/])
+  static_files: www/\1\2/index.html
+  upload: www/(.+)
+
+# Redirect Everything else
+- url: /(.+)
+  static_files: www/\1
+  upload: www/(.+)
