@@ -1,11 +1,21 @@
 application: arts-612
-version: xo
+version: angular
 runtime: python27
 api_version: 1
 threadsafe: yes
 
 # index files
 handlers:
+- url: /api.*
+  script: main.app
+
+- url: /import.*
+  script: main.app
+
+- url: /static
+  static_dir: static
+  secure: optional
+
 - url: /(.+)/
   static_files: www/\1/index.html
   upload: www/(.+)/index.html
@@ -17,10 +27,14 @@ handlers:
 
 # For folders without trailing slashes - ideally a 301 redirect, but we're static & it isn't 2004
 - url: /([^\.]+)([^/])
-  static_files: www/\1\2/index.html
-  upload: www/(.+)
+  static_files: www/index.html
+  upload: www/index.html
 
 # Redirect Everything else
+#- url: /(.+)
+#  static_files: www/\1
+#  upload: www/(.+)
+
 - url: /(.+)
-  static_files: www/\1
-  upload: www/(.+)
+  static_files: www/index.html
+  upload: www/index.html
