@@ -1,0 +1,1 @@
+VENUE_KIND = 'Venue'
