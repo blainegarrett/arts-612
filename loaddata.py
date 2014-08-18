@@ -21,9 +21,22 @@ import json
 
 from venues.internal.models import Venue
 from google.appengine.ext import ndb
+from venues.internal import search as vsearch
+from venues.internal import api as vapi
+
+INDEX_NAME = 'venues_indexx'
 
 class GalleryData(webapp2.RequestHandler):
     def get(self):
+        
+        # Destroy all existing data
+        results = Venue.query().fetch(1000)
+        docs_to_put = []
+        index = search.Index(name=INDEX_NAME)
+
+        for r in results:
+            r.key.delete()
+
         data = [
             {
                 'slug': 'gamut',
@@ -132,7 +145,7 @@ class GalleryData(webapp2.RequestHandler):
                 'city': 'Minneapolis',
                 'geo': '',
                 'category': 'gallery',
-                'website': 'http://www.bockleygallery.com/index.html',
+                'website': 'http://www.bockleygallery.com/',
                 'phone': '612 377 4669 ',
                 'email': 'information@bockleygallery.com '
             }, {
@@ -190,19 +203,8 @@ class GalleryData(webapp2.RequestHandler):
         
         stuff_to_put = []
         for v_data in data:
-            v_data['key'] = ndb.Key('Venue', v_data['slug'])
+
             v_data['state'] = 'MN'
             v_data['country'] = 'USA'
-
-
-            if (v_data['geo']):
-                geo_data = v_data['geo'].split(',')
-                v_data['geo'] = ndb.GeoPt(lat=float(geo_data[0].strip()), lon=float(geo_data[1].strip()))
-            else:
-                v_data['geo'] = None
-
-            v = Venue(**v_data)
-            stuff_to_put.append(v)
-        
-        ndb.put_multi(stuff_to_put)
+            stuff_to_put.append(vapi.create_venue(v_data))
         self.response.write('Created %s Venues' % len(stuff_to_put))

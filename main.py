@@ -20,12 +20,30 @@ import datetime
 import json
 import loaddata
 from google.appengine.ext import ndb
+from venues.internal import api as venues_api
+from venues.internal import search as vsearch
 
 class GalleriesApiHandler(webapp2.RequestHandler):
     def get(self):
         from venues.internal.models import Venue
         
-        entities = Venue.query().fetch(1000)
+        # Check if there is a query filter, etc
+        q = self.request.get('q', None)
+        
+        if q:
+            results = vsearch.simple_search(q)
+            # hydrate the search results
+            keys_to_fetch = []
+            #raise Exception(results)
+
+            for r in results['index_results']:
+                keys_to_fetch.append(venues_api.get_venue_key(r.doc_id))
+
+            entities = ndb.get_multi(keys_to_fetch)
+            
+
+        else:
+            entities = Venue.query().fetch(1000)
         
         data = {'data': [] }
         for e in entities:
@@ -37,23 +55,26 @@ class GalleriesApiHandler(webapp2.RequestHandler):
                 'city': e.city,
                 'state' : e.state,
                 'country': e.country,
-                #'geo': e.geo,
                 'website': e.website,
                 'phone': e.phone,
                 'email': e.email,
                 'category': e.category,
+                'geo' : None
             }
+            if e.geo:
+                e_data['geo'] = {'lat': e.geo.lat, 'long': e.geo.lon}
+
             data['data'].append(e_data)
-        
-        
+
         self.response.write(json.dumps(data))
     
 
 class GalleryDetailApiHandler(webapp2.RequestHandler):
     def get(self, slug):
-
-        key = ndb.Key('Venue', slug)
-        e = key.get()
+        
+        
+        # TODO: Abstract this a bit more out into a rest-like service...
+        e = venues_api.get_venue_by_slug(slug)
 
         e_data = {
             'slug': e.slug,
@@ -63,12 +84,16 @@ class GalleryDetailApiHandler(webapp2.RequestHandler):
             'city': e.city,
             'state' : e.state,
             'country': e.country,
-            #'geo': e.geo,
             'website': e.website,
             'phone': e.phone,
             'email': e.email,
             'category': e.category,
+            'geo' : None
         }
+        
+        if e.geo:
+            e_data['geo'] = {'lat': e.geo.lat, 'long': e.geo.lon}
+
         data = {'data': e_data }
         self.response.write(json.dumps(data))
 

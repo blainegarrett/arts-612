@@ -8,6 +8,7 @@ from mock import Mock, patch
 from google.appengine.ext import ndb
 
 from venues.internal import api
+from venues.internal import search
 from venues.constants import VENUE_KIND
 
 
@@ -115,6 +116,14 @@ class GetVenueBySlugTests(VenueApiTestBase):
         self.assertRaises(RuntimeError, api.get_venue_by_slug, '')
         self.assertRaises(RuntimeError, api.get_venue_by_slug, {})
         self.assertRaises(RuntimeError, api.get_venue_by_slug, 612)
+
+
+class BuildIndexesTests(VenueApiTestBase):
+    """
+    """
+    def test_base(self):
+        result = search.build_indexes()
+        raise Exception(result)
 
 
 class CreateVenueTests(VenueApiTestBase):

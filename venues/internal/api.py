@@ -4,6 +4,8 @@ from venues.internal.models import Venue
 from venues.constants import VENUE_KIND
 
 
+from venues.internal import search as vsearch
+
 def get_venue_key_by_keystr(keystr):
     """
     Given a urlsafe version of an Venue key, get the actual key
@@ -91,17 +93,28 @@ def get_venue_list():
     return entities
 
 
-def create_venue(data, operator):
+def create_venue(data, operator=None):
     """
     Create an Venue
     # TODO: Populate search index
+    # TODO: Ensure that no other event exists by slug - transactional??
     """
 
-    slug = data['slug']
-    title = data['title']
-    description = data['description']
+    search_index = vsearch.get_search_index()
 
-    key = get_venue_key(slug)
-    entity = Venue(key=key, slug=slug, title=title, description=description, photo_ids=photo_ids)
+    # Prep the data
+    data['key'] = get_venue_key(data['slug'])
+
+    if data['geo']:
+        geo_data = data['geo'].split(',')
+        data['geo'] = ndb.GeoPt(lat=float(geo_data[0].strip()), lon=float(geo_data[1].strip()))
+    else:
+        data['geo'] = None    
+
+
+    entity = Venue(**data)
+    search_doc = vsearch.build_index(entity)
+
     entity.put()
+    search_index.put([search_doc])
     return entity
