@@ -11,7 +11,7 @@ def main():
     from subprocess import call
     import sys, getopt
 
-    cmd_args = ['nosetests', "-vs", "--without-sandbox", "--nologcapture", "--with-gae", "--with-yanc"]
+    cmd_args = ['nosetests', "-vs", "--without-sandbox", "--nologcapture", "--with-gae", "--with-yanc", "--with-coverage"]
     #cmd_args.extend(['--with-coverage', '--cover-html'])
     #"--with-coverage", "--cover-html"
     #cmd_args.append("--gae-datastore=.test_datastore")

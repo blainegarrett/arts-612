@@ -16,15 +16,45 @@
 #
 import webapp2
 from google.appengine.api import search
-import datetime
-import json
 
-from venues.internal.models import Venue
-from google.appengine.ext import ndb
-from venues.internal import search as vsearch
-from venues.internal import api as vapi
+from modules.venues.internal.models import Venue, Event, EventDate
+from modules.venues.internal import search as vsearch
+from modules.venues.internal import api as vapi
 
 INDEX_NAME = 'venues_indexx'
+EVENT_INDEX_NAME = 'event_indexx'
+
+
+class EventData(webapp2.RequestHandler):
+    def get(self):
+        # Destroy all existing data
+        results = Event.query().fetch(1000)
+        results.extend(EventDate.query().fetch(1000))
+        docs_to_put = []
+        index = search.Index(name=EVENT_INDEX_NAME)
+
+        for r in results:
+            r.key.delete()
+        
+        data = [
+            {
+                'title':  'Open Art',
+                'venue_slug': 'abstracted-gallery',
+                'dates': [
+                    {
+                    'start_datetime': '2014-08-29 18:00:00',
+                    'end_datetime': '2014-08-29 23:00:00',
+                    'label': '(Opening)'
+                    }
+                ]
+            },
+        ]
+
+        stuff_to_put = []
+        for e_data in data:
+            stuff_to_put.append(vapi.create_event(e_data))
+        self.response.write('Created %s Events' % len(stuff_to_put))
+
 
 class GalleryData(webapp2.RequestHandler):
     def get(self):
@@ -208,3 +238,5 @@ class GalleryData(webapp2.RequestHandler):
             v_data['country'] = 'USA'
             stuff_to_put.append(vapi.create_venue(v_data))
         self.response.write('Created %s Venues' % len(stuff_to_put))
+
+

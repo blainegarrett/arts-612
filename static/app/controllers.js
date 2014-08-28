@@ -23,7 +23,7 @@ mainApp.controller('GalleriesListCtrl', function($scope, $location, $http) {
     // Attempt to load a listing of galleries
     var ajax = $http.get('/api/galleries');
     ajax.success(function(payload) {
-       $scope.galleries = payload.data;
+       $scope.galleries = payload.results;
        $scope.api_data = angular.toJson(payload, true);
      });
      ajax.error(function(){
@@ -54,10 +54,11 @@ mainApp.controller('GalleryDetailCtrl', function($scope, $location, $http, $rout
 
     var ajax = $http.get('/api/galleries/' + $routeParams.slug);
     ajax.success(function(payload) {
-       $scope.gallery = payload.data;
+       $scope.gallery = payload.results;
        $scope.api_data = angular.toJson(payload, true);
      });
-     ajax.error(function(){
+
+     ajax.error(function(payload){
        $scope.api_data = angular.toJson(payload, true);
      });
 

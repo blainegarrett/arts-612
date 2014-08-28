@@ -1,1 +1,0 @@
-VENUE_KIND = 'Venue'

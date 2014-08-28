@@ -7,9 +7,9 @@ from mock import Mock, patch
 
 from google.appengine.ext import ndb
 
-from venues.internal import api
-from venues.internal import search
-from venues.constants import VENUE_KIND
+from modules.venues.internal import api
+from modules.venues.internal import search
+from modules.venues.constants import VENUE_KIND
 
 
 class VenueApiTestBase(unittest.TestCase):
@@ -47,7 +47,7 @@ class GetVenueKeyByKeyStrTests(VenueApiTestBase):
     Tests surrounding getting the venue key via urlsafe keystr
     """
 
-    @patch('venues.internal.api.ndb')
+    @patch('modules.venues.internal.api.ndb')
     def test_base(self, m_ndb):
         """
         Ensure our keystr helper wrapper calls the ndb.Key constructor correctly
@@ -89,7 +89,7 @@ class GetVenueBySlugTests(VenueApiTestBase):
     Tests surrounding getting venue slug
     """
 
-    @patch('venues.internal.api.get_venue_key')
+    @patch('modules.venues.internal.api.get_venue_key')
     def test_base(self, m_get_venue_key):
         # Setup Mocks
         test_slug = 'test'
@@ -116,14 +116,6 @@ class GetVenueBySlugTests(VenueApiTestBase):
         self.assertRaises(RuntimeError, api.get_venue_by_slug, '')
         self.assertRaises(RuntimeError, api.get_venue_by_slug, {})
         self.assertRaises(RuntimeError, api.get_venue_by_slug, 612)
-
-
-class BuildIndexesTests(VenueApiTestBase):
-    """
-    """
-    def test_base(self):
-        result = search.build_indexes()
-        raise Exception(result)
 
 
 class CreateVenueTests(VenueApiTestBase):
