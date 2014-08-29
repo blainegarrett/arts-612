@@ -1,26 +1,25 @@
 application: arts-612
-version: xo
+version: xo-responsive
 runtime: python27
 api_version: 1
 threadsafe: yes
 
 # index files
 handlers:
-- url: /(.+)/
-  static_files: www/\1/index.html
-  upload: www/(.+)/index.html
 
 # site root
-- url: /
+- url: /static
+  static_dir: static
+  secure: optional
+
+- url: /robots\.txt
+  static_files: static/robots.txt
+  upload: static/robots\.txt
+
+- url: /favicon\.ico
+  static_files: static/themes/v0/favicon.ico
+  upload: static/themes/v0/favicon\.ico
+
+- url: .*
   static_files: www/index.html
   upload: www/index.html
-
-# For folders without trailing slashes - ideally a 301 redirect, but we're static & it isn't 2004
-- url: /([^\.]+)([^/])
-  static_files: www/\1\2/index.html
-  upload: www/(.+)
-
-# Redirect Everything else
-- url: /(.+)
-  static_files: www/\1
-  upload: www/(.+)
