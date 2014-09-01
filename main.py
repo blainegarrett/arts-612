@@ -1,25 +1,23 @@
-#!/usr/bin/env python
-#
-# Copyright 2007 Google Inc.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
 import webapp2
+from webapp2_extras.routes import RedirectRoute
 
-class MainHandler(webapp2.RequestHandler):
-    def get(self):
-        self.response.write('Hello world!')
+import auth.controllers as auth_c
 
-app = webapp2.WSGIApplication([
-    ('/', MainHandler)
-], debug=True)
+import logging
+
+def handle_404(request, response, exception):
+    logging.exception(exception)
+    response.write('Oops! I could swear this page was here!')
+    response.set_status(404)
+
+routes = [
+    RedirectRoute('/beta/', handler=auth_c.ProfileHandler, strict_slash=True, name="beta_index"),
+    RedirectRoute('/beta/email/', handler=auth_c.SignupHandler, strict_slash=True, name="beta_signup"),
+    RedirectRoute('/beta/activate/', handler=auth_c.ActivateHandler, strict_slash=True, name="beta_activate"),
+    RedirectRoute('/beta/confirm/', handler=auth_c.ConfirmHandler, strict_slash=True, name="beta_confirm")
+]
+
+app = webapp2.WSGIApplication(routes, debug=True)
+app.error_handlers[404] = handle_404
+
+

@@ -1,13 +1,22 @@
 application: arts-612
-version: xo-responsive
+version: phase-0
 runtime: python27
 api_version: 1
-threadsafe: yes
+threadsafe: no
 
+libraries:
+- name: webapp2
+  version: latest
+- name: jinja2
+  version: latest
+ 
 # index files
 handlers:
 
-# site root
+- url: /beta.*
+  script: main.app
+  secure: optional
+
 - url: /static
   static_dir: static
   secure: optional
