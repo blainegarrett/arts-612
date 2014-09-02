@@ -4,6 +4,12 @@ runtime: python27
 api_version: 1
 threadsafe: yes
 
+libraries:
+- name: webapp2
+  version: latest
+- name: jinja2
+  version: latest
+
 # index files
 handlers:
 - url: /api.*
@@ -16,25 +22,29 @@ handlers:
   static_dir: static
   secure: optional
 
-- url: /(.+)/
-  static_files: www/\1/index.html
-  upload: www/(.+)/index.html
+- url: .*
+  script: main.app
 
+
+#- url: /(.+)/
+#  static_files: www/\1/index.html
+#  upload: www/(.+)/index.html
+#
 # site root
-- url: /
-  static_files: www/index.html
-  upload: www/index.html
-
+#- url: /
+#  static_files: www/index.html
+#  upload: www/index.html
+#
 # For folders without trailing slashes - ideally a 301 redirect, but we're static & it isn't 2004
-- url: /([^\.]+)([^/])
-  static_files: www/index.html
-  upload: www/index.html
-
+#- url: /([^\.]+)([^/])
+#  static_files: www/index.html
+#  upload: www/index.html
+#
 # Redirect Everything else
 #- url: /(.+)
 #  static_files: www/\1
 #  upload: www/(.+)
-
-- url: /(.+)
-  static_files: www/index.html
-  upload: www/index.html
+#
+#- url: /(.+)
+#  static_files: www/index.html
+#  upload: www/index.html
