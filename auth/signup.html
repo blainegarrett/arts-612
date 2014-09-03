@@ -1,106 +1,27 @@
 {% extends "base.html" %}
 
 {% block content %}
-	<div class="col-md-6 col-md-offset-3" id="main-content-container">
-		<div id="xo-box">
-			<h3>Get Exclusive Access To The New MPLSART Site</h3>
-			<p>Stay in the loop. Give us your email address.</p>
-
+<div class="col-md-6 col-md-offset-3" id="main-content-container">
+	<br />
+	<div id="panel-signup">
+		<div class="panel-header">PRE-LAUNCH ACCESS</div>
+		<div class="panel-content">
+			<p>Enter your email address for exclusive access to the Beta calendar during its development.</p>
 
 			<form id="email-form" role="form" action="/beta/email/" method="GET">
 			  <p class="bg-danger text-danger" style="text-align:center; color:#a94442">{{ error }}</p>
 			   <div class="input-group input-group-lg {% if error %}has-error{% endif %}">
-			     <input type="text" class="form-control" name="email" placeholder="Your Email Address">
+				<input type="text" class="form-control" id="id_email" name="email" placeholder="Your email address">
 
 			     <span class="input-group-btn">
-			       <button class="btn btn-default" type="submit">Go!</button>
+			       <button class="btn btn-default" type="submit">Go</button>
 			     </span>
 
 			   	</div><!-- /input-group -->
-				<span class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>
 			</form>
 
-			</div>
-		</div>		
-		
-		
-		
+		</div>
+	</div>
+</div>		
+
 {% endblock %}
-
-
-
-			<!-- Start of main content area -->
-        	<div class="col-md-12" id="main-content-container">
-				<div style="border:1px solid black; margin-bottom:50px; height:100px">
-					Banner image
-				</div>
-			</div>
-		</div>
-	
-	
-	
-	
-      <div class="row">
-
-		<!-- Start of main content area -->
-        <div class="col-md-5" id="main-content-container">
-
-				<div id="xo-box">
-				      				<p>After eight years, it's time for mplsart to say goodbye, we can't 
-				thank you enough for the support you have provided us over the years.
-				    				</p>
-									<p>We consider ourselves lucky to have been able to provide the 
-				site for as long as we did, and even luckier to have met so many 
-				incredible, passionate, and creative people. It's these artists, 
-				gallerists, and patrons that keep the Twin Cities art scene vibrant.</p>   
-				    				<h2>XO,<br>
-										Emma Berg &amp; Kristoffer Knutson
-									</h2>
-
-
-									<hr />
-
-									<form id="email-form" role="form" action="/beta/email/" method="GET">
-									    <div class="input-group input-group-lg">
-									      <input type="text" class="form-control" name="email" placeholder="Your Email Address">
-
-									      <span class="input-group-btn">
-									        <button class="btn btn-default" type="submit">Go!</button>
-									      </span>
-
-									    </div><!-- /input-group -->
-<span class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>
-									</form>
-
-</h5>
-
-			</div>
-
-        </div>
-		<div class="col-md-4">
-			col 2
-		</div>
-		<div class="col-md-3">
-			<h2>Events</h2>
-			
-			<ul>
-				<li>
-					<h5><a href="http://www.gamutgallerympls.com/2014/08/18/chido/">Chido</a></h5>
-					
-					<h5><a href="" />Joe Aschebrock Art Show at Minnesota Power Yoga</a></h3>
-					
-				</li>
-				
-					
-					
-					
-					
-					
-					
-				
-			</ul>
-			
-		</div>
-
-
-<!--/span-->

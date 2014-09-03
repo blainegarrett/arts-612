@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <link rel="icon" href="/static/themes/v0/favicon.ico" />
-	<link href="http://fonts.googleapis.com/css?family=Quicksand:300,400" rel="stylesheet" type="text/css">
+	<link href='http://fonts.googleapis.com/css?family=Quicksand:400,700' rel='stylesheet' type='text/css'>
 	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
 	<!-- Meta -->
@@ -12,7 +12,7 @@
     <meta name="description" content="Events and Gallery Listings for Minneapolis" />
     <meta name="author" content="Blaine Garrett" />
 
-    <title>MPLSART.COM | XO</title>
+    <title>MPLS Art | Returning Soon...</title>
 
 	<!-- Social -->
 
@@ -27,135 +27,198 @@
 
   </head>
 
-
   <body>
-	
-	<style>
-	.navbar-nav .fa {
-		background-color : #777;
-		/* background-image: url('/static/themes/v0/bg_pink_stripe.jpg'); */
-		color: #101010;
 
-			border-radius: 50%;
-			margin: 0.15em;
-			width:1em;
-			text-align:center;
-			vertical-align:middle;
-			height:1em;
-
-
-	}
-	</style>
-	
-	
+	<!-- Start Top Nav -->
 	<div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
 	      <div class="container">
 	        <div class="navbar-header">
+			  <!--
 	          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 	            <span class="sr-only">Toggle navigation</span>
 	            <span class="icon-bar"></span>
 	            <span class="icon-bar"></span>
 	            <span class="icon-bar"></span>
 	          </button>
+			  -->
 	          <a class="navbar-brand" href="#">MPLSART.COM</a>
 	        </div>
-	        <div class="collapse navbar-collapse">
-	          <ul class="nav navbar-nav">
-		
-		            <li><a href="https://www.facebook.com/mplsart"><i class="fa fa-facebook"></i></a></li>
-		            <li><a href="https://twitter.com/mplsart"><i class="fa fa-twitter"></i></a></li>
-
-	          </ul>
-	        </div><!-- /.nav-collapse -->
+			
+			<p class="navbar-text navbar-right">
+				<span id="est-stamp">EST. 2005</a>
+			</p>
 	      </div><!-- /.container -->
 	    </div>
+	<!-- End Top Nav -->
 	
-	
-	
-
+	<!-- Start Main Content Container -->
     <div class="container">
 
-      <div class="row">
-
-			<!-- Start of main content area -->
-        	<div class="col-md-12" id="main-content-container">
-				<div style="border:1px solid black; margin-bottom:50px; height:100px">
-					Banner image
-				</div>
+      	<!-- Start Header Row -->
+		<div class="row">
+        	<div class="col-md-12" id="welcome-header-container">
+				<h1 id="welcome-header">
+					GOOD NEWS, MINNEAPOLIS
+				</h1>
 			</div>
 		</div>
-	
-	
-	
-	
+		<!-- End Header Row -->
+
+	 
       <div class="row">
 
 		<!-- Start of main content area -->
-        <div class="col-md-5" id="main-content-container">
-
-				<div id="xo-box">
-				      				<p>After eight years, it's time for mplsart to say goodbye, we can't 
-				thank you enough for the support you have provided us over the years.
-				    				</p>
-									<p>We consider ourselves lucky to have been able to provide the 
-				site for as long as we did, and even luckier to have met so many 
-				incredible, passionate, and creative people. It's these artists, 
-				gallerists, and patrons that keep the Twin Cities art scene vibrant.</p>   
-				    				<h2>XO,<br>
-										Emma Berg &amp; Kristoffer Knutson
-									</h2>
+        <div class="col-md-6" id="main-content-container">
 
 
-									<hr />
 
-									<form id="email-form" role="form" action="/beta/email/" method="GET">
-									    <div class="input-group input-group-lg">
-									      <input type="text" class="form-control" name="email" placeholder="Your Email Address">
+			<div id="panel-blurb">
+				<h2>MPLS Art is being rebuilt.</h2>
+				<p>This site will continue to be a curated resource listing local events in support of the arts scene.</p>
+			</div><!-- /#pane-blurb -->
 
-									      <span class="input-group-btn">
-									        <button class="btn btn-default" type="submit">Go!</button>
-									      </span>
+			<div id="panel-signup">
+				<div class="panel-header">PRE-LAUNCH ACCESS</div>
+				<div class="panel-content">
+					<p>Enter your email address for exclusive access to the Beta calendar during its development.</p>
+						<form id="email-form" role="form" action="/beta/email/" method="GET">
+						    <div class="input-group input-group-lg">
+						      <input type="text" class="form-control" id="id_email" name="email" placeholder="Your email address">
 
-									    </div><!-- /input-group -->
-<span class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>
-									</form>
+						      <span class="input-group-btn">
+						        <button class="btn btn-default" type="submit">Go</button>
+						      </span>
 
-</h5>
-
+						    </div><!-- /input-group -->
+						</form>
+						
+				</div>
+			</div>
+			
+			<div id="panel-contact">
+				<div class="panel-content"><a href="mailto:info@mplsart.com"><b>Contact us</b></a> with questions and to submit event listings.</div>
 			</div>
 
-        </div>
-		<div class="col-md-4">
-			col 2
+			<div id="panel-social">
+				<div class="panel-content">
+					
+					
+					<a href="https://www.facebook.com/mplsart" id="fb-link" target="_new">
+						<span class="fa-stack fa-lg">
+							<i class="fa fa-square-o fa-stack-2x"></i>
+							<i class="fa fa-facebook fa-stack-1x"></i>
+						</span>
+					</a>
+
+					<a href="https://twitter.com/mplsart" id="twitter-link" target="_new">  
+						<span class="fa-stack fa-lg">
+							<i class="fa fa-square-o fa-stack-2x"></i>
+							<i class="fa fa-twitter fa-stack-1x"></i>
+						</span>
+					</a>
+					
+					
+					
+							&nbsp;&nbsp;Stay Connected to MPLS Art during the rebuild.</div>
+			</div>
+
+			
+
+        </div><!-- /#main-content-container -->
+
+		<div class="col-md-3 panel-events">
+			<div class="panel-header">EVENTS</div>
+			<div class="panel-content">
+				<ul class="event-list">
+					<li class="event">
+						<a href="#"><span class="event-title">Dim Media Opening</span></a>
+						<span class="event-address">1234 Address, MPLS</span>
+						<span class="event-time">Aug 20th 5PM - 10PM</span>
+						<span class="event-descr">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut at metus vulputate, eleifend tellus </span>
+						</a>
+					</li>
+
+
+
+					<li class="event">
+						<a href="#"><span class="event-title">Dim Media Opening</span></a>
+						<span class="event-address">1234 Address, MPLS</span>
+						<span class="event-time">Aug 20th 5PM - 10PM</span>
+						<span class="event-descr">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut at metus vulputate, eleifend tellus </span>
+						</a>
+					</li>
+
+					<li class="event">
+						<a href="#"><span class="event-title">Dim Media Opening</span></a>
+						<span class="event-address">1234 Address, MPLS</span>
+						<span class="event-time">Aug 20th 5PM - 10PM</span>
+						<span class="event-descr">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut at metus vulputate, eleifend tellus </span>
+						</a>
+					</li>
+
+					<li class="event">
+						<a href="#"><span class="event-title">Dim Media Opening Squidly Dee</span></a>
+						<span class="event-address">1234 Address, MPLS</span>
+						<span class="event-time">Aug 20th 5PM - 10PM</span>
+						<span class="event-descr">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut at metus vulputate, eleifend tellus </span>
+						</a>
+					</li>
+
+
+
+
+				</ul>
+			</div>
 		</div>
-		<div class="col-md-3">
-			<h2>Events</h2>
-			
-			<ul>
-				<li>
-					<h5><a href="http://www.gamutgallerympls.com/2014/08/18/chido/">Chido</a></h5>
-					
-					<h5><a href="" />Joe Aschebrock Art Show at Minnesota Power Yoga</a></h3>
-					
-				</li>
-				
-					
-					
-					
-					
-					
-					
-				
-			</ul>
-			
+		<div class="col-md-3 panel-events">
+			<div class="panel-header">NOW SHOWING</div>
+			<div class="panel-content">
+				<ul class="event-list">
+					<li class="event">
+						<a href="#"><span class="event-title">Dim Media Opening</span></a>
+						<span class="event-address">1234 Address, MPLS</span>
+						<span class="event-time">Aug 20th 5PM - 10PM</span>
+						<span class="event-descr">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut at metus vulputate, eleifend tellus </span>
+						</a>
+					</li>
+
+
+
+					<li class="event">
+						<a href="#"><span class="event-title">Dim Media Opening</span></a>
+						<span class="event-address">1234 Address, MPLS</span>
+						<span class="event-time">Aug 20th 5PM - 10PM</span>
+						<span class="event-descr">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut at metus vulputate, eleifend tellus </span>
+						</a>
+					</li>
+
+					<li class="event">
+						<a href="#"><span class="event-title">Dim Media Opening</span></a>
+						<span class="event-address">1234 Address, MPLS</span>
+						<span class="event-time">Aug 20th 5PM - 10PM</span>
+						<span class="event-descr">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut at metus vulputate, eleifend tellus </span>
+						</a>
+					</li>
+
+					<li class="event">
+						<a href="#"><span class="event-title">Dim Media Opening</span></a>
+						<span class="event-address">1234 Address, MPLS</span>
+						<span class="event-time">Aug 20th 5PM - 10PM</span>
+						<span class="event-descr">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut at metus vulputate, eleifend tellus </span>
+						</a>
+					</li>
+
+				</ul>
+			</div>
 		</div>
 
 
-<!--/span-->
+
+<!-- /span-->
 		<!-- End of main content area -->
       </div><!--/row-->
 
-      <!-- <footer id="main-content-footer"><p>&copy; MPLSART.COM 2014</p></footer> -->
+      <footer id="main-content-footer"><p>We love art. We love you. &copy; 2014 MPLS Art</p></footer>
 
     </div><!--/.container-->
 
