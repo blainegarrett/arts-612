@@ -75,7 +75,7 @@ form {
     padding-right:5px;
     padding-bottom:5px;
 }
-form button.btn-default { background-color: #0096BE; color:#fff; }
+form button.btn-default { background-color: #0096BE; color:#fff; font-weight:bold; }
     form button.btn-default:hover { background-color: #2a6496; color:#fff; }
 
 
@@ -120,10 +120,20 @@ footer {
     line-height:1.5em;
 }
 
+/*
 .event .event-address {
     font-weight:bold;
     font-size:14px;
 }
+*/
+
+.event .event-address {
+    font-color: #000;    
+    font-size:14px;
+    line-height: 1.45em;
+    padding-top:5px;
+}
+
 
 .event .event-time {
     font-weight:bold;
