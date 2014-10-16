@@ -1,4 +1,4 @@
-# Internal API Methods for Photo Venues
+# Internal API Methods for Venues
 from google.appengine.ext import ndb
 from modules.venues.internal.models import Venue
 from modules.venues.constants import VENUE_KIND
@@ -8,6 +8,7 @@ from modules.venues.internal import search as vsearch
 def get_venue_key_by_keystr(keystr):
     """
     Given a urlsafe version of an Venue key, get the actual key
+    # TODO: Abstract this out into a helper that is kind agnostic
     """
 
     attr_err = 'Keystrings must be an instance of base string, recieved: %s' % keystr

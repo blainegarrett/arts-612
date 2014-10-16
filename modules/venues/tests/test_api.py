@@ -1,5 +1,5 @@
 """
-Tests Cases for Event Plugin API Core methods
+Tests Cases for Events Plugin API Core methods
 """
 
 import unittest

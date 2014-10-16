@@ -2,60 +2,45 @@
 Rest API for Venues/Galleries
 """
 
-import webapp2
-import json
-import traceback
-
 from google.appengine.ext import ndb
 
-#from framework.controllers import MerkabahBaseController
-#from framework.rest import RestHandlerBase
+from rest.controllers import RestHandlerBase
+
 from modules.venues.internal import api as venues_api
 from modules.venues.internal import search as vsearch
 from modules.venues.internal.models import Venue
 
 
-class RestHandlerBase(webapp2.RequestHandler):
+
+def create_resource_from_entity(e, verbose=False):
     """
-    Base Class for All Rest Endpoints
+    Create a Rest Resource from a datastore entity
+    TODO: We don't care about verbosity just yet
     """
+
+    r = {
+        'slug': e.slug,
+        'name': e.name,
+        'address': e.address,
+        'address2': e.address2,
+        'city': e.city,
+        'state': e.state,
+        'country': e.country,
+        'website': e.website,
+        'phone': e.phone,
+        'email': e.email,
+        'category': e.category,
+        'geo': None}
+
+    if e.geo:
+        r['geo'] = {'lat': e.geo.lat, 'long': e.geo.lon}
     
-    def get(self, *args, **kwargs):
-        try:
-            self._get(*args, **kwargs)
-        except Exception, e:
-            self.serve_error(e)
-        
-    def serve_success(self, result):
-        self.serve_response(200, result)
-
-    def serve_404(self, msg='Page Not Found'):
-        self.serve_response(404, [], msg)
-
-    def serve_error(self, exception):
-        # TODO: Pass in exception stack
-
-        import sys
-        exc_type, exc_value, exc_traceback = sys.exc_info()
-        formatted_lines = traceback.format_exc().splitlines()
-
-        self.serve_response(500, formatted_lines, str(exception))
-
-    def serve_response(self, status, result, messages=None):
-        """
-        Serve the response
-        """
-
-        payload = {'status': status, 'results': result, 'messages': messages}
-        
-        #If in debug mode, include stack trace?
-        self.response.set_status(status)
-        self.response.write(json.dumps(payload))
-
+    return r
 
 
 class GalleriesApiHandler(RestHandlerBase):
     """
+    Main Handler for Galleries Endpoint
     """
 
     def _get(self):
@@ -76,26 +61,11 @@ class GalleriesApiHandler(RestHandlerBase):
         else:
             entities = Venue.query().fetch(1000)
 
+
+        # Create A set of results based upon this result set - iterator??
         results = []
         for e in entities:
-            e_data = {
-                'slug': e.slug,
-                'name': e.name,
-                'address': e.address,
-                'address2': e.address2,
-                'city': e.city,
-                'state': e.state,
-                'country': e.country,
-                'website': e.website,
-                'phone': e.phone,
-                'email': e.email,
-                'category': e.category,
-                'geo': None}
-
-            if e.geo:
-                e_data['geo'] = {'lat': e.geo.lat, 'long': e.geo.lon}
-
-            results.append(e_data)
+            results.append(create_resource_from_entity(e))
 
         self.serve_success(results)
 
