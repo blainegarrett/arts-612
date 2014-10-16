@@ -19,6 +19,8 @@ def create_resource_from_entity(e, verbose=False):
     """
 
     r = {
+        'resource_id':e.slug,
+        'resource':'http://localhost:8080/api/galleries/%s' % e.slug,
         'slug': e.slug,
         'name': e.name,
         'address': e.address,
@@ -76,7 +78,6 @@ class GalleriesApiHandler(RestHandlerBase):
         TODO: None of the data is validated right now...
         """
 
-
         """
         # Expected payload
         
@@ -113,23 +114,40 @@ class GalleryDetailApiHandler(RestHandlerBase):
             self.serve_404('Gallery Not Found')
             return False
 
-        vsearch.put_search_doc(e)
+        resource = create_resource_from_entity(e)
+        self.serve_success(resource)
+    
+    def _put(self, slug):
+        """
+        Edit a resource
+        
+        TODO: None of the data is validated right now...
+        """
 
-        e_data = {
-            'slug': e.slug,
-            'name': e.name,
-            'address': e.address,
-            'address2': e.address2,
-            'city': e.city,
-            'state': e.state,
-            'country': e.country,
-            'website': e.website,
-            'phone': e.phone,
-            'email': e.email,
-            'category': e.category,
-            'geo': None}
+        """
+        # Expected payload
+        
+        {
+            "name": "Super Cool Gallery",
+            "address": "123 Whatever St",
+            "address2": "",
+            "city": "Minneapolis",
+            "state": "MN",
+            "country": "USA",
+            "geo": null,
+            "website": "http://supercool.com",
+            "phone": "612-555-5555",
+            "email": "info@totallycool.com",
+            "category": "gallery"
+        }
+        """
+        
+        venue = venues_api.get_venue_by_slug(slug)
 
-        if e.geo:
-            e_data['geo'] = {'lat': e.geo.lat, 'long': e.geo.lon}
+        if not venue:
+            self.serve_404('Gallery Not Found')
+            return False
 
-        self.serve_success(e_data)
+        venue = venues_api.edit_venue(venue, self.data)
+        result = create_resource_from_entity(venue)
+        self.serve_success(result)
