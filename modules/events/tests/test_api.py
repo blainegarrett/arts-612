@@ -46,6 +46,7 @@ class GetEventKeyByKeyStrTestsCases(EventApiTestBase):
     """
     Tests surrounding getting the event key via urlsafe keystr
     """
+
     @patch('modules.events.internal.api.get_entity_key_by_keystr')
     def test_base(self, m_get):
         """

@@ -1,6 +1,9 @@
+# Event module constants
+
 EVENT_KIND = 'Event'
 
 EVENT_SEARCH_INDEX = 'events_index'
+
 
 class CATEGORY(object):
     """

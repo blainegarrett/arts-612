@@ -46,6 +46,7 @@ class GetVenueKeyByKeyStrTestsCases(VenueApiTestBase):
     """
     Tests surrounding getting the venue key via urlsafe keystr
     """
+
     @patch('modules.venues.internal.api.get_entity_key_by_keystr')
     def test_base(self, m_get):
         """

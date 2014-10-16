@@ -4,13 +4,12 @@ from google.appengine.ext import ndb
 from modules.utils import get_entity_key_by_keystr
 from modules.venues.internal.models import Venue
 from modules.venues.constants import VENUE_KIND
-
 from modules.venues.internal import search as vsearch
+
 
 def get_venue_key_by_keystr(keystr):
     """
     Given a urlsafe version of an Venue key, get the actual key
-    # TODO: Abstract this out into a helper that is kind agnostic
     """
     return get_entity_key_by_keystr(VENUE_KIND, keystr)
 
@@ -102,8 +101,7 @@ def create_venue(data, operator=None):
         geo_data = data['geo'].split(',')
         data['geo'] = ndb.GeoPt(lat=float(geo_data[0].strip()), lon=float(geo_data[1].strip()))
     else:
-        data['geo'] = None    
-
+        data['geo'] = None
 
     entity = Venue(**data)
     search_doc = vsearch.build_index(entity)
@@ -143,6 +141,7 @@ def create_venue(data, operator=None):
 
 
 ########## Move all of this very soon###############
+
 '''
 def create_event(data, *args, **kwargs):
     """

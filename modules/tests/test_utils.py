@@ -4,13 +4,15 @@ Tests for Module Utilities
 
 import unittest
 from mock import Mock, patch
-
 from google.appengine.ext import ndb
-
 from modules import utils as api
 
 
 class ModuleUtilsBaseCase(unittest.TestCase):
+    """
+    Base Case for Module Util Tests
+    """
+
     pass
 
 
