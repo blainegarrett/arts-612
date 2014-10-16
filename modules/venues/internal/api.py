@@ -1,5 +1,7 @@
 # Internal API Methods for Venues
 from google.appengine.ext import ndb
+
+from modules.utils import get_entity_key_by_keystr
 from modules.venues.internal.models import Venue
 from modules.venues.constants import VENUE_KIND
 
@@ -10,17 +12,7 @@ def get_venue_key_by_keystr(keystr):
     Given a urlsafe version of an Venue key, get the actual key
     # TODO: Abstract this out into a helper that is kind agnostic
     """
-
-    attr_err = 'Keystrings must be an instance of base string, recieved: %s' % keystr
-    kind_err = 'Expected urlsafe keystr for kind %s but received keystr for kind %s instead.'
-    if not keystr or not isinstance(keystr, basestring):
-        raise RuntimeError(attr_err)
-
-    key = ndb.Key(urlsafe=keystr)
-    if not key.kind() == VENUE_KIND:
-        raise RuntimeError(kind_err % (VENUE_KIND, key.kind()))
-
-    return key
+    return get_entity_key_by_keystr(VENUE_KIND, keystr)
 
 
 def get_venue_key(slug):

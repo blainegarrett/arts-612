@@ -1,6 +1,7 @@
 # Internal API Methods for Events
 from google.appengine.ext import ndb
 
+from modules.utils import get_entity_key_by_keystr
 from modules.events.internal.models import Event
 from modules.events.internal import search as event_search
 from modules.events.constants import EVENT_KIND
@@ -9,19 +10,8 @@ from modules.events.constants import EVENT_KIND
 def get_event_key_by_keystr(keystr):
     """
     Given a urlsafe version of an Event key, get the actual key
-    # TODO: Abstract this out into a helper that is kind agnostic
     """
-
-    attr_err = 'Keystrings must be an instance of base string, recieved: %s' % keystr
-    kind_err = 'Expected urlsafe keystr for kind %s but received keystr for kind %s instead.'
-    if not keystr or not isinstance(keystr, basestring):
-        raise RuntimeError(attr_err)
-
-    key = ndb.Key(urlsafe=keystr)
-    if not key.kind() == EVENT_KIND:
-        raise RuntimeError(kind_err % (EVENT_KIND, key.kind()))
-
-    return key
+    return get_entity_key_by_keystr(EVENT_KIND, keystr)
 
 
 def get_event_key(slug):
@@ -37,6 +27,7 @@ def get_event_key(slug):
 
     return ndb.Key(EVENT_KIND, slug)
 
+
 def get_event_by_slug(slug):
     """
     Given an event slug, fetch the event entity
@@ -47,11 +38,10 @@ def get_event_by_slug(slug):
     return event
 
 
-
-
 def get_events():
     events = Event.query().fetch(100)
     return events
+
 
 def create_event(data):
     """
@@ -86,12 +76,12 @@ def create_event(data):
         ed['start'] = str(d_data['start']) # This is not a long term solution...
         ed['end'] = str(d_data['end']) # This is not a long term solution...
         event_dates.append(ed)
-    
+
     entity.event_dates = event_dates
     entity.put()
-    
+
     # Build search indexes for event dates
     search_docs = event_search.build_index(entity)
     search_index.put(search_docs)
-    
+
     return entity

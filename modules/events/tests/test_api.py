@@ -42,46 +42,22 @@ class GetEventKeyTests(EventApiTestBase):
         self.assertRaises(RuntimeError, api.get_event_key, 612)
 
 
-class GetEventKeyByKeyStrTests(EventApiTestBase):
+class GetEventKeyByKeyStrTestsCases(EventApiTestBase):
     """
     Tests surrounding getting the event key via urlsafe keystr
     """
-
-    @patch('modules.events.internal.api.ndb')
-    def test_base(self, m_ndb):
+    @patch('modules.events.internal.api.get_entity_key_by_keystr')
+    def test_base(self, m_get):
         """
         Ensure our keystr helper wrapper calls the ndb.Key constructor correctly
         """
-
-        # Setup Mocks
-        m_key = Mock()
-        m_key.kind.return_value = EVENT_KIND
-        m_key_init = Mock(name='mocked Key class', return_value=m_key)
-        m_ndb.Key = m_key_init
 
         # Run code under test
         result = api.get_event_key_by_keystr('some_url_safe_keystr')
 
         # Check mocks
-        self.assertEqual(result, m_key)
-        m_key_init.assert_called_once_with(urlsafe='some_url_safe_keystr')
-
-    def test_invalid_kind(self):
-        """
-        Ensure urlsafe keys from other Kinds do not work
-        """
-
-        bad_keystr = ndb.Key('SomeOtherKind', 612).urlsafe()
-        self.assertRaises(RuntimeError, api.get_event_key_by_keystr, bad_keystr)
-
-    def test_errors(self):
-        """
-        Ensure that passing in None or invalid types triggers errors
-        """
-
-        self.assertRaises(RuntimeError, api.get_event_key_by_keystr, None)
-        self.assertRaises(RuntimeError, api.get_event_key_by_keystr, '')
-        self.assertRaises(RuntimeError, api.get_event_key_by_keystr, 612)
+        self.assertEqual(result, m_get.return_value)
+        m_get.assert_called_once_with(EVENT_KIND, 'some_url_safe_keystr')
 
 
 class GetEventBySlugTests(EventApiTestBase):
