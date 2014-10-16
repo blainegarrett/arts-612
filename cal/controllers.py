@@ -53,11 +53,9 @@ class EventsApiHandler(RestHandlerBase):
             "name": "Curative"
         }
         """
-        
 
         e = events_api.create_event(self.data)
         result = create_resource_from_entity(e)
-
         self.serve_success(result)
         
     def _get(self):

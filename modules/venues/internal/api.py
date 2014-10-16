@@ -85,31 +85,52 @@ def get_venue_list():
     return entities
 
 
+@ndb.transactional
+def _create_venue_txn(key, data, operator_key):
+    """
+    Transactionally safe helper to create a venue
+    TODO: Write the search index bits in a separate furious task?
+    TODO: Do something with operator
+    """
+
+    # Final Data Prep
+    data['key'] = key
+
+    # Create the actual Venue entity
+    entity = Venue(**data)
+
+    # Write both the 
+    entity.put()
+
+    # Build the search doc - TODO: In a deferred task?
+    search_index = vsearch.get_search_index()
+    search_doc = vsearch.build_index(entity)
+    search_index.put([search_doc])
+
+    return entity    
+
+
 def create_venue(data, operator=None):
     """
     Create an Venue
-    # TODO: Populate search index
-    # TODO: Ensure that no other event exists by slug - transactional??
     """
 
-    search_index = vsearch.get_search_index()
+    key = get_venue_key(data['slug'])
 
-    # Prep the data
-    data['key'] = get_venue_key(data['slug'])
-
+    # Prep go data...
     if data['geo']:
         geo_data = data['geo'].split(',')
         data['geo'] = ndb.GeoPt(lat=float(geo_data[0].strip()), lon=float(geo_data[1].strip()))
     else:
         data['geo'] = None
 
-    entity = Venue(**data)
-    search_doc = vsearch.build_index(entity)
 
-    entity.put()
-    search_index.put([search_doc])
-    return entity
+    # Operator prep
+    operator_key = None
+    if operator:
+       operator_key = operator.key 
 
+    return _create_venue_txn(key, data, operator_key)
 
 
 '''

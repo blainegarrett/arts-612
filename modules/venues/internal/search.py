@@ -22,19 +22,16 @@ def build_index(venue):
     TODO: This needs to be done yet
     """
 
-    
-    # Prep data
-    geopoint = None
-
-    if venue.geo:
-        geopoint = search.GeoPoint(venue.geo.lat, venue.geo.lon)
-    
     # Construct Search document feilds
     fields = []
     fields.append(search.TextField(name='slug', value=venue.slug))
     fields.append(search.TextField(name='name', value=venue.name))
     fields.append(search.TextField(name='category', value=venue.category))
-    fields.append(search.GeoField(name='geo', value=geopoint))
+
+    geopoint = None
+    if venue.geo:
+        geopoint = search.GeoPoint(venue.geo.lat, venue.geo.lon)
+        fields.append(search.GeoField(name='geo', value=geopoint))
 
     return search.Document(doc_id=venue.slug, fields=fields)
 

@@ -68,6 +68,37 @@ class GalleriesApiHandler(RestHandlerBase):
             results.append(create_resource_from_entity(e))
 
         self.serve_success(results)
+    
+    def _post(self):
+        """
+        Create Venue Resource
+        
+        TODO: None of the data is validated right now...
+        """
+
+
+        """
+        # Expected payload
+        
+        {
+            "slug": "supercoolgallery",
+            "name": "Super Cool Gallery",
+            "address": "123 Whatever St",
+            "address2": "",
+            "city": "Minneapolis",
+            "state": "MN",
+            "country": "USA",
+            "geo": null,
+            "website": "http://supercool.com",
+            "phone": "612-555-5555",
+            "email": "info@totallycool.com",
+            "category": "gallery"
+        }
+        """
+
+        e = venues_api.create_venue(self.data)
+        result = create_resource_from_entity(e)
+        self.serve_success(result)
 
 
 class GalleryDetailApiHandler(RestHandlerBase):
