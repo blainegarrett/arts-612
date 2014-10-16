@@ -80,9 +80,16 @@ def create_venue(data, operator=None):
     key = get_venue_key(data['slug'])
 
     # Prep go data...
-    if data['geo']:
-        geo_data = data['geo'].split(',')
-        data['geo'] = ndb.GeoPt(lat=float(geo_data[0].strip()), lon=float(geo_data[1].strip()))
+    if data.get('geo', None):
+        if isinstance(data['geo'], dict): # Maybe this isn't the best solution to be flexible?
+            lat = data['geo']['lat']
+            lon = data['geo']['lon']
+        else:
+            geo_data = data['geo'].split(',')
+            lat = geo_data[0].strip()
+            lon = geo_data[1].strip()
+
+        data['geo'] = ndb.GeoPt(lat=float(lat), lon=float(lon))
     else:
         data['geo'] = None
 
@@ -116,6 +123,9 @@ def _edit_venue_txn(venue_key, data, operator_key):
     venue.put()
 
     # Build the search doc - TODO: In a deferred task?
+    # Figure out if anything changed to even bother with the docs
+    # Clean memcache?
+
     search_index = vsearch.get_search_index()
     search_doc = vsearch.build_index(venue)
     search_index.put([search_doc])
@@ -139,17 +149,31 @@ def edit_venue(venue, data, operator=None):
     return _edit_venue_txn(venue_key, data, operator_key)
 
 
-def delete_venue(venue_key, operator):
+@ndb.transactional
+def _delete_venue_txn(venue_key, operator_key):
+    """
+    Transactional Helper to delete a Venue
+    """
+
+    # TODO: Delete the cloud storage document
+    venue_key.delete()
+    return True
+
+
+def delete_venue(venue, operator=None):
     """
     Delete a series
     """
+
     # TODO: Find all the events with this series and remove the series
-
     # Prep the file on cloud storage to be deleted
-    venue = venue_key.get()
+    # Delete search index
+    # Clear memcache, etc?
 
-    if not venue:
-        raise RuntimeError('Venue could not be found by Key')
+    operator_key = None
+    if operator:
+        operator_key = operator.key
 
-    venue_key.delete()
-    return True
+    venue_key = venue.key
+    
+    return _delete_venue_txn(venue_key, operator_key)

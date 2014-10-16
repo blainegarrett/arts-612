@@ -1,9 +1,13 @@
 from google.appengine.ext import ndb
 
+
 class Venue(ndb.Model):
     """
     Model Representing a Place Where an Event Takes Place
     """
+
+    # class? commercial gallery, university, non-profit, etc
+    # open, closed, etc?
 
     slug = ndb.StringProperty()
     name = ndb.StringProperty()

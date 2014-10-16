@@ -16,7 +16,16 @@ class VenueApiTestBase(unittest.TestCase):
     """
     Base Test Case for Venue Api helpers
     """
-    pass
+
+    def setUp(self):
+        """
+        Set up a fake gallery and key to tinker with
+        """
+
+        self.fake_venue_key = ndb.Key(VENUE_KIND, 'x-gallery')
+        self.fake_venue = Mock(name="Fake Venue Entity") # TODO: spec to the kind
+        self.fake_venue.slug = 'x-gallery'
+        self.fake_venue.key = self.fake_venue_key
 
 
 class GetVenueKeyTests(VenueApiTestBase):
@@ -95,17 +104,114 @@ class GetVenueBySlugTests(VenueApiTestBase):
         self.assertRaises(RuntimeError, api.get_venue_by_slug, 612)
 
 
-class CreateVenueTests(VenueApiTestBase):
-    pass
+@patch('modules.venues.internal.api.get_venue_key')
+@patch('modules.venues.internal.api._create_venue_txn')
+class CreateVenueTestCases(VenueApiTestBase):
+    """
+    Tests around the method to create venues
+    """
+
+    def test_base(self, m_txn, m_get_key):
+        """
+        Trivial test to ensure that our transactional helper is called
+        """
+
+        # Run Code To Test
+        result = api.create_venue({'some': 'data', 'slug': 'z-gallery'})
+
+        # Test Mocks
+        self.assertEqual(result, m_txn.return_value)
+        m_get_key.assert_called_once_with('z-gallery')
+        m_txn.assert_called_once_with(m_get_key.return_value, 
+                                      {'geo': None, 'some': 'data', 'slug': 'z-gallery'},
+                                      None)
 
 
-class EditVenueTests(VenueApiTestBase):
-    pass
+    def test_with_geo_dict(self, m_txn, m_get_key):
+        """
+        Test to ensure that Geo coords work as expected
+        """
+
+        # Run Code To Test
+        geo_dict = {'lat': 44, 'lon': 33}
+        result = api.create_venue({'geo': geo_dict, 'slug': 'z-gallery'})
+
+        # Test Mocks
+        self.assertEqual(result, m_txn.return_value)
+        m_get_key.assert_called_once_with('z-gallery')
+        m_txn.assert_called_once_with(m_get_key.return_value, 
+                                     {'geo': ndb.GeoPt(lat=44, lon=33),
+                                     'slug': 'z-gallery'}, None)
+
+    def test_with_geo_string(self, m_txn, m_get_key):
+         """
+         Test to ensure that Geo coords work as expected
+         """
+
+         # Run Code To Test
+         geo_dict = '44, -33'
+         result = api.create_venue({'geo': geo_dict, 'slug': 'z-gallery'})
+
+         # Test Mocks
+         self.assertEqual(result, m_txn.return_value)
+         m_get_key.assert_called_once_with('z-gallery')
+         m_txn.assert_called_once_with(m_get_key.return_value,
+                                      {'geo': ndb.GeoPt(lat=44, lon=-33),
+                                      'slug': 'z-gallery'}, None)
 
 
-class DeleteVenueTests(VenueApiTestBase):
-    pass
+class CreateVenueTxnTestCases(VenueApiTestBase):
+    """
+    Tests around the transactional helper to create venues
+    """
 
 
-class FetchVenueListTests(VenueApiTestBase):
-    pass
+@patch('modules.venues.internal.api._edit_venue_txn')
+class EditVenueTestsCases(VenueApiTestBase):
+    """
+    Tests around method to edit venues
+    """
+
+    def test_base(self, m_txn):
+        """
+        """
+        
+        # Run Code To Test
+        result = api.edit_venue(self.fake_venue, {'some': 'data'})
+
+        # Test Mocks
+        self.assertEqual(result, m_txn.return_value)
+        m_txn.assert_called_once_with(self.fake_venue_key, {'some': 'data'}, None)
+
+
+class EditVenueTxnTestsCases(VenueApiTestBase):
+    """
+    Tests around the transactional helper to edit venues
+    """
+
+
+class DeleteVenueTestCases(VenueApiTestBase):
+    """
+    Tests around method to delete venues
+    """
+
+    # TODO: Refactor the txn code to be more unit testable
+
+
+@patch('modules.venues.internal.api._delete_venue_txn')
+class DeleteVenueTxnTestCases(VenueApiTestBase):
+    """
+    Tests around the transactional helper to delete venues
+    """
+
+    def test_base(self, m_txn):
+        """
+        Test to ensure our delete method calls the transactional helper
+        """
+
+        # Run Code to Test
+        result = api.delete_venue(self.fake_venue)
+
+        # Check Mocks
+        self.assertEqual(result, m_txn.return_value)
+        m_txn.assert_called_once_with(self.fake_venue_key, None)

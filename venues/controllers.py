@@ -11,7 +11,6 @@ from modules.venues.internal import search as vsearch
 from modules.venues.internal.models import Venue
 
 
-
 def create_resource_from_entity(e, verbose=False):
     """
     Create a Rest Resource from a datastore entity
@@ -35,7 +34,7 @@ def create_resource_from_entity(e, verbose=False):
         'geo': None}
 
     if e.geo:
-        r['geo'] = {'lat': e.geo.lat, 'long': e.geo.lon}
+        r['geo'] = {'lat': e.geo.lat, 'lon': e.geo.lon}
     
     return r
 
@@ -89,7 +88,10 @@ class GalleriesApiHandler(RestHandlerBase):
             "city": "Minneapolis",
             "state": "MN",
             "country": "USA",
-            "geo": null,
+            "geo": {
+                        "lat": 45.004628,
+                        "lon": -93.247606
+                    },
             "website": "http://supercool.com",
             "phone": "612-555-5555",
             "email": "info@totallycool.com",
@@ -150,4 +152,19 @@ class GalleryDetailApiHandler(RestHandlerBase):
 
         venue = venues_api.edit_venue(venue, self.data)
         result = create_resource_from_entity(venue)
+        self.serve_success(result)
+
+
+    def _delete(self, slug):
+        """
+        Delete a Resource
+        """
+
+        venue = venues_api.get_venue_by_slug(slug)
+
+        if not venue:
+            self.serve_404('Gallery Not Found')
+            return False
+
+        result = venues_api.delete_venue(venue, self.data)
         self.serve_success(result)
