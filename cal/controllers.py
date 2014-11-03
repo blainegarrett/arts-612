@@ -12,6 +12,7 @@ from modules.events.constants import CATEGORY, EVENT_DATE_TYPE
 
 #from modules.venues.internal import search as vsearch
 #from modules.venues.internal.models import Venue
+from venues.controllers import create_resource_from_entity as v_resource
 
 
 def create_resource_from_entity(e, verbose=False):
@@ -22,10 +23,50 @@ def create_resource_from_entity(e, verbose=False):
 
     r = {
         'slug': e.slug,
-        'name': e.name
+        'name': e.name,
+        'url': e.url,
+        'event_dates': []
     }
+
+    for event_date in e.event_dates:
+        v = event_date.get('venue', None)
+        if not isinstance(v, dict): # TODO: Should be Resource base class
+            event_date['venue'] = v_resource(v)
+        r['event_dates'].append(event_date)
+    
     return r
 
+class EventsWeeksApiHandler(RestHandlerBase):
+    """
+    """
+
+    def _get(self):
+        results = []
+        events = events_api.get_events()
+        for event in events:
+            results.append(create_resource_from_entity(event))
+
+        self.serve_success(results)
+    
+class EventDetailApiHandler(RestHandlerBase):
+    """
+    """
+    def _get(self, slug):
+        result = create_resource_from_entity(e)
+        self.serve_success(result)
+
+
+class EventsWeeksApiHandler(RestHandlerBase):
+    """
+    """
+
+    def _get(self):
+        results = []
+        events = events_api.get_this_week()
+        for event in events:
+            results.append(create_resource_from_entity(event))
+
+        self.serve_success(results)
 
 class EventsApiHandler(RestHandlerBase):
     """
@@ -57,24 +98,11 @@ class EventsApiHandler(RestHandlerBase):
         e = events_api.create_event(self.data)
         result = create_resource_from_entity(e)
         self.serve_success(result)
-        
-    def _get(self):
 
-        data = {
-            'slug': 'curative',
-            'name': 'Curative',
-            'url': 'http://google.com/?q=fishtacos',
-            'dates': [
-                {
-                    'venue_slug': 'gamut',
-                    'start': datetime.datetime(year=2014, month=10, day=15, hour=17, minute=0),
-                    'end': datetime.datetime(year=2014, month=10, day=15, hour=20, minute=0),
-                    'category': CATEGORY.RECEPTION,
-                    'label': 'opening night!',
-                    'type': EVENT_DATE_TYPE.TIMED
-                }
-            ]
-        }
+    def _get(self):
+        """
+        Main Endpoint
+        """
 
         results = []
         events = events_api.get_events()

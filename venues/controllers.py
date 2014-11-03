@@ -16,22 +16,25 @@ def create_resource_from_entity(e, verbose=False):
     Create a Rest Resource from a datastore entity
     TODO: We don't care about verbosity just yet
     """
-
-    r = {
-        'resource_id':e.slug,
-        'resource':'http://localhost:8080/api/galleries/%s' % e.slug,
-        'slug': e.slug,
-        'name': e.name,
-        'address': e.address,
-        'address2': e.address2,
-        'city': e.city,
-        'state': e.state,
-        'country': e.country,
-        'website': e.website,
-        'phone': e.phone,
-        'email': e.email,
-        'category': e.category,
-        'geo': None}
+    
+    try:
+        r = {
+            'resource_id':e.slug,
+            'resource':'http://localhost:8080/api/galleries/%s' % e.slug,
+            'slug': e.slug,
+            'name': e.name,
+            'address': e.address,
+            'address2': e.address2,
+            'city': e.city,
+            'state': e.state,
+            'country': e.country,
+            'website': e.website,
+            'phone': e.phone,
+            'email': e.email,
+            'category': e.category,
+            'geo': None}
+    except Exception, ex:
+        raise Exception(e)
 
     if e.geo:
         r['geo'] = {'lat': e.geo.lat, 'lon': e.geo.lon}

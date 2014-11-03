@@ -15,6 +15,7 @@ routes.extend([
     # Gallery Routes
 
     (r'/import/galleries', 'venues.import.GalleryData'),
+    (r'/import/events', 'cal.import.EventData'),
 ])
 
 app = webapp2.WSGIApplication(routes, debug=True)

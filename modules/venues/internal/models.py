@@ -21,3 +21,4 @@ class Venue(ndb.Model):
     phone = ndb.StringProperty()
     email = ndb.StringProperty()
     category = ndb.StringProperty()
+    hours = ndb.JsonProperty()

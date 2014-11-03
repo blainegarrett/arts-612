@@ -225,7 +225,124 @@ class GalleryData(webapp2.RequestHandler):
                 'website': 'https://art.umn.edu/nash',
                 'phone': '612-624-7530',
                 'email': 'artdept@umn.edu'
+            }, {
+                'slug': 'tuckunder-projects',
+                'name': 'Tuck Under Projects',
+                'address': '5120 York Ave S',
+                'city': 'Minneapolis',
+                'geo': '44.969566, -93.242290',
+                'category': 'gallery',
+                'website': 'http://www.tuckunder.org/',
+                'phone': '',
+                'email': 'info@tuckunder.org'
             },
+            
+            {
+                'slug': 'sebastian-joes-franklin',
+                'name': "Sebastian Joe's Ice Cream Cafe",
+                'address': '1007 W Franklin Ave, Minneapolis',
+                'city': 'Minneapolis',
+                'geo': '44.96246,-93.292142',
+                'category': 'business',
+                'website': 'http://sebastianjoesicecream.com/',
+                'phone': '',
+                'email': '',
+                'hours':
+                    {
+                        'Sunday': [7, 23],
+                        'Monday': [7, 23],
+                        'Tuesday': [7, 23],
+                        'Wednesday': [7, 23],
+                        'Thursday':	[7, 23],
+                        'Friday':	[7, 23],
+                        'Saturday':	[7, 23],
+                    }
+            }, {
+                'slug': 'temp',
+                'name': 'Temporary Autonomous Museum of Contemporary Art',
+                'address': '3400 Cedar Avenue S',
+                'city': 'Minneapolis',
+                'geo': '44.9412077,-93.2476723',
+                'category': 'gallery',
+                'website': 'http://www.ryanfontaine.com/theTEMP',
+                'phone': '',
+                'email': ''
+            }, {
+                'slug': 'northrup-king-building',
+                'name': 'Northrup King Building',
+                'address': '1500 Jackson St NE',
+                'city': 'Minneapolis',
+                'geo': '45.0045658,-93.2488449',
+                'category': 'studios',
+                'website': 'http://www.northrupkingbuilding.com/',
+                'phone': '',
+                'email': ''
+            }, {
+                'slug': 'soo-local',
+                'name': 'Soo Local',
+                'address': '3506 Nicollet Ave',
+                'city': 'Minneapolis',
+                'geo': '44.9395448,-93.277924',
+                'category': 'gallery',
+                'website': 'http://www.soovac.org/',
+                'phone': '',
+                'email': ''
+            }, {
+                'slug': 'vine-arts',
+                'name': 'Vine Arts',
+                'address': '2637 27th AVE S',
+                'city': 'Minneapolis',
+                'geo': '44.9546669,-93.2327891',
+                'category': 'studios',
+                'website': 'http://www.vineartscenter.com/',
+                'phone': '',
+                'email': ''
+            }, {
+                'slug': 'fox-tax',
+                'name': 'Fox Tax',
+                'address': '503 1st Ave NE',
+                'city': 'Minneapolis',
+                'geo': '44.9903532,-93.254127',
+                'category': 'business',
+                'website': 'http://www.foxtaxservice.com/',
+                'phone': '',
+                'email': ''
+            },
+            {
+                'slug': 'circa-gallery',
+                'name': 'Circa Gallery',
+                'address': '210 N First St',
+                'city': 'Minneapolis',
+                'geo': '44.9843177,-93.2692948',
+                'category': 'gallery',
+                'website': 'http://www.circagallery.org/',
+                'phone': '',
+                'email': ''
+            }, {
+                'slug': 'gallery-122',
+                'name': 'Gallery 122 at Hang It',
+                'address': '122 8th Street SE',
+                'city': 'Minneapolis',
+                'geo': '44.991017,-93.250127',
+                'category': 'gallery',
+                'website': 'http://www.hangitinc.com/',
+                'phone': '',
+                'email': '',
+                'hours': {
+                    'Monday': [9, 17],
+                    'Tuesday': [9, 19],
+                    'Wednesday': [9, 19],
+                    'Thursday': [9, 19],
+                    'Friday': [9, 17],
+                    'Saturday': [10, 16]
+                }
+            },
+            
+            
+
+
+            
+            
         ]
         
         stuff_to_put = []

@@ -1,10 +1,14 @@
 # Internal API Methods for Events
+
+import datetime
 from google.appengine.ext import ndb
 
 from modules.utils import get_entity_key_by_keystr
 from modules.events.internal.models import Event
 from modules.events.internal import search as event_search
 from modules.events.constants import EVENT_KIND
+from modules.events.constants import CATEGORY
+from modules.venues.internal import api as venue_api
 
 
 def get_event_key_by_keystr(keystr):
@@ -36,6 +40,75 @@ def get_event_by_slug(slug):
     event_key = get_event_key(slug)
     event = event_key.get()
     return event
+
+
+def tonight(category=None, limit=5):
+    """
+    TODO: Use `today`
+    """
+
+    dt = datetime.datetime(year=2014, month=11, day=15, hour=15, minute=0)
+    end = dt # 3pm
+    start = end + datetime.timedelta(hours=12) # 3am
+
+    return search_helper(start=start, end=end, category=category, sort='start')
+
+
+def upcoming_events(limit=5):
+    # end is greater than this morning with category = reception and venue_category
+    today = datetime.datetime.now().replace(hour=3, minute=0, second=0) # TODO: Needs TZ
+    #querystring = 'end >= %s AND (category: %s OR category: event)' % (unix_time(end), )
+    end = today
+    return search_helper(end=end, category=CATEGORY.RECEPTION, sort='end')
+
+
+def going_on_now(limit=5):
+    # Going on "Now" or during some other date
+    start = datetime.datetime(year=2014, month=11, day=15, hour=18, minute=0)
+    end = start
+    return search_helper(start=start, end=end, sort='end')
+
+
+def get_this_week():
+    #return upcoming_events()
+    #return tonight(category='reception')
+    #return tonight()
+    #start = datetime.datetime.now()
+    #end = start + datetime.timedelta(days=7)
+
+    # Within 1 week - starts before 7 days from now but hasn't ended
+    end = datetime.datetime.now()
+    start = end + datetime.timedelta(days=7)
+
+    # "Tonight"
+    results = search_helper(start=start, end=end, category=[CATEGORY.ONGOING, CATEGORY.RECEPTION])
+    return results
+
+
+def search_helper(start=None, end=None, category=None, sort=None, limit=20):
+
+    search_results = event_search.simple_search(start=start, end=end, category=category, sort=sort)
+    events = event_search.get_events_from_event_search_docs(search_results['index_results'])
+
+    # Conditionally Bulk Dereference Venue
+    venue_keys_to_fetch = []
+    for doc in search_results['index_results']:
+        venue_key = venue_api.get_venue_key(doc['venue_slug'][0].value)
+        venue_keys_to_fetch.append(venue_key)
+
+    venues = ndb.get_multi(venue_keys_to_fetch)
+    venue_map = {v.slug: v for v in venues}
+
+    import logging
+    for event in events:
+        i = 0
+
+        for event_date in event.event_dates:
+            venue = venue_map.get(event_date.get('venue_slug', None), None)
+            event.event_dates[i]['venue'] = venue
+            i += 1
+
+    return events
 
 
 def get_events():
@@ -85,80 +158,3 @@ def create_event(data):
     search_index.put(search_docs)
 
     return entity
-
-
-
-
-
-
-
-
-    '''
-        class Event(ndb.Model):
-            """
-            Model Representing an Event that may occur spanning multiple days (Event Date)
-            """
-
-            slug = ndb.StringProperty()
-            title = ndb.StringProperty()
-            intro = ndb.TextProperty()
-            description = ndb.TextProperty()
-            featured = ndb.BooleanProperty(default=False)
-            venue = ndb.KeyProperty(kind=Venue)
-
-
-        class EventDate(ndb.Model):
-            """
-            Model Representing a specific block of time
-            """
-            event_key = ndb.KeyProperty(kind=Event)
-            start_datetime = ndb.DateTimeProperty()
-            end_datetime = ndb.DateTimeProperty()
-            venue = ndb.KeyProperty(kind=Venue)
-            label = ndb.StringProperty()
-        '''
-
-
-
-
-    ########## Move all of this very soon###############
-
-    '''
-    def create_event(data, *args, **kwargs):
-        """
-        """
-        import datetime
-        search_index = vsearch.get_event_search_index()
-
-        # TODO: Do this outside of a txn
-        v = get_venue_by_slug(data['venue_slug'])
-
-        e = Event()
-        e.slug = 'generate_unique_slug_for_event'
-        e.title = data['title']
-        e.intro = 'This is Great'
-        e.description = 'Super Great'
-        e.featured = True
-        e.venue_key = v.key
-        e.put()
-
-        fmt = '%Y-%m-%d %H:%M:%S'
-
-        e_dates = []
-        for d_data in data['dates']:
-            ed = EventDate(parent=e.key)
-            ed.event_key = e.key
-            ed.venue_key = v.key
-            ed.label = d_data['label']
-
-            ed.start_datetime = datetime.datetime.strptime(d_data['start_datetime'], fmt)
-            ed.end_datetime = datetime.datetime.strptime(d_data['end_datetime'], fmt)
-            ed.put()
-            e_dates.append(ed)
-
-        # Create the search index for this event
-        search_doc = vsearch.build_event_index(e, e_dates, v)
-        search_index.put([search_doc])
-
-        return e
-    '''

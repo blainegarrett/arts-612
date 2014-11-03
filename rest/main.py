@@ -35,8 +35,9 @@ routes.extend([
     (r'/api/galleries', 'venues.controllers.GalleriesApiHandler'),
     
     # Event Routes
-    (r'/api/events/([a-z0-9-]+)', 'cal.controllers.EventDetailApiHandler'),
     (r'/api/events', 'cal.controllers.EventsApiHandler'),
+    (r'/api/events/thisweek', 'cal.controllers.EventsWeeksApiHandler'),
+    (r'/api/events/([a-z0-9-]+)', 'cal.controllers.EventDetailApiHandler'),
 ])
 
 
