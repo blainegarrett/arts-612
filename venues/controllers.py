@@ -16,7 +16,7 @@ def create_resource_from_entity(e, verbose=False):
     Create a Rest Resource from a datastore entity
     TODO: We don't care about verbosity just yet
     """
-    
+
     try:
         r = {
             'resource_id':e.slug,

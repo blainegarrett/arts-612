@@ -38,16 +38,16 @@ def _build_event_date(i, event, ed, venue, start, end, is_hours=False):
 
     doc_id = '%s-%s' % (event.slug, i)
     fields.append(search.TextField(name='name', value=event.name))
-    fields.append(search.TextField(name='slug', value=event.slug))
-    fields.append(search.TextField(name='event_keystr', value=str(event.key.urlsafe())))
+    fields.append(search.AtomField(name='slug', value=event.slug))
+    fields.append(search.AtomField(name='event_keystr', value=str(event.key.urlsafe())))
 
     # Populate bits specific to the event date
     fields.append(search.NumberField(name='start', value=unix_time(start)))
     fields.append(search.NumberField(name='end', value=unix_time(end)))
-    fields.append(search.TextField(name='category', value=category))
+    fields.append(search.AtomField(name='category', value=category))
 
     # Attach Venue/Geo Information
-    fields.append(search.TextField(name='venue_slug', value=ed['venue_slug']))
+    fields.append(search.AtomField(name='venue_slug', value=ed['venue_slug']))
 
     venue_geo = None
     if venue.geo:

@@ -24,9 +24,9 @@ def build_index(venue):
 
     # Construct Search document feilds
     fields = []
-    fields.append(search.TextField(name='slug', value=venue.slug))
+    fields.append(search.AtomField(name='slug', value=venue.slug))
     fields.append(search.TextField(name='name', value=venue.name))
-    fields.append(search.TextField(name='category', value=venue.category))
+    fields.append(search.AtomField(name='category', value=venue.category))
 
     geopoint = None
     if venue.geo:
@@ -34,43 +34,6 @@ def build_index(venue):
         fields.append(search.GeoField(name='geo', value=geopoint))
 
     return search.Document(doc_id=venue.slug, fields=fields)
-
-
-'''
-slug = ndb.StringProperty()
-name = ndb.StringProperty()
-address = ndb.StringProperty()
-address2 = ndb.StringProperty()
-city = ndb.StringProperty()
-state = ndb.StringProperty()
-country = ndb.StringProperty()
-geo = ndb.GeoPtProperty()
-website = ndb.StringProperty()
-phone = ndb.StringProperty()
-email = ndb.StringProperty()
-category = ndb.StringProperty()
-
-
-e_data = {
-    'slug': e.slug,
-    'name': e.name,
-    'address': e.address,
-    'address2': e.address2,
-    'city': e.city,
-    'state' : e.state,
-    'country': e.country,
-    'website': e.website,
-    'phone': e.phone,
-    'email': e.email,
-    'category': e.category,
-    'geo' : None
-}
-
-if e.geo:
-    e_data['geo'] = {'lat': e.geo.lat, 'long': e.geo.lon}
-
-
-'''
 
 
 def simple_search(querystring):
