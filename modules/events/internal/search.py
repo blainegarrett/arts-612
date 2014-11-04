@@ -100,14 +100,14 @@ def build_index(event):
 
             test_dt = start_dt
             while(test_dt <= end_dt):
-                logging.error(test_dt.weekday()) # 1 = Monday
+                #logging.error(test_dt.weekday()) # 1 = Monday
                 
                 weekday_key = weekday_map[test_dt.weekday()]
-                logging.error(weekday_key)
+                #logging.error(weekday_key)
 
                 has_hours = hours.get(weekday_key, False)
                 if has_hours:
-                    logging.error(has_hours)
+                    #logging.error(has_hours)
                     weekd_day_start = test_dt.replace(hour=has_hours[0])
                     weekd_day_end = test_dt.replace(hour=has_hours[1])
 
@@ -186,7 +186,9 @@ def simple_search(querystring=None, start=None, end=None, category=None, limit=5
 
 def get_events_from_event_search_docs(event_docs):
     """
+    
     """
+
     from modules.events.internal.api import get_event_key_by_keystr
 
     event_keys_to_fetch = [] # Set??

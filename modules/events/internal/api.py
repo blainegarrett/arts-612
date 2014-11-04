@@ -18,28 +18,33 @@ def get_event_key_by_keystr(keystr):
     return get_entity_key_by_keystr(EVENT_KIND, keystr)
 
 
-def get_event_key(slug):
+def get_event_key(event_id):
     """
     Create a ndb.Key given an Event slug
     TODO: Keys will likely not be slugs for events
     """
 
-    err = 'Event slug must be defined and of of type basestring'
+    err = 'Event slug must be defined and of of type integer'
 
-    if not slug or not isinstance(slug, basestring):
+    if not event_id or not isinstance(event_id, (int, long)):
         raise RuntimeError(err)
 
-    return ndb.Key(EVENT_KIND, slug)
+    return ndb.Key(EVENT_KIND, event_id)
 
 
 def get_event_by_slug(slug):
     """
     Given an event slug, fetch the event entity
+    TODO: slug is not the key here but rather a property
     """
 
     event_key = get_event_key(slug)
     event = event_key.get()
     return event
+
+
+def get_events():
+    return search_helper(category=[CATEGORY.ONGOING, CATEGORY.RECEPTION])
 
 
 def tonight(category=None, limit=5):
@@ -90,8 +95,46 @@ def search_helper(start=None, end=None, category=None, sort=None, limit=20):
     search_results = event_search.simple_search(start=start, end=end, category=category, sort=sort)
     events = event_search.get_events_from_event_search_docs(search_results['index_results'])
 
-    # Conditionally Bulk Dereference Venue
+    bulk_dereference_venues(events)
+
+    return events
+
+def bulk_dereference_venues(events):
+    
+    return_one = False
+    if not isinstance(events, list):
+        return_one = True
+        events = [events]
+
+    # Iterate over the event dates and collect venue keys
     venue_keys_to_fetch = []
+    for event in events:
+        for ed in event.event_dates:
+            venue_slug = ed['venue_slug']
+            if not venue_slug:
+                continue
+
+            venue_key = venue_api.get_venue_key(venue_slug)
+            venue_keys_to_fetch.append(venue_key)
+
+    # Fetch all the venue keys
+    venues = ndb.get_multi(venue_keys_to_fetch)
+    venue_map = {v.slug: v for v in venues}
+
+    # Iterate over the event dates and set venues
+    for event in events:
+        i = 0
+        
+        for i in range(len(event.event_dates)):
+            ed = event.event_dates[i]
+
+            venue_slug = ed['venue_slug']
+            if venue_slug:
+                venue = venue_map.get(venue_slug, None)
+                event.event_dates[i]['venue'] = venue
+            
+    """
+
     for doc in search_results['index_results']:
         venue_key = venue_api.get_venue_key(doc['venue_slug'][0].value)
         venue_keys_to_fetch.append(venue_key)
@@ -108,13 +151,11 @@ def search_helper(start=None, end=None, category=None, sort=None, limit=20):
             event.event_dates[i]['venue'] = venue
             i += 1
 
-    return events
-
-
-def get_events():
-    events = Event.query().fetch(100)
-    return events
-
+    """
+    
+    
+    
+    
 
 def create_event(data):
     """

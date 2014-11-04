@@ -32,9 +32,10 @@ def create_resource_from_entity(e, verbose=False):
             'phone': e.phone,
             'email': e.email,
             'category': e.category,
-            'geo': None}
-    except Exception, ex:
-        raise Exception(e)
+            'geo': None
+        }
+    except AttributeError, ex:
+        raise Exception('Attempting to create venue resource? Received:  %s' % e)
 
     if e.geo:
         r['geo'] = {'lat': e.geo.lat, 'lon': e.geo.lon}

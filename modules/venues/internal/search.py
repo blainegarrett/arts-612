@@ -39,7 +39,6 @@ def build_index(venue):
 def simple_search(querystring):
     """
     TODO: "term", "near", "by type", "now" and any combo
-    
     """
 
     #querystring = self.request.GET.get('q')
@@ -56,48 +55,10 @@ def simple_search(querystring):
     return {'number_found': number_found, 'returned_count': returned_count, 'index_results': search_results}
 
 
-
 def unix_time(dt):
     epoch = datetime.datetime.utcfromtimestamp(0)
     delta = dt - epoch
     return delta.total_seconds()
-
-def unix_time_millis(dt):
-    return unix_time(dt) * 1000.0
-
-
-def build_event_index(event, event_dates, venue):
-    """
-    Construct a search index for the event
-    """
-    fields = []
-
-    ed = event_dates[0]
-    venue_geo = search.GeoPoint(venue.geo.lat, venue.geo.lon)
-    fields.append(search.TextField(name='event_slug', value=event.slug))
-    fields.append(search.TextField(name='event_title', value=event.title))
-    fields.append(search.TextField(name='event_date_label', value=ed.label))
-    fields.append(search.NumberField(name='event_date_start_datetime', value=unix_time(ed.start_datetime)))
-    fields.append(search.NumberField(name='event_date_end_datetime', value=unix_time(ed.end_datetime)))
-    fields.append(search.GeoField(name='venue_geo', value=venue_geo))
-
-    '''
-    fields = [
-        search.TextField(name='slug', value='222'),
-        
-        
-        search.DateField(name='updated', value=datetime.datetime.now().date()),
-        search.TextField(name='name', value='Signed 0003'),
-        search.TextField(name='desc', value='uncool'),
-        search.AtomField(name='category', value='showing'),
-        search.GeoField(name='venuelocation', value=geopoint),
-        search.NumberField(name='start_time', value=55),
-        search.NumberField(name='end_time', value=67)
-        ]
-    '''
-
-    return search.Document(doc_id=event.slug, fields=fields)
-
 
 
 def put_search_doc(venue):
@@ -111,7 +72,6 @@ def put_search_doc(venue):
     return venue
 
 
-
 def build_indexes():
     # TODO: Batch this for actual use
     venues = Venue.query().fetch(1000)
@@ -123,4 +83,3 @@ def build_indexes():
         docs_to_put.append(doc)
 
     return index.put(docs_to_put)
-    #raise Exception(add_result) # [search.PutResult(code='OK', id=u'666'), search.PutResult(code='OK', id=u'777')]

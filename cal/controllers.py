@@ -14,6 +14,7 @@ from modules.events.constants import CATEGORY, EVENT_DATE_TYPE
 #from modules.venues.internal.models import Venue
 from venues.controllers import create_resource_from_entity as v_resource
 
+import logging
 
 def create_resource_from_entity(e, verbose=False):
     """
@@ -22,19 +23,24 @@ def create_resource_from_entity(e, verbose=False):
     """
 
     r = {
+        'resource_id':e.key.id(),
+        'resource':'http://localhost:8080/api/events/%s' % e.key.id(),
         'slug': e.slug,
         'name': e.name,
         'url': e.url,
         'event_dates': []
     }
 
+    # This needs to be gooder about resources...
     for event_date in e.event_dates:
         v = event_date.get('venue', None)
+
         if not isinstance(v, dict): # TODO: Should be Resource base class
             event_date['venue'] = v_resource(v)
         r['event_dates'].append(event_date)
-    
+
     return r
+
 
 class EventsWeeksApiHandler(RestHandlerBase):
     """
@@ -47,11 +53,26 @@ class EventsWeeksApiHandler(RestHandlerBase):
             results.append(create_resource_from_entity(event))
 
         self.serve_success(results)
-    
+
+
 class EventDetailApiHandler(RestHandlerBase):
     """
     """
+
     def _get(self, slug):
+        
+        slug = long(slug)
+        
+        key = events_api.get_event_key(slug)
+        if not key:
+            raise Exception('404 - TODO: Throw legit 404') # or Resource Not Found
+
+        e = key.get()
+        if not e:
+            raise Exception('404 or something')
+
+        events_api.bulk_dereference_venues(e)
+
         result = create_resource_from_entity(e)
         self.serve_success(result)
 
@@ -68,6 +89,7 @@ class EventsWeeksApiHandler(RestHandlerBase):
 
         self.serve_success(results)
 
+
 class EventsApiHandler(RestHandlerBase):
     """
     Main Handler for Events Endpoint
@@ -77,7 +99,7 @@ class EventsApiHandler(RestHandlerBase):
         """
         Create Event
         """
-        
+
         """
         # Expected payload
         {
@@ -90,7 +112,7 @@ class EventsApiHandler(RestHandlerBase):
                 "type": "timed",
                 "venue_slug": "gamut"}
             ],
-            "slug": "curative", 
+            "slug": "curative",
             "name": "Curative"
         }
         """
@@ -110,4 +132,3 @@ class EventsApiHandler(RestHandlerBase):
             results.append(create_resource_from_entity(event))
 
         self.serve_success(results)
-        
