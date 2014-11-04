@@ -62,12 +62,69 @@ mainApp.directive('socialMetaTags', function() {
 \n\
 \n\
   </div>';
- //'<textarea style="width:100%; height:500px;"><h3>{{ pagemeta.title }}</h3>'
-  //return {
-//      restrict: 'AE',
-//      replace: 'true',
-//      template: tpl
-//  };
+
+  return {
+      restrict: 'AE',
+      replace: 'true',
+      template: tpl
+  };
+});
+
+/*
+mainApp.directive('restDateRender', function() {
+    // Note: This does not totally work yet... 
+
+  return {
+      scope: '@',
+
+      template: function(elem, attr) {
+          date = attr.xval;          
+          console.log(date);
+      }
+  };
+});
+*/
+
+
+
+mainApp.controller('EventListCtrl', function($scope, $location, $http) {
+
+    // Attempt to load a listing of galleries
+    var ajax = $http.get('/api/events/thisweek');
+    ajax.success(function(payload) {
+       $scope.events = payload.results;
+       $scope.api_data = angular.toJson(payload, true);
+     });
+     ajax.error(function(){
+       $scope.api_data = angular.toJson(payload, true);
+     });
+
+    $scope.show_event = function ( path ) {
+        console.log('setting route to ' + path);
+        $location.url( path );
+        return false;
+    };
+});
+
+
+mainApp.controller('EventDetailCtrl', function($scope, $location, $http, $routeParams, $rootScope) {
+
+    console.log($routeParams.event_id);
+
+    var ajax = $http.get('/api/events/' + $routeParams.event_id);
+    ajax.success(function(payload) {
+       $scope.event = payload.results;
+       $scope.api_data = angular.toJson(payload, true);
+
+       $rootScope.pagemeta = {};
+       $rootScope.pagemeta.title = $scope.event.name;
+       $rootScope.pagemeta.description = 'Sweet Short Title';
+       $rootScope.pagemeta.image = 'http://www.soapfactory.org/img/space/gallery-one-2.jpg'
+     });
+
+     ajax.error(function(payload){
+       $scope.api_data = angular.toJson(payload, true);
+     });
 });
 
 
@@ -102,6 +159,11 @@ mainApp.controller('GalleryDetailCtrl', function($scope, $location, $http, $rout
     ajax.success(function(payload) {
        $scope.gallery = payload.results;
        $scope.api_data = angular.toJson(payload, true);
+
+       $rootScope.pagemeta = {};
+       $rootScope.pagemeta.title = $scope.gallery.name;
+       $rootScope.pagemeta.description = 'Sweet Short Title';
+       $rootScope.pagemeta.image = 'http://www.soapfactory.org/img/space/gallery-one-2.jpg'
      });
 
      ajax.error(function(payload){
@@ -113,4 +175,4 @@ mainApp.controller('GalleryDetailCtrl', function($scope, $location, $http, $rout
     };
     */
 
-})
+});

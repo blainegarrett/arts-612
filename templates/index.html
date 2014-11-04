@@ -15,11 +15,11 @@
 	<title ng-bind="'MPLS Art | ' + pagemeta.title">MPLSART | Welcome</title>
 
 	<!-- Social -->
-	<textarea style="width:100%; height:500px;">
+	<!-- <textarea style="width:100%; height:500px;"> -->
 		<div social-meta-tags>
 			{% include '/templates/_meta.html' %}
 		</div>
-	</textarea>
+	<!-- </textarea> -->
 
 
 	<!-- angular -->
@@ -77,19 +77,6 @@
       <div class="row row-offcanvas row-offcanvas-right">
 		<!-- Start of main content area -->
 
-
-		<textarea style="width:100%; height:500px;">
-			<div social-meta-tags>
-				{% include '/templates/_meta.html' %}
-			</div>
-		</textarea>
-
-
-
-			<div social-meta-tags>
-				<b>Default Meta Tags</b>
-			</div>
-
         <div class="col-xs-12" id="main-content-container" style="border:1px dashed black">
 
 			<div ng-view>
@@ -133,5 +120,6 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	<script src="/static/js/chrome.js"></script>
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
   </body>
 </html>

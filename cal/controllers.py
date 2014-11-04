@@ -13,6 +13,7 @@ from modules.events.constants import CATEGORY, EVENT_DATE_TYPE
 #from modules.venues.internal import search as vsearch
 #from modules.venues.internal.models import Venue
 from venues.controllers import create_resource_from_entity as v_resource
+from framework.controllers import MerkabahBaseController
 
 import logging
 
@@ -132,3 +133,40 @@ class EventsApiHandler(RestHandlerBase):
             results.append(create_resource_from_entity(event))
 
         self.serve_success(results)
+
+
+# Web Handlers
+
+class CalendarMainHandler(MerkabahBaseController):
+    """
+    Main Handler For Calendar Listings
+    """
+    def get(self):
+        pagemeta = {'title': 'EVENT CAL!!!', 'description': 'A Directory of Galleries and Places that Show Art in Minneapolis', 'image': 'http://www.soapfactory.org/img/space/gallery-one-2.jpg'}
+        template_values = {'pagemeta': pagemeta}
+        self.render_template('templates/index.html', template_values)        
+
+
+class CalendarDetailHandler(MerkabahBaseController):
+    """
+    Handler for Serving up the chrome for the event page
+    """
+
+    def get(self, event_id):
+        """
+        Web handler for an event
+        """
+
+        from modules.events.internal import api as events_api
+
+        # TODO: Abstract this a bit more out into a rest-like service...
+        e = events_api.get_event_key(long(event_id))
+
+        if not e:
+            self.response.write('Event Not Found with id %s' % event_id)
+            #self.serve_404('Gallery Not Found')
+            #return False
+
+        pagemeta = {'title': 'cooooool', 'description': 'this is wicked cool', 'image': 'http://www.soapfactory.org/img/space/gallery-one-2.jpg'}
+        template_values = {'pagemeta': pagemeta}
+        self.render_template('templates/index.html', template_values)

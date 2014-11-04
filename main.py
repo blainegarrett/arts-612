@@ -8,6 +8,8 @@ import logging
 import os
 import jinja2
 
+from framework.controllers import MerkabahBaseController
+
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
     extensions=['jinja2.ext.autoescape'],
@@ -34,9 +36,16 @@ app = webapp2.WSGIApplication(routes, debug=True)
 app.error_handlers[404] = handle_404
 
 
-class MainHandler(webapp2.RequestHandler):
+
+class MainHandler(MerkabahBaseController):
+    """
+    Main Handler For Gallery Listings
+    """
     def get(self):
-        self.response.write('Hello world!')
+        pagemeta = {'title': 'MainHandler Title', 'description': 'A Directory of Galleries and Places that Show Art in Minneapolis', 'image': 'http://www.soapfactory.org/img/space/gallery-one-2.jpg'}
+        template_values = {'pagemeta': pagemeta}
+        self.render_template('templates/index.html', template_values)
+
 
 
 # Web Routes
@@ -49,9 +58,13 @@ rest_routes = []
 web_routes += [
     (r'/galleries/([a-z0-9-]+)', 'venues.controllers.GalleryDetailHandler'),
     (r'/galleries', 'venues.controllers.GalleryMainHandler'),
-    (r'/import/galleries', 'loaddata.GalleryData'),
-    (r'/import/events', 'loaddata.EventData'),
-    (r'/', 'main.MainHandler')  
+
+    (r'/calendar/([a-z0-9-]+)', 'cal.controllers.CalendarDetailHandler'),
+    (r'/calendar', 'cal.controllers.CalendarMainHandler'),
+
+    #(r'/import/galleries', 'loaddata.GalleryData'), # These are handled in app.yaml
+    #(r'/import/events', 'loaddata.EventData'), # These are handled in app.yaml
+    (r'/', 'main.MainHandler')
 ]
 
 # Rest Routes

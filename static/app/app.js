@@ -15,7 +15,12 @@ mainApp.config(['$routeProvider',
         controller: 'GalleriesListCtrl'
       }).
       when('/calendar', {
-        templateUrl: '/static/partials/calendar.html'
+        templateUrl: '/static/partials/calendar.html',
+        controller: 'EventListCtrl'
+      }).
+      when('/calendar/:event_id', {
+        templateUrl: '/static/partials/event.html',
+        controller: 'EventDetailCtrl'
       }).
       when('/galleries/:slug', {
         templateUrl: '/static/partials/gallery_detail.html',

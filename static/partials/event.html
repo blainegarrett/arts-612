@@ -1,0 +1,25 @@
+<h2>{{ event.name }}</h2>
+
+<dl  class="dl-horizontal">
+	<dt>Name</dt><dd>{{ event.name }}</dd>
+	<ul>
+	  	<li ng-repeat="ed in event.event_dates">
+			<dt>Label</dt><dd>{{ ed.label }}</dd>
+			<dt>When</dt><dd>{{ ed.start }} - {{ ed.end}}</dd>
+			<dt>Where</dt><dd><a href="/galleries/{{ ed.venue.slug }}">{{ ed.venue.name }}</a><br />{{ ed.venue.address }}</dd>
+		</li>
+	</ul>
+
+	<dt>Category</dt><dd>{{ event.category }}</dd>
+	<dt>Address</dt><dd>{{ event.address }}</dd>
+	<dt>Address 2</dt><dd>{{ event.address2 }}</dd>
+	<dt>City</dt><dd>{{ event.city }}</dd>
+	<dt>State</dt><dd>{{ event.state }}</dd>
+	<dt>Phone</dt><dd>{{ event.phone }}</dd>
+	<dt>Email</dt><dd>{{ event.email }}</dd>
+	<dt>Website</dt><dd>{{ event.website }}</dd>
+</dl>
+
+<pre>{{ api_data }}</pre>
+
+

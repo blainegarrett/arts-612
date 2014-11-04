@@ -100,7 +100,6 @@ def search_helper(start=None, end=None, category=None, sort=None, limit=20):
     return events
 
 def bulk_dereference_venues(events):
-    
     return_one = False
     if not isinstance(events, list):
         return_one = True
