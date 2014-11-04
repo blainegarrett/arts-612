@@ -70,6 +70,7 @@ mainApp.directive('socialMetaTags', function() {
 //  };
 });
 
+
 /* Gallery Listing Controller */
 mainApp.controller('GalleriesListCtrl', function($scope, $location, $http) {
     
@@ -102,19 +103,15 @@ mainApp.controller('GalleriesListCtrl', function($scope, $location, $http) {
 
 
 /* Gallery Details Controller */
+
 mainApp.controller('GalleryDetailCtrl', function($scope, $location, $http, $routeParams, $rootScope) {
+
     console.log($routeParams.slug);
 
     var ajax = $http.get('/api/galleries/' + $routeParams.slug);
     ajax.success(function(payload) {
        $scope.gallery = payload.results;
        $scope.api_data = angular.toJson(payload, true);
-       
-       // 
-       $rootScope.pagemeta = {};
-       $rootScope.pagemeta.title = $scope.gallery.name;
-       $rootScope.pagemeta.description = 'Sweet Short Title';
-       $rootScope.pagemeta.image = 'http://www.soapfactory.org/img/space/gallery-one-2.jpg'
      });
 
      ajax.error(function(payload){

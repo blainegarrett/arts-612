@@ -1,18 +1,51 @@
 """
-Controllers for Venues/Galleries
+Rest API for Venues/Galleries
 """
 
 from google.appengine.ext import ndb
 
-from framework.controllers import MerkabahBaseController
-from framework.rest import RestHandlerBase
+from rest.controllers import RestHandlerBase
+
 from modules.venues.internal import api as venues_api
 from modules.venues.internal import search as vsearch
 from modules.venues.internal.models import Venue
 
 
+def create_resource_from_entity(e, verbose=False):
+    """
+    Create a Rest Resource from a datastore entity
+    TODO: We don't care about verbosity just yet
+    """
+
+    try:
+        r = {
+            'resource_id':e.slug,
+            'resource':'http://localhost:8080/api/galleries/%s' % e.slug,
+            'slug': e.slug,
+            'name': e.name,
+            'address': e.address,
+            'address2': e.address2,
+            'city': e.city,
+            'state': e.state,
+            'country': e.country,
+            'website': e.website,
+            'phone': e.phone,
+            'email': e.email,
+            'category': e.category,
+            'geo': None
+        }
+    except AttributeError, ex:
+        raise Exception('Attempting to create venue resource? Received:  %s' % e)
+
+    if e.geo:
+        r['geo'] = {'lat': e.geo.lat, 'lon': e.geo.lon}
+    
+    return r
+
+
 class GalleriesApiHandler(RestHandlerBase):
     """
+    Main Handler for Galleries Endpoint
     """
 
     def _get(self):
@@ -33,61 +66,46 @@ class GalleriesApiHandler(RestHandlerBase):
         else:
             entities = Venue.query().fetch(1000)
 
+
+        # Create A set of results based upon this result set - iterator??
         results = []
         for e in entities:
-            e_data = {
-                'slug': e.slug,
-                'name': e.name,
-                'address': e.address,
-                'address2': e.address2,
-                'city': e.city,
-                'state': e.state,
-                'country': e.country,
-                'website': e.website,
-                'phone': e.phone,
-                'email': e.email,
-                'category': e.category,
-                'geo': None}
-
-            if e.geo:
-                e_data['geo'] = {'lat': e.geo.lat, 'long': e.geo.lon}
-
-            results.append(e_data)
+            results.append(create_resource_from_entity(e))
 
         self.serve_success(results)
-
-
-class GalleryMainHandler(MerkabahBaseController):
-    """
-    Main Handler For Gallery Listings
-    """
-    def get(self):
+    
+    def _post(self):
         """
+        Create Venue Resource
+        
+        TODO: None of the data is validated right now...
         """
 
-        pagemeta = {'title': 'Galleries and Venues', 'description': 'A Directory of Galleries and Places that Show Art in Minneapolis', 'image': 'http://www.soapfactory.org/img/space/gallery-one-2.jpg'}
-        template_values = {'pagemeta': pagemeta}
-        self.render_template('templates/index.html', template_values)        
-    
-    
-class GalleryDetailHandler(MerkabahBaseController):
-    """
-    Handler for Serving up the chrome for the gallery page
-    """
+        """
+        # Expected payload
+        
+        {
+            "slug": "supercoolgallery",
+            "name": "Super Cool Gallery",
+            "address": "123 Whatever St",
+            "address2": "",
+            "city": "Minneapolis",
+            "state": "MN",
+            "country": "USA",
+            "geo": {
+                        "lat": 45.004628,
+                        "lon": -93.247606
+                    },
+            "website": "http://supercool.com",
+            "phone": "612-555-5555",
+            "email": "info@totallycool.com",
+            "category": "gallery"
+        }
+        """
 
-    def get(self, slug):
-        # TODO: Abstract this a bit more out into a rest-like service...
-        e = venues_api.get_venue_by_slug(slug)
-
-        if not e:
-            self.response.write('Gallery Not Found with slug %s' % slug)
-            #self.serve_404('Gallery Not Found')
-            #return False
-
-
-        pagemeta = {'title': 'cooooool', 'description': 'this is wicked cool', 'image': 'http://www.soapfactory.org/img/space/gallery-one-2.jpg'}
-        template_values = {'pagemeta': pagemeta}
-        self.render_template('templates/index.html', template_values)
+        e = venues_api.create_venue(self.data)
+        result = create_resource_from_entity(e)
+        self.serve_success(result)
 
 
 class GalleryDetailApiHandler(RestHandlerBase):
@@ -102,21 +120,55 @@ class GalleryDetailApiHandler(RestHandlerBase):
             self.serve_404('Gallery Not Found')
             return False
 
-        e_data = {
-            'slug': e.slug,
-            'name': e.name,
-            'address': e.address,
-            'address2': e.address2,
-            'city': e.city,
-            'state': e.state,
-            'country': e.country,
-            'website': e.website,
-            'phone': e.phone,
-            'email': e.email,
-            'category': e.category,
-            'geo': None}
+        resource = create_resource_from_entity(e)
+        self.serve_success(resource)
+    
+    def _put(self, slug):
+        """
+        Edit a resource
+        
+        TODO: None of the data is validated right now...
+        """
 
-        if e.geo:
-            e_data['geo'] = {'lat': e.geo.lat, 'long': e.geo.lon}
+        """
+        # Expected payload
+        
+        {
+            "name": "Super Cool Gallery",
+            "address": "123 Whatever St",
+            "address2": "",
+            "city": "Minneapolis",
+            "state": "MN",
+            "country": "USA",
+            "geo": null,
+            "website": "http://supercool.com",
+            "phone": "612-555-5555",
+            "email": "info@totallycool.com",
+            "category": "gallery"
+        }
+        """
+        
+        venue = venues_api.get_venue_by_slug(slug)
 
-        self.serve_success(e_data)
+        if not venue:
+            self.serve_404('Gallery Not Found')
+            return False
+
+        venue = venues_api.edit_venue(venue, self.data)
+        result = create_resource_from_entity(venue)
+        self.serve_success(result)
+
+
+    def _delete(self, slug):
+        """
+        Delete a Resource
+        """
+
+        venue = venues_api.get_venue_by_slug(slug)
+
+        if not venue:
+            self.serve_404('Gallery Not Found')
+            return False
+
+        result = venues_api.delete_venue(venue, self.data)
+        self.serve_success(result)

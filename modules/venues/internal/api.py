@@ -1,25 +1,17 @@
-# Internal API Methods for Photo Venues
+# Internal API Methods for Venues
 from google.appengine.ext import ndb
-from modules.venues.internal.models import Venue, Event, EventDate
+
+from modules.utils import get_entity_key_by_keystr
+from modules.venues.internal.models import Venue
 from modules.venues.constants import VENUE_KIND
-
-
 from modules.venues.internal import search as vsearch
+
 
 def get_venue_key_by_keystr(keystr):
     """
     Given a urlsafe version of an Venue key, get the actual key
     """
-    attr_err = 'Keystrings must be an instance of base string, recieved: %s' % keystr
-    kind_err = 'Expected urlsafe keystr for kind %s but received keystr for kind %s instead.'
-    if not keystr or not isinstance(keystr, basestring):
-        raise RuntimeError(attr_err)
-
-    key = ndb.Key(urlsafe=keystr)
-    if not key.kind() == VENUE_KIND:
-        raise RuntimeError(kind_err % (VENUE_KIND, key.kind()))
-
-    return key
+    return get_entity_key_by_keystr(VENUE_KIND, keystr)
 
 
 def get_venue_key(slug):
@@ -44,11 +36,78 @@ def get_venue_by_slug(slug):
     return venue
 
 
-def edit_venue(venue_key, data, operator):
+def get_venue_list():
     """
-    Edit a series
+    Fetch a list of Venues
     """
-    # TODO: This should be transactional
+
+    # TODO: Paginate this, etc
+    entities = Venue.query().order(-Venue.title).fetch(1000)
+
+    return entities
+
+
+@ndb.transactional
+def _create_venue_txn(key, data, operator_key):
+    """
+    Transactionally safe helper to create a venue
+    TODO: Write the search index bits in a separate furious task?
+    TODO: Do something with operator
+    """
+
+    # Final Data Prep
+    data['key'] = key
+
+    # Create the actual Venue entity
+    entity = Venue(**data)
+
+    # Write the entity
+    entity.put()
+
+    # Build the search doc - TODO: In a deferred task?
+    search_index = vsearch.get_search_index()
+    search_doc = vsearch.build_index(entity)
+    search_index.put([search_doc])
+
+    return entity
+
+
+def create_venue(data, operator=None):
+    """
+    Create an Venue
+    """
+
+    key = get_venue_key(data['slug'])
+
+    # Prep go data...
+    if data.get('geo', None):
+        if isinstance(data['geo'], dict): # Maybe this isn't the best solution to be flexible?
+            lat = data['geo']['lat']
+            lon = data['geo']['lon']
+        else:
+            geo_data = data['geo'].split(',')
+            lat = geo_data[0].strip()
+            lon = geo_data[1].strip()
+
+        data['geo'] = ndb.GeoPt(lat=float(lat), lon=float(lon))
+    else:
+        data['geo'] = None
+
+
+    # Operator prep
+    operator_key = None
+    if operator:
+        operator_key = operator.key
+
+    return _create_venue_txn(key, data, operator_key)
+
+
+@ndb.transactional
+def _edit_venue_txn(venue_key, data, operator_key):
+    """
+    Transactional Helper to edit a Venue
+    """
+
     # TODO: If slug changes, we need to update the key
     # TODO: Update search indexes
 
@@ -63,127 +122,58 @@ def edit_venue(venue_key, data, operator):
     # Record audit, clear cache, etc
     venue.put()
 
+    # Build the search doc - TODO: In a deferred task?
+    # Figure out if anything changed to even bother with the docs
+    # Clean memcache?
+
+    search_index = vsearch.get_search_index()
+    search_doc = vsearch.build_index(venue)
+    search_index.put([search_doc])
+
     return venue
 
 
-def delete_venue(venue_key, operator):
+def edit_venue(venue, data, operator=None):
     """
-    Delete a series
+    Edit an event
     """
-    # TODO: Find all the events with this series and remove the series
 
-    # Prep the file on cloud storage to be deleted
-    venue = venue_key.get()
+    # Operator prep
+    operator_key = None
+    if operator:
+        operator_key = operator.key
 
-    if not venue:
-        raise RuntimeError('Venue could not be found by Key')
 
+    venue_key = venue.key
+
+    return _edit_venue_txn(venue_key, data, operator_key)
+
+
+@ndb.transactional
+def _delete_venue_txn(venue_key, operator_key):
+    """
+    Transactional Helper to delete a Venue
+    """
+
+    # TODO: Delete the cloud storage document
     venue_key.delete()
     return True
 
 
-def get_venue_list():
+def delete_venue(venue, operator=None):
     """
-    Fetch a list of Venues
-    """
-
-    # TODO: Paginate this, etc
-    entities = Venue.query().order(-Venue.title).fetch(1000)
-
-    return entities
-
-
-def create_venue(data, operator=None):
-    """
-    Create an Venue
-    # TODO: Populate search index
-    # TODO: Ensure that no other event exists by slug - transactional??
+    Delete a series
     """
 
-    search_index = vsearch.get_search_index()
+    # TODO: Find all the events with this series and remove the series
+    # Prep the file on cloud storage to be deleted
+    # Delete search index
+    # Clear memcache, etc?
 
-    # Prep the data
-    data['key'] = get_venue_key(data['slug'])
+    operator_key = None
+    if operator:
+        operator_key = operator.key
 
-    if data['geo']:
-        geo_data = data['geo'].split(',')
-        data['geo'] = ndb.GeoPt(lat=float(geo_data[0].strip()), lon=float(geo_data[1].strip()))
-    else:
-        data['geo'] = None    
-
-
-    entity = Venue(**data)
-    search_doc = vsearch.build_index(entity)
-
-    entity.put()
-    search_index.put([search_doc])
-    return entity
-
-
-
-    '''
-    class Event(ndb.Model):
-        """
-        Model Representing an Event that may occur spanning multiple days (Event Date)
-        """
-
-        slug = ndb.StringProperty()
-        title = ndb.StringProperty()
-        intro = ndb.TextProperty()
-        description = ndb.TextProperty()
-        featured = ndb.BooleanProperty(default=False)
-        venue = ndb.KeyProperty(kind=Venue)
-
-
-    class EventDate(ndb.Model):
-        """
-        Model Representing a specific block of time
-        """
-        event_key = ndb.KeyProperty(kind=Event)
-        start_datetime = ndb.DateTimeProperty()
-        end_datetime = ndb.DateTimeProperty()
-        venue = ndb.KeyProperty(kind=Venue)
-        label = ndb.StringProperty()
-    '''
-
-
-
-
-########## Move all of this very soon###############
-def create_event(data, *args, **kwargs):
-    """
-    """
-    import datetime
-    search_index = vsearch.get_event_search_index()
-
-    # TODO: Do this outside of a txn
-    v = get_venue_by_slug(data['venue_slug'])
-
-    e = Event()
-    e.slug = 'generate_unique_slug_for_event'
-    e.title = data['title']
-    e.intro = 'This is Great'
-    e.description = 'Super Great'
-    e.featured = True
-    e.venue_key = v.key
-    e.put()
-
-    fmt = '%Y-%m-%d %H:%M:%S'
-
-    e_dates = []
-    for d_data in data['dates']:
-        ed = EventDate(parent=e.key)
-        ed.event_key = e.key
-        ed.venue_key = v.key
-        ed.label = d_data['label']
-
-        ed.start_datetime = datetime.datetime.strptime(d_data['start_datetime'], fmt)
-        ed.end_datetime = datetime.datetime.strptime(d_data['end_datetime'], fmt)
-        ed.put()
-        e_dates.append(ed)
-
-    # Create the search index for this event
-    search_doc = vsearch.build_event_index(e, e_dates, v)
-    search_index.put([search_doc])
-
-    return e
+    venue_key = venue.key
+    
+    return _delete_venue_txn(venue_key, operator_key)
