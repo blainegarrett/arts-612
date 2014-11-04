@@ -83,16 +83,6 @@ mainApp.controller('GalleriesListCtrl', function($scope, $location, $http) {
      ajax.error(function(){
        $scope.api_data = angular.toJson(payload, true);
      });
-    
-    /*
-    $scope.galleries = [
-        {name:'Abstracted Gallery', slug: 'abstracted'},
-        {name:'Soap Factory', slug: 'soap-factory'},
-        {name:'Gallery 13', slug: 'gallery13'},
-        {name:'Public Functionary', slug: 'public-functionary'},
-        {name:'Shoebox Gallery', slug: 'shoebox-gallery'}
-    ];
-    */
 
     $scope.show_gallery = function ( path ) {
         console.log('setting route to ' + path);

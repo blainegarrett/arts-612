@@ -10,7 +10,6 @@ mainApp.config(['$routeProvider',
       when('/', {
         templateUrl: '/static/partials/main.html'
       }).
-      /*
       when('/galleries', {
         templateUrl: '/static/partials/galleries.html',
         controller: 'GalleriesListCtrl'
@@ -22,7 +21,6 @@ mainApp.config(['$routeProvider',
         templateUrl: '/static/partials/gallery_detail.html',
         controller: 'GalleryDetailCtrl'
       }).
-      */
       otherwise({
         templateUrl: '/static/partials/main.html'
         //redirectTo: '/'

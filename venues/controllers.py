@@ -10,6 +10,7 @@ from modules.venues.internal import api as venues_api
 from modules.venues.internal import search as vsearch
 from modules.venues.internal.models import Venue
 
+from framework.controllers import MerkabahBaseController
 
 def create_resource_from_entity(e, verbose=False):
     """
@@ -172,3 +173,36 @@ class GalleryDetailApiHandler(RestHandlerBase):
 
         result = venues_api.delete_venue(venue, self.data)
         self.serve_success(result)
+
+
+
+# Web Handlers
+
+class GalleryMainHandler(MerkabahBaseController):
+    """
+    Main Handler For Gallery Listings
+    """
+    def get(self):
+        pagemeta = {'title': 'Galleries and Venues', 'description': 'A Directory of Galleries and Places that Show Art in Minneapolis', 'image': 'http://www.soapfactory.org/img/space/gallery-one-2.jpg'}
+        template_values = {'pagemeta': pagemeta}
+        self.render_template('templates/index.html', template_values)        
+
+
+class GalleryDetailHandler(MerkabahBaseController):
+    """
+    Handler for Serving up the chrome for the gallery page
+    """
+
+    def get(self, slug):
+        # TODO: Abstract this a bit more out into a rest-like service...
+        e = venues_api.get_venue_by_slug(slug)
+
+        if not e:
+            self.response.write('Gallery Not Found with slug %s' % slug)
+            #self.serve_404('Gallery Not Found')
+            #return False
+
+        pagemeta = {'title': 'cooooool', 'description': 'this is wicked cool', 'image': 'http://www.soapfactory.org/img/space/gallery-one-2.jpg'}
+        template_values = {'pagemeta': pagemeta}
+        self.render_template('templates/index.html', template_values)
+
