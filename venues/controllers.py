@@ -12,6 +12,8 @@ from modules.venues.internal.models import Venue
 
 from framework.controllers import MerkabahBaseController
 
+import voluptuous
+
 def create_resource_from_entity(e, verbose=False):
     """
     Create a Rest Resource from a datastore entity

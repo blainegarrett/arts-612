@@ -5,10 +5,13 @@ import auth.controllers as auth_c
 
 import logging
 
-import os
+import os, sys
 import jinja2
 
 from framework.controllers import MerkabahBaseController
+
+# Add the external libs
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'external'))
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
