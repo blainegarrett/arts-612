@@ -34,12 +34,24 @@ class EventDateField(RestField):
 
         return_value = []
         for event_date in val:
-            v = event_date.get('venue', None)
-
+            
+            # Resolve VenueResource
+            v = event_date.venue
             if not isinstance(v, Resource): # TODO: Should be Resource base class
-                event_date['venue'] = v_resource(v)
+                event_date.venue = v_resource(v)
 
-            return_value.append(event_date)
+            event_date_resource = {}
+
+            event_date_resource['start'] = event_date.start.strftime('%Y-%m-%d %H:%M:%S') # These need to be rest formatted
+            event_date_resource['end'] = event_date.end.strftime('%Y-%m-%d %H:%M:%S') # These need to be rest formatted
+            
+            event_date_resource['type'] = event_date.type
+            event_date_resource['category'] = event_date.category
+            event_date_resource['label'] = event_date.label
+            event_date_resource['venue_slug'] = event_date.venue_slug
+            event_date_resource['venue'] = event_date.venue
+            return_value.append(event_date_resource)
+
         return return_value
 
 

@@ -29,7 +29,7 @@ def _build_event_date(i, event, ed, venue, start, end, is_hours=False):
     """
     Helper to create a specific date - yeilds one search doc
     """
-    category = ed['category']
+    category = ed.category
     if is_hours:
         category = CATEGORY.HOURS
 
@@ -47,7 +47,7 @@ def _build_event_date(i, event, ed, venue, start, end, is_hours=False):
     fields.append(search.AtomField(name='category', value=category))
 
     # Attach Venue/Geo Information
-    fields.append(search.AtomField(name='venue_slug', value=ed['venue_slug']))
+    fields.append(search.AtomField(name='venue_slug', value=ed.venue_slug))
 
     venue_geo = None
     if venue.geo:
@@ -69,7 +69,7 @@ def build_index(event):
     return_documents = []
     for ed in event.event_dates:
 
-        v_slug = ed.get('venue_slug', None)
+        v_slug = ed.venue_slug
         if not v_slug:
             raise Exception('Can\'t Create Search indexes for events w/o venues yet')
 
@@ -80,46 +80,42 @@ def build_index(event):
             raise Exception('Venue with key %s not found' % ed['venue_slug'])
 
         # Decide to unfold for gallery hours or not?
-        if ed['category'] == CATEGORY.ONGOING:
+        if ed.category == CATEGORY.ONGOING:
             hours = venue.hours
+            if hours:
 
-            start_dt = datetime.datetime.strptime(ed['start'], '%Y-%m-%d')
-            end_dt = datetime.datetime.strptime(ed['end'], '%Y-%m-%d')
+                weekday_map = {
+                    0:'Monday',
+                    1:'Tuesday',
+                    2:'Wednesday',
+                    3:'Thursday',
+                    4:'Friday',
+                    5:'Saturday',
+                    6:'Sunday'
+                }
 
-            import logging
-
-            weekday_map = {
-                0:'Monday',
-                1:'Tuesday',
-                2:'Wednesday',
-                3:'Thursday',
-                4:'Friday',
-                5:'Saturday',
-                6:'Sunday'
-            }
-
-            test_dt = start_dt
-            while(test_dt <= end_dt):
-                #logging.error(test_dt.weekday()) # 1 = Monday
+                test_dt = ed.start
+                while(test_dt <= ed.end):
+                    #logging.error(test_dt.weekday()) # 1 = Monday
                 
-                weekday_key = weekday_map[test_dt.weekday()]
-                #logging.error(weekday_key)
+                    weekday_key = weekday_map[test_dt.weekday()]
+                    #logging.error(weekday_key)
 
-                has_hours = hours.get(weekday_key, False)
-                if has_hours:
-                    #logging.error(has_hours)
-                    weekd_day_start = test_dt.replace(hour=has_hours[0])
-                    weekd_day_end = test_dt.replace(hour=has_hours[1])
+                    has_hours = hours.get(weekday_key, False)
+                    if has_hours:
+                        #logging.error(has_hours)
+                        weekd_day_start = test_dt.replace(hour=has_hours[0])
+                        weekd_day_end = test_dt.replace(hour=has_hours[1])
 
-                    return_documents.append(_build_event_date(i, event, ed, venue, weekd_day_start, weekd_day_end, is_hours=True))                    
+                        return_documents.append(_build_event_date(i, event, ed, venue, weekd_day_start, weekd_day_end, is_hours=True))                    
 
-                i += 1
-                test_dt = test_dt + datetime.timedelta(days=1)
+                    i += 1
+                    test_dt = test_dt + datetime.timedelta(days=1)
 
         # If it was ongoing, it'll remain so for search purposes
 
         i += 1
-        return_documents.append(_build_event_date(i, event, ed, venue, ed['start'], ed['end']))
+        return_documents.append(_build_event_date(i, event, ed, venue, ed.start, ed.end))
         
     return return_documents
 

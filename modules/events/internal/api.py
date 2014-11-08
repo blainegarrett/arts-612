@@ -109,7 +109,7 @@ def bulk_dereference_venues(events):
     venue_keys_to_fetch = []
     for event in events:
         for ed in event.event_dates:
-            venue_slug = ed['venue_slug']
+            venue_slug = ed.venue_slug
             if not venue_slug:
                 continue
 
@@ -127,10 +127,10 @@ def bulk_dereference_venues(events):
         for i in range(len(event.event_dates)):
             ed = event.event_dates[i]
 
-            venue_slug = ed['venue_slug']
+            venue_slug = ed.venue_slug
             if venue_slug:
                 venue = venue_map.get(venue_slug, None)
-                event.event_dates[i]['venue'] = venue
+                event.event_dates[i].venue = venue
             
     """
 
@@ -195,7 +195,7 @@ def create_event(data):
     entity.put()
 
     # Build search indexes for event dates
-    #search_docs = event_search.build_index(entity)
-    #search_index.put(search_docs)
+    search_docs = event_search.build_index(entity)
+    search_index.put(search_docs)
 
     return entity
