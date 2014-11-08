@@ -4,7 +4,7 @@ import datetime
 from google.appengine.ext import ndb
 
 from modules.utils import get_entity_key_by_keystr
-from modules.events.internal.models import Event
+from modules.events.internal.models import Event, EventDate
 from modules.events.internal import search as event_search
 from modules.events.constants import EVENT_KIND
 from modules.events.constants import CATEGORY
@@ -178,23 +178,24 @@ def create_event(data):
     # TODO: As we add different event types, pull this into its own method
 
     event_dates = []
-    for d_data in data['dates']:
-        ed = {}
+    for d_data in data['event_dates']:
+        ed = EventDate()
 
-        ed['category'] = d_data['category']
-        ed['venue_slug'] = d_data['venue_slug']
+        ed.category = d_data['category']
+        ed.venue_slug = d_data['venue_slug']
 
-        ed['label'] = d_data['label']
-        ed['type'] = str(d_data['type']) # This is not a long term solution...
-        ed['start'] = str(d_data['start']) # This is not a long term solution...
-        ed['end'] = str(d_data['end']) # This is not a long term solution...
+        ed.label = d_data['label']
+        ed.type = str(d_data['type']) # This is not a long term solution...
+        ed.start = d_data['start'] # Expected to be a DateTime or None
+        ed.end = d_data['end'] # Expected to be a DateTime or None
         event_dates.append(ed)
 
     entity.event_dates = event_dates
+
     entity.put()
 
     # Build search indexes for event dates
-    search_docs = event_search.build_index(entity)
-    search_index.put(search_docs)
+    #search_docs = event_search.build_index(entity)
+    #search_index.put(search_docs)
 
     return entity

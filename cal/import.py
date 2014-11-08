@@ -1,6 +1,7 @@
 # Handlers for bulk importing data
 
 import webapp2
+import datetime
 from google.appengine.api import search
 
 from modules.events.internal.models import Event
@@ -8,6 +9,18 @@ from modules.events.internal import search as esearch
 from modules.events.internal import api as eapi
 from modules.events.constants import EVENT_SEARCH_INDEX
 
+def convert_rest_dt_to_datetime(dt):
+    format = '%Y-%m-%d %H:%M:%S'
+    try:
+        fmt = '%Y-%m-%d %H:%M:%S'
+        dt = datetime.datetime.strptime(dt, fmt)
+    except ValueError:
+        # Attempt full day method
+        fmt = '%Y-%m-%d'
+        dt = datetime.datetime.strptime(dt, fmt)
+
+    return dt
+    
 
 class EventData(webapp2.RequestHandler):
     """
@@ -27,7 +40,7 @@ class EventData(webapp2.RequestHandler):
         data = [
             {
                     "url": "http://www.kolmanpryorgallery.com/exhibition/mutable-landscapes/",
-                    "dates": [{
+                    "event_dates": [{
                         "category": "reception",
                         "start": "2014-11-08 19:00:00",
                         "end": "2014-11-08 20:00:00",
@@ -40,7 +53,7 @@ class EventData(webapp2.RequestHandler):
             },
             {
                 "url" : "http://www.tuckunder.org/",
-                "dates": [{
+                "event_dates": [{
                     "category": "reception",
                     "start": "2014-10-30 18:00:00",
                     "end": "2014-10-30 21:00:00",
@@ -53,7 +66,7 @@ class EventData(webapp2.RequestHandler):
             },
             {
                 "url" : "http://www.soapfactory.org/exhibit.php?content_id=706",
-                "dates": [{
+                "event_dates": [{
                     "category": "reception",
                     "start": "2014-11-15 18:00:00",
                     "end": "2014-11-16 00:00:00",
@@ -66,7 +79,7 @@ class EventData(webapp2.RequestHandler):
             },
             {
                 "url" : "http://www.dimmedia.com/events/2013/ice-cream-social/",
-                "dates": [{
+                "event_dates": [{
                     "category": "ongoing",
                     "start": "2014-10-31",
                     "end": "2014-11-30",
@@ -79,7 +92,7 @@ class EventData(webapp2.RequestHandler):
             },
             {
                 "url" : "http://www.hangitinc.com/art_shows.html",
-                "dates": [{
+                "event_dates": [{
                     "category": "ongoing",
                     "start": "2014-10-24",
                     "end": "2014-11-29",
@@ -93,6 +106,16 @@ class EventData(webapp2.RequestHandler):
         ]
 
         stuff_to_put = []
-        for v_data in data:
+        j = 0
+        for v_data in data: 
+            i = 0
+
+            for event_dates in v_data['event_dates']:
+                
+                v_data['event_dates'][i]['end'] = convert_rest_dt_to_datetime(event_dates['end'])
+                v_data['event_dates'][i]['start'] = convert_rest_dt_to_datetime(event_dates['start'])
+                i += 1
+            j += 1
+            
             stuff_to_put.append(eapi.create_event(v_data))
         self.response.write('Created %s Events' % len(stuff_to_put))

@@ -41,7 +41,6 @@ class EventDateField(RestField):
 
             return_value.append(event_date)
         return return_value
-    
 
 
 REST_RULES = [
@@ -53,8 +52,6 @@ REST_RULES = [
     RestField(Event.url, always=True),
     EventDateField(Event.event_dates, always=True)
 ]
-
-
 
 
 def create_resource_from_entity(e, verbose=False):

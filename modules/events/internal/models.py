@@ -1,5 +1,29 @@
 from google.appengine.ext import ndb
 
+class EventDate(ndb.Model):
+    """
+    Model for StructuredProperty - Event.event_dates
+    """
+
+    start = ndb.DateTimeProperty()
+    end = ndb.DateTimeProperty()
+    type = ndb.StringProperty()
+    category = ndb.StringProperty()
+    label = ndb.StringProperty()
+    venue_slug = ndb.StringProperty()
+    # Eventually, address, etc if no target venue...
+
+
+'''
+guido = Contact(name='Guido',
+                addresses=[Address(type='home',
+                                   city='Amsterdam'),
+                           Address(type='work',
+                                   street='Spear St',
+                                   city='SF')])
+'''
+
+
 class Event(ndb.Model):
     """
     Model Representing an "Event", which may consist of one or more dates
@@ -9,7 +33,7 @@ class Event(ndb.Model):
     slug = ndb.StringProperty() # Event slug for permalinks
     url = ndb.StringProperty() # Main external url for the event
 
-    event_dates = ndb.JsonProperty() # Compress it?
+    event_dates = ndb.StructuredProperty(EventDate, repeated=True)
     
     '''
     event_date is a list of dicts for the different event_dates
@@ -48,15 +72,3 @@ class Event(ndb.Model):
     #venue_key = ndb.KeyProperty()
     #category = ndb.StringProperty() # Categorization reception, opening, closing, event, gallery hours
     #label = ndb.StringProperty() # "Opening Reception"
-
-
-class EventDate(ndb.Model):
-    """
-    A Queryable Object Representing a Concise Unit of Time the Event is Going on
-    """
-
-    start_time = ndb.DateTimeProperty()
-    end_time = ndb.DateTimeProperty()
-    venue_key = ndb.KeyProperty()
-    category = ndb.StringProperty() # Categorization reception, opening, closing, event, gallery hours
-    label = ndb.StringProperty() # "Opening Reception"

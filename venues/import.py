@@ -246,8 +246,9 @@ class GalleryData(webapp2.RequestHandler):
                 'category': 'business',
                 'website': 'http://sebastianjoesicecream.com/',
                 'phone': '',
-                'email': '',
-                'hours':
+                'email': ''
+                '''
+                'xhours':
                     {
                         'Sunday': [7, 23],
                         'Monday': [7, 23],
@@ -257,6 +258,7 @@ class GalleryData(webapp2.RequestHandler):
                         'Friday':	[7, 23],
                         'Saturday':	[7, 23],
                     }
+                '''
             }, {
                 'slug': 'temp',
                 'name': 'Temporary Autonomous Museum of Contemporary Art',
@@ -327,8 +329,9 @@ class GalleryData(webapp2.RequestHandler):
                 'category': 'gallery',
                 'website': 'http://www.hangitinc.com/',
                 'phone': '',
-                'email': '',
-                'hours': {
+                'email': ''
+                '''
+                'xhours': {
                     'Monday': [9, 17],
                     'Tuesday': [9, 19],
                     'Wednesday': [9, 19],
@@ -336,6 +339,7 @@ class GalleryData(webapp2.RequestHandler):
                     'Friday': [9, 17],
                     'Saturday': [10, 16]
                 }
+                '''
             },
             
             
