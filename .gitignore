@@ -53,3 +53,6 @@ coverage.xml
 docs/_build/
 
 external
+results.xml
+unit_results.xml
+cover

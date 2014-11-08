@@ -15,4 +15,4 @@ install:
 	linkenv $(PYTHON_SITE_PACKAGES_PATH) external
 
 unit:
-	nosetests -vs --without-sandbox --nologcapture --with-gae --verbosity=3 --with-yanc --with-coverage tests/
+	nosetests --cover-package=modules,rest -vs --without-sandbox --with-gae --with-yanc --with-xunit --xunit-file=unit_results.xml --nologcapture --verbosity=3 --cover-html --logging-level=ERROR --with-coverage --with-yanc tests

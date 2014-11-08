@@ -5,6 +5,8 @@ Rest API for Venues/Galleries
 from google.appengine.ext import ndb
 
 from rest.controllers import RestHandlerBase
+from rest.resource import Resource
+from rest.resource import RestField, SlugField, ResourceIdField, ResourceUrlField, GeoField
 
 from modules.venues.internal import api as venues_api
 from modules.venues.internal import search as vsearch
@@ -12,7 +14,27 @@ from modules.venues.internal.models import Venue
 
 from framework.controllers import MerkabahBaseController
 
-import voluptuous
+resource_url = 'http://localhost:8080/api/galleries/%s' #TODO: HRM?
+
+REST_RULES = [
+    ResourceIdField(always=True),
+    ResourceUrlField(resource_url, always=True),
+    SlugField(Venue.slug, always=True),
+    RestField(Venue.name, always=True),
+    
+    RestField(Venue.address, always=True),
+    RestField(Venue.address2, always=True),
+    RestField(Venue.city, always=True),
+    RestField(Venue.state, always=True),
+    RestField(Venue.country, always=True),
+
+    RestField(Venue.website, always=True),
+    RestField(Venue.phone, always=True),
+    RestField(Venue.email, always=True),
+    RestField(Venue.category, always=True),
+    RestField(Venue.hours, always=True),
+    GeoField(Venue.geo, always=True),    
+]
 
 def create_resource_from_entity(e, verbose=False):
     """
@@ -20,12 +42,15 @@ def create_resource_from_entity(e, verbose=False):
     TODO: We don't care about verbosity just yet
     """
 
+    return Resource(e, REST_RULES).to_dict()
+
     try:
         r = {
             'resource_id':e.slug,
             'resource':'http://localhost:8080/api/galleries/%s' % e.slug,
             'slug': e.slug,
             'name': e.name,
+
             'address': e.address,
             'address2': e.address2,
             'city': e.city,

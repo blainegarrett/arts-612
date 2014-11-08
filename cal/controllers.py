@@ -6,8 +6,11 @@ from google.appengine.ext import ndb
 import datetime
 
 from rest.controllers import RestHandlerBase
+from rest.resource import Resource
+from rest.resource import RestField, SlugField, ResourceIdField, ResourceUrlField
 
 from modules.events.internal import api as events_api
+from modules.events.internal.models import Event
 from modules.events.constants import CATEGORY, EVENT_DATE_TYPE
 
 #from modules.venues.internal import search as vsearch
@@ -17,11 +20,50 @@ from framework.controllers import MerkabahBaseController
 
 import logging
 
+resource_url = 'http://localhost:8080/api/events/%s' #TODO: HRM?
+
+
+class EventDateField(RestField):
+
+    def from_resource(self, obj, field):
+        """
+        Outout a field to dic value
+        """
+
+        val = super(EventDateField, self).from_resource(obj, field)
+
+        return_value = []
+        for event_date in val:
+            v = event_date.get('venue', None)
+
+            if not isinstance(v, Resource): # TODO: Should be Resource base class
+                event_date['venue'] = v_resource(v)
+
+            return_value.append(event_date)
+        return return_value
+    
+
+
+REST_RULES = [
+    ResourceIdField(always=True),
+    ResourceUrlField(resource_url, always=True),
+    SlugField(Event.slug, always=True),
+    RestField(Event.name, always=True),
+
+    RestField(Event.url, always=True),
+    EventDateField(Event.event_dates, always=True)
+]
+
+
+
+
 def create_resource_from_entity(e, verbose=False):
     """
     Create a Rest Resource from a datastore entity
     TODO: We don't care about verbosity just yet
     """
+
+    return Resource(e, REST_RULES).to_dict()
 
     r = {
         'resource_id':e.key.id(),
