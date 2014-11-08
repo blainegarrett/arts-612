@@ -5,6 +5,10 @@ Temporary Importer Routes
 import webapp2
 import logging
 
+import os, sys
+# Add the external libs
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../external'))
+
 def handle_404(request, response, exception):
     logging.exception(exception)
     response.write('Oops! I could swear this page was here!')

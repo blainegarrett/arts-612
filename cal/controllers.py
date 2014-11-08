@@ -2,6 +2,7 @@
 
 # Each Date record will have its own search document
 
+from pytz import timezone
 from google.appengine.ext import ndb
 import datetime
 
@@ -42,8 +43,8 @@ class EventDateField(RestField):
 
             event_date_resource = {}
 
-            event_date_resource['start'] = event_date.start.strftime('%Y-%m-%d %H:%M:%S') # These need to be rest formatted
-            event_date_resource['end'] = event_date.end.strftime('%Y-%m-%d %H:%M:%S') # These need to be rest formatted
+            event_date_resource['start'] = event_date.start.isoformat() + 'Z' #strftime('%Y-%m-%d %H:%M:%S') # These need to be rest formatted
+            event_date_resource['end'] = event_date.end.isoformat() + 'Z' # .strftime('%Y-%m-%d %H:%M:%S') # These need to be rest formatted
             
             event_date_resource['type'] = event_date.type
             event_date_resource['category'] = event_date.category

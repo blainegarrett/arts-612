@@ -1,5 +1,7 @@
 # Handlers for bulk importing data
 
+import pytz
+from pytz import timezone
 import webapp2
 import datetime
 from google.appengine.api import search
@@ -9,8 +11,10 @@ from modules.events.internal import search as esearch
 from modules.events.internal import api as eapi
 from modules.events.constants import EVENT_SEARCH_INDEX
 
+import logging
 def convert_rest_dt_to_datetime(dt):
-    format = '%Y-%m-%d %H:%M:%S'
+    centraltz = timezone('US/Central')
+
     try:
         fmt = '%Y-%m-%d %H:%M:%S'
         dt = datetime.datetime.strptime(dt, fmt)
@@ -19,7 +23,9 @@ def convert_rest_dt_to_datetime(dt):
         fmt = '%Y-%m-%d'
         dt = datetime.datetime.strptime(dt, fmt)
 
-    return dt
+    dt = timezone('US/Central').localize(dt)
+    dt =  dt.astimezone(timezone('UTC'))
+    return dt.replace(tzinfo=None)
     
 
 class EventData(webapp2.RequestHandler):
@@ -43,7 +49,7 @@ class EventData(webapp2.RequestHandler):
                     "event_dates": [{
                         "category": "reception",
                         "start": "2014-11-08 19:00:00",
-                        "end": "2014-11-08 20:00:00",
+                        "end": "2014-11-08 22:00:00",
                         "label": "opening night!",
                         "type": "timed",
                         "venue_slug": "kolman-pryor"
@@ -105,15 +111,37 @@ class EventData(webapp2.RequestHandler):
             },
         ]
 
+        '''
+
+        ERROR    2014-11-08 06:02:36,307 import.py:34] 2014-11-09 02:00:00+00:00
+        ERROR    2014-11-08 06:02:36,307 import.py:34] 2014-11-09 01:00:00+00:00
+        
+        ERROR    2014-11-08 06:02:36,323 import.py:34] 2014-10-31 02:00:00+00:00
+        ERROR    2014-11-08 06:02:36,323 import.py:34] 2014-10-30 23:00:00+00:00
+
+        ERROR    2014-11-08 06:02:36,337 import.py:34] 2014-11-16 06:00:00+00:00
+        ERROR    2014-11-08 06:02:36,338 import.py:34] 2014-11-16 00:00:00+00:00
+
+
+
+
+        ERROR    2014-11-08 06:02:36,354 import.py:34] 2014-11-30 06:00:00+00:00
+        ERROR    2014-11-08 06:02:36,355 import.py:34] 2014-10-31 05:00:00+00:00
+
+
+        ERROR    2014-11-08 06:02:36,370 import.py:34] 2014-11-29 06:00:00+00:00
+        ERROR    2014-11-08 06:02:36,370 import.py:34] 2014-10-24 05:00:00+00:00
+
+        '''
+
         stuff_to_put = []
         j = 0
         for v_data in data: 
             i = 0
 
             for event_dates in v_data['event_dates']:
-                
-                v_data['event_dates'][i]['end'] = convert_rest_dt_to_datetime(event_dates['end'])
                 v_data['event_dates'][i]['start'] = convert_rest_dt_to_datetime(event_dates['start'])
+                v_data['event_dates'][i]['end'] = convert_rest_dt_to_datetime(event_dates['end'])
                 i += 1
             j += 1
             
