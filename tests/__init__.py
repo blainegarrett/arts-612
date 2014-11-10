@@ -18,10 +18,3 @@ class BaseCase(unittest.TestCase):
 
     def tearDown(self):
         self.testbed.deactivate()
-
-    def test_dfsf(self):
-        import logging
-        self.assertTrue(True)
-        e = Event()
-        logging.debug('asdasdasdassadasdadasdasd')
-        self.assertTrue(bool(e))

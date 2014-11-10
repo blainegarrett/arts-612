@@ -14,16 +14,6 @@ class EventDate(ndb.Model):
     # Eventually, address, etc if no target venue...
 
 
-'''
-guido = Contact(name='Guido',
-                addresses=[Address(type='home',
-                                   city='Amsterdam'),
-                           Address(type='work',
-                                   street='Spear St',
-                                   city='SF')])
-'''
-
-
 class Event(ndb.Model):
     """
     Model Representing an "Event", which may consist of one or more dates

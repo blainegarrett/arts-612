@@ -7,6 +7,7 @@ import sys
 import logging
 
 from rest import errors
+from rest.resource import Resource
 
 
 class RestHandlerBase(webapp2.RequestHandler):
@@ -16,12 +17,21 @@ class RestHandlerBase(webapp2.RequestHandler):
 
     data = {} # Payload data
 
+    def validate_payload(self): # aka Form.clean
+        """
+        Validate the request payload against the rest rules
+        This only works for a single payload entity, not a list...
+        """
+
+        rules = self.get_rules()
+        self.cleaned_data = Resource(None, rules).from_dict(self.data)
+
     def dispatch(self):
         """
         Dispatcher for checking various things
         """
 
-        # Process Request data
+        # Process Request Payload
         if self.request.body:
             self.data = json.loads(self.request.body)
 
@@ -50,7 +60,11 @@ class RestHandlerBase(webapp2.RequestHandler):
 
     def post(self, *args, **kwargs):
         """
+        Typically used to create a new resource
         """
+
+        # Validate incoming payload
+        self.validate_payload()
 
         if not hasattr(self, '_post'):
             raise errors.MethodNotAllowed('Method Not Allowed.')

@@ -55,6 +55,10 @@ def _create_venue_txn(key, data, operator_key):
     TODO: Do something with operator
     """
 
+    # Check if something with same slug already exists
+    if get_venue_by_slug(data['slug']):
+        raise Exception('venue already exists with slug %s' % data['slug'])
+
     # Final Data Prep
     data['key'] = key
 

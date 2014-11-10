@@ -2,7 +2,8 @@
 Rest
 """
 
-import os, sys
+import os
+import sys
 # Add the external libs
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../external'))
 
@@ -30,14 +31,13 @@ def handle_404(request, response, exception):
 
     serve_response(response, 404, None, messages=[err])
 
-    
 routes = []
 routes.extend([
 
     # Gallery Routes
     (r'/api/galleries/([a-z0-9-]+)', 'venues.controllers.GalleryDetailApiHandler'),
     (r'/api/galleries', 'venues.controllers.GalleriesApiHandler'),
-    
+
     # Event Routes
     (r'/api/events', 'cal.controllers.EventsApiHandler'),
     (r'/api/events/thisweek', 'cal.controllers.EventsWeeksApiHandler'),

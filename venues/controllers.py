@@ -42,6 +42,10 @@ def create_resource_from_entity(e, verbose=False):
     TODO: We don't care about verbosity just yet
     """
 
+    import logging
+    logging.warning('--------Venue Create Resource----------------')
+    logging.warning(e)
+
     return Resource(e, REST_RULES).to_dict()
 
     try:

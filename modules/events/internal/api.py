@@ -152,15 +152,18 @@ def bulk_dereference_venues(events):
 
     """
     
-    
-    
-    
 
 def create_event(data):
     """
     Create an event
     # TODO: Make this transactional
     """
+
+    # check if there are any other events with this slug
+    
+    v = Event.query(Event.slug == data['slug']).get()
+    if v:
+        raise Exception('There is already an Event with the slug "%s". Please select another.' % data['slug'])
 
     search_index = event_search.get_search_index()
 
