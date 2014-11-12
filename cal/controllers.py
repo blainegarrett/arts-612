@@ -187,8 +187,33 @@ class EventDetailApiHandler(RestHandlerBase):
         self.serve_success(result)
 
 
+class EventsUpcomingHandler(RestHandlerBase):
+    """
+    """
+    def _get(self):
+        results = []
+        events = events_api.upcoming_events()
+        for event in events:
+            results.append(create_resource_from_entity(event))
+
+        self.serve_success(results)
+
+
+class EventsNowShowingHandler(RestHandlerBase):
+    """
+    """
+
+    def _get(self):
+        results = []
+        events = events_api.now_showing()
+        for event in events:
+            results.append(create_resource_from_entity(event))
+
+        self.serve_success(results)
+
 class EventsWeeksApiHandler(RestHandlerBase):
     """
+    Not currently in use
     """
 
     def _get(self):

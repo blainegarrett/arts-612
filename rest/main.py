@@ -40,7 +40,8 @@ routes.extend([
 
     # Event Routes
     (r'/api/events', 'cal.controllers.EventsApiHandler'),
-    (r'/api/events/thisweek', 'cal.controllers.EventsWeeksApiHandler'),
+    (r'/api/events/upcoming', 'cal.controllers.EventsUpcomingHandler'),
+    (r'/api/events/nowshowing', 'cal.controllers.EventsNowShowingHandler'),
     (r'/api/events/([a-z0-9-]+)', 'cal.controllers.EventDetailApiHandler'),
 ])
 

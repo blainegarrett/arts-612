@@ -77,7 +77,7 @@ def build_index(event):
 
         venue = v_key.get()
         if not venue:
-            raise Exception('Venue with key %s not found' % ed['venue_slug'])
+            raise Exception('Venue with key %s not found' % ed.venue_slug)
 
         # Decide to unfold for gallery hours or not?
         if ed.category == CATEGORY.ONGOING:
@@ -120,7 +120,7 @@ def build_index(event):
     return return_documents
 
 
-def simple_search(querystring=None, start=None, end=None, category=None, limit=5, sort=None):
+def simple_search(querystring=None, start=None, end=None, category=None, limit=100, sort=None):
     """
     TODO: "term", "near", "by type", "now" and any combo
     """

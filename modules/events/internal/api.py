@@ -64,7 +64,16 @@ def upcoming_events(limit=5):
     today = datetime.datetime.now().replace(hour=3, minute=0, second=0) # TODO: Needs TZ
     #querystring = 'end >= %s AND (category: %s OR category: event)' % (unix_time(end), )
     end = today
-    return search_helper(end=end, category=CATEGORY.RECEPTION, sort='end')
+    return search_helper(end=end, category=[CATEGORY.RECEPTION, CATEGORY.SALE], sort='start')
+
+
+def now_showing():
+    """
+    """
+
+    today = datetime.datetime.now().replace(hour=3, minute=0, second=0)
+    end = today
+    return search_helper(end=end, category=CATEGORY.ONGOING, sort='end')
 
 
 def going_on_now(limit=5):

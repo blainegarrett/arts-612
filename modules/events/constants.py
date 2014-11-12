@@ -11,6 +11,7 @@ class CATEGORY(object):
     """
     RECEPTION = 'reception' # Art Opening, Closing, etc, etc
     ONGOING = 'ongoing' # Designation for on display, etc - non-event - can be wide range
+    SALE = 'sale'
 
     HOURS = 'hours' # Special category for search. Business Hours, etc - concise range - connected with ongoing possibly
 

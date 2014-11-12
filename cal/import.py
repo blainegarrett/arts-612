@@ -82,57 +82,274 @@ class EventData(webapp2.RequestHandler):
                 }],
                 "slug": "soap-factory-day",
                 "name": "Soap Factory Day and 25th Anniversary Party"
+            }, {
+            "url" : "https://www.facebook.com/events/724306997652799",
+            "slug": "mark-schoening-shapeshifter",
+            "name": "Mark Schoening: shapeshifter",
+            "event_dates": [{
+                "category": "reception",
+                "start": "2014-11-14 19:00:00",
+                "end": "2014-11-14 22:00:00",
+                "type": "timed",
+                "label": "Reception",
+                "venue_slug": "midnight-brigade"
+            }],                
+            }, {
+            "url" : "http://www.soovac.org/index.php/shows/view/untitled_11_soovacs_11th_annual_juried_exhibition/",
+            "slug": "soovac-untitled-11",
+            "name": "Untitled 11: SooVac's 11th Annual Juried Exhibition",
+            "event_dates": [{
+                "category": "reception",
+                "start": "2014-11-15 19:00:00",
+                "end": "2014-11-15 21:00:00",
+                "type": "timed",
+                "label": "Reception",
+                "venue_slug": "soovac"
+            }],
+            }, {
+            "url" : "https://www.facebook.com/events/677020089080861/",
+            "slug": "gamut-c4w-2104-finale",
+            "name": "C4W:2014 Finale - With Improv Orchestra \"Improvestra\"",
+            "event_dates": [{
+                "category": "reception",
+                "start": "2014-11-22 19:00:00",
+                "end": "2014-11-22 22:00:00",
+                "type": "timed",
+                "label": "Reception",
+                "venue_slug": "gamut"
             },
+            ],
+            },
+
             {
-                "url" : "http://www.dimmedia.com/events/2013/ice-cream-social/",
+            "url" : "https://www.facebook.com/events/677020089080861/",
+            "slug": "gamut-c4w-2104-finale",
+            "name": "C4W:2014 - Curated by Kristoffer Knutson",
+            "event_dates": [{
+                "category": "ongoing",
+                "start": "2014-10-24 00:00:00",
+                "end": "2014-11-22 00:00:00",
+                "type": "reoccurring",
+                "label": "Ongoing",
+                "venue_slug": "gamut"
+             }],
+             },
+            
+             {
+            "url" : "http://publicfunctionary.org/now/",
+            "slug": "inkala-chaos-complex",
+            "name": "Inkala: Chaos Complex",
+            "event_dates": [{
+                "category": "reception",
+                "start": "2014-11-22 19:00:00",
+                "end": "2014-11-23 00:00:00",
+                "type": "timed",
+                "label": "Reception",
+                "venue_slug": "public-functionary"
+            }],
+            }, {
+            "url" : "http://www.hangitinc.com/art_shows.html",
+            "slug": "doodles-5-year-journey",
+            "name": "Doodles: A 5 Year Journey",
+            "event_dates": [{
+                "category": "reception",
+                "start": "2014-12-05 19:00:00",
+                "end": "2014-12-05 21:00:00",
+                "type": "timed",
+                "label": "Reception",
+                "venue_slug": "gallery-122"
+            }],
+            }, {
+            "url" : "http://www.hangitinc.com/art_shows.html",
+            "slug": "doodles-5-year-journey",
+            "name": "Doodles: A 5 Year Journey",
+            "event_dates": [{
+                "category": "reception",
+                "start": "2014-12-05 19:00:00",
+                "end": "2014-12-05 21:00:00",
+                "type": "timed",
+                "label": "Reception",
+                "venue_slug": "gallery-122"
+            }],
+            }, {
+            "url" : "http://highpointprintmaking.org/",
+            "slug": "prints-on-ice",
+            "name": "Prints on Ice",
+            "event_dates": [{
+                "category": "sale",
+                "start": "2014-12-05 19:30:00",
+                "end": "2014-12-05 21:00:00",
+                "type": "timed",
+                "label": "Reception",
+                "venue_slug": "highpoint"
+            }],
+            }, {
+            "url" : "https://www.facebook.com/events/882117088465341/",
+            "slug": "raging-art-on-2014",
+            "name": "Raging Art On - 2014",
+            "event_dates": [{
+                "category": "sale",
+                "start": "2014-12-12 12:00:00",
+                "end": "2014-12-12 22:00:00",
+                "type": "timed",
+                "label": "Opening Night",
+                "venue_slug": "gamut"
+            }, {
+                    "category": "sale",
+                    "start": "2014-12-13 12:00:00",
+                    "end": "2014-12-13 22:00:00",
+                    "type": "timed",
+                    "label": "Opening Night",
+                    "venue_slug": "gamut"
+                }
+            ],
+            }, {
+            "url" : "http://www.midwayart.org/events/mdr7/",
+            "slug": "monster-drawing-rally-7",
+            "name": "7th Annual Monster Drawing Rally",
+            "event_dates": [{
+                "category": "reception",
+                "start": "2014-12-13 18:00:00",
+                "end": "2014-12-13 22:00:00",
+                "type": "timed",
+                "label": "Reception",
+                "venue_slug": "grainbelt-bottling-house"
+            }],
+            },
+             {
+            "url" : "http://www.midwayart.org/events/mdr7/",
+            "slug": "monster-drawing-rally-7",
+            "name": "7th Annual Monster Drawing Rally",
+            "event_dates": [{
+                "category": "reception",
+                "start": "2014-12-13 18:00:00",
+                "end": "2014-12-13 22:00:00",
+                "type": "timed",
+                "label": "Reception",
+                "venue_slug": "grainbelt-bottling-house"
+            }],
+            }, {
+            "url" : "http://mcad.edu/events-fellowships/art-sale",
+            "slug": "mcad-art-sale-2014",
+            "name": "MCAD Art Sale",
+            "event_dates": [{
+                "category": "sale",
+                "start": "2014-11-22 18:00:00",
+                "end": "2014-11-22 21:00:00",
+                "type": "timed",
+                "label": "Day 1",
+                "venue_slug": "mcad"
+            }, {
+                "category": "sale",
+                "start": "2014-11-23 18:00:00",
+                "end": "2014-11-23 21:00:00",
+                "type": "timed",
+                "label": "Day 2",
+                "venue_slug": "mcad"
+                }],
+            }, 
+            
+            {
+            "url" : "https://www.facebook.com/events/1502473189988054/",
+            "slug": "on-fertile-ground",
+            "name": "On Fertile Ground",
+            "event_dates": [{
+                "category": "ongoing",
+                "start": "2014-08-15 00:00:00",
+                "end": "2014-11-15 00:00:00",
+                "type": "reoccurring",
+                "label": "On Display",
+                "venue_slug": "all-my-relations"
+            }]
+            },
+
+            {
+            "url" : "http://foxtaxservice.com/gallery/",
+            "slug": "patefacio",
+            "name": u"Patefaci\u014D",
+            "event_dates": [{
+                "category": "ongoing",
+                "start": "2014-10-18 00:00:00",
+                "end": "2014-11-15 00:00:00",
+                "type": "reoccurring",
+                "label": "On Display",
+                "venue_slug": "fox-tax"
+            }]
+            },
+            
+
+            {
+            "url" : "http://www.circagallery.org/",
+            "slug": "carmen-vetter-folding-vaulting",
+            "name": u"Carmen Vetter: Folding | Vaulting",
+            "event_dates": [{
+                "category": "ongoing",
+                "start": "2014-10-04 00:00:00",
+                "end": "2014-11-15 00:00:00",
+                "type": "reoccurring",
+                "label": "On Display",
+                "venue_slug": "circa-gallery"
+            }]
+            },
+
+            {
+            "url" : "https://www.facebook.com/events/189268111243845/",
+            "slug": "doors-to-the-underworld",
+            "name": u"Doorways to the Underworld",
+            "event_dates": [{
+                "category": "ongoing",
+                "start": "2014-10-25 00:00:00",
+                "end": "2014-11-15 00:00:00",
+                "type": "reoccurring",
+                "label": "On Display",
+                "venue_slug": "stevens-square-arts"
+            }]
+            },
+
+             {
+                "url" : "https://art.umn.edu/nash",
+                "slug": "thinking-making-living",
+                "name": u"Thinking Making Living",
                 "event_dates": [{
                     "category": "ongoing",
-                    "start": "2014-10-31",
-                    "end": "2014-11-30",
+                    "start": "2014-09-02 00:00:00",
+                    "end": "2014-12-13 00:00:00",
                     "type": "reoccurring",
                     "label": "On Display",
-                    "venue_slug": "sebastian-joes-franklin"
-                }],
-                "slug": "icecream-social",
-                "name": "Dim Media - Ice Cream Social"
+                    "venue_slug": "nash-gallery"
+                }]
             },
-            {
-                "url" : "http://www.hangitinc.com/art_shows.html",
+
+             {
+                "url" : "http://www.midwayart.org/exhibitions/14_04_megan_francis_sullivan/",
+                "slug": "click-click-space-space",
+                "name": u"click click, space space - Megan Francis Sullivan",
                 "event_dates": [{
                     "category": "ongoing",
-                    "start": "2014-10-24",
-                    "end": "2014-11-29",
+                    "start": "2014-11-07 00:00:00",
+                    "end": "2014-12-20 00:00:00",
                     "type": "reoccurring",
                     "label": "On Display",
-                    "venue_slug": "gallery-122"
-                }],
-                "slug": "afterlife-merriment",
-                "name": "Afterlife Merriment"
+                    "venue_slug": "midway-contemporary"
+                }]
             },
+
+             {
+                "url" : "http://www.intermediaarts.org/catalyst-series-the-blacker-the-berry",
+                "slug": "the-blacker-the-berry",
+                "name": u"The Blacker The Berry ...",
+                "event_dates": [{
+                    "category": "ongoing",
+                    "start": "2014-11-05 00:00:00",
+                    "end": "2014-12-10 00:00:00",
+                    "type": "reoccurring",
+                    "label": "On Display",
+                    "venue_slug": "intermedia-arts"
+                }]
+            },
+            
         ]
 
-        '''
-
-        ERROR    2014-11-08 06:02:36,307 import.py:34] 2014-11-09 02:00:00+00:00
-        ERROR    2014-11-08 06:02:36,307 import.py:34] 2014-11-09 01:00:00+00:00
-        
-        ERROR    2014-11-08 06:02:36,323 import.py:34] 2014-10-31 02:00:00+00:00
-        ERROR    2014-11-08 06:02:36,323 import.py:34] 2014-10-30 23:00:00+00:00
-
-        ERROR    2014-11-08 06:02:36,337 import.py:34] 2014-11-16 06:00:00+00:00
-        ERROR    2014-11-08 06:02:36,338 import.py:34] 2014-11-16 00:00:00+00:00
-
-
-
-
-        ERROR    2014-11-08 06:02:36,354 import.py:34] 2014-11-30 06:00:00+00:00
-        ERROR    2014-11-08 06:02:36,355 import.py:34] 2014-10-31 05:00:00+00:00
-
-
-        ERROR    2014-11-08 06:02:36,370 import.py:34] 2014-11-29 06:00:00+00:00
-        ERROR    2014-11-08 06:02:36,370 import.py:34] 2014-10-24 05:00:00+00:00
-
-        '''
 
         stuff_to_put = []
         j = 0

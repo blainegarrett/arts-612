@@ -158,7 +158,7 @@ class GalleryData(webapp2.RequestHandler):
             }, {
                 'slug': 'kolman-pryor',
                 'name': 'Kolman Pryor Gallery',
-                'address': '1500 Jackson Street NE.,Studio 395',
+                'address': '1500 Jackson St NE #395',
                 'city': 'Minneapolis',
                 'geo': '45.004171, -93.250036',
                 'category': 'gallery',
@@ -208,7 +208,7 @@ class GalleryData(webapp2.RequestHandler):
             }, {
                 'slug': 'gallery-427',
                 'name': 'Gallery 427',
-                'address': '1500 Jackson St NE; Studio 427',
+                'address': '1500 Jackson St NE; #427',
                 'city': 'Minneapolis',
                 'geo': '45.004209, -93.250025',
                 'category': 'gallery',
@@ -216,7 +216,7 @@ class GalleryData(webapp2.RequestHandler):
                 'phone': '612-379-2237',
                 'email': 'info@gallery427.com'
             }, {
-                'slug': 'katherine-e-nash-gallery',
+                'slug': 'nash-gallery',
                 'name': 'Katherine E. Nash Gallery',
                 'address': '405 21st Ave S',
                 'city': 'Minneapolis',
@@ -246,19 +246,7 @@ class GalleryData(webapp2.RequestHandler):
                 'category': 'business',
                 'website': 'http://sebastianjoesicecream.com/',
                 'phone': '',
-                'email': ''
-                '''
-                'xhours':
-                    {
-                        'Sunday': [7, 23],
-                        'Monday': [7, 23],
-                        'Tuesday': [7, 23],
-                        'Wednesday': [7, 23],
-                        'Thursday':	[7, 23],
-                        'Friday':	[7, 23],
-                        'Saturday':	[7, 23],
-                    }
-                '''
+                'email': '',
             }, {
                 'slug': 'temp',
                 'name': 'Temporary Autonomous Museum of Contemporary Art',
@@ -329,24 +317,69 @@ class GalleryData(webapp2.RequestHandler):
                 'category': 'gallery',
                 'website': 'http://www.hangitinc.com/',
                 'phone': '',
+                'email': '',
+            }, {
+                'slug': 'midnight-brigade',
+                'name': 'The Midnight Brigade',
+                'address': '1830 E 35th St',
+                'city': 'Minneapolis',
+                'geo': '44.9396802,-93.2468541',
+                'category': 'gallery',
+                'website': 'https://www.facebook.com/pages/The-Midnight-Brigade/292777424261005',
+                'phone': '',
                 'email': ''
-                '''
-                'xhours': {
-                    'Monday': [9, 17],
-                    'Tuesday': [9, 19],
-                    'Wednesday': [9, 19],
-                    'Thursday': [9, 19],
-                    'Friday': [9, 17],
-                    'Saturday': [10, 16]
-                }
-                '''
-            },
-            
-            
-
-
-            
-            
+            }, {
+                'slug': 'stevens-square-arts',
+                'name': 'Stevens Square Center for the Arts',
+                'address': '1905 3rd Ave S',
+                'city': 'Minneapolis',
+                'geo': '44.96374,-93.272387',
+                'category': 'gallery',
+                'website': 'http://www.stevensarts.org/',
+                'phone': '(612) 879-0200',
+                'email': 'ssca@stevensarts.org'
+            }, {
+                'slug': 'intermedia-arts',
+                'name': 'Intermedia Arts',
+                'address': '2822 Lyndale Ave S',
+                'city': 'Minneapolis',
+                'geo': '44.951095,-93.2885514',
+                'category': 'gallery',
+                'website': 'http://www.intermediaarts.org/',
+                'phone': '(612) 871-4444',
+                'email': 'Info@IntermediaArts.org'
+            }, {
+                'slug': 'highpoint',
+                'name': 'Highpoint Center for Printmaking',
+                'address': '912 West Lake Street',
+                'city': 'Minneapolis',
+                'geo': '44.9486836,-93.2914843',
+                'category': 'gallery',
+                'website': 'http://highpointprintmaking.org/',
+                'phone': '',
+                'email': ''
+            }, {
+                'slug': 'mcad',
+                'name': 'Minneapolis College of Art and Design',
+                'address': '2501 Stevens Avenue',
+                'city': 'Minneapolis',
+                'geo': '44.9567218,-93.2746323',
+                'category': 'gallery',
+                'website': 'http://mcad.edu/',
+                'phone': '',
+                'email': ''
+            }, {
+                'slug': 'grainbelt-bottling-house',
+                'name': 'Grain Belt Bottling House',
+                'address': '79 13th Ave NE',
+                'city': 'Minneapolis',
+                'geo': '44.999758,-93.271099',
+                'category': 'studios',
+                'website': '',
+                'phone': '',
+                'email': ''
+            }
+                
         ]
         
         stuff_to_put = []
