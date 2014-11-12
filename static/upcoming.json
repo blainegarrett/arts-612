@@ -1,0 +1,521 @@
+{
+    "status": 200,
+    "messages": null,
+    "results": [{
+        "event_dates": [{
+            "category": "reception",
+            "end": "2014-11-15T04:00:00Z",
+            "venue": {
+                "website": "https://www.facebook.com/pages/The-Midnight-Brigade/292777424261005",
+                "city": "Minneapolis",
+                "name": "The Midnight Brigade",
+                "resource_id": "agxkZXZ-YXJ0cy02MTJyGwsSBVZlbnVlIhBtaWRuaWdodC1icmlnYWRlDA",
+                "country": "USA",
+                "address2": null,
+                "email": "",
+                "hours": null,
+                "phone": "",
+                "state": "MN",
+                "address": "1830 E 35th St",
+                "resource_url": "http://localhost:8080/api/galleries/agxkZXZ-YXJ0cy02MTJyGwsSBVZlbnVlIhBtaWRuaWdodC1icmlnYWRlDA",
+                "category": "gallery",
+                "geo": {
+                    "lat": 44.9396802,
+                    "lon": -93.2468541
+                },
+                "slug": "midnight-brigade"
+            },
+            "label": "Reception",
+            "start": "2014-11-15T01:00:00Z",
+            "type": "timed",
+            "venue_slug": "midnight-brigade"
+        }],
+        "name": "Mark Schoening: shapeshifter",
+        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoIgLDA",
+        "url": "https://www.facebook.com/events/724306997652799",
+        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoIgLDA",
+        "slug": "mark-schoening-shapeshifter"
+    }, {
+        "event_dates": [{
+            "category": "reception",
+            "end": "2014-11-16T06:00:00Z",
+            "venue": {
+                "website": "http://www.soapfactory.org/",
+                "city": "Minneapolis",
+                "name": "The Soap Factory",
+                "resource_id": "agxkZXZ-YXJ0cy02MTJyFwsSBVZlbnVlIgxzb2FwLWZhY3RvcnkM",
+                "country": "USA",
+                "address2": null,
+                "email": "info@soapfactory.org",
+                "hours": null,
+                "phone": "612-623-9176",
+                "state": "MN",
+                "address": "514 2nd St. SE",
+                "resource_url": "http://localhost:8080/api/galleries/agxkZXZ-YXJ0cy02MTJyFwsSBVZlbnVlIgxzb2FwLWZhY3RvcnkM",
+                "category": "gallery",
+                "geo": {
+                    "lat": 44.98344,
+                    "lon": -93.249613
+                },
+                "slug": "soap-factory"
+            },
+            "label": "Party",
+            "start": "2014-11-16T00:00:00Z",
+            "type": "timed",
+            "venue_slug": "soap-factory"
+        }],
+        "name": "Soap Factory Day and 25th Anniversary Party",
+        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoIgIDA",
+        "url": "http://www.soapfactory.org/exhibit.php?content_id=706",
+        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoIgIDA",
+        "slug": "soap-factory-day"
+    }, {
+        "event_dates": [{
+            "category": "reception",
+            "end": "2014-11-16T03:00:00Z",
+            "venue": {
+                "website": "http://www.soovac.org/",
+                "city": "Minneapolis",
+                "name": "Soo Visual Arts Center",
+                "resource_id": "agxkZXZ-YXJ0cy02MTJyEQsSBVZlbnVlIgZzb292YWMM",
+                "country": "USA",
+                "address2": null,
+                "email": "info@soovac.org",
+                "hours": null,
+                "phone": "612-871-2263 ",
+                "state": "MN",
+                "address": "2638 Lyndale Ave. S",
+                "resource_url": "http://localhost:8080/api/galleries/agxkZXZ-YXJ0cy02MTJyEQsSBVZlbnVlIgZzb292YWMM",
+                "category": "gallery",
+                "geo": {
+                    "lat": 44.954464,
+                    "lon": -93.288527
+                },
+                "slug": "soovac"
+            },
+            "label": "Reception",
+            "start": "2014-11-16T01:00:00Z",
+            "type": "timed",
+            "venue_slug": "soovac"
+        }],
+        "name": "Untitled 11: SooVac's 11th Annual Juried Exhibition",
+        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoMgIDA",
+        "url": "http://www.soovac.org/index.php/shows/view/untitled_11_soovacs_11th_annual_juried_exhibition/",
+        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoMgIDA",
+        "slug": "soovac-untitled-11"
+    }, {
+        "event_dates": [{
+            "category": "sale",
+            "end": "2014-11-23T03:00:00Z",
+            "venue": {
+                "website": "http://mcad.edu/",
+                "city": "Minneapolis",
+                "name": "Minneapolis College of Art and Design",
+                "resource_id": "agxkZXZ-YXJ0cy02MTJyDwsSBVZlbnVlIgRtY2FkDA",
+                "country": "USA",
+                "address2": null,
+                "email": "",
+                "hours": null,
+                "phone": "",
+                "state": "MN",
+                "address": "2501 Stevens Avenue",
+                "resource_url": "http://localhost:8080/api/galleries/agxkZXZ-YXJ0cy02MTJyDwsSBVZlbnVlIgRtY2FkDA",
+                "category": "gallery",
+                "geo": {
+                    "lat": 44.9567218,
+                    "lon": -93.2746323
+                },
+                "slug": "mcad"
+            },
+            "label": "Day 1",
+            "start": "2014-11-23T00:00:00Z",
+            "type": "timed",
+            "venue_slug": "mcad"
+        }, {
+            "category": "sale",
+            "end": "2014-11-24T03:00:00Z",
+            "venue": {
+                "website": "http://mcad.edu/",
+                "city": "Minneapolis",
+                "name": "Minneapolis College of Art and Design",
+                "resource_id": "agxkZXZ-YXJ0cy02MTJyDwsSBVZlbnVlIgRtY2FkDA",
+                "country": "USA",
+                "address2": null,
+                "email": "",
+                "hours": null,
+                "phone": "",
+                "state": "MN",
+                "address": "2501 Stevens Avenue",
+                "resource_url": "http://localhost:8080/api/galleries/agxkZXZ-YXJ0cy02MTJyDwsSBVZlbnVlIgRtY2FkDA",
+                "category": "gallery",
+                "geo": {
+                    "lat": 44.9567218,
+                    "lon": -93.2746323
+                },
+                "slug": "mcad"
+            },
+            "label": "Day 2",
+            "start": "2014-11-24T00:00:00Z",
+            "type": "timed",
+            "venue_slug": "mcad"
+        }],
+        "name": "MCAD Art Sale",
+        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoOgKDA",
+        "url": "http://mcad.edu/events-fellowships/art-sale",
+        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoOgKDA",
+        "slug": "mcad-art-sale-2014"
+    }, {
+        "event_dates": [{
+            "category": "reception",
+            "end": "2014-11-23T06:00:00Z",
+            "venue": {
+                "website": "http://publicfunctionary.org/",
+                "city": "Minneapolis",
+                "name": "Public Functionary",
+                "resource_id": "agxkZXZ-YXJ0cy02MTJyHQsSBVZlbnVlIhJwdWJsaWMtZnVuY3Rpb25hcnkM",
+                "country": "USA",
+                "address2": null,
+                "email": "tricia@publicfunctionary.org",
+                "hours": null,
+                "phone": "612-238-9523",
+                "state": "MN",
+                "address": "1400 12th Ave NE",
+                "resource_url": "http://localhost:8080/api/galleries/agxkZXZ-YXJ0cy02MTJyHQsSBVZlbnVlIhJwdWJsaWMtZnVuY3Rpb25hcnkM",
+                "category": "gallery",
+                "geo": {
+                    "lat": 44.999343,
+                    "lon": -93.239475
+                },
+                "slug": "public-functionary"
+            },
+            "label": "Reception",
+            "start": "2014-11-23T01:00:00Z",
+            "type": "timed",
+            "venue_slug": "public-functionary"
+        }],
+        "name": "Inkala: Chaos Complex",
+        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoMgJDA",
+        "url": "http://publicfunctionary.org/now/",
+        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoMgJDA",
+        "slug": "inkala-chaos-complex"
+    }, {
+        "event_dates": [{
+            "category": "reception",
+            "end": "2014-11-23T04:00:00Z",
+            "venue": {
+                "website": "http://www.gamutgallerympls.com/",
+                "city": "Minneapolis",
+                "name": "Gamut Gallery",
+                "resource_id": "agxkZXZ-YXJ0cy02MTJyEAsSBVZlbnVlIgVnYW11dAw",
+                "country": "USA",
+                "address2": null,
+                "email": "art@gamutgallerympls.com",
+                "hours": null,
+                "phone": "612-293-6497",
+                "state": "MN",
+                "address": "1006 Marquette Ave",
+                "resource_url": "http://localhost:8080/api/galleries/agxkZXZ-YXJ0cy02MTJyEAsSBVZlbnVlIgVnYW11dAw",
+                "category": "gallery",
+                "geo": {
+                    "lat": 44.973357,
+                    "lon": -93.273592
+                },
+                "slug": "gamut"
+            },
+            "label": "Reception",
+            "start": "2014-11-23T01:00:00Z",
+            "type": "timed",
+            "venue_slug": "gamut"
+        }],
+        "name": "C4W:2014 Finale - With Improv Orchestra \"Improvestra\"",
+        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoMgKDA",
+        "url": "https://www.facebook.com/events/677020089080861/",
+        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoMgKDA",
+        "slug": "gamut-c4w-2104-finale"
+    }, {
+        "event_dates": [{
+            "category": "sale",
+            "end": "2014-11-23T03:00:00Z",
+            "venue": {
+                "website": "http://mcad.edu/",
+                "city": "Minneapolis",
+                "name": "Minneapolis College of Art and Design",
+                "resource_id": "agxkZXZ-YXJ0cy02MTJyDwsSBVZlbnVlIgRtY2FkDA",
+                "country": "USA",
+                "address2": null,
+                "email": "",
+                "hours": null,
+                "phone": "",
+                "state": "MN",
+                "address": "2501 Stevens Avenue",
+                "resource_url": "http://localhost:8080/api/galleries/agxkZXZ-YXJ0cy02MTJyDwsSBVZlbnVlIgRtY2FkDA",
+                "category": "gallery",
+                "geo": {
+                    "lat": 44.9567218,
+                    "lon": -93.2746323
+                },
+                "slug": "mcad"
+            },
+            "label": "Day 1",
+            "start": "2014-11-23T00:00:00Z",
+            "type": "timed",
+            "venue_slug": "mcad"
+        }, {
+            "category": "sale",
+            "end": "2014-11-24T03:00:00Z",
+            "venue": {
+                "website": "http://mcad.edu/",
+                "city": "Minneapolis",
+                "name": "Minneapolis College of Art and Design",
+                "resource_id": "agxkZXZ-YXJ0cy02MTJyDwsSBVZlbnVlIgRtY2FkDA",
+                "country": "USA",
+                "address2": null,
+                "email": "",
+                "hours": null,
+                "phone": "",
+                "state": "MN",
+                "address": "2501 Stevens Avenue",
+                "resource_url": "http://localhost:8080/api/galleries/agxkZXZ-YXJ0cy02MTJyDwsSBVZlbnVlIgRtY2FkDA",
+                "category": "gallery",
+                "geo": {
+                    "lat": 44.9567218,
+                    "lon": -93.2746323
+                },
+                "slug": "mcad"
+            },
+            "label": "Day 2",
+            "start": "2014-11-24T00:00:00Z",
+            "type": "timed",
+            "venue_slug": "mcad"
+        }],
+        "name": "MCAD Art Sale",
+        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoOgKDA",
+        "url": "http://mcad.edu/events-fellowships/art-sale",
+        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoOgKDA",
+        "slug": "mcad-art-sale-2014"
+    }, {
+        "event_dates": [{
+            "category": "reception",
+            "end": "2014-12-06T03:00:00Z",
+            "venue": {
+                "website": "http://www.hangitinc.com/",
+                "city": "Minneapolis",
+                "name": "Gallery 122 at Hang It",
+                "resource_id": "agxkZXZ-YXJ0cy02MTJyFgsSBVZlbnVlIgtnYWxsZXJ5LTEyMgw",
+                "country": "USA",
+                "address2": null,
+                "email": "",
+                "hours": null,
+                "phone": "",
+                "state": "MN",
+                "address": "122 8th Street SE",
+                "resource_url": "http://localhost:8080/api/galleries/agxkZXZ-YXJ0cy02MTJyFgsSBVZlbnVlIgtnYWxsZXJ5LTEyMgw",
+                "category": "gallery",
+                "geo": {
+                    "lat": 44.991017,
+                    "lon": -93.250127
+                },
+                "slug": "gallery-122"
+            },
+            "label": "Reception",
+            "start": "2014-12-06T01:00:00Z",
+            "type": "timed",
+            "venue_slug": "gallery-122"
+        }],
+        "name": "Doodles: A 5 Year Journey",
+        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoKgIDA",
+        "url": "http://www.hangitinc.com/art_shows.html",
+        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoKgIDA",
+        "slug": "doodles-5-year-journey"
+    }, {
+        "event_dates": [{
+            "category": "sale",
+            "end": "2014-12-06T03:00:00Z",
+            "venue": {
+                "website": "http://highpointprintmaking.org/",
+                "city": "Minneapolis",
+                "name": "Highpoint Center for Printmaking",
+                "resource_id": "agxkZXZ-YXJ0cy02MTJyFAsSBVZlbnVlIgloaWdocG9pbnQM",
+                "country": "USA",
+                "address2": null,
+                "email": "",
+                "hours": null,
+                "phone": "",
+                "state": "MN",
+                "address": "912 West Lake Street",
+                "resource_url": "http://localhost:8080/api/galleries/agxkZXZ-YXJ0cy02MTJyFAsSBVZlbnVlIgloaWdocG9pbnQM",
+                "category": "gallery",
+                "geo": {
+                    "lat": 44.9486836,
+                    "lon": -93.2914843
+                },
+                "slug": "highpoint"
+            },
+            "label": "Reception",
+            "start": "2014-12-06T01:30:00Z",
+            "type": "timed",
+            "venue_slug": "highpoint"
+        }],
+        "name": "Prints on Ice",
+        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoKgKDA",
+        "url": "http://highpointprintmaking.org/",
+        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoKgKDA",
+        "slug": "prints-on-ice"
+    }, {
+        "event_dates": [{
+            "category": "sale",
+            "end": "2014-12-13T04:00:00Z",
+            "venue": {
+                "website": "http://www.gamutgallerympls.com/",
+                "city": "Minneapolis",
+                "name": "Gamut Gallery",
+                "resource_id": "agxkZXZ-YXJ0cy02MTJyEAsSBVZlbnVlIgVnYW11dAw",
+                "country": "USA",
+                "address2": null,
+                "email": "art@gamutgallerympls.com",
+                "hours": null,
+                "phone": "612-293-6497",
+                "state": "MN",
+                "address": "1006 Marquette Ave",
+                "resource_url": "http://localhost:8080/api/galleries/agxkZXZ-YXJ0cy02MTJyEAsSBVZlbnVlIgVnYW11dAw",
+                "category": "gallery",
+                "geo": {
+                    "lat": 44.973357,
+                    "lon": -93.273592
+                },
+                "slug": "gamut"
+            },
+            "label": "Opening Night",
+            "start": "2014-12-12T18:00:00Z",
+            "type": "timed",
+            "venue_slug": "gamut"
+        }, {
+            "category": "sale",
+            "end": "2014-12-14T04:00:00Z",
+            "venue": {
+                "website": "http://www.gamutgallerympls.com/",
+                "city": "Minneapolis",
+                "name": "Gamut Gallery",
+                "resource_id": "agxkZXZ-YXJ0cy02MTJyEAsSBVZlbnVlIgVnYW11dAw",
+                "country": "USA",
+                "address2": null,
+                "email": "art@gamutgallerympls.com",
+                "hours": null,
+                "phone": "612-293-6497",
+                "state": "MN",
+                "address": "1006 Marquette Ave",
+                "resource_url": "http://localhost:8080/api/galleries/agxkZXZ-YXJ0cy02MTJyEAsSBVZlbnVlIgVnYW11dAw",
+                "category": "gallery",
+                "geo": {
+                    "lat": 44.973357,
+                    "lon": -93.273592
+                },
+                "slug": "gamut"
+            },
+            "label": "Opening Night",
+            "start": "2014-12-13T18:00:00Z",
+            "type": "timed",
+            "venue_slug": "gamut"
+        }],
+        "name": "Raging Art On - 2014",
+        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoKgJDA",
+        "url": "https://www.facebook.com/events/882117088465341/",
+        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoKgJDA",
+        "slug": "raging-art-on-2014"
+    }, {
+        "event_dates": [{
+            "category": "sale",
+            "end": "2014-12-13T04:00:00Z",
+            "venue": {
+                "website": "http://www.gamutgallerympls.com/",
+                "city": "Minneapolis",
+                "name": "Gamut Gallery",
+                "resource_id": "agxkZXZ-YXJ0cy02MTJyEAsSBVZlbnVlIgVnYW11dAw",
+                "country": "USA",
+                "address2": null,
+                "email": "art@gamutgallerympls.com",
+                "hours": null,
+                "phone": "612-293-6497",
+                "state": "MN",
+                "address": "1006 Marquette Ave",
+                "resource_url": "http://localhost:8080/api/galleries/agxkZXZ-YXJ0cy02MTJyEAsSBVZlbnVlIgVnYW11dAw",
+                "category": "gallery",
+                "geo": {
+                    "lat": 44.973357,
+                    "lon": -93.273592
+                },
+                "slug": "gamut"
+            },
+            "label": "Opening Night",
+            "start": "2014-12-12T18:00:00Z",
+            "type": "timed",
+            "venue_slug": "gamut"
+        }, {
+            "category": "sale",
+            "end": "2014-12-14T04:00:00Z",
+            "venue": {
+                "website": "http://www.gamutgallerympls.com/",
+                "city": "Minneapolis",
+                "name": "Gamut Gallery",
+                "resource_id": "agxkZXZ-YXJ0cy02MTJyEAsSBVZlbnVlIgVnYW11dAw",
+                "country": "USA",
+                "address2": null,
+                "email": "art@gamutgallerympls.com",
+                "hours": null,
+                "phone": "612-293-6497",
+                "state": "MN",
+                "address": "1006 Marquette Ave",
+                "resource_url": "http://localhost:8080/api/galleries/agxkZXZ-YXJ0cy02MTJyEAsSBVZlbnVlIgVnYW11dAw",
+                "category": "gallery",
+                "geo": {
+                    "lat": 44.973357,
+                    "lon": -93.273592
+                },
+                "slug": "gamut"
+            },
+            "label": "Opening Night",
+            "start": "2014-12-13T18:00:00Z",
+            "type": "timed",
+            "venue_slug": "gamut"
+        }],
+        "name": "Raging Art On - 2014",
+        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoKgJDA",
+        "url": "https://www.facebook.com/events/882117088465341/",
+        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoKgJDA",
+        "slug": "raging-art-on-2014"
+    }, {
+        "event_dates": [{
+            "category": "reception",
+            "end": "2014-12-14T04:00:00Z",
+            "venue": {
+                "website": "",
+                "city": "Minneapolis",
+                "name": "Grain Belt Bottling House",
+                "resource_id": "agxkZXZ-YXJ0cy02MTJyIwsSBVZlbnVlIhhncmFpbmJlbHQtYm90dGxpbmctaG91c2UM",
+                "country": "USA",
+                "address2": null,
+                "email": "",
+                "hours": null,
+                "phone": "",
+                "state": "MN",
+                "address": "79 13th Ave NE",
+                "resource_url": "http://localhost:8080/api/galleries/agxkZXZ-YXJ0cy02MTJyIwsSBVZlbnVlIhhncmFpbmJlbHQtYm90dGxpbmctaG91c2UM",
+                "category": "studios",
+                "geo": {
+                    "lat": 44.999758,
+                    "lon": -93.271099
+                },
+                "slug": "grainbelt-bottling-house"
+            },
+            "label": "Reception",
+            "start": "2014-12-14T00:00:00Z",
+            "type": "timed",
+            "venue_slug": "grainbelt-bottling-house"
+        }],
+        "name": "7th Annual Monster Drawing Rally",
+        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoOgIDA",
+        "url": "http://www.midwayart.org/events/mdr7/",
+        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoOgIDA",
+        "slug": "monster-drawing-rally-7"
+    }]
+}

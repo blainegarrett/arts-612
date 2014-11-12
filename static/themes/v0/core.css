@@ -127,13 +127,18 @@ footer {
 }
 */
 
-.event .event-address {
+.event .event-venue-name {
     font-color: #000;    
     font-size:14px;
     line-height: 1.45em;
     padding-top:5px;
 }
 
+.event .event-address {
+    font-color: #000;    
+    font-size:14px;
+    line-height: 1.45em;
+}
 
 .event .event-time {
     font-weight:bold;

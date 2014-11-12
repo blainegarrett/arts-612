@@ -1,0 +1,277 @@
+{
+    "status": 200,
+    "messages": null,
+    "results": [{
+        "event_dates": [{
+            "category": "ongoing",
+            "end": "2014-11-15T06:00:00Z",
+            "venue": {
+                "website": "http://www.nacdi.org/default/",
+                "city": "Minneapolis",
+                "name": "All My Relations Gallery",
+                "resource_id": "agxkZXZ-YXJ0cy02MTJyGwsSBVZlbnVlIhBhbGwtbXktcmVsYXRpb25zDA",
+                "country": "USA",
+                "address2": null,
+                "email": "",
+                "hours": null,
+                "phone": "612-235-4976",
+                "state": "MN",
+                "address": "1414 E. Franklin Ave",
+                "resource_url": "http://localhost:8080/api/galleries/agxkZXZ-YXJ0cy02MTJyGwsSBVZlbnVlIhBhbGwtbXktcmVsYXRpb25zDA",
+                "category": "gallery",
+                "geo": {
+                    "lat": 44.963038,
+                    "lon": -93.254424
+                },
+                "slug": "all-my-relations"
+            },
+            "label": "On Display",
+            "start": "2014-08-15T05:00:00Z",
+            "type": "reoccurring",
+            "venue_slug": "all-my-relations"
+        }],
+        "name": "On Fertile Ground",
+        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoMoIDA",
+        "url": "https://www.facebook.com/events/1502473189988054/",
+        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoMoIDA",
+        "slug": "on-fertile-ground"
+    }, {
+        "event_dates": [{
+            "category": "ongoing",
+            "end": "2014-11-15T06:00:00Z",
+            "venue": {
+                "website": "http://www.circagallery.org/",
+                "city": "Minneapolis",
+                "name": "Circa Gallery",
+                "resource_id": "agxkZXZ-YXJ0cy02MTJyGAsSBVZlbnVlIg1jaXJjYS1nYWxsZXJ5DA",
+                "country": "USA",
+                "address2": null,
+                "email": "",
+                "hours": null,
+                "phone": "",
+                "state": "MN",
+                "address": "210 N First St",
+                "resource_url": "http://localhost:8080/api/galleries/agxkZXZ-YXJ0cy02MTJyGAsSBVZlbnVlIg1jaXJjYS1nYWxsZXJ5DA",
+                "category": "gallery",
+                "geo": {
+                    "lat": 44.9843177,
+                    "lon": -93.2692948
+                },
+                "slug": "circa-gallery"
+            },
+            "label": "On Display",
+            "start": "2014-10-04T05:00:00Z",
+            "type": "reoccurring",
+            "venue_slug": "circa-gallery"
+        }],
+        "name": "Carmen Vetter: Folding | Vaulting",
+        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoMoJDA",
+        "url": "http://www.circagallery.org/",
+        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoMoJDA",
+        "slug": "carmen-vetter-folding-vaulting"
+    }, {
+        "event_dates": [{
+            "category": "ongoing",
+            "end": "2014-11-15T06:00:00Z",
+            "venue": {
+                "website": "http://www.foxtaxservice.com/",
+                "city": "Minneapolis",
+                "name": "Fox Tax",
+                "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBVZlbnVlIgdmb3gtdGF4DA",
+                "country": "USA",
+                "address2": null,
+                "email": "",
+                "hours": null,
+                "phone": "",
+                "state": "MN",
+                "address": "503 1st Ave NE",
+                "resource_url": "http://localhost:8080/api/galleries/agxkZXZ-YXJ0cy02MTJyEgsSBVZlbnVlIgdmb3gtdGF4DA",
+                "category": "business",
+                "geo": {
+                    "lat": 44.9903532,
+                    "lon": -93.254127
+                },
+                "slug": "fox-tax"
+            },
+            "label": "On Display",
+            "start": "2014-10-18T05:00:00Z",
+            "type": "reoccurring",
+            "venue_slug": "fox-tax"
+        }],
+        "name": "Patefaci\u014d",
+        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoMoKDA",
+        "url": "http://foxtaxservice.com/gallery/",
+        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoMoKDA",
+        "slug": "patefacio"
+    }, {
+        "event_dates": [{
+            "category": "ongoing",
+            "end": "2014-11-15T06:00:00Z",
+            "venue": {
+                "website": "http://www.stevensarts.org/",
+                "city": "Minneapolis",
+                "name": "Stevens Square Center for the Arts",
+                "resource_id": "agxkZXZ-YXJ0cy02MTJyHgsSBVZlbnVlIhNzdGV2ZW5zLXNxdWFyZS1hcnRzDA",
+                "country": "USA",
+                "address2": null,
+                "email": "ssca@stevensarts.org",
+                "hours": null,
+                "phone": "(612) 879-0200",
+                "state": "MN",
+                "address": "1905 3rd Ave S",
+                "resource_url": "http://localhost:8080/api/galleries/agxkZXZ-YXJ0cy02MTJyHgsSBVZlbnVlIhNzdGV2ZW5zLXNxdWFyZS1hcnRzDA",
+                "category": "gallery",
+                "geo": {
+                    "lat": 44.96374,
+                    "lon": -93.272387
+                },
+                "slug": "stevens-square-arts"
+            },
+            "label": "On Display",
+            "start": "2014-10-25T05:00:00Z",
+            "type": "reoccurring",
+            "venue_slug": "stevens-square-arts"
+        }],
+        "name": "Doorways to the Underworld",
+        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoMoLDA",
+        "url": "https://www.facebook.com/events/189268111243845/",
+        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoMoLDA",
+        "slug": "doors-to-the-underworld"
+    }, {
+        "event_dates": [{
+            "category": "ongoing",
+            "end": "2014-11-22T06:00:00Z",
+            "venue": {
+                "website": "http://www.gamutgallerympls.com/",
+                "city": "Minneapolis",
+                "name": "Gamut Gallery",
+                "resource_id": "agxkZXZ-YXJ0cy02MTJyEAsSBVZlbnVlIgVnYW11dAw",
+                "country": "USA",
+                "address2": null,
+                "email": "art@gamutgallerympls.com",
+                "hours": null,
+                "phone": "612-293-6497",
+                "state": "MN",
+                "address": "1006 Marquette Ave",
+                "resource_url": "http://localhost:8080/api/galleries/agxkZXZ-YXJ0cy02MTJyEAsSBVZlbnVlIgVnYW11dAw",
+                "category": "gallery",
+                "geo": {
+                    "lat": 44.973357,
+                    "lon": -93.273592
+                },
+                "slug": "gamut"
+            },
+            "label": "Ongoing",
+            "start": "2014-10-24T05:00:00Z",
+            "type": "reoccurring",
+            "venue_slug": "gamut"
+        }],
+        "name": "C4W:2014 - Curated by Kristoffer Knutson",
+        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoLILDA",
+        "url": "https://www.facebook.com/events/677020089080861/",
+        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoLILDA",
+        "slug": "gamut-c4w-2104-finale"
+    }, {
+        "event_dates": [{
+            "category": "ongoing",
+            "end": "2014-12-10T06:00:00Z",
+            "venue": {
+                "website": "http://www.intermediaarts.org/",
+                "city": "Minneapolis",
+                "name": "Intermedia Arts",
+                "resource_id": "agxkZXZ-YXJ0cy02MTJyGgsSBVZlbnVlIg9pbnRlcm1lZGlhLWFydHMM",
+                "country": "USA",
+                "address2": null,
+                "email": "Info@IntermediaArts.org",
+                "hours": null,
+                "phone": "(612) 871-4444",
+                "state": "MN",
+                "address": "2822 Lyndale Ave S",
+                "resource_url": "http://localhost:8080/api/galleries/agxkZXZ-YXJ0cy02MTJyGgsSBVZlbnVlIg9pbnRlcm1lZGlhLWFydHMM",
+                "category": "gallery",
+                "geo": {
+                    "lat": 44.951095,
+                    "lon": -93.2885514
+                },
+                "slug": "intermedia-arts"
+            },
+            "label": "On Display",
+            "start": "2014-11-05T06:00:00Z",
+            "type": "reoccurring",
+            "venue_slug": "intermedia-arts"
+        }],
+        "name": "The Blacker The Berry ...",
+        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoKoJDA",
+        "url": "http://www.intermediaarts.org/catalyst-series-the-blacker-the-berry",
+        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoKoJDA",
+        "slug": "the-blacker-the-berry"
+    }, {
+        "event_dates": [{
+            "category": "ongoing",
+            "end": "2014-12-13T06:00:00Z",
+            "venue": {
+                "website": "https://art.umn.edu/nash",
+                "city": "Minneapolis",
+                "name": "Katherine E. Nash Gallery",
+                "resource_id": "agxkZXZ-YXJ0cy02MTJyFwsSBVZlbnVlIgxuYXNoLWdhbGxlcnkM",
+                "country": "USA",
+                "address2": null,
+                "email": "artdept@umn.edu",
+                "hours": null,
+                "phone": "612-624-7530",
+                "state": "MN",
+                "address": "405 21st Ave S",
+                "resource_url": "http://localhost:8080/api/galleries/agxkZXZ-YXJ0cy02MTJyFwsSBVZlbnVlIgxuYXNoLWdhbGxlcnkM",
+                "category": "gallery",
+                "geo": {
+                    "lat": 44.969566,
+                    "lon": -93.24229
+                },
+                "slug": "nash-gallery"
+            },
+            "label": "On Display",
+            "start": "2014-09-02T05:00:00Z",
+            "type": "reoccurring",
+            "venue_slug": "nash-gallery"
+        }],
+        "name": "Thinking Making Living",
+        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoKoIDA",
+        "url": "https://art.umn.edu/nash",
+        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoKoIDA",
+        "slug": "thinking-making-living"
+    }, {
+        "event_dates": [{
+            "category": "ongoing",
+            "end": "2014-12-20T06:00:00Z",
+            "venue": {
+                "website": "http://www.midwayart.org",
+                "city": "Minneapolis",
+                "name": "Midway Contemporary Art",
+                "resource_id": "agxkZXZ-YXJ0cy02MTJyHgsSBVZlbnVlIhNtaWR3YXktY29udGVtcG9yYXJ5DA",
+                "country": "USA",
+                "address2": null,
+                "email": "info@midwayart.org",
+                "hours": null,
+                "phone": "612-605-4504",
+                "state": "MN",
+                "address": "527 Second Avenue SE",
+                "resource_url": "http://localhost:8080/api/galleries/agxkZXZ-YXJ0cy02MTJyHgsSBVZlbnVlIhNtaWR3YXktY29udGVtcG9yYXJ5DA",
+                "category": "gallery",
+                "geo": {
+                    "lat": 44.988944,
+                    "lon": -93.251482
+                },
+                "slug": "midway-contemporary"
+            },
+            "label": "On Display",
+            "start": "2014-11-07T06:00:00Z",
+            "type": "reoccurring",
+            "venue_slug": "midway-contemporary"
+        }],
+        "name": "click click, space space - Megan Francis Sullivan",
+        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoKoKDA",
+        "url": "http://www.midwayart.org/exhibitions/14_04_megan_francis_sullivan/",
+        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoKoKDA",
+        "slug": "click-click-space-space"
+    }]
+}
