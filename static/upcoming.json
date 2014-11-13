@@ -31,9 +31,9 @@
             "venue_slug": "midnight-brigade"
         }],
         "name": "Mark Schoening: shapeshifter",
-        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoIgLDA",
+        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoNoLDA",
         "url": "https://www.facebook.com/events/724306997652799",
-        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoIgLDA",
+        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoNoLDA",
         "slug": "mark-schoening-shapeshifter"
     }, {
         "event_dates": [{
@@ -65,9 +65,9 @@
             "venue_slug": "soap-factory"
         }],
         "name": "Soap Factory Day and 25th Anniversary Party",
-        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoIgIDA",
+        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoNoJDA",
         "url": "http://www.soapfactory.org/exhibit.php?content_id=706",
-        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoIgIDA",
+        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoNoJDA",
         "slug": "soap-factory-day"
     }, {
         "event_dates": [{
@@ -99,9 +99,9 @@
             "venue_slug": "soovac"
         }],
         "name": "Untitled 11: SooVac's 11th Annual Juried Exhibition",
-        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoMgIDA",
+        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoLoIDA",
         "url": "http://www.soovac.org/index.php/shows/view/untitled_11_soovacs_11th_annual_juried_exhibition/",
-        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoMgIDA",
+        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoLoIDA",
         "slug": "soovac-untitled-11"
     }, {
         "event_dates": [{
@@ -160,9 +160,9 @@
             "venue_slug": "mcad"
         }],
         "name": "MCAD Art Sale",
-        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoOgKDA",
+        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoIYJDA",
         "url": "http://mcad.edu/events-fellowships/art-sale",
-        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoOgKDA",
+        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoIYJDA",
         "slug": "mcad-art-sale-2014"
     }, {
         "event_dates": [{
@@ -289,10 +289,44 @@
             "venue_slug": "mcad"
         }],
         "name": "MCAD Art Sale",
-        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoOgKDA",
+        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoIYJDA",
         "url": "http://mcad.edu/events-fellowships/art-sale",
-        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoOgKDA",
+        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoIYJDA",
         "slug": "mcad-art-sale-2014"
+    }, {
+        "event_dates": [{
+            "category": "sale",
+            "end": "2014-12-01T01:00:00Z",
+            "venue": {
+                "website": "http://bauhausbrewlabs.com/",
+                "city": "Minneapolis",
+                "name": "Bauhaus Brew Labs",
+                "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBVZlbnVlIgdiYXVoYXVzDA",
+                "country": "USA",
+                "address2": null,
+                "email": "",
+                "hours": null,
+                "phone": "",
+                "state": "MN",
+                "address": "1315 Tyler St NE",
+                "resource_url": "http://localhost:8080/api/galleries/agxkZXZ-YXJ0cy02MTJyEgsSBVZlbnVlIgdiYXVoYXVzDA",
+                "category": "business",
+                "geo": {
+                    "lat": 45.0010838,
+                    "lon": -93.2457776
+                },
+                "slug": "bauhaus"
+            },
+            "label": "Event",
+            "start": "2014-11-30T18:00:00Z",
+            "type": "timed",
+            "venue_slug": "bauhaus"
+        }],
+        "name": "Made By Hands - Holiday Sale",
+        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoKYJDA",
+        "url": "https://www.facebook.com/events/310047975865939/",
+        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoKYJDA",
+        "slug": "made-by-hands"
     }, {
         "event_dates": [{
             "category": "reception",
@@ -323,9 +357,9 @@
             "venue_slug": "gallery-122"
         }],
         "name": "Doodles: A 5 Year Journey",
-        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoKgIDA",
+        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoPoKDA",
         "url": "http://www.hangitinc.com/art_shows.html",
-        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoKgIDA",
+        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoPoKDA",
         "slug": "doodles-5-year-journey"
     }, {
         "event_dates": [{
@@ -357,9 +391,9 @@
             "venue_slug": "highpoint"
         }],
         "name": "Prints on Ice",
-        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoKgKDA",
+        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoPoJDA",
         "url": "http://highpointprintmaking.org/",
-        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoKgKDA",
+        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoPoJDA",
         "slug": "prints-on-ice"
     }, {
         "event_dates": [{
@@ -418,9 +452,9 @@
             "venue_slug": "gamut"
         }],
         "name": "Raging Art On - 2014",
-        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoKgJDA",
+        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoPoLDA",
         "url": "https://www.facebook.com/events/882117088465341/",
-        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoKgJDA",
+        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoPoLDA",
         "slug": "raging-art-on-2014"
     }, {
         "event_dates": [{
@@ -479,9 +513,9 @@
             "venue_slug": "gamut"
         }],
         "name": "Raging Art On - 2014",
-        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoKgJDA",
+        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoPoLDA",
         "url": "https://www.facebook.com/events/882117088465341/",
-        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoKgJDA",
+        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoPoLDA",
         "slug": "raging-art-on-2014"
     }, {
         "event_dates": [{
@@ -513,9 +547,9 @@
             "venue_slug": "grainbelt-bottling-house"
         }],
         "name": "7th Annual Monster Drawing Rally",
-        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoOgIDA",
+        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoIYKDA",
         "url": "http://www.midwayart.org/events/mdr7/",
-        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoOgIDA",
+        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoIYKDA",
         "slug": "monster-drawing-rally-7"
     }]
 }
