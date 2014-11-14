@@ -1,0 +1,13 @@
+Events
+
+<hr />
+
+<!-- This will eventually be a Set of ReactComponents but whatever -->
+
+<ul>
+  <li ng-repeat="event in events">
+    <a href="/calendar/{{ event.resource_id }}">{{event.name}}</a>
+  </li>
+</ul>
+
+<pre>{{ api_data }}</pre>

@@ -1,0 +1,13 @@
+Galleries
+
+<hr />
+
+<!-- This will eventually be a Set of ReactComponents but whatever -->
+
+<ul>
+  <li ng-repeat="gallery in galleries">
+    <a href="/galleries/{{ gallery.slug }}">{{gallery.name}}</a>
+  </li>
+</ul>
+
+<pre>{{ api_data }}</pre>
