@@ -347,7 +347,20 @@ class EventData(webapp2.RequestHandler):
                     "venue_slug": "intermedia-arts"
                 }]
             },
-            
+            {
+            "url" : "https://www.facebook.com/events/310047975865939/",
+            "slug": "made-by-hands",
+            "name": "Made By Hands - Holiday Sale",
+            "event_dates": [{
+                "category": "sale",
+                "start": "2014-11-30 12:00:00",
+                "end": "2014-11-30 19:00:00",
+                "type": "timed",
+                "label": "Event",
+                "venue_slug": "bauhaus"
+            }],
+            },
+
         ]
 
 

@@ -378,7 +378,17 @@ class GalleryData(webapp2.RequestHandler):
                 'website': '',
                 'phone': '',
                 'email': ''
-            }
+            }, {
+                'slug': 'bauhaus',
+                'name': 'Bauhaus Brew Labs',
+                'address': '1315 Tyler St NE',
+                'city': 'Minneapolis',
+                'geo': '45.0010838,-93.2457776',
+                'category': 'business',
+                'website': 'http://bauhausbrewlabs.com/',
+                'phone': '',
+                'email': ''
+            },
                 
         ]
         
