@@ -42,6 +42,11 @@ handlers:
   script: rest.main.app
   secure: optional
 
+- url: /admin.*
+  static_files: static/admin/app.html
+  upload: static/admin/app\.html
+  login: admin
+
 - url: /import.*
   script: import.main.app
   secure: optional
