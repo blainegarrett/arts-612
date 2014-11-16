@@ -35,14 +35,14 @@ routes = []
 routes.extend([
 
     # Gallery Routes
-    (r'/api/galleries/([a-z0-9-]+)', 'venues.controllers.GalleryDetailApiHandler'),
+    (r'/api/galleries/([a-zA-Z0-9-]+)', 'venues.controllers.GalleryDetailApiHandler'),
     (r'/api/galleries', 'venues.controllers.GalleriesApiHandler'),
 
     # Event Routes
     (r'/api/events', 'cal.controllers.EventsApiHandler'),
     (r'/api/events/upcoming', 'cal.controllers.EventsUpcomingHandler'),
     (r'/api/events/nowshowing', 'cal.controllers.EventsNowShowingHandler'),
-    (r'/api/events/([a-z0-9-]+)', 'cal.controllers.EventDetailApiHandler'),
+    (r'/api/events/([a-zA-Z0-9-]+)', 'cal.controllers.EventDetailApiHandler'),
 ])
 
 

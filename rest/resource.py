@@ -221,6 +221,11 @@ class GeoField(RestField):
     def __init__(self, prop, **kwargs):
         super(GeoField, self).__init__(prop, **kwargs)
 
+
+    def to_resource(self, data):
+        val = super(GeoField, self).to_resource(data)
+        return ndb.GeoPt(lat=val['lat'], lon=val['lon'])
+
     def from_resource(self, obj, field):
         """
         Outout a field to dic value

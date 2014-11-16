@@ -85,7 +85,10 @@ def create_venue(data, operator=None):
 
     # Prep go data...
     if data.get('geo', None):
-        if isinstance(data['geo'], dict): # Maybe this isn't the best solution to be flexible?
+        if isinstance(data['geo'], ndb.GeoPt): # Lazy...
+            lat = data['geo'].lat
+            lon = data['geo'].lon
+        elif isinstance(data['geo'], dict): # Maybe this isn't the best solution to be flexible?
             lat = data['geo']['lat']
             lon = data['geo']['lon']
         else:
@@ -149,6 +152,25 @@ def edit_venue(venue, data, operator=None):
 
 
     venue_key = venue.key
+
+
+    # Prep go data...
+    if data.get('geo', None):
+        if isinstance(data['geo'], ndb.GeoPt): # Lazy...
+            lat = data['geo'].lat
+            lon = data['geo'].lon
+        elif isinstance(data['geo'], dict): # Maybe this isn't the best solution to be flexible?
+            lat = data['geo']['lat']
+            lon = data['geo']['lon']
+        else:
+            geo_data = data['geo'].split(',')
+            lat = geo_data[0].strip()
+            lon = geo_data[1].strip()
+
+        data['geo'] = ndb.GeoPt(lat=float(lat), lon=float(lon))
+    else:
+        data['geo'] = None
+
 
     return _edit_venue_txn(venue_key, data, operator_key)
 

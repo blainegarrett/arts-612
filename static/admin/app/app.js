@@ -2,7 +2,13 @@
 MPLS Art Angular App
 */
 
-var mainApp = angular.module('mainApp', ['ngRoute']);
+
+
+var edit_venue_template = '<div class="col-md-12 panel"><react-component name="VenuesForm" props="person" /></div>';
+var create_venue_template = '<div class="col-md-12 panel"><react-component name="VenuesForm" props="person"  /></div>';
+
+
+var mainApp = angular.module('mainApp', ['ngRoute', 'react']);
 
 /* Routing */
 mainApp.config(['$routeProvider',
@@ -23,9 +29,13 @@ mainApp.config(['$routeProvider',
         templateUrl: '/static/admin/partials/event.html',
         controller: 'EventDetailCtrl'
       }).
-      when('/admin/galleries/:slug', {
-        templateUrl: '/static/admin/partials/gallery_detail.html',
-        controller: 'GalleryDetailCtrl'
+      when('/admin/venues/create', {
+        template: edit_venue_template,
+        controller: 'VenueCreateCtrl'
+      }).
+      when('/admin/venues/:slug/edit', {
+        template: edit_venue_template,
+        controller: 'VenueEditCtrl'
       }).
       otherwise({
         templateUrl: '/static/admin/partials/404.html'

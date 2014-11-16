@@ -154,5 +154,41 @@ mainApp.controller('GalleryDetailCtrl', function($scope, $location, $http, $rout
         name:'Abstracted Gallery', slug: 'abstracted', 'description': 'This place is rad as shit...'
     };
     */
+});
 
+
+mainApp.controller('VenueEditCtrl', function($scope, $location, $http, $routeParams, $rootScope) {
+
+    $scope.resource_id = $routeParams.slug
+    $scope.resource_url = '/api/galleries/' + $routeParams.slug;
+    $scope.person = { resource_url: $scope.resource_url, fname: 'Clark', lname: 'Kent', 'is_edit': true};
+
+    /*
+    var ajax = $http.get();
+    ajax.success(function(payload) {
+       $scope.gallery = payload.results;
+       $scope.api_data = angular.toJson(payload, true);
+
+       $rootScope.pagemeta = {};
+       $rootScope.pagemeta.title = $scope.gallery.name;
+       $rootScope.pagemeta.description = 'Sweet Short Title';
+       $rootScope.pagemeta.image = 'http://www.soapfactory.org/img/space/gallery-one-2.jpg'
+     });
+
+     ajax.error(function(payload){
+       $scope.api_data = angular.toJson(payload, true);
+     });
+     */
+
+    /*
+    $scope.gallery = {
+        name:'Abstracted Gallery', slug: 'abstracted', 'description': 'This place is rad as shit...'
+    };
+    */
+});
+
+
+mainApp.controller('VenueCreateCtrl', function($scope, $location, $http, $routeParams, $rootScope) {
+    $scope.resource_url = '/api/galleries';
+    $scope.person = { resource_url: $scope.resource_url, fname: 'Clark', lname: 'Kent', 'is_edit': false};
 });

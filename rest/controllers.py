@@ -46,6 +46,9 @@ class RestHandlerBase(webapp2.RequestHandler):
         """
         """
 
+        # Validate incoming payload
+        self.validate_payload()
+
         if not hasattr(self, '_put'):
             raise errors.MethodNotAllowed('Method Not Allowed.')
         self._put(*args, **kwargs)

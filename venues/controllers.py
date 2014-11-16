@@ -17,8 +17,8 @@ from framework.controllers import MerkabahBaseController
 resource_url = 'http://localhost:8080/api/galleries/%s' #TODO: HRM?
 
 REST_RULES = [
-    ResourceIdField(always=True),
-    ResourceUrlField(resource_url, always=True),
+    ResourceIdField(output_only=True),
+    ResourceUrlField(resource_url, output_only=True),
     SlugField(Venue.slug, always=True),
     RestField(Venue.name, always=True),
     
@@ -33,7 +33,7 @@ REST_RULES = [
     RestField(Venue.email, always=True),
     RestField(Venue.category, always=True),
     RestField(Venue.hours, always=True),
-    GeoField(Venue.geo, always=True),    
+    GeoField(Venue.geo, required=True),    
 ]
 
 def create_resource_from_entity(e, verbose=False):
@@ -75,7 +75,15 @@ def create_resource_from_entity(e, verbose=False):
     return r
 
 
-class GalleriesApiHandler(RestHandlerBase):
+class GalleryApiHandlerBase(RestHandlerBase):
+    """
+    Base Handler for all Gallery API endpoints
+    """
+    def get_rules(self):
+        return REST_RULES;
+
+
+class GalleriesApiHandler(GalleryApiHandlerBase):
     """
     Main Handler for Galleries Endpoint
     """
@@ -135,18 +143,22 @@ class GalleriesApiHandler(RestHandlerBase):
         }
         """
 
-        e = venues_api.create_venue(self.data)
+        e = venues_api.create_venue(self.cleaned_data)
         result = create_resource_from_entity(e)
         self.serve_success(result)
 
 
-class GalleryDetailApiHandler(RestHandlerBase):
+class GalleryDetailApiHandler(GalleryApiHandlerBase):
     """
     """
 
     def _get(self, slug):
         # TODO: Abstract this a bit more out into a rest-like service...
-        e = venues_api.get_venue_by_slug(slug)
+        
+        key = ndb.Key(urlsafe=slug)
+        e = key.get()
+        
+        #e = venues_api.get_venue_by_slug(slug)
 
         if not e:
             self.serve_404('Gallery Not Found')
@@ -179,14 +191,15 @@ class GalleryDetailApiHandler(RestHandlerBase):
             "category": "gallery"
         }
         """
+        key = ndb.Key(urlsafe=slug)
+        venue = key.get()
         
-        venue = venues_api.get_venue_by_slug(slug)
-
+        #venue = venues_api.get_venue_by_slug(slug)
         if not venue:
             self.serve_404('Gallery Not Found')
             return False
 
-        venue = venues_api.edit_venue(venue, self.data)
+        venue = venues_api.edit_venue(venue, self.cleaned_data)
         result = create_resource_from_entity(venue)
         self.serve_success(result)
 
@@ -202,7 +215,7 @@ class GalleryDetailApiHandler(RestHandlerBase):
             self.serve_404('Gallery Not Found')
             return False
 
-        result = venues_api.delete_venue(venue, self.data)
+        result = venues_api.delete_venue(venue, self.cleaned_data)
         self.serve_success(result)
 
 
@@ -216,7 +229,7 @@ class GalleryMainHandler(MerkabahBaseController):
     def get(self):
         pagemeta = {'title': 'Galleries and Venues', 'description': 'A Directory of Galleries and Places that Show Art in Minneapolis', 'image': 'http://www.soapfactory.org/img/space/gallery-one-2.jpg'}
         template_values = {'pagemeta': pagemeta}
-        self.render_template('templates/index.html', template_values)        
+        self.render_template('templates/index.html', template_values)
 
 
 class GalleryDetailHandler(MerkabahBaseController):
