@@ -30,6 +30,21 @@ libraries:
 # index files
 handlers:
 
+
+- url: /app.*
+  static_files: public/app.html
+  upload: public/app\.html
+  login: admin
+
+# Node modules that are for client
+- url: /node_modules
+  static_dir: node_modules
+  secure: optional
+
+- url: /public
+  static_dir: public
+  secure: optional
+
 - url: /beta.*
   script: main.app
   secure: optional
