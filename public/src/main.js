@@ -9,16 +9,24 @@ console.log(coolthing.derp.doit());
 */
 
 
-var React = require('react')
+var React = require('react');
 
 var Hello = React.createClass({
 
   render: function() {
-    return <div>Hello, {this.props.name}!</div>
+    return <div>Oh hey. Hello, {this.props.name}!</div>
   }
 });
 
 React.render(
   <Hello name="World" />,
   document.getElementById('hello')
-)
+);
+
+
+var container = document.querySelector('#xcontainer');
+var msnry = new Masonry( container, {
+  columnWidth: 200,
+  itemSelector: '.item',
+  gutter: 0
+});
