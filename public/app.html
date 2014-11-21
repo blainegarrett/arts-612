@@ -57,9 +57,18 @@
 
 
 	<style>
+
+	.row {
+		margin-right: -5px;
+		margin-left: -5px;
+	}
 	.item {
+		margin-bottom: 10px;
+		padding-right: 5px;
+		padding-left: 5px;
+	}
+	.item-container {
 		border : 1px solid silver;
-		padding:0px;
 	}
 
 	.item h3 {
@@ -70,7 +79,11 @@
 		text-align:left;
 		font-size: 20px;
 	}
-
+	.stamp {
+	  position: absolute;
+	  background: orange;
+	  border: 4px dotted black;
+	}
 	</style>
 
 
@@ -84,70 +97,18 @@
 		<div id="hello">If you are reading this, the react component didn't load...</div>
 
 
-<div id="xcontainer" class="row bs-downloads">
-	<div class="item col-sm-4">
-		<h3 id="download-bootstrap">Bootstrap</h3>
-		<img class="img-responsive" src="https://scontent-a-sea.xx.fbcdn.net/hphotos-xpa1/v/t1.0-9/p526x296/524150_10154709828460357_7089693634088703368_n.jpg?oh=20f20c793fe7c11205992101c883f787&oe=54DE2A7F" />
-	</div>
-	
-	<div class="item col-sm-4">
-		<h3 id="download-source">Source code</h3>
-		<p>Source Less, JavaScript, and font files, along with our docs. <strong>Requires a Less compiler and <a href="#grunt">some setup.</a></strong></p>
-	</div>
 
-	<div class="item col-sm-4">
-		<h3 id="download-sass">Sass</h3>
-		<p><a href="https://github.com/twbs/bootstrap-sass">Bootstrap ported from Less to Sass</a> for easy inclusion in Rails, Compass, or Sass-only projects.</p>
-		<p>
-		<a href="https://github.com/twbs/bootstrap-sass/archive/v3.3.1.tar.gz" class="btn btn-lg btn-outline" role="button" onclick="ga('send', 'event', 'Getting started', 'Download', 'Download Sass');">Download Sass</a>
-		</p>
-	</div>
-	
-	<div class="item col-sm-4">
-		<h3 id="download-sass">Sass</h3>
-		<p><a href="https://github.com/twbs/bootstrap-sass">Bootstrap ported from Less to Sass</a> for easy inclusion in Rails, Compass, or Sass-only projects.</p>
-		<p>
-		<a href="https://github.com/twbs/bootstrap-sass/archive/v3.3.1.tar.gz" class="btn btn-lg btn-outline" role="button" onclick="ga('send', 'event', 'Getting started', 'Download', 'Download Sass');">Download Sass</a>
-		</p>
-	</div>
-	
-	<div class="item col-sm-4">
-		<h3 id="download-sass">Sass</h3>
-		<p><a href="https://github.com/twbs/bootstrap-sass">Bootstrap ported from Less to Sass</a> for easy inclusion in Rails, Compass, or Sass-only projects.</p>
-		<p>
-		<a href="https://github.com/twbs/bootstrap-sass/archive/v3.3.1.tar.gz" class="btn btn-lg btn-outline" role="button" onclick="ga('send', 'event', 'Getting started', 'Download', 'Download Sass');">Download Sass</a>
-		</p>
-	</div>
-	
-	<div class="item col-sm-4">
-		<h3 id="download-sass">Sass</h3>
-		<p><a href="https://github.com/twbs/bootstrap-sass">Bootstrap ported from Less to Sass</a> for easy inclusion in Rails, Compass, or Sass-only projects.</p>
-		<p>
-		<a href="https://github.com/twbs/bootstrap-sass/archive/v3.3.1.tar.gz" class="btn btn-lg btn-outline" role="button" onclick="ga('send', 'event', 'Getting started', 'Download', 'Download Sass');">Download Sass</a>
-		</p>
-		</div>
-		<div class="item col-sm-4">
-		<h3 id="download-sass">Sass</h3>
-		<p><a href="https://github.com/twbs/bootstrap-sass">Bootstrap ported from Less to Sass</a> for easy inclusion in Rails, Compass, or Sass-only projects.</p>
-		<p>
-		<a href="https://github.com/twbs/bootstrap-sass/archive/v3.3.1.tar.gz" class="btn btn-lg btn-outline" role="button" onclick="ga('send', 'event', 'Getting started', 'Download', 'Download Sass');">Download Sass</a>
-		</p>
-		</div>
-		<div class="item col-sm-4">
-		<h3 id="download-sass">Sass</h3>
-		<p><a href="https://github.com/twbs/bootstrap-sass">Bootstrap ported from Less to Sass</a> for easy inclusion in Rails, Compass, or Sass-only projects.</p>
-		<p>
-		<a href="https://github.com/twbs/bootstrap-sass/archive/v3.3.1.tar.gz" class="btn btn-lg btn-outline" role="button" onclick="ga('send', 'event', 'Getting started', 'Download', 'Download Sass');">Download Sass</a>
-		</p>
-		</div>
-		<div class="item col-sm-4">
-		<h3 id="download-sass">Sass</h3>
-		<p><a href="https://github.com/twbs/bootstrap-sass">Bootstrap ported from Less to Sass</a> for easy inclusion in Rails, Compass, or Sass-only projects.</p>
-		<p>
-		<a href="https://github.com/twbs/bootstrap-sass/archive/v3.3.1.tar.gz" class="btn btn-lg btn-outline" role="button" onclick="ga('send', 'event', 'Getting started', 'Download', 'Download Sass');">Download Sass</a>
-		</p>
-		</div>
-		</div>
+
+
+<div id="xcontainer" class="row bs-downloads">
+	Loading indicator....
+</div>
+
+
+
+
+
+
 
 		</div>
 
