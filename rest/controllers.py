@@ -93,13 +93,17 @@ class RestHandlerBase(webapp2.RequestHandler):
         exc_type, exc_value, exc_traceback = sys.exc_info()
         formatted_lines = traceback.format_exc().splitlines()
 
-        self.serve_response(status, formatted_lines, str(exception))
+        self.serve_response(status, formatted_lines, [str(exception)])
         logging.exception(exception)
 
     def serve_response(self, status, result, messages=None):
         """
         Serve the response
         """
+
+        if (not isinstance(messages, list)):
+            messages = [messages]
+
 
         payload = {'status': status, 'results': result, 'messages': messages}
 

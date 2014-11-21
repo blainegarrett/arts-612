@@ -19,21 +19,21 @@ resource_url = 'http://localhost:8080/api/galleries/%s' #TODO: HRM?
 REST_RULES = [
     ResourceIdField(output_only=True),
     ResourceUrlField(resource_url, output_only=True),
-    SlugField(Venue.slug, always=True),
-    RestField(Venue.name, always=True),
+    SlugField(Venue.slug, required=True),
+    RestField(Venue.name, required=True),
     
-    RestField(Venue.address, always=True),
-    RestField(Venue.address2, always=True),
-    RestField(Venue.city, always=True),
-    RestField(Venue.state, always=True),
-    RestField(Venue.country, always=True),
+    RestField(Venue.address, required=True),
+    RestField(Venue.address2, required=False),
+    RestField(Venue.city, required=True),
+    RestField(Venue.state, required=True),
+    RestField(Venue.country, required=True),
 
-    RestField(Venue.website, always=True),
-    RestField(Venue.phone, always=True),
-    RestField(Venue.email, always=True),
-    RestField(Venue.category, always=True),
-    RestField(Venue.hours, always=True),
-    GeoField(Venue.geo, required=True),    
+    RestField(Venue.website, required=False),
+    RestField(Venue.phone, required=False),
+    RestField(Venue.email, required=False),
+    RestField(Venue.category, required=True),
+    RestField(Venue.hours, required=False),
+    GeoField(Venue.geo, required=False), 
 ]
 
 def create_resource_from_entity(e, verbose=False):
