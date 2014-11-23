@@ -19,7 +19,10 @@ var ActionColumn = React.createClass({
     render: function() {
         var col = this.state.col;
         var obj = this.state.obj;
-        return <span><a href={'/admin/calendar/' +  obj.resource_id + '/edit'} >edit</a></span>;
+
+        var action_url = '/admin/venues/' +  obj.resource_id + '/edit'
+
+        return <span><a href={action_url} >edit</a></span>;
     }
 
 });
