@@ -10,7 +10,7 @@ Documentation:
 	* [Deploying](/docs/dev/deploying)
 	* [Developing](/docs/dev/developing)
 	* [REST Api Documentation]((/docs/api/))
-*   Style Guide
+*   [Style Guide(/docs/style-guide)
 
 
 
@@ -28,3 +28,6 @@ Virtual Environment Setup
 * Step 5: Open a new shell and run the newly created alias `xarts612`
 * Step 6: Run `make install`
 * Step 7: run `python run_tests.py` If everything passes, you are probably good to go.
+
+Developing for react (pre-client)
+* In working directory, run `jsx --watch static/admin/js/react/src/ static/admin/js/react/build/`
