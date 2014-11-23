@@ -59,15 +59,38 @@ var DataList = React.createClass(
                         }
                         return <td>{ widget }</td>;
                     });
-                    return <tr>{ columnNodes }</tr>;
+                    return (<tr>{ columnNodes }</tr>);
                 });
             }
 
-            return  <tbody> { rowNodes } </tbody>;
+            return  <tbody>{ rowNodes }</tbody>;
         }
 });
 
 var DataTableMixin = {
+    filter_by_name : function(e) {
+
+        var term = e.target.value;
+
+        this.setState({data:[]}); // This forces the table to render empty...
+
+        $.ajax({
+            url: this.state.resource_url + '?q=' + term,
+            dataType: 'json',
+            success:  function(data) {
+                this.setState({data:data});
+                console.log(data)
+                
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(this.state.resource_url, status, err.toString());
+            }.bind(this)
+            
+        });
+
+        
+        
+    },
     componentDidMount: function(){
         $.ajax({
             url: this.state.resource_url,
@@ -83,6 +106,8 @@ var DataTableMixin = {
     },
     
     render_templatexxx: function() {
+        console.log(this.state.data);
+
         var columnNodes = this.state.columns.map(function (col) {
             return <th>{ col }</th>
         });
@@ -91,8 +116,25 @@ var DataTableMixin = {
             <div>
                 <h2>Venues</h2>
                 <div className="pull-right">
+                    
+
+                <form className="form-inline" role="form">
+                    <div className="form-group">
+                        <div className="input-group">
+                              <label className="sr-only" for="exampleInputEmail2">Email address</label>
+                              <input type="email" className="form-control" id="exampleInputEmail2" placeholder="Filter by Name" onChange={this.filter_by_name} />
+                              </div>
+
+                  </div>
+
+                 </form>
+                </div>
+                
+                <div className="pull-left">
                     <a href="/admin/venues/create/" className="btn btn-default">Add Venue</a>
                 </div>
+
+                
             </div>
 
             <table className="table table-hover table-striped table-compressed">
@@ -103,6 +145,7 @@ var DataTableMixin = {
                 </thead>
                 <DataList data={this.state.data} columns={ this.state.columns } grid={ this } />
             </table>
+
         </div>;
     }
 }
