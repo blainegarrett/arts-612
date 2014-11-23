@@ -2,6 +2,6 @@
 # Packages in requirements_dev.txt will be installed locally only
 
 unicode-slugify==0.1.1
-furious
 pytz
 voluptuous
+git+git://github.com/Workiva/furious.git#egg=furious
