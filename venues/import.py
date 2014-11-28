@@ -6,8 +6,8 @@ from google.appengine.api import search
 from modules.venues.internal.models import Venue
 from modules.venues.internal import search as vsearch
 from modules.venues.internal import api as vapi
+from modules.venues.constants import VENUE_SEARCH_INDEX
 
-INDEX_NAME = 'venues_indexx'
 
 class GalleryData(webapp2.RequestHandler):
     """
@@ -16,10 +16,23 @@ class GalleryData(webapp2.RequestHandler):
 
     def get(self):
         
+        # Fetch all Events
+        docs_to_put = []
+        results = Venue.query().fetch(1000)
+        search_index = search.Index(name=VENUE_SEARCH_INDEX)
+
+        for entity in results:
+            docs_to_put.append(vsearch.build_index(entity))
+        
+        search_index.put(docs_to_put)
+        
+        raise Exception(docs_to_put)
+        return 
+        
         # Destroy all existing data
         results = Venue.query().fetch(1000)
         docs_to_put = []
-        index = search.Index(name=INDEX_NAME)
+        index = search.Index(name=VENUE_SEARCH_INDEX)
 
         for r in results:
             r.key.delete()

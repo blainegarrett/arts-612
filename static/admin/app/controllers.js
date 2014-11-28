@@ -67,9 +67,33 @@ mainApp.directive('restDateRender', function() {
 
 
 
-mainApp.controller('EventListCtrl', function($scope, $location, $http) {
-    
+mainApp.controller('EventListCtrl', function($scope, $location, $http) { });
+
+mainApp.controller('EventEditCtrl', function($scope, $location, $http, $routeParams, $rootScope) {
+    /* Controller for Editing a Events */
+    var save_callback = function(){
+      $location.path( "/admin/events/" ); 
+    };
+
+    $scope.resource_id = $routeParams.event_id;
+    $scope.resource_url = '/api/events/' + $routeParams.event_id;
+    $scope.form_props = { resource_url: $scope.resource_url, fname: 'Clark', lname: 'Kent', 'is_edit': true, 'save_callback': save_callback};
+
 });
+
+
+mainApp.controller('EventCreateCtrl', function($scope, $location, $http, $routeParams, $rootScope) {
+    /* Controller for Creating an Event */
+
+    var save_callback = function(){
+      $location.path( "/admin/events" ); 
+    };
+
+    $scope.resource_url = '/api/events';
+    $scope.form_props = { resource_url: $scope.resource_url, fname: 'Clark', lname: 'Kent', 'is_edit': false, 'save_callback': save_callback};
+});
+
+
 
 
 mainApp.controller('EventDetailCtrl', function($scope, $location, $http, $routeParams, $rootScope) {

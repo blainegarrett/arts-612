@@ -58,7 +58,7 @@ def simple_search(querystring):
 
     #querystring = self.request.GET.get('q')
 
-    search_query = search.Query(query_string=querystring, options=search.QueryOptions(limit=5))
+    search_query = search.Query(query_string=querystring, options=search.QueryOptions(limit=10))
 
     index = get_search_index()
     search_results = index.search(search_query)
