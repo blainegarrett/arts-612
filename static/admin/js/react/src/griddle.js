@@ -2139,9 +2139,13 @@ BaseWidgetMixin = {
         return this.refs.input.getDOMNode().value;
      },
       handleChange: function(event) {
-          //event.target.value
-          var value = this.getValue();
-          this.setState({val: value});
+          if (typeof(this._handleChange) == 'function') {
+              return this._handleChange();
+          }
+          else {
+              this.setState({val: event.target.value});
+          }
+          
      },
     onBlur: function(e){
         var value = this.getValue();
@@ -2168,7 +2172,10 @@ CheckboxWidget = React.createClass({
         state['choices'] = this.props.choices
         return state;
     },
+
     _getValue: function() {
+        /* This should be run after state chnage???? maybe...*/
+
         
         for (ref in this.refs) {
             if (this.refs[ref].props.checked) {
@@ -2434,7 +2441,19 @@ DateRangeWidget = React.createClass({
         return field_value;
     },
     _handleChange: function(value){
-       alert('sfsdfsd');
+        
+        /* TODO: This is where we can detect if this date is valid or not... */
+        var time_val = this.refs.time_input.getDOMNode().value;
+        var is_time_valid = moment('2010-10-10 ' + time_val).isValid();
+        
+        if (is_time_valid) {
+        
+            field_value =  this.refs.date_input.getDOMNode().value + ' ' + this.refs.time_input.getDOMNode().value;
+            this.setState({val: field_value});
+        }
+        else {
+            console.log('Time is not valud...');
+        }
     },
 
     toResourceX: function(field_value) {
@@ -2480,9 +2499,8 @@ DateRangeWidget = React.createClass({
        
        // time inputs
       $(time_input).timepicker(
-          {defaultTime: false}
-        
-            ).on('changeTime.timepicker', function(e) { 
+          {defaultTime: false, disableFocus: true})
+          .on('changeTime.timepicker', function(e) { 
                 react_element.getValue();
                 react_element.handleChange();
 
@@ -2519,7 +2537,7 @@ DateRangeWidget = React.createClass({
         var time_val = date_obj.format('h:mm a');
         var date_val = date_obj.format('YYYY-MM-DD');
 
-        if (date_type == 'reoccurring' || time_val == '12:00 am') {
+        if ((date_type == 'reoccurring' || date_type == '') || time_val == '12:00 am') {
             show_time = false;
             time_val = '';
         }
