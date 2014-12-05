@@ -1972,7 +1972,7 @@ var DataTableMixin = {
                 <form className="form-inline" role="form">
                     <div className="form-group">
                         <div className="input-group">
-                              <label className="sr-only" for="exampleInputEmail2">Email address</label>
+                              <label className="sr-only" htmlFor="exampleInputEmail2">Email address</label>
                               <input type="email" className="form-control" id="exampleInputEmail2" placeholder="Filter by Name" onChange={this.filter_by_name} />
                               </div>
 
@@ -2425,6 +2425,10 @@ TextField = React.createClass({
     mixins: [BaseField],
 });
 
+function combine_datetime(date_str, time_str) {
+    var dt_str = date_str + ' ' + time_str;
+    return dt_str;
+}
 
 DateRangeWidget = React.createClass({
     /* General Input Widget */
@@ -2433,22 +2437,26 @@ DateRangeWidget = React.createClass({
 
     _getValue: function() {
         /* Called on blur */
+
         console.log('in DateRangeWidget._getValue');
+        var date_input = this.refs.date_input.getDOMNode();
+        var time_input = this.refs.time_input.getDOMNode();
 
-        field_value =  this.refs.date_input.getDOMNode().value + ' ' + this.refs.time_input.getDOMNode().value;
-
-        console.log(field_value);
-        return field_value;
+        return combine_datetime(date_input.value, time_input.value);
+        
     },
+
     _handleChange: function(value){
-        
+        var date_input = this.refs.date_input.getDOMNode();
+        var time_input = this.refs.time_input.getDOMNode();
+
+
         /* TODO: This is where we can detect if this date is valid or not... */
-        var time_val = this.refs.time_input.getDOMNode().value;
+        var time_val = time_input.value;
         var is_time_valid = moment('2010-10-10 ' + time_val).isValid();
-        
+
         if (is_time_valid) {
-        
-            field_value =  this.refs.date_input.getDOMNode().value + ' ' + this.refs.time_input.getDOMNode().value;
+            field_value = this._getValue();
             this.setState({val: field_value});
         }
         else {
@@ -2486,24 +2494,26 @@ DateRangeWidget = React.createClass({
     },
 
     componentDidMount: function() {
-      var date_input = $(this.refs.date_input.getDOMNode());
-      var time_input = $(this.refs.time_input.getDOMNode());
-      var react_element = this;
-      
-      $(date_input).datepicker({ format: 'YYYY-MM-DD', autoSize: true }).on('changeDate', function(ev){
-          react_element.getValue();
-          react_element.handleChange();
-      });
+        var date_input = $(this.refs.date_input.getDOMNode());
+        var time_input = $(this.refs.time_input.getDOMNode());
+        var react_element = this;
+
+        // Bind the datepicker...
+        $(date_input).datepicker({ format: 'YYYY-MM-DD', autoSize: true }).on('changeDate', function(ev){
+            react_element.getValue();
+            react_element.handleChange();
+        });
   
        console.log(time_input);
        
-       // time inputs
+       // Bind the Time Picker
       $(time_input).timepicker(
           {defaultTime: false, disableFocus: true})
           .on('changeTime.timepicker', function(e) { 
                 react_element.getValue();
                 react_element.handleChange();
 
+                console.log('is this redundant?');
                 console.log(react_element.setState({val: react_element.getValue()}))
 
       }); 
@@ -2534,10 +2544,10 @@ DateRangeWidget = React.createClass({
         date_obj = moment(val)
 
         var show_time = true;
-        var time_val = date_obj.format('h:mm a');
+        var time_val = date_obj.format('h:mm A');
         var date_val = date_obj.format('YYYY-MM-DD');
 
-        if ((date_type == 'reoccurring' || date_type == '') || time_val == '12:00 am') {
+        if ((date_type == 'reoccurring' || date_type == '') && time_val == '12:00 AM') {
             show_time = false;
             time_val = '';
         }
@@ -2553,6 +2563,9 @@ DateRangeWidget = React.createClass({
                 <div className="col-sm-3 input-append bootstrap-timepicker">
                     <input type="text" className={ 'form-control ' + classes } id={'id_' +  id } placeholder={ placeholder } value={ time_val } onChange={this.handleChange} onBlur={this.onBlur} onFocus={this.onFocus} ref="time_input" placeholder="Add Time?" />
                 <span className="glyphicon glyphicon-time form-control-feedback" aria-hidden="true" onClick={this.show_time}></span>
+                </div>
+                <div className="col-sm-6 input-append bootstrap-timepicker">
+                ({ date_val } { time_val })
                 </div>
             </div>;
     }

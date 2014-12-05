@@ -26,7 +26,7 @@ class GalleryData(webapp2.RequestHandler):
         
         search_index.put(docs_to_put)
         
-        raise Exception(docs_to_put)
+        raise Exception('This is here to not accidentally overwrite data in production...')
         return 
         
         # Destroy all existing data
