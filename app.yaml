@@ -1,5 +1,5 @@
 application: arts-612
-version: angular
+version: beta-client
 
 runtime: python27
 api_version: 1
@@ -26,7 +26,16 @@ libraries:
 #  - url: .*
 #    script: main.app
 
- 
+skip_files:
+  ^node_modules$
+  ^(.*/)?#.*#$
+  ^(.*/)?.*~$
+  ^(.*/)?.*\.py[co]$
+  ^(.*/)?.*/RCS/.*$
+  ^(.*/)?\..*$
+  ^node_modules$
+
+
 # index files
 handlers:
 

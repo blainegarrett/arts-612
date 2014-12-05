@@ -2,6 +2,7 @@ var gulp = require('gulp');
 var browserify = require('gulp-browserify');
 var watchify = require('gulp-watchify');
 var react = require('react-tools');
+var uglify = require('gulp-uglify');
 
 gulp.task('scripts', function() {
     // Single entry point to browserify
@@ -34,4 +35,11 @@ gulp.task('browserify', watchify(function(watchify) {
 }));
 
 
-
+gulp.task('browserify-min', function() {
+    // Single entry point to browserify
+    return gulp.src('./public/src/main.js')
+        .pipe(browserify())
+        .pipe(uglify())
+        .pipe(gulp.dest('./public/build'))
+ 
+});
