@@ -55,7 +55,7 @@ class MainHandler(MerkabahBaseController):
 # TODO: WE need to somehow inject these into the angular app
 
 # WebGalleries
-web_routes = []
+web_routes = routes
 rest_routes = []
 
 web_routes += [

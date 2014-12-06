@@ -14,35 +14,9 @@
 	<!-- Open Graph and Social Meta -->
 	
 
-    <title>MPLS Art | Welcome</title>
+    <title>mplsart | returning soon</title>
 
 	<!-- Social -->
-
-	<!-- angular -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.18/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.18/angular-route.js"></script>
-	<script src="/static/app/app.js"></script>
-	<script src="/static/app/controllers.js"></script>
-
-
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <link rel="icon" href="/static/themes/v0/favicon.ico" />
-	<link href='http://fonts.googleapis.com/css?family=Quicksand:400,700' rel='stylesheet' type='text/css'>
-	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <!-- Bootstrap core CSS -->
-	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-
-    <!-- Custom styles for this template -->
-	<link rel="stylesheet" href="/static/themes/v0/core.css">
-
-	<!-- important bits -->
-	<meta name="google-site-verification" content="5rh0RiNkYuPuVOdrIXk4mY4AQ87uS7Ad_ZigdjDNBp0" />
-
-
-	<!-- Search/Social Meta -->
     <title>mplsart | returning soon...</title>
     <meta name="description" content="The Very Best Events and Gallery Listings for Minneapolis" />
     <meta name="keywords" content="minneapolis, twin cities, art, galleries, scene, painting, visual arts, drawing, purchase, coffee shop, shows, exhibition" />
@@ -55,15 +29,28 @@
 	<meta name="twitter:description" content="Minneapolis' favorite arts calendar is returning soon with the very best events and gallery listings the city has to offer.">
 	<meta name="twitter:creator" content="@mplsart">
 	<!-- Twitter Summary card images must be at least 200x200px -->
-	<meta name="twitter:image" content="/static/themes/v0/mplsart_fbimg.jpg">
+	<meta name="twitter:image" content="http://mplsart.com/static/themes/v0/mplsart_fbimg.jpg">
 
 	<!-- Open Graph data -->
 	<meta property="og:site_name" content="mplsart" />
 	<meta property="og:title" content="mplsart | returning soon..." />
 	<meta property="og:type" content="website" />
 	<!-- <meta property="og:url" content="http://mplsart.com/" /> -->
-	<meta property="og:image" content="http://phase-0.arts-612.appspot.com/static/themes/v0/mplsart_fbimg.jpg" />
+	<meta property="og:image" content="http://mplsart.com/static/themes/v0/mplsart_fbimg.jpg" />
 	<meta property="og:description" content="Minneapolis' favorite arts calendar is returning soon with the very best events and gallery listings the city has to offer." />
+
+	<!-- fonts -->
+	<link href='http://fonts.googleapis.com/css?family=Quicksand:400,700' rel='stylesheet' type='text/css'>
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Bootstrap core CSS -->
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+    <!-- Custom styles for this template -->
+	<link rel="stylesheet" href="/static/themes/v0/core.css" />
+
+	<!-- important bits -->
+	<meta name="google-site-verification" content="5rh0RiNkYuPuVOdrIXk4mY4AQ87uS7Ad_ZigdjDNBp0" />
 
   </head>
 
@@ -81,7 +68,7 @@
 	            <span class="icon-bar"></span>
 	          </button>
 			  -->
-	          <a class="navbar-brand" href="">MPLSART.COM</a>
+	          <a class="navbar-brand" href="/">MPLSART.COM</a>
 	        </div>
 			
 			<p class="navbar-text navbar-right">
@@ -93,330 +80,9 @@
 	
 	<!-- Start Main Content Container -->
     <div class="container">
-
-      	<!-- Start Header Row -->
-		<div class="row">
-        	<div class="col-md-12" id="welcome-header-container">
-				<h1 id="welcome-header">
-					GOOD NEWS, MINNEAPOLIS
-				</h1>
-			</div>
+		<div ng-view>
+			loading ...
 		</div>
-		<!-- End Header Row -->
-
-	 
-      <div class="row">
-
-		<!-- Start of main content area -->
-        <div class="col-md-6" id="main-content-container">
-
-			<div id="panel-blurb">
-				<h2>mplsart is returning!</h2>
-				<p>
-					We are delighted to say that we’ve met a lovely pair who love art &amp; mpls as much as we do.  We're handing over the keys and are thrilled that they will be re-launching mplsart. Look for a new calendar this Spring and keep submitting your events to <a href="mailto:calendar@mplsart.com">calendar@mplsart.com</a>
-				</p>
-					
-				<p style="font-size:18px"><br />XO,<br />
-				Emma Berg &amp; Kristoffer Knutson</p>
-			</div><!-- /#pane-blurb -->
-
-			<div id="panel-signup">
-				<div class="panel-header">PRE-LAUNCH ACCESS</div>
-				<div class="panel-content">
-					<p>Enter your email address for exclusive access to the Beta calendar during its development.</p>
-						<form id="email-form" role="form" action="/beta/email/" method="GET">
-						    <div class="input-group input-group-lg">
-						      <input type="text" class="form-control" id="id_email" name="email" placeholder="Your email address">
-
-						      <span class="input-group-btn">
-						        <button class="btn btn-default" type="submit">Go</button>
-						      </span>
-
-						    </div><!-- /input-group -->
-						</form>
-						
-				</div>
-			</div>
-			
-			<div id="panel-contact">
-				<div class="panel-content"><a href="mailto:calendar@mplsart.com"><b>Contact us</b></a> with questions and to submit event listings.</div>
-			</div>
-
-			<div id="panel-social">
-				<div class="panel-content">
-					
-					
-					<a href="https://www.facebook.com/mplsart" id="fb-link" target="_new">
-						<span class="fa-stack fa-lg">
-							<i class="fa fa-square-o fa-stack-2x"></i>
-							<i class="fa fa-facebook fa-stack-1x"></i>
-						</span>
-					</a>
-
-					<a href="https://twitter.com/mplsart" id="twitter-link" target="_new">  
-						<span class="fa-stack fa-lg">
-							<i class="fa fa-square-o fa-stack-2x"></i>
-							<i class="fa fa-twitter fa-stack-1x"></i>
-						</span>
-					</a>
-					
-					
-					
-							&nbsp;&nbsp;Stay Connected to mplsart during the rebuild.</div>
-			</div>
-
-			
-
-        </div><!-- /#main-content-container -->
-
-		<div class="col-md-3 panel-events">
-			<div class="panel-header">OPENINGS &amp; EVENTS</div>
-			<div class="panel-content">
-				<ul class="event-list">
-
-				<!--
-				<li class="event">
-					<a href="https://www.facebook.com/events/351303221712449/" target="_blank">
-						<span class="event-title">Curative</span>
-					</a>
-					<span class="event-time">Wed Oct 15th 5PM - 8PM</span>
-					<span class="event-address">Gamut Gallery<br />1006 Marquette Ave S</span>
-				</li>
-
-
-				<li class="event">
-					<a href="http://burnetgallery.com/news.html" target="_blank">
-						<span class="event-title">Michael Kareken - Parts</span>
-					</a>
-					<span class="event-time">Thurs Oct 16th 7PM - 9PM</span>
-					<span class="event-address">Burnet Gallery<br />210 N First St</span>
-				</li>
-
-				<li class="event">
-					<a href="https://www.facebook.com/events/288156661388165/" target="_blank">
-						<span class="event-title">Die Wunderkammer</span>
-					</a>
-					<span class="event-time">Fri Oct 17th  6:30PM - 9PM</span>
-					<span class="event-address">Gallery 148<br />2501 Stevens Ave</span>
-				</li>
-
-				<li class="event">
-					<a href="http://www.jehrapatrick.com/Waiting-Room" target="_blank"><span class="event-title">Paintings From the Collection - Artwork by Jehra Patrick</span></a>
-					<span class="event-time">Fri Oct 17th  12PM - 4PM</span>
-					<span class="event-address">Waiting Room<br />1629 Hennepin Ave #300</span>
-				</li>
-
-
-				<li class="event">
-					<a href="http://publicfunctionary.org/now/" target="_blank"><span class="event-title">Overturf + Van Gieson: In search of…</span></a>
-					<span class="event-time">Fri Oct 17th (Closing) 7PM - 12AM</span>
-					<span class="event-address">Public Functionary<br />1400 12th Ave. NE</span>
-				</li>
-
-
-				<li class="event">
-					<a href="https://www.facebook.com/events/1583982815162972/" target="_blank">
-						<span class="event-title">Alspach at Gallery 100</span>
-					</a>
-					<span class="event-time">Sat Oct 18th 6PM - 10PM</span> Through Nov 15th 
-					<span class="event-address">Gallery 100<br />801 Washington Ave N. #100</span>
-				</li>
-
-				<li class="event">
-					<a href="https://www.facebook.com/events/1567689863450688/" target="_blank">
-						<span class="event-title">Grupo Soap del Corazon Espiritus</span>
-					</a>
-					<span class="event-time">Sat Oct 18th 6PM - 10PM</span> Through Nov 15th
-					<span class="event-address">Gallery 100<br />801 Washington Ave N. #100</span>
-				</li>
-
-				<li class="event">
-					<a href="https://www.facebook.com/events/701442159935358/" target="_blank">
-						<span class="event-title">Cult Status Presents: Dimensional Mutation</span>
-					</a>
-					<span class="event-time">Sat Oct 18th 6PM - 10PM</span>
-					<span class="event-address">Premises<br />3449 North 2nd St</span>
-				</li>
-				-->
-
-
-				<li class="event">
-					<a href="http://www.TuckUnder.org" target="_blank"><span class="event-title">36CHMBRZ</span></a>
-					<span class="event-time">Thur Oct 30th 6PM - 9PM</span>
-					<span class="event-address">TuckUnder Projects<br />5120 York Ave S</span>
-				</li>
-
-
-				<li class="event">
-					<a href="http://www.northrupkingbuilding.com/" target="_blank">
-						<span class="event-title">Art Attack 2014 - 20+ Artists</span>
-					</a>
-					<span class="event-time">Fri Nov 7th - Sun Nov 9th</span>
-					<span class="event-address">Northrop King Building<br />1500 Jackson St NE</span>
-				</li>
-
-
-				<li class="event">
-					<a href="http://www.kolmanpryorgallery.com/exhibition/mutable-landscapes/" target="_blank">
-						<span class="event-title">Mutable Landscapes - Patrick Kemal Pryor</span>
-					</a>
-					<span class="event-time">Sat Nov 8th 7PM - 10PM</span>
-					<span class="event-address">Kolman &amp; Pryor Gallery<br />1500 Jackson St NE #395</span>
-				</li>
-				
-				<li class="event">
-					<a href="http://www.ryanfontaine.com/theTEMP" target="_blank">
-						<span class="event-title">The TEMP(Opening)</span>
-					</a>
-					<span class="event-time">Mon Nov 10th 6PM - 10PM</span>
-					<span class="event-address">Temporary Autonomous Museum of Contemporary Art<br />3400 Cedar Avenue S</span>
-				</li>
-
-
-				<li class="event">
-					<a href="http://www.soapfactory.org/exhibit.php?content_id=706" target="_blank">
-						<span class="event-title">Soap Factory Day and 25th Anniversary Party</span>
-					</a>
-					<span class="event-time">Sat Nov 15th 6PM - 12AM</span>
-					<span class="event-address">Soap Factory<br />514 2nd St. SE</span>
-				</li>
-
-				<li class="event">
-					<a href="http://www.soovac.org/index.php/shows/view/untitled_11_soovacs_11th_annual_juried_exhibition/" target="_blank">
-						<span class="event-title">Untitled 11: SooVac's 11th Annual Juried Exhibition</span>
-					</a>
-					<span class="event-time">Sa Nov 15th 6 - 9PM</span>
-					<span class="event-address">Soo Visual Arts Center<br />2638 Lyndale Ave. S</span>
-				</li>
-
-
-				</ul>
-			</div>
-		</div>
-		<div class="col-md-3 panel-events">
-			<div class="panel-header">NOW SHOWING</div>
-			<div class="panel-content">
-
-				<ul class="event-list">
-
-					<li class="event">
-						<a href="http://www.vineartscenter.com/membershow/" target="_blank">
-							<span class="event-title">Get Behind the Work II</span>
-						</a>
-						<span class="event-time">Oct 4th - Nov 1st</span>
-						<span class="event-address">Vine Arts<br />2637 27th AVE S</span>
-					</li>
-
-					<li class="event">
-						<a href="http://www.soapfactory.org/exhibit.php?content_id=136" target="_blank">
-							<span class="event-title">Unhinged in the Haunted Basement</span>
-						</a>
-						<span class="event-time">Sept 27th - Nov 2nd</span>
-						<span class="event-address">Soap Factory<br />514 2nd St. SE</span>
-					</li>
-
-					<li class="event">
-						<a href="http://www.formandcontent.org/upcoming-exhibitions/" target="_blank">
-							<span class="event-title">F+C@SEVEN</span>
-						</a>
-						<span class="event-time">Sep 25th - Nov 8th</span>
-						<span class="event-address">Form+Content Gallery<br />210 N 2nd St #104</span>
-					</li>
-
-					<li class="event">
-						<a href="https://www.facebook.com/events/335545323283237/?unit_ref=suggested_events" target="_blank">
-							<span class="event-title">The Black Moon: New Works by Kate Iverson</span>
-						</a>
-						<span class="event-time">Oct 3rd - Nov 8th</span>
-						<span class="event-address">Soo Local<br />3506 Nicollet Ave</span>
-					</li>
-
-					<!-- https://www.facebook.com/events/189268111243845/ 
-					https://www.facebook.com/events/189268111243845/
-					Show Map
-					Stevens Square Center for the Arts
-					1905 3rd Ave S, Minneapolis, Minnesota 55404
-					-->
-
-					<li class="event">
-						<a href="http://alexahorochowski.com/2014/06/02/club-disminucion/" target="_blank"><span class="event-title">Alexa Horochowski: Club Disminución</span></a>
-						<span class="event-time">Sept 6th - Nov 9th</span>
-						<span class="event-address">Soap Factory<br />514 2nd St. SE</span>
-					</li>
-
-					<li class="event">
-						<a href="http://www.alteredesthetics.org/dark-solo-exhibition-ashley-l-wiermaa" target="_blank">
-							<span class="event-title">Altered Esthetics presents: From the Dark</span>
-						</a>
-						<span class="event-time">Oct 9th - Nov 10th</span>
-						<span class="event-address">Nomad World Pub<br />501 Cedar Ave</span>
-					</li>
-
-					<li class="event">
-						<a href="https://www.facebook.com/events/1502473189988054/" target="_blank"><span class="event-title">On Fertile Ground</span></a>
-						<span class="event-time">Aug 15th - Nov 15th</span>
-						<span class="event-address">All My Relations Arts<br />1414 East Franklin</span>
-					</li>
-
-					<li class="event">
-						<a href="http://foxtaxservice.com/gallery/" target="_blank">
-							<span class="event-title">Patefaciō</span>
-						</a>
-						<span class="event-time">Oct 18th - Nov 15th</span>
-						<span class="event-address">Fox Tax<br /> 503 1st Ave NE</span>
-					</li>
-
-					<li class="event">
-						<a href="http://www.circagallery.org/" target="_blank">
-							<span class="event-title">Carmen Vetter: Folding | Vaulting</span>
-						</a>
-						<span class="event-time">Oct 4th - Nov 15th</span>
-						<span class="event-address">Circa Gallery<br />210 N First St</span>
-					</li>
-
-					<li class="event">
-						<a href="https://www.facebook.com/events/189268111243845/" target="_blank">
-							<span class="event-title">Doorways to the Underworld</span>
-						</a>
-						<span class="event-time">Oct 25th - Nov 15th</span>
-						<span class="event-address">Stevens Square Center for the Arts<br />1905 3rd Ave S</span>
-					</li>
-
-					<li class="event">
-						<a href="http://www.gamutgallerympls.com/category/exhibits/" target="_blank">
-							<span class="event-title">C4W:2014 - Curated by Kristoffer Knutson</span>
-						</a>
-						<span class="event-time">Oct 24th - Nov 22nd</span>
-						<span class="event-address">Gamut Gallery<br />1006 Marquette Ave S</span>
-					</li>
-					<li class="event">
-						<a href="http://www.hangitinc.com/art_shows.html" target="_blank"><span class="event-title">Afterlife Merriment</span></a>
-						<span class="event-time">Oct 24th - Nov 29th</span>
-						<span class="event-address">Gallery 122 at Hang It<br />122 8th Street SE</span>
-					</li>
-					<li class="event">
-						<a href="https://art.umn.edu/nash" target="_blank"><span class="event-title">Thinking Making Living</span></a>
-						<span class="event-time">Sep 2nd - Dec 13th</span>
-						<span class="event-address">Katherine E. Nash Gallery (U of M)<br />405 21st Ave S</span>
-					</li>
-
-					<li class="event">
-						<a href="http://www.intermediaarts.org/catalyst-series-the-blacker-the-berry" target="_blank">
-							<span class="event-title">The Blacker The Berry ...</span>
-						</a>
-						<span class="event-time">Nov 5th - Jan 10th</span>
-						<span class="event-address">Intermedia Arts<br />2822 Lyndale Ave S</span>
-					</li>
-
-				</ul>
-			</div>
-		</div>
-
-		<!-- End of main content area -->
-      </div><!--/row-->
-
-      <footer id="main-content-footer"><p>We love art. We love you. &copy; 2014 mplsart</p></footer>
-
     </div><!--/.container-->
 
 
@@ -426,7 +92,22 @@
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-	<script src="/static/js/chrome.js"></script>
+
+	
+	<!-- angular -->
+	<script src="/static/app/controllers.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.18/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.18/angular-route.js"></script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.12.0/react.js"></script>
+    <script src="/static/js/ngReact.js"></script>
+
+	<script src="/static/app/app.js"></script>
+	<script src="/static/app/controllers.js"></script>
+
+	<script src="/static/js/react/build/eventlist.js"></script>
+	<script src="/static/js/moment.js"></script>	
+
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 

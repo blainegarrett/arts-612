@@ -1,34 +1,19 @@
 /*
 MPLS Art Angular App
 */
-var mainApp = angular.module('mainApp', ['ngRoute']);
+var mainApp = angular.module('mainApp', ['ngRoute', 'react']);
 
 /* Routing */
 mainApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
       when('/', {
-        templateUrl: '/static/partials/main.html'
-      }).
-      when('/galleries', {
-        templateUrl: '/static/partials/galleries.html',
-        controller: 'GalleriesListCtrl'
-      }).
-      when('/calendar', {
-        templateUrl: '/static/partials/calendar.html',
-        controller: 'EventListCtrl'
-      }).
-      when('/calendar/:event_id', {
-        templateUrl: '/static/partials/event.html',
-        controller: 'EventDetailCtrl'
-      }).
-      when('/galleries/:slug', {
-        templateUrl: '/static/partials/gallery_detail.html',
-        controller: 'GalleryDetailCtrl'
+        templateUrl: '/static/partials/main.html',
+        controller: 'TempMainPageController'
       }).
       otherwise({
-        templateUrl: '/static/partials/main.html'
-        //redirectTo: '/'
+        templateUrl: '/static/partials/main.html',
+        controller: 'TempMainPageController'
       });
   }]);
 

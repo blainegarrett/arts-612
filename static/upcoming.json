@@ -1,0 +1,331 @@
+{
+    "status": 200,
+    "messages": [null],
+    "results": [{
+        "event_dates": [{
+            "category": "sale",
+            "end": "2014-12-14T04:00:00Z",
+            "venue": {
+                "website": "http://www.gamutgallerympls.com/",
+                "city": "Minneapolis",
+                "name": "Gamut Gallery",
+                "resource_id": "agxkZXZ-YXJ0cy02MTJyEAsSBVZlbnVlIgVnYW11dAw",
+                "country": "USA",
+                "address2": null,
+                "email": "art@gamutgallerympls.com",
+                "hours": null,
+                "phone": "612-293-6497",
+                "state": "MN",
+                "address": "1006 Marquette Ave",
+                "resource_url": "http://localhost:8080/api/galleries/agxkZXZ-YXJ0cy02MTJyEAsSBVZlbnVlIgVnYW11dAw",
+                "category": "gallery",
+                "geo": {
+                    "lat": 44.973357,
+                    "lon": -93.273592
+                },
+                "slug": "gamut"
+            },
+            "label": "Opening Night",
+            "start": "2014-12-12T18:00:00Z",
+            "type": "timed",
+            "venue_slug": "gamut"
+        }],
+        "name": "Raging Art On - 2014",
+        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoMoJDA",
+        "url": "https://www.facebook.com/events/882117088465341/",
+        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoMoJDA",
+        "slug": "raging-art-on-2014"
+    }, {
+        "event_dates": [{
+            "category": "reception",
+            "end": "2014-12-13T03:00:00Z",
+            "venue": {
+                "website": "http://burnetgallery.com/",
+                "city": "Minneapolis",
+                "name": "Burnet Gallery",
+                "resource_id": "agxkZXZ-YXJ0cy02MTJyGQsSBVZlbnVlIg5idXJuZXQtZ2FsbGVyeQw",
+                "country": "USA",
+                "address2": null,
+                "email": "",
+                "hours": null,
+                "phone": "",
+                "state": "MN",
+                "address": "901 Hennepin Ave",
+                "resource_url": "http://localhost:8080/api/galleries/agxkZXZ-YXJ0cy02MTJyGQsSBVZlbnVlIg5idXJuZXQtZ2FsbGVyeQw",
+                "category": "gallery",
+                "geo": {
+                    "lat": 44.9760573,
+                    "lon": -93.276923
+                },
+                "slug": "burnet-gallery"
+            },
+            "label": "Event",
+            "start": "2014-12-13T00:00:00Z",
+            "type": "timed",
+            "venue_slug": "burnet-gallery"
+        }],
+        "name": "Drew Peterson / Waterworks",
+        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoJoJDA",
+        "url": "https://www.facebook.com/events/673422836110831/",
+        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoJoJDA",
+        "slug": "drew-peterson-waterworks"
+    }, {
+        "event_dates": [{
+            "category": "sale",
+            "end": "2014-12-14T00:00:00Z",
+            "venue": {
+                "website": "http://burlesquedesign.com/",
+                "city": "Minneapolis",
+                "name": "CO Exhibitions Gallery",
+                "resource_id": "agxkZXZ-YXJ0cy02MTJyIQsSBVZlbnVlIhZjby1leGhpYml0aW9ucy1nYWxsZXJ5DA",
+                "country": "USA",
+                "address2": null,
+                "email": "info@burlesquedesign.com",
+                "hours": null,
+                "phone": "(612) 379-4151",
+                "state": "MN",
+                "address": "1101 Stinson Blvd",
+                "resource_url": "http://localhost:8080/api/galleries/agxkZXZ-YXJ0cy02MTJyIQsSBVZlbnVlIhZjby1leGhpYml0aW9ucy1nYWxsZXJ5DA",
+                "category": "gallery",
+                "geo": {
+                    "lat": 44.9996658,
+                    "lon": -93.226391
+                },
+                "slug": "co-exhibitions-gallery"
+            },
+            "label": "Sale",
+            "start": "2014-12-13T16:00:00Z",
+            "type": "timed",
+            "venue_slug": "co-exhibitions-gallery"
+        }],
+        "name": "CO Exhibition's 5th Annual World Fair",
+        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoJoLDA",
+        "url": "http://burlesquedesign.com/blogs/main/15907508-co-exhibitions-world-craft-fair-coming-soon",
+        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoJoLDA",
+        "slug": "co-exhibitions-world-craft-fair"
+    }, {
+        "event_dates": [{
+            "category": "sale",
+            "end": "2014-12-14T03:00:00Z",
+            "venue": {
+                "website": "http://www.theabstracted.com/",
+                "city": "St. Paul",
+                "name": "Abstracted Gallery",
+                "resource_id": "agxkZXZ-YXJ0cy02MTJyHQsSBVZlbnVlIhJhYnN0cmFjdGVkLWdhbGxlcnkM",
+                "country": "USA",
+                "address2": null,
+                "email": "jcoleman@theabstracted.com",
+                "hours": null,
+                "phone": "",
+                "state": "MN",
+                "address": "2380 Wycliff St #140",
+                "resource_url": "http://localhost:8080/api/galleries/agxkZXZ-YXJ0cy02MTJyHQsSBVZlbnVlIhJhYnN0cmFjdGVkLWdhbGxlcnkM",
+                "category": "gallery",
+                "geo": {
+                    "lat": 44.9699163,
+                    "lon": -93.1964877
+                },
+                "slug": "abstracted-gallery"
+            },
+            "label": "Sale",
+            "start": "2014-12-13T20:00:00Z",
+            "type": "timed",
+            "venue_slug": "abstracted-gallery"
+        }],
+        "name": "Elements of the Underground Makers Market",
+        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoNoIDA",
+        "url": "https://www.facebook.com/events/1513775338906703/",
+        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoNoIDA",
+        "slug": "elements-of-the-underground-makers-market"
+    }, {
+        "event_dates": [{
+            "category": "reception",
+            "end": "2014-12-14T04:00:00Z",
+            "venue": {
+                "website": "",
+                "city": "Minneapolis",
+                "name": "Grain Belt Bottling House",
+                "resource_id": "agxkZXZ-YXJ0cy02MTJyIwsSBVZlbnVlIhhncmFpbmJlbHQtYm90dGxpbmctaG91c2UM",
+                "country": "USA",
+                "address2": null,
+                "email": "",
+                "hours": null,
+                "phone": "",
+                "state": "MN",
+                "address": "79 13th Ave NE",
+                "resource_url": "http://localhost:8080/api/galleries/agxkZXZ-YXJ0cy02MTJyIwsSBVZlbnVlIhhncmFpbmJlbHQtYm90dGxpbmctaG91c2UM",
+                "category": "studios",
+                "geo": {
+                    "lat": 44.999758,
+                    "lon": -93.271099
+                },
+                "slug": "grainbelt-bottling-house"
+            },
+            "label": "Reception",
+            "start": "2014-12-14T00:00:00Z",
+            "type": "timed",
+            "venue_slug": "grainbelt-bottling-house"
+        }],
+        "name": "7th Annual Monster Drawing Rally",
+        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoKoIDA",
+        "url": "http://www.midwayart.org/events/mdr7/",
+        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoKoIDA",
+        "slug": "monster-drawing-rally-7"
+    }, {
+        "event_dates": [{
+            "category": "reception",
+            "end": "2015-01-04T02:00:00Z",
+            "venue": {
+                "website": "http://www.formandcontent.org/",
+                "city": "Minneapolis",
+                "name": "Form + Content Gallery",
+                "resource_id": "agxkZXZ-YXJ0cy02MTJyHwsSBVZlbnVlIhRmb3JtLWNvbnRlbnQtZ2FsbGVyeQw",
+                "country": "USA",
+                "address2": null,
+                "email": "formandcontent@gmail.com",
+                "hours": null,
+                "phone": "612-436-1151",
+                "state": "MN",
+                "address": "210 2nd St N",
+                "resource_url": "http://localhost:8080/api/galleries/agxkZXZ-YXJ0cy02MTJyHwsSBVZlbnVlIhRmb3JtLWNvbnRlbnQtZ2FsbGVyeQw",
+                "category": "gallery",
+                "geo": {
+                    "lat": 44.985837,
+                    "lon": -93.270745
+                },
+                "slug": "form-content-gallery"
+            },
+            "label": "Opening",
+            "start": "2015-01-04T00:00:00Z",
+            "type": "timed",
+            "venue_slug": "form-content-gallery"
+        }, {
+            "category": "ongoing",
+            "end": "2015-02-21T06:00:00Z",
+            "venue": {
+                "website": "http://www.formandcontent.org/",
+                "city": "Minneapolis",
+                "name": "Form + Content Gallery",
+                "resource_id": "agxkZXZ-YXJ0cy02MTJyHwsSBVZlbnVlIhRmb3JtLWNvbnRlbnQtZ2FsbGVyeQw",
+                "country": "USA",
+                "address2": null,
+                "email": "formandcontent@gmail.com",
+                "hours": null,
+                "phone": "612-436-1151",
+                "state": "MN",
+                "address": "210 2nd St N",
+                "resource_url": "http://localhost:8080/api/galleries/agxkZXZ-YXJ0cy02MTJyHwsSBVZlbnVlIhRmb3JtLWNvbnRlbnQtZ2FsbGVyeQw",
+                "category": "gallery",
+                "geo": {
+                    "lat": 44.985837,
+                    "lon": -93.270745
+                },
+                "slug": "form-content-gallery"
+            },
+            "label": "Showing",
+            "start": "2015-01-02T14:00:00Z",
+            "type": "reoccurring",
+            "venue_slug": "form-content-gallery"
+        }],
+        "name": "Sticky Valentines: Mark Ostapchuk",
+        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoNoLDA",
+        "url": "http://www.formandcontent.org/upcoming-exhibitions/",
+        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoNoLDA",
+        "slug": "sticky-valentines-mark-ostapchuk"
+    }, {
+        "event_dates": [{
+            "category": "reception",
+            "end": "2015-01-12T04:00:00Z",
+            "venue": {
+                "website": "http://gallery360mpls.com/",
+                "city": "Minneapolis",
+                "name": "Gallery 360",
+                "resource_id": "agxkZXZ-YXJ0cy02MTJyFgsSBVZlbnVlIgtnYWxsZXJ5LTM2MAw",
+                "country": "USA",
+                "address2": null,
+                "email": "info@gallery360mpls.com",
+                "hours": null,
+                "phone": "612-925-2400",
+                "state": "MN",
+                "address": "3011 West 50th St",
+                "resource_url": "http://localhost:8080/api/galleries/agxkZXZ-YXJ0cy02MTJyFgsSBVZlbnVlIgtnYWxsZXJ5LTM2MAw",
+                "category": "gallery",
+                "geo": {
+                    "lat": 44.9122663,
+                    "lon": -93.3181562
+                },
+                "slug": "gallery-360"
+            },
+            "label": "Opening",
+            "start": "2015-01-12T01:00:00Z",
+            "type": "timed",
+            "venue_slug": "gallery-360"
+        }],
+        "name": "Oil Paintings by Clinton Rost",
+        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoNoKDA",
+        "url": "http://gallery360mpls.com/events/upcoming.php?page=upcoming",
+        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoNoKDA",
+        "slug": "oil-paintings-by-clinton-rost"
+    }, {
+        "event_dates": [{
+            "category": "reception",
+            "end": "2015-02-26T03:00:00Z",
+            "venue": {
+                "website": "https://art.umn.edu/nash",
+                "city": "Minneapolis",
+                "name": "Katherine E. Nash Gallery",
+                "resource_id": "agxkZXZ-YXJ0cy02MTJyFwsSBVZlbnVlIgxuYXNoLWdhbGxlcnkM",
+                "country": "USA",
+                "address2": null,
+                "email": "artdept@umn.edu",
+                "hours": null,
+                "phone": "612-624-7530",
+                "state": "MN",
+                "address": "405 21st Ave S",
+                "resource_url": "http://localhost:8080/api/galleries/agxkZXZ-YXJ0cy02MTJyFwsSBVZlbnVlIgxuYXNoLWdhbGxlcnkM",
+                "category": "gallery",
+                "geo": {
+                    "lat": 44.969566,
+                    "lon": -93.24229
+                },
+                "slug": "nash-gallery"
+            },
+            "label": "Reception",
+            "start": "2015-02-26T01:00:00Z",
+            "type": "timed",
+            "venue_slug": "nash-gallery"
+        }, {
+            "category": "ongoing",
+            "end": "2015-03-28T05:00:00Z",
+            "venue": {
+                "website": "https://art.umn.edu/nash",
+                "city": "Minneapolis",
+                "name": "Katherine E. Nash Gallery",
+                "resource_id": "agxkZXZ-YXJ0cy02MTJyFwsSBVZlbnVlIgxuYXNoLWdhbGxlcnkM",
+                "country": "USA",
+                "address2": null,
+                "email": "artdept@umn.edu",
+                "hours": null,
+                "phone": "612-624-7530",
+                "state": "MN",
+                "address": "405 21st Ave S",
+                "resource_url": "http://localhost:8080/api/galleries/agxkZXZ-YXJ0cy02MTJyFwsSBVZlbnVlIgxuYXNoLWdhbGxlcnkM",
+                "category": "gallery",
+                "geo": {
+                    "lat": 44.969566,
+                    "lon": -93.24229
+                },
+                "slug": "nash-gallery"
+            },
+            "label": "Showing",
+            "start": "2015-02-24T06:00:00Z",
+            "type": "reoccurring",
+            "venue_slug": "nash-gallery"
+        }],
+        "name": "The Longest Way Around is the Shortest Way Home: James Henkel & Joyce Lyon",
+        "resource_id": "agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoNoJDA",
+        "url": "https://art.umn.edu/nash",
+        "resource_url": "http://localhost:8080/api/events/agxkZXZ-YXJ0cy02MTJyEgsSBUV2ZW50GICAgICAoNoJDA",
+        "slug": "longest-way-around-james-henkel-joyce-lyon"
+    }]
+}
