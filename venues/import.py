@@ -15,7 +15,10 @@ class GalleryData(webapp2.RequestHandler):
     """
 
     def get(self):
-        
+
+        raise Exception('This is here to not accidentally overwrite data in production...')
+        return
+
         # Fetch all Events
         docs_to_put = []
         results = Venue.query().fetch(1000)
@@ -25,9 +28,6 @@ class GalleryData(webapp2.RequestHandler):
             docs_to_put.append(vsearch.build_index(entity))
         
         search_index.put(docs_to_put)
-        
-        raise Exception('This is here to not accidentally overwrite data in production...')
-        return 
         
         # Destroy all existing data
         results = Venue.query().fetch(1000)
@@ -71,9 +71,9 @@ class GalleryData(webapp2.RequestHandler):
             }, {
                 'slug': 'abstracted-gallery',
                 'name': 'Abstracted Gallery',
-                'address': '1618 Central Ave NE Suite 110',
-                'city': 'Minneapolis',
-                'geo': '45.004628, -93.247606',
+                'address': '2380 Wycliff St #140',
+                'city': 'St. Paul',
+                'geo': '44.9699163,-93.1964877',
                 'category': 'gallery',
                 'website': 'http://www.theabstracted.com/',
                 'phone': '',
@@ -141,7 +141,7 @@ class GalleryData(webapp2.RequestHandler):
             }, {
                 'slug': 'bockley',
                 'name': 'Bockley Gallery',
-                'address': '2123 W 21st Street, Mpls, MN 55405',
+                'address': '2123 W 21st ST',
                 'city': 'Minneapolis',
                 'geo': '44.961904, -93.308112',
                 'category': 'gallery',
@@ -402,7 +402,169 @@ class GalleryData(webapp2.RequestHandler):
                 'phone': '',
                 'email': ''
             },
+
+            {
+                'slug': 'burnet-gallery',
+                'name': 'Burnet Gallery',
+                'address': '901 Hennepin Ave',
+                'city': 'Minneapolis',
+                'geo': '44.9760573,-93.276923',
+                'category': 'gallery',
+                'website': 'http://burnetgallery.com/',
+                'phone': '',
+                'email': ''
+            },
+
+
+            {
+                 'slug': 'co-exhibitions-gallery',
+                 'name': 'CO Exhibitions Gallery',
+                 'address': '1101 Stinson Blvd',
+                 'city': 'Minneapolis',
+                 'geo': '44.9996658,-93.226391',
+                 'category': 'gallery',
+                 'website': 'http://burlesquedesign.com/',
+                 'phone': '(612) 379-4151',
+                 'email': 'info@burlesquedesign.com'
+             },
+
+
+             {
+                  'slug': 'gallery-360',
+                  'name': 'Gallery 360',
+                  'address': '3011 West 50th St',
+                  'city': 'Minneapolis',
+                  'geo': '44.9122663,-93.3181562',
+                  'category': 'gallery',
+                  'website': 'http://gallery360mpls.com/',
+                  'phone': '612-925-2400',
+                  'email': 'info@gallery360mpls.com'
+              },
+
+
+              {
+                    "website": "http://www.augsburg.edu/galleries/", 
+                    "city": "Minneapolis",
+                    "name": "Christiansen Center, Augsburg College",
+                    "country": "USA",
+                    "address2": "",
+                    "email": "",
+                    "phone": "", 
+                    "state": "MN", 
+                    "address": "2211 Riverside Ave", 
+                    "category": "gallery",
+                    "geo": '44.9668639,-93.241886899999997',
+                    "slug": "christiansen-center"
+                },
+
+                {
+                    "website": "http://trafficzoneart.com/", 
+                    "city": "Minneapolis", 
+                    "name": "Traffic Zone", 
+                    "country": "USA",
+                    "address2": "",
+                    "email": "",
+                    "phone": "",
+                    "state": "MN",
+                    "address": " 250 3rd Ave N",
+                    "category": "gallery",
+                    "geo": "44.984042000000002,-93.273781999999997",
+                    "slug": "traffic-zone"
+                },
                 
+                #Weisman
+                {
+                    "website": "http://www.weisman.umn.edu/", 
+                    "city": "Minneapolis", 
+                    "name": "Weisman Art Museum", 
+                    "country": "USA", 
+                    "address2": "", 
+                    "email": "", 
+                    "phone": "612.625.9494",
+                    "state": "MN",
+                    "address": "333 E River Pkwy",
+                    "category": "museum",
+                    "geo": '44.973204000000003,-93.237094999999997',
+                    "slug": "weisman-art-museum"
+                },
+
+                #MIA
+                {
+                    "website": "http://artsmia.org/",
+                    "city": "Minneapolis",
+                    "name": "Minneapolis Institute of Arts",
+                    "country": "USA",
+                    "address2": "",
+                    "email": "",
+                    "phone": "",
+                    "state": "MN", 
+                    "address": "2400 3rd Ave S",
+                    "category": "museum", 
+                    "geo": '44.958548999999998,-93.274054000000007',
+                    "slug": "mia"},
+
+                # Instinct
+                {
+                    "website": "http://www.instinctmpls.com/",
+                    "city": "Minneapolis",
+                    "name": "Instinct Gallery",
+                    "country": "USA",
+                    "address2": "",
+                    "email": "",
+                    "phone": "",                    
+                    "state": "MN", 
+                    "address": "940 Nicollet Mall",
+                    "category": "gallery", 
+                    "geo": '44.974475499999997,-93.274291599999998',
+                    "slug": "instinct-gallery"
+                },
+
+                # Weinstein
+                {
+                    "website": "http://weinstein-gallery.com/", 
+                    "city": "Minneapolis",
+                    "name": "Weinstein Gallery", 
+                    "country": "USA",
+                    "address2": "",
+                    "email": "",
+                    "phone": "",
+                    "state": "MN",
+                    "address": "908 West 46th St",
+                    "category": "gallery",
+                    "geo": '44.919730399999999,-93.291328500000006',
+                    "slug": "weinstein-gallery"
+                },
+
+                # Walker
+                {
+                    "website": "http://walkerarts.org",
+                    "city": "Minneapolis",
+                    "name": "Walker Arts Center", 
+                    "country": "USA", 
+                    "address2": "",
+                    "email": "",
+                    "phone": "(612) 375-7600",
+                    "state": "MN",
+                    "address": "1750 Hennepin Ave", 
+                    "category": "museum", 
+                    "geo": "44.969014999999999,-93.288426000000001", 
+                    "slug": "walker-arts-center"
+                },
+                # metro-realty ?????
+                {
+                    "website": "http://www.ermetro.com/",
+                    "city": "Minneapolis",
+                    "name": "Exit Realty Metro", 
+                    "country": "USA", 
+                    "address2": "#203",
+                    "email": "",
+                    "phone": "",
+                    "state": "MN",
+                    "address": "1 Groveland Tr", 
+                    "category": "business", 
+                    "geo": "44.9669538,-93.2890295", 
+                    "slug": "exit-realty-metro"
+                },
         ]
         
         stuff_to_put = []

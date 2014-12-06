@@ -99,7 +99,7 @@ def get_this_week():
     return results
 
 
-def search_helper(start=None, end=None, category=None, sort=None, limit=20):
+def search_helper(start=None, end=None, category=None, sort=None, limit=1000):
 
     search_results = event_search.simple_search(start=start, end=end, category=category, sort=sort)
     events = event_search.get_events_from_event_search_docs(search_results['index_results'])

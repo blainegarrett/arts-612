@@ -35,6 +35,9 @@ class EventData(webapp2.RequestHandler):
 
     def get(self):
 
+        raise Exception('This is here to not accidentally overwrite data in production...')
+        return
+
         # Destroy all existing data
         results = Event.query().fetch(1000)
         docs_to_put = []
@@ -105,19 +108,16 @@ class EventData(webapp2.RequestHandler):
                 "type": "timed",
                 "label": "Reception",
                 "venue_slug": "soovac"
-            }],
-            }, {
-            "url" : "https://www.facebook.com/events/677020089080861/",
-            "slug": "gamut-c4w-2104-finale",
-            "name": "C4W:2014 Finale - With Improv Orchestra \"Improvestra\"",
-            "event_dates": [{
-                "category": "reception",
-                "start": "2014-11-22 19:00:00",
-                "end": "2014-11-22 22:00:00",
-                "type": "timed",
-                "label": "Reception",
-                "venue_slug": "gamut"
             },
+            {
+                "category": "ongoing",
+                "start": "2014-11-15 00:00:00",
+                "end": "2014-12-28 00:00:00",
+                "type": "reoccurring",
+                "label": "Showing",
+                "venue_slug": "soovac"
+            }
+            
             ],
             },
 
@@ -146,7 +146,17 @@ class EventData(webapp2.RequestHandler):
                 "type": "timed",
                 "label": "Reception",
                 "venue_slug": "public-functionary"
-            }],
+            },
+            {
+                "category": "ongoing",
+                "start": "2014-11-22 00:00:00",
+                "end": "2014-12-20 00:00:00",
+                "type": "reoccurring",
+                "label": "Showing",
+                "venue_slug": "public-functionary"
+            }
+            
+            ],
             }, {
             "url" : "http://www.hangitinc.com/art_shows.html",
             "slug": "doodles-5-year-journey",
@@ -159,19 +169,7 @@ class EventData(webapp2.RequestHandler):
                 "label": "Reception",
                 "venue_slug": "gallery-122"
             }],
-            }, {
-            "url" : "http://www.hangitinc.com/art_shows.html",
-            "slug": "doodles-5-year-journey",
-            "name": "Doodles: A 5 Year Journey",
-            "event_dates": [{
-                "category": "reception",
-                "start": "2014-12-05 19:00:00",
-                "end": "2014-12-05 21:00:00",
-                "type": "timed",
-                "label": "Reception",
-                "venue_slug": "gallery-122"
-            }],
-            }, {
+            },  {
             "url" : "http://highpointprintmaking.org/",
             "slug": "prints-on-ice",
             "name": "Prints on Ice",
@@ -190,32 +188,13 @@ class EventData(webapp2.RequestHandler):
             "event_dates": [{
                 "category": "sale",
                 "start": "2014-12-12 12:00:00",
-                "end": "2014-12-12 22:00:00",
+                "end": "2014-12-13 22:00:00",
                 "type": "timed",
                 "label": "Opening Night",
                 "venue_slug": "gamut"
-            }, {
-                    "category": "sale",
-                    "start": "2014-12-13 12:00:00",
-                    "end": "2014-12-13 22:00:00",
-                    "type": "timed",
-                    "label": "Opening Night",
-                    "venue_slug": "gamut"
-                }
-            ],
-            }, {
-            "url" : "http://www.midwayart.org/events/mdr7/",
-            "slug": "monster-drawing-rally-7",
-            "name": "7th Annual Monster Drawing Rally",
-            "event_dates": [{
-                "category": "reception",
-                "start": "2014-12-13 18:00:00",
-                "end": "2014-12-13 22:00:00",
-                "type": "timed",
-                "label": "Reception",
-                "venue_slug": "grainbelt-bottling-house"
-            }],
-            },
+            },],
+
+            }, 
              {
             "url" : "http://www.midwayart.org/events/mdr7/",
             "slug": "monster-drawing-rally-7",
@@ -341,12 +320,13 @@ class EventData(webapp2.RequestHandler):
                 "event_dates": [{
                     "category": "ongoing",
                     "start": "2014-11-05 00:00:00",
-                    "end": "2014-12-10 00:00:00",
+                    "end": "2015-01-10 00:00:00",
                     "type": "reoccurring",
                     "label": "On Display",
                     "venue_slug": "intermedia-arts"
                 }]
             },
+
             {
             "url" : "https://www.facebook.com/events/310047975865939/",
             "slug": "made-by-hands",
@@ -360,6 +340,294 @@ class EventData(webapp2.RequestHandler):
                 "venue_slug": "bauhaus"
             }],
             },
+
+            {
+            "url" : "https://www.facebook.com/events/673422836110831/",
+            "slug": "drew-peterson-waterworks",
+            "name": "Drew Peterson / Waterworks",
+            "event_dates": [{
+                "category": "reception",
+                "start": "2014-12-12 18:00:00",
+                "end": "2014-12-12 21:00:00",
+                "type": "timed",
+                "label": "Event",
+                "venue_slug": "burnet-gallery"
+            }],
+            },
+
+
+            
+            
+            {
+            "url" : "http://burlesquedesign.com/blogs/main/15907508-co-exhibitions-world-craft-fair-coming-soon",
+            "slug": "co-exhibitions-world-craft-fair",
+            "name": "CO Exhibition's 5th Annual World Fair",
+            "event_dates": [{
+                "category": "sale",
+                "start": "2014-12-13 10:00:00",
+                "end": "2014-12-13 18:00:00",
+                "type": "timed",
+                "label": "Sale",
+                "venue_slug": "co-exhibitions-gallery"
+            }],
+            },
+            {
+            "url" : "https://www.facebook.com/events/1513775338906703/",
+            "slug": "elements-of-the-underground-makers-market",
+            "name": "Elements of the Underground Makers Market",
+            "event_dates": [{
+                "category": "sale",
+                "start": "2014-12-13 14:00:00",
+                "end": "2014-12-13 21:00:00",
+                "type": "timed",
+                "label": "Sale",
+                "venue_slug": "abstracted-gallery"
+            }],
+            },
+
+            {
+            "url" : "http://gallery360mpls.com/events/upcoming.php?page=upcoming",
+            "slug": "oil-paintings-by-clinton-rost",
+            "name": "Oil Paintings by Clinton Rost",
+            "event_dates": [{
+                "category": "reception",
+                "start": "2015-01-11 19:00:00",
+                "end": "2015-01-11 22:00:00",
+                "type": "timed",
+                "label": "Opening",
+                "venue_slug": "gallery-360"
+            }],
+            },
+            
+
+
+            {
+            "url" : "https://art.umn.edu/nash",
+            "slug": "longest-way-around-james-henkel-joyce-lyon",
+            "name": "The Longest Way Around is the Shortest Way Home: James Henkel & Joyce Lyon",
+            "event_dates": [{
+                "category": "reception",
+                "start": "2015-02-25 19:00:00",
+                "end": "2015-02-25 21:00:00",
+                "type": "timed",
+                "label": "Reception",
+                "venue_slug": "nash-gallery"
+            }, {
+                    "category": "ongoing",
+                    "start": "2015-02-24 00:00:00",
+                    "end": "2015-03-28 00:00:00",
+                    "type": "reoccurring",
+                    "label": "Showing",
+                    "venue_slug": "nash-gallery"
+                 }
+            
+            ],
+            },
+
+            {
+            "url" : "http://www.formandcontent.org/upcoming-exhibitions/",
+            "slug": "sticky-valentines-mark-ostapchuk",
+            "name": "Sticky Valentines: Mark Ostapchuk",
+            "event_dates": [{
+                "category": "reception",
+                "start": "2015-01-03 18:00:00",
+                "end": "2015-01-03 20:00:00",
+                "type": "timed",
+                "label": "Opening",
+                "venue_slug": "form-content-gallery"
+            }, {
+                    "category": "ongoing",
+                    "start": "2015-01-02 08:00:00",
+                    "end": "2015-02-21 00:00:00",
+                    "type": "reoccurring",
+                    "label": "Showing",
+                    "venue_slug": "form-content-gallery"
+                }],
+            },
+
+            {
+                "url" : "http://www.bockleygallery.com/exhibitions.html",
+                "slug": "jim-denomie-dialogues",
+                "name": "Jim Denomie: Dialogues",
+                "event_dates": [{
+                    "category": "ongoing",
+                    "start": "2014-11-01 00:00:00",
+                    "end": "2014-12-13 00:00:00",
+                    "type": "reoccurring",
+                    "label": "Showing",
+                    "venue_slug": "bockley"
+                }],
+            },
+
+
+        {
+            "url" : "http://www.formandcontent.org/current-exhibition/",
+            "slug": "mrs-darwins-gardens",
+            "name": "Mrs. Darwin's Gardens - Paintings by Vesna Kittelson",
+            "event_dates": [{
+                "category": "ongoing",
+                "start": "2014-11-13 00:00:00",
+                "end": "2014-12-20 00:00:00",
+                "type": "reoccurring",
+                "label": "Showing",
+                "venue_slug": "form-content-gallery"
+            }],
+        },
+
+
+        {
+            "url" : "http://www.augsburg.edu/galleries/",
+            "slug": "entrance-to-wood-stephanie-hunder",
+            "name": "Entrance to Wood: Stephanie Hunder",
+            "event_dates": [{
+                "category": "ongoing",
+                "start": "2014-11-03 00:00:00",
+                "end": "2014-12-18 00:00:00",
+                "type": "reoccurring",
+                "label": "Showing",
+                "venue_slug": "christiansen-center"
+            }],
+        },
+
+            
+        {
+            "url" : "http://trafficzoneart.com/index.php?id=2",
+            "slug": "gestura-anne-george",
+            "name": "Gestura - Anne George",
+            "event_dates": [{
+                "category": "ongoing",
+                "start": "2014-11-14 00:00:00",
+                "end": "2015-01-02 00:00:00",
+                "type": "reoccurring",
+                "label": "Showing",
+                "venue_slug": "traffic-zone"
+            }],
+        },
+
+        {
+            "url" : "http://www.circagallery.org/",
+            "slug": "myke-reilly-emanate",
+            "name": "Myke Reilly:Emanate",
+            "event_dates": [{
+                "category": "ongoing",
+                "start": "2014-11-22 00:00:00",
+                "end": "2015-01-03 00:00:00",
+                "type": "reoccurring",
+                "label": "Showing",
+                "venue_slug": "circa-gallery"
+            }],
+        },
+        {
+            "url" : "http://www.weisman.umn.edu/event/anishinaabensag-biimskowebshkigewag-native-kids-ride-bikes",
+            "slug": "native-kids-on-bikes",
+            "name": "Anishinaabensag Biimskowebshkigewag (Native Kids Ride Bikes)",
+            "event_dates": [{
+                "category": "ongoing",
+                "start": "2014-10-03 00:00:00",
+                "end": "2015-01-04 00:00:00",
+                "type": "reoccurring",
+                "label": "Showing",
+                "venue_slug": "weisman-art-museum"
+            }],
+        },
+        
+        {
+            "url" : "http://new.artsmia.org/italian-style/",
+            "slug": "italian-style-fasion-since-1945",
+            "name": "Italian Style: Fasion since 1945",
+            "event_dates": [{
+                "category": "ongoing",
+                "start": "2014-10-26 00:00:00",
+                "end": "2015-01-04 00:00:00",
+                "type": "reoccurring",
+                "label": "Showing",
+                "venue_slug": "mia"
+            }],
+        },
+
+        {
+            "url" : "https://www.facebook.com/events/668745859890013/",
+            "slug": "make-garden",
+            "name": "Make Garden",
+            "event_dates": [{
+                "category": "ongoing",
+                "start": "2014-11-22 00:00:00",
+                "end": "2015-01-10 00:00:00",
+                "type": "reoccurring",
+                "label": "Showing",
+                "venue_slug": "instinct-gallery"
+            }],
+        },
+        
+        
+
+        {
+            "url" : "http://trafficzoneart.com/index.php?id=2",
+            "slug": "adetomiwa-gbadebo-solo-exhibition",
+            "name": "Adetomiwa Gbadebo (Solo Exhibition)",
+            "event_dates": [{
+                "category": "ongoing",
+                "start": "2014-11-20 00:00:00",
+                "end": "2015-01-10 00:00:00",
+                "type": "reoccurring",
+                "label": "Showing",
+                "venue_slug": "exit-realty-metro"
+            }],
+        },
+        
+
+
+        {
+            "url" : "http://gallery360mpls.com/current/index.php",
+            "slug": "benevolent-beasts",
+            "name": "Benevolent Beasts...",
+            "event_dates": [{
+                "category": "ongoing",
+                "start": "2014-11-15 00:00:00",
+                "end": "2015-01-11 00:00:00",
+                "type": "reoccurring",
+                "label": "Showing",
+                "venue_slug": "gallery-360"
+            }],
+        },
+        
+
+
+        {
+            "url" : "http://weinstein-gallery.com/exhibits.php?eid=51",
+            "slug": "fashion-weinstein-gallery",
+            "name": "Fashion",
+            "event_dates": [{
+                "category": "ongoing",
+                "start": "2014-11-07 00:00:00",
+                "end": "2015-01-17 00:00:00",
+                "type": "reoccurring",
+                "label": "Showing",
+                "venue_slug": "weinstein-gallery"
+            }],
+        },
+        
+        {
+            "url" : "http://www.walkerart.org/75/",
+            "slug": "art-at-the-center-walker-75",
+            "name": "Art At The Center - 75 years of Walker Collections",
+            "event_dates": [{
+                "category": "ongoing",
+                "start": "2014-10-16 00:00:00",
+                "end": "2015-09-11 00:00:00",
+                "type": "reoccurring",
+                "label": "Showing",
+                "venue_slug": "walker-arts-center"
+            }],
+        },
+        
+
+
+
+
+
+
+ 
 
         ]
 

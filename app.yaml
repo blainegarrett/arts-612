@@ -1,5 +1,5 @@
 application: arts-612
-version: admin
+version: admin2
 
 runtime: python27
 api_version: 1
@@ -76,6 +76,7 @@ skip_files: |
  (^web/bootstrap/.*)|
  (^static/bootstrap/docs/.*)|
  (.git/.*)|
+ (.module-cache/.*)|
  (.*/node_modules/.*)|
 
  (.*SpecRunner.html)|
