@@ -56,3 +56,4 @@ external
 results.xml
 unit_results.xml
 cover
+node_modules
