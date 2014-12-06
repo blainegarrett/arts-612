@@ -8,6 +8,20 @@ from modules.venues.internal.models import Venue
 from modules.venues.constants import VENUE_SEARCH_INDEX
 
 
+def get_substrs(value):
+    """
+    Given Value, exploads each word into substrings
+    """
+
+    names = value.lower().split(' ')
+    tokens = []
+    for n in names:
+        length = len(n)
+        for i in xrange(0, length):
+            tokens.append(n[:i+1])
+    return " ".join(tokens)
+
+
 def get_search_index():
     """
     Get the search index for Venues main search
@@ -27,6 +41,7 @@ def build_index(venue):
     fields.append(search.AtomField(name='slug', value=venue.slug))
     fields.append(search.TextField(name='name', value=venue.name))
     fields.append(search.AtomField(name='category', value=venue.category))
+    fields.append(search.TextField(name='substrs', value=get_substrs(venue.name)))
 
     geopoint = None
     if venue.geo:
@@ -43,7 +58,7 @@ def simple_search(querystring):
 
     #querystring = self.request.GET.get('q')
 
-    search_query = search.Query(query_string=querystring, options=search.QueryOptions(limit=5))
+    search_query = search.Query(query_string=querystring, options=search.QueryOptions(limit=10))
 
     index = get_search_index()
     search_results = index.search(search_query)

@@ -1,6 +1,5 @@
 # Packages here will be installed locally only and not deployed to the appspot
 
-PyCrypto==2.6
 Pillow==2.3.0
 git+https://github.com/ze-phyr-us/linkenv.git
 mock

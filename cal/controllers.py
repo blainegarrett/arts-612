@@ -31,7 +31,11 @@ def convert_rest_dt_to_datetime(dt):
     Helper to convert a input datetime string to a UTC datetime
     """
 
-    centraltz = timezone('US/Central')
+    #centraltz = timezone('US/Central')
+
+    #raise Exception(dt)
+
+    #2014-11-15T01:00:00.000Z
 
     try:
         fmt = '%Y-%m-%dT%H:%M:%SZ'
@@ -63,6 +67,11 @@ class EventDateField(RestField):
 
             event_date_resource['start'] = convert_rest_dt_to_datetime(event_date['start'])
             event_date_resource['end'] = convert_rest_dt_to_datetime(event_date['end'])
+
+            # Janky Validation
+            if (event_date_resource['end'] < event_date_resource['start']):
+                # Should be a rest validation form error...
+                raise Exception('End time cannot occur before start time')
 
             event_date_resource['type'] = event_date['type']
             event_date_resource['category'] = event_date['category']
@@ -168,12 +177,31 @@ class EventsWeeksApiHandler(RestHandlerBase):
 class EventDetailApiHandler(RestHandlerBase):
     """
     """
+    def get_rules(self):
+        return REST_RULES
+
+
+    def _put(self, slug):
+        # Edit an event
+
+        key = ndb.Key(urlsafe=slug)
+
+        if not key:
+            raise Exception('404 - TODO: Throw legit 404') # or Resource Not Found
+
+        e = key.get()
+        
+        e = events_api.edit_event(e, self.cleaned_data)
+        result = create_resource_from_entity(e)
+        self.serve_success(result)
+
 
     def _get(self, slug):
         
-        slug = long(slug)
-        
-        key = events_api.get_event_key(slug)
+        #slug = long(slug)
+        #key = events_api.get_event_key(slug)
+        key = ndb.Key(urlsafe=slug)
+
         if not key:
             raise Exception('404 - TODO: Throw legit 404') # or Resource Not Found
 

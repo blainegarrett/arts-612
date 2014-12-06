@@ -224,7 +224,10 @@ class GeoField(RestField):
 
     def to_resource(self, data):
         val = super(GeoField, self).to_resource(data)
-        return ndb.GeoPt(lat=val['lat'], lon=val['lon'])
+
+        if val:
+            return ndb.GeoPt(lat=val['lat'], lon=val['lon'])
+        return None
 
     def from_resource(self, obj, field):
         """

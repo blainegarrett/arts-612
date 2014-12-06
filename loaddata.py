@@ -1,3 +1,5 @@
+# I think this file can be deleted....
+
 #!/usr/bin/env python
 #
 # Copyright 2007 Google Inc.

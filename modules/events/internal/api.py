@@ -99,7 +99,7 @@ def get_this_week():
     return results
 
 
-def search_helper(start=None, end=None, category=None, sort=None, limit=20):
+def search_helper(start=None, end=None, category=None, sort=None, limit=1000):
 
     search_results = event_search.simple_search(start=start, end=end, category=category, sort=sort)
     events = event_search.get_events_from_event_search_docs(search_results['index_results'])
@@ -161,7 +161,40 @@ def bulk_dereference_venues(events):
 
     """
     
+def edit_event(entity, data):
+    """
+    Edit an event
+    """
 
+    # Create the base Event Model
+
+    entity.slug = data['slug']
+    entity.name = data['name']
+    entity.url = data['url']
+
+    # Create the Event Dates
+    # TODO: As we add different event types, pull this into its own method
+
+    event_dates = []
+    for d_data in data['event_dates']:
+        ed = EventDate()
+
+        ed.category = d_data['category']
+        ed.venue_slug = d_data['venue_slug']
+
+        ed.label = d_data['label']
+        ed.type = str(d_data['type']) # This is not a long term solution...
+        ed.start = d_data['start'] # Expected to be a DateTime or None
+        ed.end = d_data['end'] # Expected to be a DateTime or None
+        event_dates.append(ed)
+
+    entity.event_dates = event_dates
+
+    entity.put()
+
+    return entity
+    
+    
 def create_event(data):
     """
     Create an event

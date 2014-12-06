@@ -67,24 +67,33 @@ mainApp.directive('restDateRender', function() {
 
 
 
-mainApp.controller('EventListCtrl', function($scope, $location, $http) {
+mainApp.controller('EventListCtrl', function($scope, $location, $http) { });
 
-    // Attempt to load a listing of galleries
-    var ajax = $http.get('/api/events/thisweek');
-    ajax.success(function(payload) {
-       $scope.events = payload.results;
-       $scope.api_data = angular.toJson(payload, true);
-     });
-     ajax.error(function(){
-       $scope.api_data = angular.toJson(payload, true);
-     });
-
-    $scope.show_event = function ( path ) {
-        console.log('setting route to ' + path);
-        $location.url( path );
-        return false;
+mainApp.controller('EventEditCtrl', function($scope, $location, $http, $routeParams, $rootScope) {
+    /* Controller for Editing a Events */
+    var save_callback = function(){
+      $location.path( "/admin/events/" ); 
     };
+
+    $scope.resource_id = $routeParams.event_id;
+    $scope.resource_url = '/api/events/' + $routeParams.event_id;
+    $scope.form_props = { resource_url: $scope.resource_url, fname: 'Clark', lname: 'Kent', 'is_edit': true, 'save_callback': save_callback};
+
 });
+
+
+mainApp.controller('EventCreateCtrl', function($scope, $location, $http, $routeParams, $rootScope) {
+    /* Controller for Creating an Event */
+
+    var save_callback = function(){
+      $location.path( "/admin/events" ); 
+    };
+
+    $scope.resource_url = '/api/events';
+    $scope.form_props = { resource_url: $scope.resource_url, fname: 'Clark', lname: 'Kent', 'is_edit': false, 'save_callback': save_callback};
+});
+
+
 
 
 mainApp.controller('EventDetailCtrl', function($scope, $location, $http, $routeParams, $rootScope) {
@@ -107,88 +116,31 @@ mainApp.controller('EventDetailCtrl', function($scope, $location, $http, $routeP
      });
 });
 
+/* Venue Details Controller */
 
-/* Gallery Listing Controller */
-mainApp.controller('GalleriesListCtrl', function($scope, $location, $http) {
-    
-    // Attempt to load a listing of galleries
-    var ajax = $http.get('/api/galleries');
-    ajax.success(function(payload) {
-       $scope.galleries = payload.results;
-       $scope.api_data = angular.toJson(payload, true);
-     });
-     ajax.error(function(){
-       $scope.api_data = angular.toJson(payload, true);
-     });
-
-    $scope.show_gallery = function ( path ) {
-        console.log('setting route to ' + path);
-        $location.url( path );
-        return false;
-    };
+mainApp.controller('VenueListCtrl', function($scope, $location, $http, $routeParams, $rootScope) {
+    /* Controller for Listing Venues */
 });
-
-
-/* Gallery Details Controller */
-
-mainApp.controller('GalleryDetailCtrl', function($scope, $location, $http, $routeParams, $rootScope) {
-
-    console.log($routeParams.slug);
-
-    var ajax = $http.get('/api/galleries/' + $routeParams.slug);
-    ajax.success(function(payload) {
-       $scope.gallery = payload.results;
-       $scope.api_data = angular.toJson(payload, true);
-
-       $rootScope.pagemeta = {};
-       $rootScope.pagemeta.title = $scope.gallery.name;
-       $rootScope.pagemeta.description = 'Sweet Short Title';
-       $rootScope.pagemeta.image = 'http://www.soapfactory.org/img/space/gallery-one-2.jpg'
-     });
-
-     ajax.error(function(payload){
-       $scope.api_data = angular.toJson(payload, true);
-     });
-
-    /*$scope.gallery = {
-        name:'Abstracted Gallery', slug: 'abstracted', 'description': 'This place is rad as shit...'
-    };
-    */
-});
-
 
 mainApp.controller('VenueEditCtrl', function($scope, $location, $http, $routeParams, $rootScope) {
+    /* Controller for Editing a Venue */
+    var save_callback = function(){
+      $location.path( "/admin" ); 
+    };
 
     $scope.resource_id = $routeParams.slug
     $scope.resource_url = '/api/galleries/' + $routeParams.slug;
-    $scope.person = { resource_url: $scope.resource_url, fname: 'Clark', lname: 'Kent', 'is_edit': true};
+    $scope.form_props = { resource_url: $scope.resource_url, fname: 'Clark', lname: 'Kent', 'is_edit': true, 'save_callback': save_callback};
 
-    /*
-    var ajax = $http.get();
-    ajax.success(function(payload) {
-       $scope.gallery = payload.results;
-       $scope.api_data = angular.toJson(payload, true);
-
-       $rootScope.pagemeta = {};
-       $rootScope.pagemeta.title = $scope.gallery.name;
-       $rootScope.pagemeta.description = 'Sweet Short Title';
-       $rootScope.pagemeta.image = 'http://www.soapfactory.org/img/space/gallery-one-2.jpg'
-     });
-
-     ajax.error(function(payload){
-       $scope.api_data = angular.toJson(payload, true);
-     });
-     */
-
-    /*
-    $scope.gallery = {
-        name:'Abstracted Gallery', slug: 'abstracted', 'description': 'This place is rad as shit...'
-    };
-    */
 });
 
 
 mainApp.controller('VenueCreateCtrl', function($scope, $location, $http, $routeParams, $rootScope) {
+    /* Controller for Creating a Venue */
+
+    var save_callback = function(){
+      $location.path( "/admin" ); 
+    };
     $scope.resource_url = '/api/galleries';
-    $scope.person = { resource_url: $scope.resource_url, fname: 'Clark', lname: 'Kent', 'is_edit': false};
+    $scope.form_props = { resource_url: $scope.resource_url, fname: 'Clark', lname: 'Kent', 'is_edit': false, 'save_callback': save_callback};
 });
