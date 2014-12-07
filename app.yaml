@@ -33,6 +33,7 @@ skip_files: |
  (index\.yaml)|
  (index\.yml)|
  (\.DS_Store)|
+ (node_modules/.*)|
 
  (#.*#)|
  (.*~)|
