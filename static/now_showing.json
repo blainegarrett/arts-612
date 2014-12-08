@@ -326,7 +326,7 @@
             },
             "label": "Showing",
             "start": "2014-12-06T06:00:00Z",
-            "type": "reocurring",
+            "type": "reoccurring",
             "venue_slug": "rosalux"
         }],
         "name": "Phantasmagoria - Amelia Biewald & Elaine Rutherford",
