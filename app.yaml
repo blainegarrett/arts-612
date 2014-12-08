@@ -1,5 +1,5 @@
 application: arts-612
-version: phase2
+version: admin
 
 runtime: python27
 api_version: 1

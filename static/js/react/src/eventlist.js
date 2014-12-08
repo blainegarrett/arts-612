@@ -1,4 +1,6 @@
 /** @jsx React.DOM */
+/*global React, moment */
+/* jshint trailing:false, quotmark:false, newcap:false */
 
 /*
 var Time = React.createClass({
@@ -8,7 +10,7 @@ var Time = React.createClass({
     },
     
     getDefaultProps: function () {
-        return {
+        return
             date: null,
             pattern: "MMM D, YYYY, h:mm A"
         }
@@ -20,23 +22,34 @@ var Time = React.createClass({
 */
 
 var NiceDate = React.createClass({
-    render: function() {
-        //start = Date.parse(self.props.start);
-        //end = Date.parse(self.props.end);
+    propTypes: {
+        start: React.PropTypes.string,
+        end: React.PropTypes.string,
+        eventdate_type: React.PropTypes.string
+    },
+    getInitialState: function () {
+        return {
+            start: this.props.start,
+            end: this.props.end,
+            eventdate_type: this.props.eventdate_type
+        };
+    },
+    render: function () {
+        var start, end, display_str, duration_hours, start_time_format, end_time_format, extra_minute;
 
-        var start = moment(Date.parse(this.props.start));
-        var end = moment(Date.parse(this.props.end));
-        var eventdate_type = this.props.eventdate_type;
+        start = moment(Date.parse(this.state.start));
+        end = moment(Date.parse(this.state.end));
 
-        display_str = start.format("MMM Do") + ' - ' +  end.format("MMM Do")
+        display_str = start.format("MMM Do") + ' - ' +  end.format("MMM Do");
         duration_hours = end.diff(start, 'hours');
 
-        if (duration_hours < 15 ){ // eventdate_type == 'timed' might be a better indicator
+        // this.state.eventdate_type == 'timed' might be a better indicator
+        if (duration_hours < 15) {
             // Assumed to be a single timed event: Sat Nov 8th 7PM - 10:30PM
-            
+
             start_time_format = 'hA';
             end_time_format = 'hA';
-            
+
             if (start.minutes() > 0) {
                 start_time_format = 'h:mmA';
             }
@@ -45,10 +58,10 @@ var NiceDate = React.createClass({
                 end_time_format = 'h:mmA';
             }
 
-            extra_minute = ':mm'
-            
+            extra_minute = ':mm';
+
             display_str = start.format("ddd MMM Do " + start_time_format);
-            display_str += ' - '
+            display_str += ' - ';
             display_str += end.format(end_time_format);
         }
 
@@ -57,13 +70,26 @@ var NiceDate = React.createClass({
 });
 
 var TempEvent = React.createClass({
-    
-    render: function() {
+    render: function () {
+        // Determine which ED we meant to show actually
 
-        var ed = this.props.event_dates[0];
+        var ed = false;
+        for (i in this.props.event_dates){
+            this.props.event_dates[i];
+            if (this.props.event_dates[i].type == this.props.ed_filter) {
+                ed = this.props.event_dates[i];
+            }
+            
+        }
+        
+        if (!ed) {
+            ed = this.props.event_dates[0];
+            console.error('Warning: Failed to find an ed for the below event with a ed.type matching "' + this.props.ed_filter  + '". Defaulting to first found one. ');
+            console.error(this.props);
+        }        
 
         return (<li className="event">
-    		<div><a href={this.props.xxurl} target="_blank"><span className="event-title">{this.props.name}</span></a></div>
+    		<div><a href={this.props.url} target="_blank"><span className="event-title">{this.props.name}</span></a></div>
             <div className="event-time"><NiceDate start={ ed.start } end={ ed.end } eventdate_type={ ed.type } /></div>
             <div className="event-venue-name">{ed.venue.name}</div>
             <div className="event-address">{ed.venue.address}</div>
@@ -72,38 +98,42 @@ var TempEvent = React.createClass({
 });
 
 var TempEventsListMixin = {
-    componentDidMount: function(){
+    componentDidMount: function (){
         $.ajax({
             url: this.state.resource_url,
             dataType: 'json',
-            success:  function(data) {
+            success:  function (data) {
                 this.setState({event_data:data});
 
             }.bind(this),
-            error: function(xhr, status, err) {
+            error: function (xhr, status, err) {
                 console.error(this.state.resource_url, status, err.toString());
             }.bind(this)
             
         });
     },
 
-    render_templatexxx: function(){
+    render_templatexxx: function (){
         return <div className="panel-container">
             <div className="panel-header">{ this.state.col_name }</div>
             <div className="panel-content">
-                 <TempEventList event_data={this.state.event_data} />
+                 <TempEventList ed_filter={ this.state.ed_filter } event_data={this.state.event_data} />
             </div>
         </div>;
     }
 }
 
 var TempEventList = React.createClass({
-    render: function(){
+    getInitialState: function () {
+        return {ed_filter: this.props.ed_filter, event_data: this.props.event_data };
+    },
+    render: function (){
         var eventNodes;
+        var ed_filter = this.props.ed_filter;
 
         if (this.props.event_data.results != undefined) {
             eventNodes = this.props.event_data.results.map(function (event) {
-                return <TempEvent name={event.name} xxurl={event.url} event_dates={ event.event_dates }/>;
+                return <TempEvent key={event.resource_id} name={event.name} ed_filter={ed_filter} url={event.url} event_dates={ event.event_dates }/>;
             });
         }
         
@@ -113,27 +143,27 @@ var TempEventList = React.createClass({
     }
 });
 
-
 var TempUpcoming = React.createClass({
     mixins: [TempEventsListMixin],
+
     getInitialState: function(){
-        return {'col_name': 'OPENINGS & EVENTS', event_data: [], 'resource_url': '/api/events/upcoming'};
+        return {ed_filter: 'timed', 'col_name': 'OPENINGS & EVENTS', event_data: [], 'resource_url': '/api/events/upcoming'};
     },
-    render: function() {
+
+    render: function () {
         return this.render_templatexxx()
     }
 });
 mainApp.value('TempUpcoming', TempUpcoming);
 
-
-
 var TempEvents = React.createClass({
     mixins: [TempEventsListMixin],
+
     getInitialState: function(){
-        return {'col_name': 'NOW SHOWING', 'event_data': [], 'resource_url': '/api/events/nowshowing'};
+        return {ed_filter: 'reoccurring', 'col_name': 'NOW SHOWING', 'event_data': [], 'resource_url': '/api/events/nowshowing'};
     },
 
-    render: function() {
+    render: function () {
         return this.render_templatexxx()
     }
 });
