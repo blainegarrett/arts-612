@@ -29,6 +29,7 @@ def handle_404(request, response, exception):
     response.set_status(404)
 
 routes = [
+    RedirectRoute('/logout/', handler=auth_c.LogoutHandler, strict_slash=True, name="auth_logout"),
     RedirectRoute('/beta/', handler=auth_c.ProfileHandler, strict_slash=True, name="beta_index"),
     RedirectRoute('/beta/email/', handler=auth_c.SignupHandler, strict_slash=True, name="beta_signup"),
     RedirectRoute('/beta/activate/', handler=auth_c.ActivateHandler, strict_slash=True, name="beta_activate"),

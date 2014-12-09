@@ -15,3 +15,4 @@ class MethodNotAllowed(RestError):
     """
 
     pass
+

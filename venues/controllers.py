@@ -1,6 +1,7 @@
 """
 Rest API for Venues/Galleries
 """
+from auth.decorators import rest_login_required
 
 from google.appengine.ext import ndb
 
@@ -113,7 +114,8 @@ class GalleriesApiHandler(GalleryApiHandlerBase):
             results.append(create_resource_from_entity(e))
 
         self.serve_success(results)
-    
+
+    @rest_login_required
     def _post(self):
         """
         Create Venue Resource
@@ -166,7 +168,8 @@ class GalleryDetailApiHandler(GalleryApiHandlerBase):
 
         resource = create_resource_from_entity(e)
         self.serve_success(resource)
-    
+
+    @rest_login_required
     def _put(self, slug):
         """
         Edit a resource
@@ -203,7 +206,7 @@ class GalleryDetailApiHandler(GalleryApiHandlerBase):
         result = create_resource_from_entity(venue)
         self.serve_success(result)
 
-
+    @rest_login_required
     def _delete(self, slug):
         """
         Delete a Resource

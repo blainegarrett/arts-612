@@ -33,7 +33,13 @@ def strip_tags(html):
     s.feed(html)
     return s.get_data()
 
-
+class LogoutHandler(webapp2.RequestHandler):
+    
+    @login_required
+    def get(self):
+        self.response.write('Hello, %s! (<a href="%s">Click here to continue logging out.</a>)<br /><br />' %
+                    (self._user.nickname(), users.create_logout_url('/')))
+    
 class SignupHandler(webapp2.RequestHandler):
     def get(self):
 

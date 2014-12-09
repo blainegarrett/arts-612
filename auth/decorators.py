@@ -30,3 +30,18 @@ def login_required(handler_method):
             handler_method(self, *args, **kwargs)
 
     return check_login
+
+def rest_login_required(handler_method):
+    """
+    Throws a 401 instead of trying to redirect.
+    """
+
+    def check_login(self, *args, **kwargs):
+
+        self._user = users.get_current_user()
+        if not self._user:
+            raise Exception('You are not authorized...')
+        else:
+            handler_method(self, *args, **kwargs)
+
+    return check_login

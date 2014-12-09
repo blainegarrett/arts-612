@@ -2,6 +2,7 @@
 
 # Each Date record will have its own search document
 
+from auth.decorators import rest_login_required
 from pytz import timezone
 from google.appengine.ext import ndb
 import datetime
@@ -19,8 +20,6 @@ from venues.controllers import create_resource_from_entity as v_resource
 from modules.venues.internal.api import get_venue_by_slug
 
 from framework.controllers import MerkabahBaseController
-
-import logging
 
 resource_url = 'http://localhost:8080/api/events/%s' #TODO: HRM?
 
@@ -48,6 +47,7 @@ def convert_rest_dt_to_datetime(dt):
     dt = timezone('UTC').localize(dt)
     #dt =  dt.astimezone(timezone('UTC'))
     return dt.replace(tzinfo=None)
+
 
 class EventDateField(RestField):
     """
@@ -180,7 +180,7 @@ class EventDetailApiHandler(RestHandlerBase):
     def get_rules(self):
         return REST_RULES
 
-
+    @rest_login_required
     def _put(self, slug):
         # Edit an event
 
@@ -261,6 +261,7 @@ class EventsApiHandler(RestHandlerBase):
     def get_rules(self):
         return REST_RULES
 
+    @rest_login_required
     def _post(self):
         """
         Create Event
