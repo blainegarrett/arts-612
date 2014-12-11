@@ -2,12 +2,13 @@
 
 # Each Date record will have its own search document
 
-from auth.decorators import rest_login_required
-from pytz import timezone
+from google.appengine.api import memcache
 from google.appengine.ext import ndb
+from pytz import timezone
 import datetime
 import logging
-            
+
+from auth.decorators import rest_login_required
 from rest.controllers import RestHandlerBase
 from rest.resource import Resource
 from rest.resource import RestField, SlugField, ResourceIdField, ResourceUrlField
@@ -291,12 +292,21 @@ class EventsApiHandler(RestHandlerBase):
     def _get(self):
         """
         Main Endpoint
+        
+        TODO: This has some really basic silly caching on it to prevent being slashdotted to death
         """
 
         results = []
-        events = events_api.get_events()
-        for event in events:
-            results.append(create_resource_from_entity(event))
+
+        cash_key = 'testing_events_cache'
+        cached_events = memcache.get(cash_key)
+        if cached_events is not None:
+            results = cached_events
+        else:
+            events = events_api.get_events()
+            for event in events:
+                results.append(create_resource_from_entity(event))
+            memcache.add(cash_key, results, 60)
 
         self.serve_success(results)
 
