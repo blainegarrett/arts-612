@@ -69,11 +69,12 @@ def upcoming_events(limit=5):
 
 def now_showing():
     """
+    Find all the events happening today (3pm UTC) - already started but haven't ended yet
     """
 
     today = datetime.datetime.now().replace(hour=3, minute=0, second=0)
-    end = today
-    return search_helper(end=end, category=CATEGORY.ONGOING, sort='end')
+    end = start = today
+    return search_helper(end=end, start=start, category=CATEGORY.ONGOING, sort='end')
 
 
 def going_on_now(limit=5):
