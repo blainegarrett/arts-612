@@ -11,13 +11,13 @@ import os
 
 from auth import mailinglist
 
+from HTMLParser import HTMLParser
+
+
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
-
-
-from HTMLParser import HTMLParser
 
 class MLStripper(HTMLParser):
     def __init__(self):
@@ -128,3 +128,33 @@ class ConfirmHandler(webapp2.RequestHandler):
                         users.create_login_url('/beta/confirm/'))
 
         self.response.out.write('<html><body>%s</body></html>' % greeting)
+
+
+
+class MerkabahBaseController(webapp2.RequestHandler):
+    """
+    """
+
+    def render_template(self, template_path, template_context):
+        """
+        Render a Template to output
+        """
+
+        # TODO: This needs to abstract the jinja env out further...
+        from main import JINJA_ENVIRONMENT as default_jinja_env
+
+        template = default_jinja_env.get_template(template_path)
+        self.response.write(template.render(template_context))
+
+
+
+class MainHandler(MerkabahBaseController):
+    def get(self):
+        pagemeta = {
+            'title': 'MainHandler Title',
+            'description': 'A Directory of Galleries and Places that Show Art in Minneapolis',
+            'image': 'http://www.soapfactory.org/img/space/gallery-one-2.jpg'
+        }
+
+        template_values = {'pagemeta': pagemeta}
+        self.render_template('./templates/index.html', template_values)
