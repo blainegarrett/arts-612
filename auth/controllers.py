@@ -133,6 +133,7 @@ class ConfirmHandler(webapp2.RequestHandler):
 
 class MerkabahBaseController(webapp2.RequestHandler):
     """
+    Base Helper Class that renders the chrome and inputs page meta for non-JS renderers (FB, etc)
     """
 
     def render_template(self, template_path, template_context):
@@ -147,11 +148,22 @@ class MerkabahBaseController(webapp2.RequestHandler):
         self.response.write(template.render(template_context))
 
 
-
 class MainHandler(MerkabahBaseController):
     def get(self):
         pagemeta = {
             'title': 'MainHandler Title',
+            'description': 'A Directory of Galleries and Places that Show Art in Minneapolis',
+            'image': 'http://www.soapfactory.org/img/space/gallery-one-2.jpg'
+        }
+
+        template_values = {'pagemeta': pagemeta}
+        self.render_template('./templates/index.html', template_values)
+
+
+class WrittenArticleHandler(MerkabahBaseController):
+    def get(self, year, month, slug):
+        pagemeta = {
+            'title': 'Written Content Title',
             'description': 'A Directory of Galleries and Places that Show Art in Minneapolis',
             'image': 'http://www.soapfactory.org/img/space/gallery-one-2.jpg'
         }

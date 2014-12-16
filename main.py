@@ -46,6 +46,7 @@ web_routes += [
     #(r'/galleries', 'venues.controllers.GalleryMainHandler'),
     #(r'/calendar/([a-z0-9-]+)', 'cal.controllers.CalendarDetailHandler'),
     #(r'/calendar', 'cal.controllers.CalendarMainHandler'),
+    (r'/written/([0-9-_]+)/([a-z0-9-_]+)/([a-z0-9-_]+)', 'auth.controllers.WrittenArticleHandler'),
     (r'/', 'auth.controllers.MainHandler')
 ]
 

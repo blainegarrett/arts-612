@@ -51,5 +51,13 @@ mainApp.controller('GalleryDetailCtrl', function($scope, $location, $http, $rout
         name:'Abstracted Gallery', slug: 'abstracted', 'description': 'This place is rad as shit...'
     };
     */
+});
 
-})
+
+mainApp.controller('TempWrittenArticleController', function($scope, $location, $http, $routeParams) {
+    // For now this only sets the content of the meta tags
+    console.log($routeParams);
+    
+    $scope.hamburger = 'laptop';
+
+});

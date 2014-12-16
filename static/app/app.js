@@ -11,6 +11,10 @@ mainApp.config(['$routeProvider',
         templateUrl: '/static/partials/main.html',
         controller: 'TempMainPageController'
       }).
+      when('/written/:year/:month/:slug', {
+        templateUrl: '/static/partials/written_article.html',
+        controller: 'TempWrittenArticleController'
+      }).
       otherwise({
         templateUrl: '/static/partials/main.html',
         controller: 'TempMainPageController'
