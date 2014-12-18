@@ -2,12 +2,13 @@
 
 import datetime
 from google.appengine.ext import ndb
+from google.appengine.api import memcache 
 
 from modules.utils import get_entity_key_by_keystr
 from modules.events.internal.models import Event, EventDate
 from modules.events.internal import search as event_search
 from modules.events.constants import EVENT_KIND
-from modules.events.constants import CATEGORY
+from modules.events.constants import CATEGORY, UPCOMING_CACHE_KEY, NOWSHOWING_CACHE_KEY
 from modules.venues.internal import api as venue_api
 
 
@@ -193,6 +194,12 @@ def edit_event(entity, data):
 
     entity.put()
 
+    # Step 2: Next update the search indexes incase anything affecting them has changed
+    event_search.maybe_up_update_search_index(entity)
+
+    # Step 3: Kill All caches
+    memcache.delete_multi([UPCOMING_CACHE_KEY, NOWSHOWING_CACHE_KEY])
+
     return entity
     
     
@@ -243,5 +250,8 @@ def create_event(data):
     # Build search indexes for event dates
     search_docs = event_search.build_index(entity)
     search_index.put(search_docs)
+
+    # Step 3: Delete any cache keys related
+    memcache.delete_multi([UPCOMING_CACHE_KEY, NOWSHOWING_CACHE_KEY])
 
     return entity

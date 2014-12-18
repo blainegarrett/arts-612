@@ -55,8 +55,30 @@ def _build_event_date(i, event, ed, venue, start, end, is_hours=False):
     fields.append(search.GeoField(name='venue_geo', value=venue_geo))
 
     return search.Document(doc_id=doc_id, fields=fields)
-    
-    
+
+
+def maybe_up_update_search_index(event):
+    """
+    On an edit event, we need to build a new set of documents
+    """
+    # TODO:  Optimize this to see if data has actually changed against what is in the index
+
+    index = get_search_index()
+
+    results = simple_search('event_keystr: %s' % str(event.key.urlsafe()))
+
+    doc_ids = [] # Set??
+    for doc in results['index_results']:
+        doc_ids.append(doc.doc_id)
+
+    if doc_ids:
+        index.delete(doc_ids)
+
+    # Next Rebuild the search index
+    search_docs = build_index(event)
+    index.put(search_docs)
+
+
 def build_index(event):
     """
     Construct a search document for the event.
@@ -125,9 +147,13 @@ def simple_search(querystring=None, start=None, end=None, category=None, limit=1
     TODO: "term", "near", "by type", "now" and any combo
     """
 
+    if not querystring:
+        querystring = ''
+
     # Now = started and hasn't ended yet
-    querystring = ''
     if start:
+        if querystring:
+            querystring += ' AND '
         querystring += 'start <= %s' % unix_time(start)
     if end:
         if querystring:
