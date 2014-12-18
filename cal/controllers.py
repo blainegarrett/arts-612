@@ -6,7 +6,6 @@ from google.appengine.api import memcache
 from google.appengine.ext import ndb
 from pytz import timezone
 import datetime
-import logging
 
 from auth.decorators import rest_login_required
 from rest.controllers import RestHandlerBase
@@ -15,7 +14,8 @@ from rest.resource import RestField, SlugField, ResourceIdField, ResourceUrlFiel
 
 from modules.events.internal import api as events_api
 from modules.events.internal.models import Event
-from modules.events.constants import CATEGORY, EVENT_DATE_TYPE
+
+from modules.events.constants import UPCOMING_CACHE_KEY, NOWSHOWING_CACHE_KEY
 
 from venues.controllers import create_resource_from_entity as v_resource
 from modules.venues.internal.api import get_venue_by_slug
@@ -25,17 +25,10 @@ from framework.controllers import MerkabahBaseController
 resource_url = 'http://localhost:8080/api/events/%s' #TODO: HRM?
 
 
-
 def convert_rest_dt_to_datetime(dt):
     """
     Helper to convert a input datetime string to a UTC datetime
     """
-
-    #centraltz = timezone('US/Central')
-
-    #raise Exception(dt)
-
-    #2014-11-15T01:00:00.000Z
 
     try:
         fmt = '%Y-%m-%dT%H:%M:%SZ'
@@ -46,7 +39,6 @@ def convert_rest_dt_to_datetime(dt):
         dt = datetime.datetime.strptime(dt, fmt)
 
     dt = timezone('UTC').localize(dt)
-    #dt =  dt.astimezone(timezone('UTC'))
     return dt.replace(tzinfo=None)
 
 
@@ -81,20 +73,17 @@ class EventDateField(RestField):
             return_value.append(event_date_resource)
 
         return return_value
-        
-
 
     def from_resource(self, obj, field):
         """
         Outout a field to dic value
         """
-        logging.error('IN EVENT DATES FROM RESOURCE')
 
         val = super(EventDateField, self).from_resource(obj, field)
 
         return_value = []
         for event_date in val:
-            
+
             # Resolve VenueResource
             v = getattr(event_date, 'venue', None)
             if not isinstance(v, Resource): # TODO: Should be Resource base class
@@ -111,7 +100,7 @@ class EventDateField(RestField):
             event_date_resource['label'] = event_date.label
             event_date_resource['venue_slug'] = event_date.venue_slug
             event_date_resource['venue'] = event_date.venue
-            
+
             return_value.append(event_date_resource)
 
         return return_value
@@ -136,30 +125,7 @@ def create_resource_from_entity(e, verbose=False):
     TODO: We don't care about verbosity just yet
     """
 
-    import logging
-    logging.warning('--------Event Create Resource----------------')
-    logging.warning(e)
-
     return Resource(e, REST_RULES).to_dict()
-
-    r = {
-        'resource_id':e.key.id(),
-        'resource':'http://localhost:8080/api/events/%s' % e.key.id(),
-        'slug': e.slug,
-        'name': e.name,
-        'url': e.url,
-        'event_dates': []
-    }
-
-    # This needs to be gooder about resources...
-    for event_date in e.event_dates:
-        v = event_date.get('venue', None)
-
-        if not isinstance(v, dict): # TODO: Should be Resource base class
-            event_date['venue'] = v_resource(v)
-        r['event_dates'].append(event_date)
-
-    return r
 
 
 class EventsWeeksApiHandler(RestHandlerBase):
@@ -178,6 +144,7 @@ class EventsWeeksApiHandler(RestHandlerBase):
 class EventDetailApiHandler(RestHandlerBase):
     """
     """
+
     def get_rules(self):
         return REST_RULES
 
@@ -191,14 +158,13 @@ class EventDetailApiHandler(RestHandlerBase):
             raise Exception('404 - TODO: Throw legit 404') # or Resource Not Found
 
         e = key.get()
-        
+
         e = events_api.edit_event(e, self.cleaned_data)
         result = create_resource_from_entity(e)
         self.serve_success(result)
 
-
     def _get(self, slug):
-        
+
         #slug = long(slug)
         #key = events_api.get_event_key(slug)
         key = ndb.Key(urlsafe=slug)
@@ -219,11 +185,21 @@ class EventDetailApiHandler(RestHandlerBase):
 class EventsUpcomingHandler(RestHandlerBase):
     """
     """
+
     def _get(self):
+        """
+        Temp handler for upcoming events
+        """
+
         results = []
-        events = events_api.upcoming_events()
-        for event in events:
-            results.append(create_resource_from_entity(event))
+        cached_events = memcache.get(UPCOMING_CACHE_KEY)
+        if cached_events is not None:
+            results = cached_events
+        else:
+            events = events_api.upcoming_events()
+            for event in events:
+                results.append(create_resource_from_entity(event))
+            memcache.add(UPCOMING_CACHE_KEY, results)
 
         self.serve_success(results)
 
@@ -233,12 +209,22 @@ class EventsNowShowingHandler(RestHandlerBase):
     """
 
     def _get(self):
+        """
+        Temp handler for upcoming events
+        """
+
         results = []
-        events = events_api.now_showing()
-        for event in events:
-            results.append(create_resource_from_entity(event))
+        cached_events = memcache.get(NOWSHOWING_CACHE_KEY)
+        if cached_events is not None:
+            results = cached_events
+        else:
+            events = events_api.now_showing()
+            for event in events:
+                results.append(create_resource_from_entity(event))
+            memcache.add(NOWSHOWING_CACHE_KEY, results)
 
         self.serve_success(results)
+
 
 class EventsWeeksApiHandler(RestHandlerBase):
     """
@@ -292,7 +278,7 @@ class EventsApiHandler(RestHandlerBase):
     def _get(self):
         """
         Main Endpoint
-        
+
         TODO: This has some really basic silly caching on it to prevent being slashdotted to death
         """
 
@@ -317,10 +303,16 @@ class CalendarMainHandler(MerkabahBaseController):
     """
     Main Handler For Calendar Listings
     """
+
     def get(self):
-        pagemeta = {'title': 'EVENT CAL!!!', 'description': 'A Directory of Galleries and Places that Show Art in Minneapolis', 'image': 'http://www.soapfactory.org/img/space/gallery-one-2.jpg'}
+        pagemeta = {
+            'title': 'EVENT CAL!!!',
+            'description': 'A Directory of Galleries and Places that Show Art in Minneapolis',
+            'image': 'http://www.soapfactory.org/img/space/gallery-one-2.jpg'
+        }
+
         template_values = {'pagemeta': pagemeta}
-        self.render_template('templates/index.html', template_values)        
+        self.render_template('templates/index.html', template_values)
 
 
 class CalendarDetailHandler(MerkabahBaseController):
@@ -343,6 +335,11 @@ class CalendarDetailHandler(MerkabahBaseController):
             #self.serve_404('Gallery Not Found')
             #return False
 
-        pagemeta = {'title': 'cooooool', 'description': 'this is wicked cool', 'image': 'http://www.soapfactory.org/img/space/gallery-one-2.jpg'}
+        pagemeta = {
+            'title': 'cooooool',
+            'description': 'this is wicked cool',
+            'image': 'http://www.soapfactory.org/img/space/gallery-one-2.jpg'
+        }
+
         template_values = {'pagemeta': pagemeta}
         self.render_template('templates/index.html', template_values)

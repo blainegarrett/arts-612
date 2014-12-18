@@ -22,7 +22,7 @@ REST_RULES = [
     ResourceUrlField(resource_url, output_only=True),
     SlugField(Venue.slug, required=True),
     RestField(Venue.name, required=True),
-    
+
     RestField(Venue.address, required=True),
     RestField(Venue.address2, required=False),
     RestField(Venue.city, required=True),
@@ -34,8 +34,9 @@ REST_RULES = [
     RestField(Venue.email, required=False),
     RestField(Venue.category, required=True),
     RestField(Venue.hours, required=False),
-    GeoField(Venue.geo, required=False), 
+    GeoField(Venue.geo, required=False),
 ]
+
 
 def create_resource_from_entity(e, verbose=False):
     """
@@ -43,45 +44,16 @@ def create_resource_from_entity(e, verbose=False):
     TODO: We don't care about verbosity just yet
     """
 
-    import logging
-    logging.warning('--------Venue Create Resource----------------')
-    logging.warning(e)
-
     return Resource(e, REST_RULES).to_dict()
-
-    try:
-        r = {
-            'resource_id':e.slug,
-            'resource':'http://localhost:8080/api/galleries/%s' % e.slug,
-            'slug': e.slug,
-            'name': e.name,
-
-            'address': e.address,
-            'address2': e.address2,
-            'city': e.city,
-            'state': e.state,
-            'country': e.country,
-            'website': e.website,
-            'phone': e.phone,
-            'email': e.email,
-            'category': e.category,
-            'geo': None
-        }
-    except AttributeError, ex:
-        raise Exception('Attempting to create venue resource? Received:  %s' % e)
-
-    if e.geo:
-        r['geo'] = {'lat': e.geo.lat, 'lon': e.geo.lon}
-    
-    return r
 
 
 class GalleryApiHandlerBase(RestHandlerBase):
     """
     Base Handler for all Gallery API endpoints
     """
+
     def get_rules(self):
-        return REST_RULES;
+        return REST_RULES
 
 
 class GalleriesApiHandler(GalleryApiHandlerBase):
@@ -119,13 +91,13 @@ class GalleriesApiHandler(GalleryApiHandlerBase):
     def _post(self):
         """
         Create Venue Resource
-        
+
         TODO: None of the data is validated right now...
         """
 
         """
         # Expected payload
-        
+
         {
             "slug": "supercoolgallery",
             "name": "Super Cool Gallery",
@@ -156,10 +128,10 @@ class GalleryDetailApiHandler(GalleryApiHandlerBase):
 
     def _get(self, slug):
         # TODO: Abstract this a bit more out into a rest-like service...
-        
+
         key = ndb.Key(urlsafe=slug)
         e = key.get()
-        
+
         #e = venues_api.get_venue_by_slug(slug)
 
         if not e:
@@ -173,13 +145,13 @@ class GalleryDetailApiHandler(GalleryApiHandlerBase):
     def _put(self, slug):
         """
         Edit a resource
-        
+
         TODO: None of the data is validated right now...
         """
 
         """
         # Expected payload
-        
+
         {
             "name": "Super Cool Gallery",
             "address": "123 Whatever St",
@@ -196,7 +168,7 @@ class GalleryDetailApiHandler(GalleryApiHandlerBase):
         """
         key = ndb.Key(urlsafe=slug)
         venue = key.get()
-        
+
         #venue = venues_api.get_venue_by_slug(slug)
         if not venue:
             self.serve_404('Gallery Not Found')
@@ -222,15 +194,18 @@ class GalleryDetailApiHandler(GalleryApiHandlerBase):
         self.serve_success(result)
 
 
-
-# Web Handlers
-
 class GalleryMainHandler(MerkabahBaseController):
     """
     Main Handler For Gallery Listings
     """
+
     def get(self):
-        pagemeta = {'title': 'Galleries and Venues', 'description': 'A Directory of Galleries and Places that Show Art in Minneapolis', 'image': 'http://www.soapfactory.org/img/space/gallery-one-2.jpg'}
+        pagemeta = {
+            'title': 'Galleries and Venues',
+            'description': 'A Directory of Galleries and Places that Show Art in Minneapolis',
+            'image': 'http://www.soapfactory.org/img/space/gallery-one-2.jpg'
+        }
+
         template_values = {'pagemeta': pagemeta}
         self.render_template('templates/index.html', template_values)
 
@@ -249,7 +224,11 @@ class GalleryDetailHandler(MerkabahBaseController):
             #self.serve_404('Gallery Not Found')
             #return False
 
-        pagemeta = {'title': 'cooooool', 'description': 'this is wicked cool', 'image': 'http://www.soapfactory.org/img/space/gallery-one-2.jpg'}
+        pagemeta = {
+                'title': 'cooooool',
+                'description': 'this is wicked cool',
+                'image': 'http://www.soapfactory.org/img/space/gallery-one-2.jpg'
+            }
+
         template_values = {'pagemeta': pagemeta}
         self.render_template('templates/index.html', template_values)
-
