@@ -63,6 +63,18 @@ class GalleriesApiHandler(GalleryApiHandlerBase):
 
     def _get(self):
         # Check if there is a query filter, etc
+        get_by_slug = self.request.get('get_by_slug', None)
+        
+        if get_by_slug:
+            venue = venues_api.get_venue_by_slug(get_by_slug)
+            if not venue:
+                self.serve_404('Gallery Not Found')
+                return False
+
+            resource = create_resource_from_entity(venue)
+            self.serve_success(resource)
+            return
+
         q = self.request.get('q', None)
 
         if q:
@@ -203,8 +215,7 @@ class GalleryMainHandler(MerkabahBaseController):
         pagemeta = {
             'title': 'Galleries and Venues',
             'description': 'A Directory of Galleries and Places that Show Art in Minneapolis',
-            'image': 'http://www.soapfactory.org/img/space/gallery-one-2.jpg'
-        }
+            'image': 'http://www.soapfactory.org/img/space/gallery-one-2.jpg'}
 
         template_values = {'pagemeta': pagemeta}
         self.render_template('templates/index.html', template_values)
@@ -227,8 +238,7 @@ class GalleryDetailHandler(MerkabahBaseController):
         pagemeta = {
                 'title': 'cooooool',
                 'description': 'this is wicked cool',
-                'image': 'http://www.soapfactory.org/img/space/gallery-one-2.jpg'
-            }
+                'image': 'http://www.soapfactory.org/img/space/gallery-one-2.jpg'}
 
         template_values = {'pagemeta': pagemeta}
         self.render_template('templates/index.html', template_values)

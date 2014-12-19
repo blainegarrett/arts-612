@@ -157,15 +157,27 @@ class MerkabahBaseController(webapp2.RequestHandler):
 class MainHandler(MerkabahBaseController):
     def get(self):
         pagemeta = {
-            'title': 'MainHandler Title',
-            'description': 'A Directory of Galleries and Places that Show Art in Minneapolis',
-            'image': 'http://www.soapfactory.org/img/space/gallery-one-2.jpg'
+            'title': 'returning soon ...',
+            'description': 'The Very Best Events and Gallery Listings for Minneapolis',
+            'image': '/static/themes/v0/mplsart_fbimg.jpg'
         }
 
         template_values = {'pagemeta': pagemeta}
         self.render_template('./templates/index.html', template_values)
 
 
+class WrittenHandler(MerkabahBaseController):
+
+    def get(self):
+        pagemeta = {
+            'title': 'Written',
+            'description': 'Reviews, critique, news from the mpls arts scene',
+            'image': 'http://www.soapfactory.org/img/space/gallery-one-2.jpg'
+        }
+
+        template_values = {'pagemeta': pagemeta}
+        self.render_template('./templates/index.html', template_values)
+    
 class WrittenArticleHandler(MerkabahBaseController):
     def get(self, year, month, slug):
         pagemeta = {

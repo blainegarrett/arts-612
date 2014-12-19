@@ -50,7 +50,12 @@ web_routes += [
 
     (r'/calendar/([a-z0-9-]+)', 'cal.controllers.CalendarDetailHandler'),
     (r'/calendar', 'cal.controllers.CalendarMainHandler'),
+
+
     (r'/written/([0-9-_]+)/([a-z0-9-_]+)/([a-z0-9-_]+)', 'auth.controllers.WrittenArticleHandler'),
+    RedirectRoute('/written/', 'auth.controllers.WrittenHandler', strict_slash=True, name="auth_logout"),
+
+
     #(r'/import/galleries', 'loaddata.GalleryData'), # These are handled in app.yaml
     #(r'/import/events', 'loaddata.EventData'), # These are handled in app.yaml
     (r'/', 'auth.controllers.MainHandler')]

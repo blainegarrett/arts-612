@@ -1,4 +1,5 @@
 # Handlers for bulk importing data
+# We need to figure out a better way to bulk import data...
 
 import pytz
 from pytz import timezone
