@@ -5,20 +5,15 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <link rel="icon" href="/static/themes/v0/favicon.ico" />
-	<link href='http://fonts.googleapis.com/css?family=Quicksand:400,700' rel='stylesheet' type='text/css'>
-	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Meta -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- Bootstrap core CSS -->
-	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <meta name="description" content="" />
+    <meta name="author" content="" />
 
-    <!-- Custom styles for this template -->
-	<link rel="stylesheet" href="/static/themes/v0/core.css">
+	<!-- Open Graph and Social Meta -->
 
-	<!-- important bits -->
-	<meta name="google-site-verification" content="5rh0RiNkYuPuVOdrIXk4mY4AQ87uS7Ad_ZigdjDNBp0" />
-
-
-	<!-- Search/Social Meta -->
+	<!-- Social -->
     <title>mplsart | returning soon...</title>
     <meta name="description" content="The Very Best Events and Gallery Listings for Minneapolis" />
     <meta name="keywords" content="minneapolis, twin cities, art, galleries, scene, painting, visual arts, drawing, purchase, coffee shop, shows, exhibition" />
@@ -41,10 +36,25 @@
 	<meta property="og:image" content="http://mplsart.com/static/themes/v0/mplsart_fbimg.jpg" />
 	<meta property="og:description" content="Minneapolis' favorite arts calendar is returning soon with the very best events and gallery listings the city has to offer." />
 
+	<!-- fonts -->
+	<link href='http://fonts.googleapis.com/css?family=Quicksand:400,700' rel='stylesheet' type='text/css'>
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Bootstrap core CSS -->
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+    <!-- Custom styles for this template -->
+	<link rel="stylesheet" href="/static/themes/v0/core.css" />
+
+	<!-- important bits -->
+	<meta name="google-site-verification" content="5rh0RiNkYuPuVOdrIXk4mY4AQ87uS7Ad_ZigdjDNBp0" />
+
   </head>
 
   <body>
-    <div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+
+	<!-- Start Top Nav -->
+	<div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
 	      <div class="container">
 	        <div class="navbar-header">
 			  <!--
@@ -55,30 +65,21 @@
 	            <span class="icon-bar"></span>
 	          </button>
 			  -->
-	          <a class="navbar-brand" href="">MPLSART.COM</a>
+	          <a class="navbar-brand" href="/">MPLSART.COM</a>
 	        </div>
 			
 			<p class="navbar-text navbar-right">
 				<span id="est-stamp">EST. 2005</a>
 			</p>
 	      </div><!-- /.container -->
-    </div><!-- /.navbar -->
-
+	    </div>
+	<!-- End Top Nav -->
+	
+	<!-- Start Main Content Container -->
     <div class="container">
-      <div class="row row-offcanvas row-offcanvas-right">
-		<!-- Start of main content area -->
-
-        <div class="col-xs-12" id="main-content-container">
-
-			<div ng-view>loading...</div>
-
-
-        </div><!--/span-->
-		<!-- End of main content area -->
-      </div><!--/row-->
-
-      <!-- <footer id="main-content-footer"><p>&copy; MPLSART.COM 2014</p></footer> -->
-
+		<div ng-view>
+			loading ...
+		</div>
     </div><!--/.container-->
 
 
@@ -86,9 +87,10 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
 
-	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
-	
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
+	
 	<!-- angular -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.18/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.18/angular-route.js"></script>
@@ -99,16 +101,21 @@
 	<script src="/static/app/app.js"></script>
 	<script src="/static/app/controllers.js"></script>
 
-	
 	<script src="/static/js/react/build/eventlist.js"></script>
 	<script src="/static/js/moment.js"></script>	
 
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-	
-	
-	
-	
-	
+	<!-- start google analytics -->
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-54271335-1', 'auto');
+	  ga('send', 'pageview');
+
+	</script>
+	<!-- end google analytics -->
+
   </body>
 </html>
