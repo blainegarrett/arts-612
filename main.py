@@ -51,8 +51,9 @@ web_routes += [
     (r'/calendar/([a-z0-9-]+)', 'cal.controllers.CalendarDetailHandler'),
     (r'/calendar', 'cal.controllers.CalendarMainHandler'),
 
-
+    # TODO: CONVERT TO NATIVE REGEXPS
     (r'/written/([0-9-_]+)/([a-z0-9-_]+)/([a-z0-9-_]+)', 'auth.controllers.WrittenArticleHandler'),
+    #RedirectRoute(r'/written/([0-9-_]+)/([a-z0-9-_]+)/([a-z0-9-_]+)', 'auth.controllers.WrittenHandler', strict_slash=True, name="auth_logout"),
     RedirectRoute('/written/', 'auth.controllers.WrittenHandler', strict_slash=True, name="auth_logout"),
 
 

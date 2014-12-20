@@ -39,7 +39,7 @@ mainApp.config(['$routeProvider',
   mainApp.config(['$routeProvider',
     function($routeProvider) {
       $routeProvider.
-        when('/written', {
+        when('/written/', {
           templateUrl: '/static/partials/written_home.html',
           controller: 'TempMainPageController'
         }).
