@@ -44,7 +44,7 @@ mainApp.config(['$routeProvider',
           controller: 'TempMainPageController'
         }).
         when('/written/:year/:month/:slug', {
-          templateUrl: '/static/partials/written_article.html',
+          template: '<react-component name="BlogArticlePage" />',
           controller: 'TempWrittenArticleController'
         })
     }]);
