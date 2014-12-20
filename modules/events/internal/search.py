@@ -8,6 +8,7 @@
 # Things happening tonight near...
 
 import datetime
+from pytz import timezone
 
 from google.appengine.api import search
 from google.appengine.ext import ndb
@@ -231,7 +232,9 @@ def unix_time(dt):
             fmt = '%Y-%m-%d'
             dt = datetime.datetime.strptime(dt, fmt)
 
-    epoch = datetime.datetime.utcfromtimestamp(0)
+    # Make it the epoch in central time..
+    epoch = datetime.datetime.utcfromtimestamp(0).replace(tzinfo=timezone('UTC'))
+    
     delta = dt - epoch
     return delta.total_seconds()
 

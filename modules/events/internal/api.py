@@ -4,6 +4,8 @@ import datetime
 from google.appengine.ext import ndb
 from google.appengine.api import memcache 
 
+from pytz import timezone
+
 from modules.utils import get_entity_key_by_keystr
 from modules.events.internal.models import Event, EventDate
 from modules.events.internal import search as event_search
@@ -62,7 +64,11 @@ def tonight(category=None, limit=5):
 
 def upcoming_events(limit=5):
     # end is greater than this morning with category = reception and venue_category
-    today = datetime.datetime.now().replace(hour=3, minute=0, second=0) # TODO: Needs TZ
+
+    today = datetime.datetime.now()
+    today = timezone('US/Central').localize(today)
+    today = today.replace(hour=3, minute=0, second=0)
+
     #querystring = 'end >= %s AND (category: %s OR category: event)' % (unix_time(end), )
     end = today
     return search_helper(end=end, category=[CATEGORY.RECEPTION, CATEGORY.SALE], sort='start')
@@ -70,10 +76,10 @@ def upcoming_events(limit=5):
 
 def now_showing():
     """
-    Find all the events happening today (3pm UTC) - already started but haven't ended yet
+    Find all the events happening today (11pm UTC) - already started but haven't ended yet
     """
 
-    today = datetime.datetime.now().replace(hour=3, minute=0, second=0)
+    today = datetime.datetime.now().replace(hour=0, minute=0, second=0, tzinfo=timezone('US/Central'))
     end = start = today
     return search_helper(end=end, start=start, category=CATEGORY.ONGOING, sort='end')
 
