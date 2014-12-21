@@ -39,7 +39,7 @@ def convert_rest_dt_to_datetime(dt):
         dt = datetime.datetime.strptime(dt, fmt)
 
     dt = timezone('UTC').localize(dt)
-    return dt.replace(tzinfo=None)
+    return dt #.replace(tzinfo=None)
 
 
 class EventDateField(RestField):

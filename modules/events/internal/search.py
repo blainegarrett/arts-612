@@ -43,8 +43,8 @@ def _build_event_date(i, event, ed, venue, start, end, is_hours=False):
     fields.append(search.AtomField(name='event_keystr', value=str(event.key.urlsafe())))
 
     # Populate bits specific to the event date
-    fields.append(search.NumberField(name='start', value=unix_time(start)))
-    fields.append(search.NumberField(name='end', value=unix_time(end)))
+    fields.append(search.NumberField(name='start', value=unix_time(timezone('UTC').localize(start))))
+    fields.append(search.NumberField(name='end', value=unix_time(timezone('UTC').localize(end))))
     fields.append(search.AtomField(name='category', value=category))
 
     # Attach Venue/Geo Information

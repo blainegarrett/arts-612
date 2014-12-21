@@ -192,8 +192,8 @@ def edit_event(entity, data):
 
         ed.label = d_data['label']
         ed.type = str(d_data['type']) # This is not a long term solution...
-        ed.start = d_data['start'] # Expected to be a DateTime or None
-        ed.end = d_data['end'] # Expected to be a DateTime or None
+        ed.start = d_data['start'].replace(tzinfo=None) # Expected to be a DateTime or None
+        ed.end = d_data['end'].replace(tzinfo=None) # Expected to be a DateTime or None
         event_dates.append(ed)
 
     entity.event_dates = event_dates
@@ -245,8 +245,8 @@ def create_event(data):
 
         ed.label = d_data['label']
         ed.type = str(d_data['type']) # This is not a long term solution...
-        ed.start = d_data['start'] # Expected to be a DateTime or None
-        ed.end = d_data['end'] # Expected to be a DateTime or None
+        ed.start = d_data['start'].replace(tzinfo=None) # Expected to be a DateTime or None
+        ed.end = d_data['end'].replace(tzinfo=None) # Expected to be a DateTime or None
         event_dates.append(ed)
 
     entity.event_dates = event_dates
