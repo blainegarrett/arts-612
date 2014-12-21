@@ -8,8 +8,7 @@ console.log('jive');
 console.log(coolthing.derp.doit());
 */
 
-
-var React = require('react');
+// React is global
 var MasonryMixin = require('react-masonry-mixin');
 
 var Hello = React.createClass({

@@ -46,10 +46,10 @@
     "gulp": "^3.8.10",
     "gulp-browserify": "^0.5.0"
   },
-"browserify-shim": {
+  "browserify-shim": {
     "react": {
-        "exports": "react"
-    },
+        "exports": "React"
+    }
 }
 
 }
