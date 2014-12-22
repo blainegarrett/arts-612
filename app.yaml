@@ -1,5 +1,6 @@
 application: arts-612
-version: admin-20141220
+
+version: admin-beta-client
 
 runtime: python27
 api_version: 1
@@ -117,8 +118,24 @@ skip_files: |
  (^external_libs/wf/apps/dc/dashboard/assets/.*)|
  (^external_libs/wf/apps/section16/assets/.*)|
  )$
+
 # index files
 handlers:
+
+
+- url: /app.*
+  static_files: public/app.html
+  upload: public/app\.html
+  login: admin
+
+# Node modules that are for client
+- url: /node_modules
+  static_dir: node_modules
+  secure: optional
+
+- url: /public
+  static_dir: public
+  secure: optional
 
 - url: /beta.*
   script: main.app
