@@ -10,6 +10,20 @@ console.log(coolthing.derp.doit());
 
 // React is global
 var MasonryMixin = require('react-masonry-mixin');
+var React = require('react');
+
+
+var MainApp = require('./components/MainApp.react');
+var PageMeta = require('./components/pages/PageMeta');
+
+
+/* Render the PageMeta immediatly...*/
+React.render(
+	<PageMeta />,
+    document.getElementById('navbar')
+);
+
+
 
 var Hello = React.createClass({
 
@@ -118,12 +132,21 @@ var HomePods = React.createClass({
 });
 
 //React.render(HomePods, document.getElementById('xcontainer'));
+/*
 React.render(
   <HomePods  />,
   document.getElementById('xcontainer')
 );
+*/
+
+React.render(
+  <MainApp  />,
+  document.getElementById('xcontainer')
+);
+
 
 module.exports = HomePods
+
 
 React.render(
   <Hello name="World" />,
