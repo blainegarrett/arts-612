@@ -56,7 +56,7 @@ AppDispatcher.register(function(payload) {
   var action = payload.action;
   var text;
 
-  console.log(payload);
+  //console.log(payload);
   _page_meta = payload; // set
   PageMetaStore.emitChange();
 

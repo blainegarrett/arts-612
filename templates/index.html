@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="mainApp">
+<html>
   <head>
 
     <meta charset="utf-8" />
@@ -77,9 +77,11 @@
 	
 	<!-- Start Main Content Container -->
     <div class="container">
-		<div ng-view>
-			loading ...
-		</div>
+
+		<!-- Start of Primary Page Content -->
+		<div id="main_content" ng-view>loading...</div>
+		<!-- End of Primary Page Content -->
+
     </div><!--/.container-->
 
 
@@ -90,19 +92,12 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
-	
-	<!-- angular -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.18/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.18/angular-route.js"></script>
-
+	<script src="/public/build/main.js"></script>
+	<!-- 
     <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.12.0/react.js"></script>
-    <script src="/static/js/ngReact.js"></script>
-
-	<script src="/static/app/app.js"></script>
-	<script src="/static/app/controllers.js"></script>
-
 	<script src="/static/js/react/build/eventlist.js"></script>
-	<script src="/static/js/moment.js"></script>	
+	<script src="/static/js/moment.js"></script>
+	-->
 
 	<!-- start google analytics -->
 	<script>
