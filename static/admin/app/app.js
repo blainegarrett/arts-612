@@ -7,7 +7,6 @@ MPLS Art Angular App
 var edit_venue_template = '<div class="col-md-12 panel"><react-component name="VenuesForm" props="person" /></div>';
 var create_venue_template = '<div class="col-md-12 panel"><react-component name="VenuesForm" props="person"  /></div>';
 
-
 var mainApp = angular.module('mainApp', ['ngRoute', 'react']);
 
 /* Routing */
