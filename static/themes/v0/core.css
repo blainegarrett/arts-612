@@ -179,3 +179,10 @@ footer {
     .navbar-header { float:left; }
     .navbar-right { float:right; }
 }
+
+
+#map-canvas {
+    height:500px;
+    width:100%;
+    border: 1px solid green;
+}

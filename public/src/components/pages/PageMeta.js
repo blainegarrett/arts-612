@@ -31,7 +31,7 @@ var PageMeta = React.createClass({
         //  return null;
         //}
 
-        console.log('rendering...')
+        console.log('rendering MetaData...')
         console.log(this.state);
 
         var meta = this.state;
@@ -40,6 +40,7 @@ var PageMeta = React.createClass({
         //Title...
         menu_ops.push(<meta name="title" content={meta.title} />);
         menu_ops.push(<meta itemprop="name" content={meta.title } />);
+        document.title = meta.title + ' | mplsart.com';
 
         // Description
         menu_ops.push(<meta name="description" content={meta.description} />);
