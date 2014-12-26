@@ -1,6 +1,6 @@
 application: arts-612
 
-version: admin-beta-client1
+version: master-20141226
 
 runtime: python27
 api_version: 1
