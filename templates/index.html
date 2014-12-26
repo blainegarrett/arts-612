@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="mainApp">
+<html>
   <head>
 
     <meta charset="utf-8" />
@@ -10,10 +10,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 	<!-- Open Graph and Social Meta -->
+	<!-- Note: Page title must be a direct child of HEAD for validation to work -->
+    <title>{[{ pagemeta.title }]}</title>
 
-	<!-- Social -->
-	<title ng-bind="pagemeta.title + ' | mplsart.com'">{[{ pagemeta.title }]} | mplsart.com</title>
-	<social-meta-tags>{% include '/templates/_meta.html' %}</social-meta-tags>
+	{% include 'templates/_meta.html' %}
 
 	<!-- fonts -->
 	<link href='http://fonts.googleapis.com/css?family=Quicksand:400,700' rel='stylesheet' type='text/css'>
@@ -56,9 +56,13 @@
 	
 	<!-- Start Main Content Container -->
     <div class="container">
-		<div ng-view>
-			loading ...
+
+		<!-- Start of Primary Page Content -->
+		<div id="main_content">
+			Loading...
 		</div>
+		<!-- End of Primary Page Content -->
+
     </div><!--/.container-->
 
 
@@ -66,25 +70,11 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-
-	
-	<!-- angular -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.18/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.18/angular-route.js"></script>
-
-    <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.12.0/react.js"></script>
-    <script src="/static/js/ngReact.js"></script>
-
-	<script src="/static/app/app.js"></script>
-	<script src="/static/app/controllers.js"></script>
-
-
-	<script src="/static/js/moment.js"></script>	
-	<script src="/static/js/react/build/eventlist.js"></script>
-	<script src="/static/js/react/build/blog.js"></script>
-
+	{% if not no_client %}
+	    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+		<script src="/public/build/main.js"></script>
+	{% endif %}
 
 	<!-- start google analytics -->
 	<script>

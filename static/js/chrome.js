@@ -1,4 +1,4 @@
-/* */
+/* This code is obsolete, but I want to keep it around incase I use it... */
 
 $(document).ready(function () {
   $(window).bind('resize', set_chrome_height).trigger('resize');

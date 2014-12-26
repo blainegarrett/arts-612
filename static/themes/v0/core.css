@@ -52,6 +52,9 @@ h1#welcome-header {
     #panel-blurb p {
         line-height: 1.25em;
     }
+    #panel-blurb .blurb-signature {
+        font-size: 18px;
+    }
 
 /* Signup Bits */
 #panel-signup {
@@ -185,4 +188,11 @@ footer {
 @media (max-width:768px) {
     .navbar-header { float:left; }
     .navbar-right { float:right; }
+}
+
+
+#map-canvas {
+    height:500px;
+    width:100%;
+    border: 1px solid green;
 }

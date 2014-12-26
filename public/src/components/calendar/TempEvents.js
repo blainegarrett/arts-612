@@ -1,25 +1,5 @@
-/** @jsx React.DOM */
-/*global React, moment */
-/* jshint trailing:false, quotmark:false, newcap:false */
-
-/*
-var Time = React.createClass({
-    propTypes: {
-        date: React.PropTypes.string,
-        pattern: React.PropTypes.string
-    },
-    
-    getDefaultProps: function () {
-        return
-            date: null,
-            pattern: "MMM D, YYYY, h:mm A"
-        }
-    },
-    getTimeFromDate: function () {
-        return !data ? new Date() : 
-    }
-});
-*/
+var React = require('react');
+var moment = require('moment');
 
 var NiceDate = React.createClass({
     propTypes: {
@@ -97,6 +77,7 @@ var TempEvent = React.createClass({
     }    
 });
 
+
 var TempEventsListMixin = {
     componentDidMount: function (){
         $.ajax({
@@ -154,7 +135,6 @@ var TempUpcoming = React.createClass({
         return this.render_templatexxx()
     }
 });
-mainApp.value('TempUpcoming', TempUpcoming);
 
 var TempEvents = React.createClass({
     mixins: [TempEventsListMixin],
@@ -167,4 +147,6 @@ var TempEvents = React.createClass({
         return this.render_templatexxx()
     }
 });
-mainApp.value('TempEvents', TempEvents);
+
+
+module.exports = TempEvents

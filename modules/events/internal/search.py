@@ -8,6 +8,7 @@
 # Things happening tonight near...
 
 import datetime
+from pytz import timezone
 
 from google.appengine.api import search
 from google.appengine.ext import ndb
@@ -42,8 +43,8 @@ def _build_event_date(i, event, ed, venue, start, end, is_hours=False):
     fields.append(search.AtomField(name='event_keystr', value=str(event.key.urlsafe())))
 
     # Populate bits specific to the event date
-    fields.append(search.NumberField(name='start', value=unix_time(start)))
-    fields.append(search.NumberField(name='end', value=unix_time(end)))
+    fields.append(search.NumberField(name='start', value=unix_time(timezone('UTC').localize(start))))
+    fields.append(search.NumberField(name='end', value=unix_time(timezone('UTC').localize(end))))
     fields.append(search.AtomField(name='category', value=category))
 
     # Attach Venue/Geo Information
@@ -231,7 +232,9 @@ def unix_time(dt):
             fmt = '%Y-%m-%d'
             dt = datetime.datetime.strptime(dt, fmt)
 
-    epoch = datetime.datetime.utcfromtimestamp(0)
+    # Make it the epoch in central time..
+    epoch = datetime.datetime.utcfromtimestamp(0).replace(tzinfo=timezone('UTC'))
+    
     delta = dt - epoch
     return delta.total_seconds()
 

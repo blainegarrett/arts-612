@@ -19,34 +19,48 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 
+
 class MLStripper(HTMLParser):
+    """
+    """
+
     def __init__(self):
         self.reset()
         self.fed = []
+
     def handle_data(self, d):
         self.fed.append(d)
+
     def get_data(self):
         return ''.join(self.fed)
+
 
 def strip_tags(html):
     s = MLStripper()
     s.feed(html)
     return s.get_data()
 
+
 class LogoutHandler(webapp2.RequestHandler):
-    
+    """
+    """
+
     @login_required
     def get(self):
-        self.response.write('Hello, %s! (<a href="%s">Click here to continue logging out.</a>)<br /><br />' %
+        self.response.write('Hello, %s! (<a href="%s">Click here to continue logging out.</a>)' %
                     (self._user.nickname(), users.create_logout_url('/')))
-    
+
+
 class SignupHandler(webapp2.RequestHandler):
+    """
+    """
+
     def get(self):
 
         # Super simple validation
         email = self.request.get('email', None)
         error = False
-        
+
         if not email:
             error = 'Please Enter Your Email Address'
 
@@ -78,19 +92,20 @@ class SignupHandler(webapp2.RequestHandler):
         template_values = {'error': error, 'email': email}
         template = JINJA_ENVIRONMENT.get_template(template)
         self.response.write(template.render(template_values))
-        
-        
+
 
 class ActivateHandler(webapp2.RequestHandler):
+    """
+    """
+
     def get(self):
         self.response.write('Activation Handler')
-
 
 
 class BaseHandler(webapp2.RequestHandler):
     """
     """
-    
+
     _user = None
 
     def handle_exception(self, exception, debug):
@@ -110,8 +125,10 @@ class BaseHandler(webapp2.RequestHandler):
             self.response.write(exception)
 
 
-
 class ProfileHandler(BaseHandler):
+    """
+    """
+
     @login_required
     def get(self):
 
@@ -123,6 +140,9 @@ class ProfileHandler(BaseHandler):
 
 
 class ConfirmHandler(webapp2.RequestHandler):
+    """
+    """
+
     def get(self):
 
         user = users.get_current_user()
@@ -134,7 +154,6 @@ class ConfirmHandler(webapp2.RequestHandler):
                         users.create_login_url('/beta/confirm/'))
 
         self.response.out.write('<html><body>%s</body></html>' % greeting)
-
 
 
 class MerkabahBaseController(webapp2.RequestHandler):
@@ -155,36 +174,15 @@ class MerkabahBaseController(webapp2.RequestHandler):
 
 
 class MainHandler(MerkabahBaseController):
-    def get(self):
-        pagemeta = {
-            'title': 'returning soon ...',
-            'description': 'The Very Best Events and Gallery Listings for Minneapolis',
-            'image': '/static/themes/v0/mplsart_fbimg.jpg'
-        }
-
-        template_values = {'pagemeta': pagemeta}
-        self.render_template('./templates/index.html', template_values)
-
-
-class WrittenHandler(MerkabahBaseController):
+    """
+    Temporary Main Page Handler
+    """
 
     def get(self):
         pagemeta = {
-            'title': 'Written',
-            'description': 'Reviews, critique, news from the mpls arts scene',
-            'image': 'http://www.soapfactory.org/img/space/gallery-one-2.jpg'
-        }
-
-        template_values = {'pagemeta': pagemeta}
-        self.render_template('./templates/index.html', template_values)
-    
-class WrittenArticleHandler(MerkabahBaseController):
-    def get(self, year, month, slug):
-        pagemeta = {
-            'title': 'Written Content Title',
-            'description': 'A Directory of Galleries and Places that Show Art in Minneapolis',
-            'image': 'http://www.soapfactory.org/img/space/gallery-one-2.jpg'
-        }
+            'title': 'mplsart.com | Returning Spring 2015',
+            'description': 'The Very Best Events and Gallery Listings for Minneapolis and St. Paul',
+            'image': 'http://mplsart.com/static/themes/v0/mplsart_fbimg.jpg'}
 
         template_values = {'pagemeta': pagemeta}
         self.render_template('./templates/index.html', template_values)

@@ -5,7 +5,6 @@ MPLS Art Angular App
 
 var admin_home_template = '<div class="col-md-12 panel"><h2>Hello!</h2><p> This is the super temporary admin page. It\'ll get better. I swear.</p><ul><li><a href="/admin/venues/">Manage Venues</a></li><li><a href="/admin/events/">Managed Events</a></li></ul></div>';
 
-
 var edit_event_template = '<div class="col-md-12 panel"><react-component name="EventsForm" props="form_props" /></div>';
 
 var edit_venue_template = '<div class="col-md-12 panel"><react-component name="VenuesForm" props="form_props" /></div>';

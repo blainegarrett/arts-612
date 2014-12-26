@@ -1,6 +1,7 @@
 """
 Rest API for Venues/Galleries
 """
+import logging
 from auth.decorators import rest_login_required
 
 from google.appengine.ext import ndb
@@ -76,6 +77,20 @@ class GalleriesApiHandler(GalleryApiHandlerBase):
             return
 
         q = self.request.get('q', None)
+
+        get_by_slug = self.request.get('get_by_slug', None)
+
+        if get_by_slug:
+            e = venues_api.get_venue_by_slug(get_by_slug)
+
+            if not e:
+                self.serve_404('Gallery Not Found')
+                return False
+
+            resource = create_resource_from_entity(e)
+            self.serve_success(resource)
+            return
+
 
         if q:
             results = vsearch.simple_search(q)
@@ -231,7 +246,9 @@ class GalleryDetailHandler(MerkabahBaseController):
         e = venues_api.get_venue_by_slug(slug)
 
         if not e:
-            self.response.write('Gallery Not Found with slug %s' % slug)
+            #self.response.write('Gallery Not Found with slug %s. (written in py Contoller...)' % slug)
+            logging.error('Gallery Not Found with slug %s.' % slug)
+            self.response.set_status(404)
             #self.serve_404('Gallery Not Found')
             #return False
 

@@ -44,6 +44,12 @@ routes = [
 web_routes = routes
 rest_routes = []
 
+
+'''
+TODO: Design for web routes - put in jsonfile that is mounted in client too...
+name = {url, server_view, react_view }
+'''
+
 web_routes += [
     (r'/galleries/([a-z0-9-]+)', 'venues.controllers.GalleryDetailHandler'),
     (r'/galleries', 'venues.controllers.GalleryMainHandler'),
@@ -51,11 +57,9 @@ web_routes += [
     (r'/calendar/([a-z0-9-]+)', 'cal.controllers.CalendarDetailHandler'),
     (r'/calendar', 'cal.controllers.CalendarMainHandler'),
 
-    # TODO: CONVERT TO NATIVE REGEXPS
-    (r'/written/([0-9-_]+)/([a-z0-9-_]+)/([a-z0-9-_]+)', 'auth.controllers.WrittenArticleHandler'),
+    RedirectRoute('/written/', 'controllers.written.WrittenMainHandler', strict_slash=True, name="written"),
+    (r'/written/([0-9-_]+)/([a-z0-9-_]+)/([a-z0-9-_]+)', 'controllers.written.WrittenArticleHandler'),
     #RedirectRoute(r'/written/([0-9-_]+)/([a-z0-9-_]+)/([a-z0-9-_]+)', 'auth.controllers.WrittenHandler', strict_slash=True, name="auth_logout"),
-    RedirectRoute('/written/', 'auth.controllers.WrittenHandler', strict_slash=True, name="auth_logout"),
-
 
     #(r'/import/galleries', 'loaddata.GalleryData'), # These are handled in app.yaml
     #(r'/import/events', 'loaddata.EventData'), # These are handled in app.yaml
