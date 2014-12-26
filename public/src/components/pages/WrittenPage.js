@@ -2,6 +2,9 @@ var React = require('react');
 var ReactRouter = require('flux-react-router');
 var PageMixin = require('./PageMixin');
 
+var Footer = require('../temp/Footer');
+var GoodNewsBanner = require('../temp/GoodNewsBanner');
+
 var WrittenPage = React.createClass({
     mixins: [PageMixin],
 
@@ -9,13 +12,13 @@ var WrittenPage = React.createClass({
         'title': 'Galleries',
         'description': 'These are some galleries.'
     },
+
     render: function() {
         return <div>
         <h2>Written</h2>
         
-        <a onClick={ReactRouter.deferTo('/galleries')}>Galleries</a>
-        <a onClick={ReactRouter.deferTo('/calendar')}>Calendar</a>
-        <a onClick={ReactRouter.deferTo('/')}>Home</a>
+            <p>Our collection of reviews, critiques, blogs, and other written content will be returning soon</p>
+
         </div>;
 
     },

@@ -1,43 +1,25 @@
-<!-- Keep this in sync with the directive -->
-<div>
-
-
-
-<!-- Place this data between the <head> tags of your website -->
-<title>{[{ pagemeta.title }]}</title>
-<meta name="description" content="{[{ pagemeta.description }]}" />
-
-<!-- Google Authorship and Publisher Markup -->
-<link rel="author" href="https://plus.google.com/[Google+_Profile]/posts"/>
-<link rel="publisher" href="https://plus.google.com/[Google+_Page_Profile]"/>
+<!-- container for meta react -->
+<div id="page_meta"></div>
+	
+<meta name="description" content="{[{ pagemeta.description }]}" class="dynamic_meta" />
 
 <!-- Schema.org markup for Google -->
-<meta itemprop="name" content="{[{ pagemeta.title }]}">
-<meta itemprop="description" content="{[{ pagemeta.description }]}">
-<meta itemprop="image" content="{[{ pagemeta.image }]}">
+<meta itemprop="name" content="{[{ pagemeta.title }]}" class="dynamic_meta" />
+<meta itemprop="description" content="{[{ pagemeta.description }]}" class="dynamic_meta" />
+<meta itemprop="image" content="{[{ pagemeta.image }]}" class="dynamic_meta" />
  
 <!-- Twitter Card data -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:site" content="@mplsart">
-<meta name="twitter:title" content="{[{ pagemeta.title }]}">
-<meta name="twitter:description" content="{[{ pagemeta.description }]}">
-<meta name="twitter:creator" content="@mplsart">
+<meta name="twitter:card" content="summary_large_image" class="dynamic_meta" />
+<meta name="twitter:site" content="@mplsart" class="dynamic_meta" />
+<meta name="twitter:title" content="{[{ pagemeta.title }]}" class="dynamic_meta" />
+<meta name="twitter:description" content="{[{ pagemeta.description }]}" class="dynamic_meta" />
+<meta name="twitter:creator" content="@mplsart" class="dynamic_meta" />
+
 <!-- Twitter summary card with large image must be at least 280x150px -->
-<meta name="twitter:image:src" content="{[{ pagemeta.image }]}">
+<meta name="twitter:image:src" content="{[{ pagemeta.image }]}" class="dynamic_meta" />
 
 <!-- Open Graph data -->
-<meta property="og:title" content="Title Here" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="http://www.example.com/" />
-<meta property="og:image" content="http://example.com/image.jpg" />
-<meta property="og:description" content="Description Here" />
-<meta property="og:site_name" content="Site Name, i.e. Moz" />
-<meta property="article:published_time" content="2013-09-17T05:59:00+01:00" />
-<meta property="article:modified_time" content="2013-09-16T19:08:47+01:00" />
-<meta property="article:section" content="Article Section" />
-<meta property="article:tag" content="Article Tag" />
-<meta property="fb:admins" content="Facebook numberic ID" />
-
-
-
-  </div>
+<meta property="og:title" content="{[{ pagemeta.title }]}" class="dynamic_meta" />
+<meta property="og:description" content="{[{ pagemeta.description }]}" class="dynamic_meta" />
+<meta property="og:image" content="{[{ pagemeta.image }]}" class="dynamic_meta" />
+<meta property="og:site_name" content="mplsart.com" class="dynamic_meta" />

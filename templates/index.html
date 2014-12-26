@@ -10,10 +10,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="author" content="" />
 
-
 	<!-- Open Graph and Social Meta -->
-    <title>mplsart | returning soon...</title>
-	<div id="page_meta"></div>
+	<!-- Note: Page title must be a direct child of HEAD for validation to work -->
+    <title>{[{ pagemeta.title }]}</title>
+
+	{% include 'templates/_meta.html' %}
 
 	<!-- fonts -->
 	<link href='http://fonts.googleapis.com/css?family=Quicksand:400,700' rel='stylesheet' type='text/css'>
@@ -58,7 +59,9 @@
     <div class="container">
 
 		<!-- Start of Primary Page Content -->
-		<div id="main_content" ng-view>loading...</div>
+		<div id="main_content">
+			Loading...
+		</div>
 		<!-- End of Primary Page Content -->
 
     </div><!--/.container-->
@@ -68,10 +71,11 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-
-	<script src="/public/build/main.js"></script>
+	{% if not no_client %}
+	    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+		<script src="/public/build/main.js"></script>
+	{% endif %}
 
 	<!-- start google analytics -->
 	<script>

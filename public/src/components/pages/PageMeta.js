@@ -31,60 +31,65 @@ var PageMeta = React.createClass({
         //  return null;
         //}
 
-        console.log('rendering MetaData...')
-        console.log(this.state);
+        var meta, meta_tags;
+        $('.dynamic_meta').each(function(){
+            $(this).remove();
+        });
 
-        var meta = this.state;
-        var menu_ops = [];
+        meta = this.state;
+        meta_tags = [];
 
         //Title...
-        menu_ops.push(<meta name="title" content={meta.title} />);
-        menu_ops.push(<meta itemprop="name" content={meta.title } />);
+        meta_tags.push(<meta name="title" content={meta.title} class="dynamic_meta"/>);
+        meta_tags.push(<meta itemprop="name" content={meta.title } class="dynamic_meta"/>);
+        meta_tags.push(<meta property="og:title" content={ meta.title } class="dynamic_meta"/>)
         document.title = meta.title + ' | mplsart.com';
 
         // Description
-        menu_ops.push(<meta name="description" content={meta.description} />);
-        menu_ops.push(<meta itemprop="description" content={ meta.description } />);
+        meta_tags.push(<meta name="description" content={meta.description} class="dynamic_meta"/>);
+        meta_tags.push(<meta itemprop="description" content={ meta.description } class="dynamic_meta"/>);
+        meta_tags.push(<meta property="og:description" content={ meta.description } class="dynamic_meta"/>)
 
         // Image
-        //menu_ops.push(<meta name="description" content={meta.description} />);
-        //<meta itemprop="image" content="{[{ pagemeta.image }]}">
+        if (meta.image) {
+            meta_tags.push(<meta property="image" content={ meta.image } class="dynamic_meta"/>);
+            meta_tags.push(<meta property="og:image" content={ meta.image } class="dynamic_meta"/>)
+        }
 
         //Keywords - TODO: Not currently dynamic
-        menu_ops.push(<meta name="keywords" content="minneapolis, st. paul, art, galleries, art openings, painting, jive" />);
+        meta_tags.push(<meta name="keywords" content="minneapolis, st. paul, art, galleries, art openings, painting, jive" class="dynamic_meta"/>);
 
         // Twitter Specific
         /*
         <!-- Twitter Card data -->
-        <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:site" content="@mplsart">
-        <meta name="twitter:title" content="{[{ pagemeta.title }]}">
-        <meta name="twitter:description" content="{[{ pagemeta.description }]}">
-        <meta name="twitter:creator" content="@mplsart">
+        <meta name="twitter:card" content="summary_large_image" class="dynamic_meta" />
+        <meta name="twitter:site" content="@mplsart" class="dynamic_meta"/>
+        <meta name="twitter:title" content="{[{ pagemeta.title }]}" class="dynamic_meta" />
+        <meta name="twitter:description" content="{[{ pagemeta.description }]}" class="dynamic_meta" />
+        <meta name="twitter:creator" content="@mplsart" class="dynamic_meta" />
         <!-- Twitter summary card with large image must be at least 280x150px -->
-        <meta name="twitter:image:src" content="{[{ pagemeta.image }]}">
+        <meta name="twitter:image:src" content="{[{ pagemeta.image }]}" class="dynamic_meta" />
         */
 
         // Facebook/OpenGraph specific
         /*
         <!-- Open Graph data -->
-        <meta property="og:title" content="Title Here" />
-        <meta property="og:type" content="article" />
-        <meta property="og:url" content="http://www.example.com/" />
-        <meta property="og:image" content="http://example.com/image.jpg" />
-        <meta property="og:description" content="Description Here" />
-        <meta property="og:site_name" content="Site Name, i.e. Moz" />
-        <meta property="article:published_time" content="2013-09-17T05:59:00+01:00" />
-        <meta property="article:modified_time" content="2013-09-16T19:08:47+01:00" />
-        <meta property="article:section" content="Article Section" />
-        <meta property="article:tag" content="Article Tag" />
-        <meta property="fb:admins" content="Facebook numberic ID" />
+        <meta property="og:title" content="Title Here" class="dynamic_meta"/>
+        <meta property="og:type" content="article" class="dynamic_meta"/>
+        <meta property="og:url" content="http://www.example.com/" class="dynamic_meta"/>
+        <meta property="og:image" content="http://example.com/image.jpg" class="dynamic_meta"/>
+        <meta property="og:description" content="Description Here" class="dynamic_meta"/>
+        <meta property="og:site_name" content="Site Name, i.e. Moz" class="dynamic_meta"/>
+        <meta property="article:published_time" content="2013-09-17T05:59:00+01:00" class="dynamic_meta" />
+        <meta property="article:modified_time" content="2013-09-16T19:08:47+01:00" class="dynamic_meta" />
+        <meta property="article:section" content="Article Section" class="dynamic_meta" />
+        <meta property="article:tag" content="Article Tag" class="dynamic_meta" />
+        <meta property="fb:admins" content="Facebook numberic ID" class="dynamic_meta" />
         */
 
-        return <div>{ menu_ops}</div> ;
+        return <div>{ meta_tags}</div> ;
     },
     _onChange: function() {
-      console.log('Received a change..?')
       this.setState(getPageMetaState()); 
     },
     addPageMeta: function() {

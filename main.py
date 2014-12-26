@@ -44,13 +44,20 @@ routes = [
 web_routes = routes
 rest_routes = []
 
+
+'''
+TODO: Design for web routes - put in jsonfile that is mounted in client too...
+name = {url, server_view, react_view }
+'''
+
 web_routes += [
     (r'/galleries/([a-z0-9-]+)', 'venues.controllers.GalleryDetailHandler'),
     (r'/galleries', 'venues.controllers.GalleryMainHandler'),
 
     (r'/calendar/([a-z0-9-]+)', 'cal.controllers.CalendarDetailHandler'),
     (r'/calendar', 'cal.controllers.CalendarMainHandler'),
-    (r'/written/([0-9-_]+)/([a-z0-9-_]+)/([a-z0-9-_]+)', 'auth.controllers.WrittenArticleHandler'),
+    (r'/written', 'controllers.written.WrittenMainHandler'),
+    (r'/written/([0-9-_]+)/([a-z0-9-_]+)/([a-z0-9-_]+)', 'controllers.written.WrittenArticleHandler'),
     #(r'/import/galleries', 'loaddata.GalleryData'), # These are handled in app.yaml
     #(r'/import/events', 'loaddata.EventData'), # These are handled in app.yaml
     (r'/', 'auth.controllers.MainHandler')]

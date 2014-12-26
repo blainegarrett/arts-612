@@ -40,7 +40,7 @@ var MapComponent = React.createClass({
 
             var map = new google.maps.Map(document.getElementById('map-canvas'), {
                 center: { lat: c.state.geo.lat, lng: c.state.geo.lon},
-                zoom: 15
+                zoom: 17
             });
 
             var marker = new google.maps.Marker({
