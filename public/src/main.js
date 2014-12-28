@@ -7,6 +7,7 @@ var WrittenPage = require('./components/pages/WrittenPage');
 var WrittenArticlePage = require('./components/pages/WrittenArticlePage');
 var GalleryPage = require('./components/pages/GalleryPage');
 var GalleryViewPage = require('./components/pages/GalleryViewPage');
+var Error404Page = require('./components/pages/Error404Page');
 
 var PageMeta = require('./components/pages/PageMeta');
 var PrimaryMenu = require('./components/pages/PrimaryMenu')
@@ -42,10 +43,9 @@ ReactRouter.createRoute('/written/{year}/{month}/{slug}', function (params) {
     React.render(<WrittenArticlePage year={params.year} month={params.month} slug={params.slug} />, document.getElementById('main_content'));    
 });
 
-
 ReactRouter.createRoute('*', function () {
     React.unmountComponentAtNode( document.getElementById('main_content'));
-    React.render(<HomePage />, document.getElementById('main_content'));    
+    React.render(<Error404Page />, document.getElementById('main_content'));    
 });
 ReactRouter.init();
 

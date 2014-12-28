@@ -4163,6 +4163,7 @@ VenuesForm = React.createClass({
             ['business', 'business'],
             ['public', 'public'],
             ['private', 'private'],
+            ['popup', 'popup'],
             ['studios', 'studios']
         ];
 
@@ -4217,6 +4218,7 @@ EventDateForm =  React.createClass({
         var category_choices = [
             ['reception', 'Reception/Opening/Closing aka "Concise" Event'],
             ['ongoing', 'Ongoing Event'],
+            ['performance', 'Performance - Specific Start time to show up...'],
             ['sale', 'Sale - separate category etc'],
             ['hours', 'Gallery/Display Hours (maps to venue hours)'],
         ];

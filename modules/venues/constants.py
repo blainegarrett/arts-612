@@ -17,3 +17,4 @@ class VENUE_CATEGORIES(object):
     PUBLIC = 'public' # Public space - park, mural, etc
     PRIVATE = 'private' # Private residence, etc
     STUDIOS = 'studios' # Collection of artist studios - Northrup King, etc
+    POPUP = 'popup' # Popup shop - different than private or business...
