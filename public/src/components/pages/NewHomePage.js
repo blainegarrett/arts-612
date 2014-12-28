@@ -1,5 +1,6 @@
 var React = require('react');
 var PageMixin = require('./PageMixin');
+//var MasonryMixin = require('react-packery-mixin');
 var MasonryMixin = require('react-masonry-mixin');
 var InfiniteScroll = require('react-infinite-scroll')(React);
 
@@ -11,26 +12,24 @@ var TempEvents = require('../calendar/TempEvents');
 var TempExtras = require('../temp/TempExtras');
 
 var masonryOptions = {
-    transitionDuration: 0,
+    transitionDuration: "0.4s",
     gutter: 0,
     columnWidth: ".col-sm-1",
     itemSelector: '.item'
 };
 
 var pod_data = [
-    {'colspan': 6, 'img_url': "https://scontent-a-sea.xx.fbcdn.net/hphotos-xpa1/v/t1.0-9/p526x296/524150_10154709828460357_7089693634088703368_n.jpg?oh=20f20c793fe7c11205992101c883f787&oe=54DE2A7F"},
-    {'colspan': 6, 'img_url': "https://fbcdn-sphotos-a-a.akamaihd.net/hphotos-ak-xaf1/v/t1.0-9/10152433_10154107872845357_9126802419535311414_n.jpg?oh=1ff0dd0512ff5d89f45378c3108de5e9&oe=55166AF7&__gda__=1427244355_579859ab5a0384fddb8afc40e0313d47"},
-    {'colspan': 4, 'img_url': "https://fbcdn-sphotos-f-a.akamaihd.net/hphotos-ak-xpa1/v/t1.0-9/10489643_10154347000515357_9062012805293187042_n.jpg?oh=7f479814a25b1eba333d8069f7ecb200&oe=54D1EA78&__gda__=1424270446_9bad1ba970d75506abc56160f3628a49"},
-    {'colspan': 4, 'img_url': "https://scontent-b-sea.xx.fbcdn.net/hphotos-xpf1/v/t1.0-9/10175070_10154107871190357_2989812135025342919_n.jpg?oh=504a757d4312cb620de88750b1ffd7dd&oe=551D1B47"},
-    {'colspan': 2, 'img_url': "https://fbcdn-sphotos-f-a.akamaihd.net/hphotos-ak-xpa1/v/t1.0-9/10489643_10154347000515357_9062012805293187042_n.jpg?oh=7f479814a25b1eba333d8069f7ecb200&oe=54D1EA78&__gda__=1424270446_9bad1ba970d75506abc56160f3628a49"},
-    {'colspan': 2, 'img_url': "https://scontent-b-sea.xx.fbcdn.net/hphotos-xpf1/v/t1.0-9/10175070_10154107871190357_2989812135025342919_n.jpg?oh=504a757d4312cb620de88750b1ffd7dd&oe=551D1B47"},
-    {'colspan': 4, 'img_url': "https://scontent-b-sea.xx.fbcdn.net/hphotos-xpf1/v/t1.0-9/10175070_10154107871190357_2989812135025342919_n.jpg?oh=504a757d4312cb620de88750b1ffd7dd&oe=551D1B47"}
+    {'colspan': 6, pos: 1, 'img_url': "https://scontent-a-sea.xx.fbcdn.net/hphotos-xpa1/v/t1.0-9/p526x296/524150_10154709828460357_7089693634088703368_n.jpg?oh=20f20c793fe7c11205992101c883f787&oe=54DE2A7F"},
+    {'colspan': 3, pos: 2,  'img_url': "https://fbcdn-sphotos-a-a.akamaihd.net/hphotos-ak-xaf1/v/t1.0-9/10152433_10154107872845357_9126802419535311414_n.jpg?oh=1ff0dd0512ff5d89f45378c3108de5e9&oe=55166AF7&__gda__=1427244355_579859ab5a0384fddb8afc40e0313d47"},
+    {'colspan': 3, pos: 3,  'img_url': "https://fbcdn-sphotos-f-a.akamaihd.net/hphotos-ak-xpa1/v/t1.0-9/10489643_10154347000515357_9062012805293187042_n.jpg?oh=7f479814a25b1eba333d8069f7ecb200&oe=54D1EA78&__gda__=1424270446_9bad1ba970d75506abc56160f3628a49"},
+    {'colspan': 4, pos: 4,  'img_url': "https://scontent-b-sea.xx.fbcdn.net/hphotos-xpf1/v/t1.0-9/10175070_10154107871190357_2989812135025342919_n.jpg?oh=504a757d4312cb620de88750b1ffd7dd&oe=551D1B47"},
+    {'colspan': 2, pos: 5,  'img_url': "https://fbcdn-sphotos-f-a.akamaihd.net/hphotos-ak-xpa1/v/t1.0-9/10489643_10154347000515357_9062012805293187042_n.jpg?oh=7f479814a25b1eba333d8069f7ecb200&oe=54D1EA78&__gda__=1424270446_9bad1ba970d75506abc56160f3628a49"},
+    {'colspan': 2, pos: 6,  'img_url': "https://scontent-b-sea.xx.fbcdn.net/hphotos-xpf1/v/t1.0-9/10175070_10154107871190357_2989812135025342919_n.jpg?oh=504a757d4312cb620de88750b1ffd7dd&oe=551D1B47"},
+    {'colspan': 6, pos: 7,  'img_url': "https://scontent-b-sea.xx.fbcdn.net/hphotos-xpf1/v/t1.0-9/10175070_10154107871190357_2989812135025342919_n.jpg?oh=504a757d4312cb620de88750b1ffd7dd&oe=551D1B47"}
 ];
 
 var Pod = React.createClass({
     getInitialState: function() {
-        console.log(this.props.container);
-
         return {data: this.props.data, container: this.props.container }
     },
     addmore : function() {
@@ -42,7 +41,7 @@ var Pod = React.createClass({
 
         return <div className={'item col-sm-' + this.state.data.colspan}>
     		<div className="item-container">
-    			<h3 id="download-sass">4. Sass <button onClick={this.addmore}>Add More</button></h3>
+    			<h3 id="download-sass">{ this.state.data.pos }. Sass <button onClick={this.addmore}>Add More</button></h3>
                 <img style={style} src="http://commondatastorage.googleapis.com/dim-media/artwork/sized/dip-trip-flip-synesthesia.jpg" />
     		</div>
     	</div>
@@ -57,7 +56,6 @@ var HomePods = React.createClass({
     },
 
     addmore : function() {
-        //console.log(this.masonry);
         
 
         pod = {'colspan': 2, 'img_url': "https://scontent-a-sea.xx.fbcdn.net/hphotos-xpa1/v/t1.0-9/p526x296/524150_10154709828460357_7089693634088703368_n.jpg?oh=20f20c793fe7c11205992101c883f787&oe=54DE2A7F"};
@@ -85,11 +83,10 @@ var HomePods = React.createClass({
 
 //http://jsfiddle.net/mb9vJ/2/
 var NewHomePage = React.createClass({
-    mixins: [PageMixin],
-    
+    mixins: [PageMixin, MasonryMixin('masonryContainer', masonryOptions)],    
     getInitialState: function() {
         return {
-            pod_data: [],
+            pod_data: pod_data,
             hasMore: true
         }
     },
@@ -104,7 +101,6 @@ var NewHomePage = React.createClass({
     },
 
     loadFunc: function (page){
-        console.log('load');
         setTimeout(function () {
             var pod = {'colspan': 2, 'img_url': "https://scontent-a-sea.xx.fbcdn.net/hphotos-xpa1/v/t1.0-9/p526x296/524150_10154709828460357_7089693634088703368_n.jpg?oh=20f20c793fe7c11205992101c883f787&oe=54DE2A7F"};
           this.setState({
@@ -121,17 +117,19 @@ var NewHomePage = React.createClass({
             return <Pod data={pod_data} container={container} />;
         });
 
-
-
         return <div id="HomePageWrapper">
             <div className="row">
+            
                 <InfiniteScroll
                     pageStart={0}
                     loadMore={this.loadFunc}
                     hasMore={this.hasMore}
                     loader={<div className="loader">Loading ...</div>}>
-                  {pods}
-                </InfiniteScroll>
+                        <div ref="masonryContainer">
+                            { pods }
+                            <div className="item col-sm-1"></div>
+                        </div>
+                    </InfiniteScroll>
             </div>
             
             <Footer />
