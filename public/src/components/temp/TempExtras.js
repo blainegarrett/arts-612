@@ -28,7 +28,6 @@ var TempExtras = React.createClass({
 </div>
 
 
-
 <div id="panel-social">
 	<div className="panel-content">
 		<a href="https://www.facebook.com/mplsart" id="fb-link" target="_new">

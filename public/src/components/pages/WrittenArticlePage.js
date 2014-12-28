@@ -30,10 +30,7 @@ var FullArticle = React.createClass({
         }
     },
     render: function() {
-        return <div className="col-md-6" id="main-content-container">
-            <h2>Written</h2>
-            <p>Our collection of reviews, critiques, blogs, and other written content will be returning soon</p>
-            </div>
+        // Render the blog article
         p = this.state.post;
         
         published_date = moment(Date.parse(p.published_date)).format('MMMM, Do YYYY');
