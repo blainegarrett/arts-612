@@ -2,6 +2,7 @@
 var React = require('react');
 var ReactRouter = require('flux-react-router');
 var HomePage = require('./components/pages/HomePage');
+var NewHomePage = require('./components/pages/NewHomePage');
 var CalendarPage = require('./components/pages/CalendarPage');
 var WrittenPage = require('./components/pages/WrittenPage');
 var WrittenArticlePage = require('./components/pages/WrittenArticlePage');
@@ -31,6 +32,11 @@ ReactRouter.createRoute('/galleries', function () {
 ReactRouter.createRoute('/galleries/{slug}', function (params) {
     React.unmountComponentAtNode( document.getElementById('main_content'));
     React.render(<GalleryViewPage slug={params.slug} />, document.getElementById('main_content'));    
+});
+
+ReactRouter.createRoute('/home', function () {
+    React.unmountComponentAtNode( document.getElementById('main_content'));
+    React.render(<NewHomePage />, document.getElementById('main_content'));    
 });
 
 ReactRouter.createRoute('/written', function () {
