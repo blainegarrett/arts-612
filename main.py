@@ -64,7 +64,7 @@ web_routes += [
     #(r'/import/galleries', 'loaddata.GalleryData'), # These are handled in app.yaml
     #(r'/import/events', 'loaddata.EventData'), # These are handled in app.yaml
     (r'/', 'auth.controllers.MainHandler'),
-    (r'.*', 'auth.controllers.MainHandler'), # TODO: This should route through an error handler...
+    (r'.*', 'controllers.Error404Handler'),
     ]
 
 # Rest Routes

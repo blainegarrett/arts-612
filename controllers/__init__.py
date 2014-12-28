@@ -4,7 +4,7 @@ class BaseController(webapp2.RequestHandler):
     """
     Base Helper Class that renders the chrome and inputs page meta for non-JS renderers (FB, etc)
     """
-
+        
     def render_template(self, template_path, template_context):
         """
         Render a Template to output
@@ -18,3 +18,20 @@ class BaseController(webapp2.RequestHandler):
 
         template = default_jinja_env.get_template(template_path)
         self.response.write(template.render(template_context))
+        
+
+class Error404Handler(BaseController):
+    """
+    """
+    
+    def get(self, *args, **kwargs):
+        pagemeta = {
+            'title': 'Page Not Found',
+            'description': 'Unable to find page, please check your url',
+            'image': 'http://phase-0.arts-612.appspot.com/static/themes/v0/mplsart_fbimg.jpg'}
+
+        template_values = {'pagemeta': pagemeta}
+        self.response.set_status(404)
+        self.render_template('./templates/index.html', template_values)
+
+    
