@@ -47,7 +47,8 @@ def get_event_by_slug(slug):
 
 
 def get_events():
-    return search_helper(category=[CATEGORY.ONGOING, CATEGORY.RECEPTION])
+    # Currently used to populate the admin page...
+    return search_helper()
 
 
 def tonight(category=None, limit=5):
@@ -71,7 +72,7 @@ def upcoming_events(limit=5):
 
     #querystring = 'end >= %s AND (category: %s OR category: event)' % (unix_time(end), )
     end = today
-    return search_helper(end=end, category=[CATEGORY.RECEPTION, CATEGORY.SALE], sort='start')
+    return search_helper(end=end, category=[CATEGORY.PERFORMANCE, CATEGORY.RECEPTION, CATEGORY.SALE], sort='start')
 
 
 def now_showing():

@@ -6,8 +6,9 @@ var Error404Page = React.createClass({
     mixins: [PageMixin],
 
     default_meta: {
-        'title': 'Error...',
-        'description': 'This is the calendar'
+        'title': 'Page Not Found',
+        'description': 'Unable to find page, please check your url',
+        'image': 'http://phase-0.arts-612.appspot.com/static/themes/v0/mplsart_fbimg.jpg'
     },
     render: function() {
         return <div>
