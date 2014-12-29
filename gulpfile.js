@@ -34,7 +34,6 @@ gulp.task('browserify', watchify(function(watchify) {
  
 }));
 
-
 gulp.task('browserify-min', function() {
     // Single entry point to browserify
     return gulp.src('./public/src/main.js')
@@ -43,3 +42,15 @@ gulp.task('browserify-min', function() {
         .pipe(gulp.dest('./public/build'))
  
 });
+
+gulp.task('admin-browserify', watchify(function(watchify) {
+    // Single entry point to browserify
+    return gulp.src('./static/admin/js/react/src/main.js')
+        .pipe(watchify({
+            watching : watching,
+            insertGlobals : true,
+            debug: true
+        }))
+        .pipe(gulp.dest('./static/admin/js/react/build'))
+ 
+}));

@@ -133,14 +133,3 @@ mainApp.controller('VenueEditCtrl', function($scope, $location, $http, $routePar
     $scope.form_props = { resource_url: $scope.resource_url, fname: 'Clark', lname: 'Kent', 'is_edit': true, 'save_callback': save_callback};
 
 });
-
-
-mainApp.controller('VenueCreateCtrl', function($scope, $location, $http, $routeParams, $rootScope) {
-    /* Controller for Creating a Venue */
-
-    var save_callback = function(){
-      $location.path( "/admin" ); 
-    };
-    $scope.resource_url = '/api/galleries';
-    $scope.form_props = { resource_url: $scope.resource_url, fname: 'Clark', lname: 'Kent', 'is_edit': false, 'save_callback': save_callback};
-});
