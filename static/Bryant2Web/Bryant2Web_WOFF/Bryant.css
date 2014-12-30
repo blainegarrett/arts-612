@@ -1,0 +1,13 @@
+@font-face {
+  font-family: 'Bryant';
+  font-style: normal;
+  font-weight: 100;
+  src: url('BryantWebRegularAlt.woff') format('woff');
+}
+/* latin */
+@font-face {
+  font-family: 'Bryant';
+  font-style: normal;
+  font-weight: 700;
+  src: url('BryantWebBold.woff') format('woff');
+}
