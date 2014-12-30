@@ -16,7 +16,7 @@ var TempEvents = require('../calendar/TempEvents');
 var post = {
     'title': 'A message from mplsart.com founder, Emma Berg',
     'slug': 'new_beginnings_for_mplsart',
-    'content': '<p class="lead">It is with great pleasure that we introduce you to the new owners of mplsart.com, Katie and Blaine Garrett!</p><p> Kristoffer and I have spent the past few months talking with them about our experience with the site, why it came to be, and our love of artists and this arts scene. We\'ve talked about what makes the site and the scene work and what could make it better. From the first meeting, Katie and Blaine have voiced a true passion for digging in, supporting, and building upon what we started as a way to provide insight and guidance into this thing we call Minneapolis art. We were sold. We know they have the passion to make this work and we are happy to be handing over the keys. In the following months, they\'ll have much to share. And we\'ll be eagerly waiting to see what mplsart.com grows into.</p><p>As Kristoffer and I step aside, we ask that you welcome Katie and Blaine and continue to support the galleries and artists of Minneapolis and beyond. </p> <div><img src="http://cdn.mplsart.com/written/temp/animated_foursome.gif" class="img-thumbnail" style="width:100%" /></div>',
+    'content': '<p class="lead">It is with great pleasure that we introduce you to the new owners of mplsart.com, Blaine and Katie Garrett.</p><p> Kristoffer and I have spent the past few months talking with them about our experience with the site, why it came to be, and our love of artists and this arts scene. We\'ve talked about what makes the site and the scene work and what could make it better. From the first meeting, Blaine and Katie have voiced a true passion for digging in, supporting, and building upon what we started as a way to provide insight and guidance into this thing we call Minneapolis art. We were sold. We know they have the passion to make this work and we are happy to be handing over the keys. In the following months, they\'ll have much to share. And we\'ll be eagerly waiting to see what mplsart.com grows into.</p><p>As Kristoffer and I step aside, we ask that you welcome Blaine and Katie, and continue to support the galleries and artists of Minneapolis and beyond. </p> <div><img src="http://cdn.mplsart.com/written/temp/animated_foursome.gif" style="width:100%" /></div>',
     'published_date': '2015-01-04T02:00:00Z',
     'author': {'firstname': 'Emma', 'lastname': 'Berg'},
     'primary_image': 'http://cdn.mplsart.com/written/temp/mplsart_fbimg_foursome.jpg',
@@ -38,7 +38,7 @@ var FullArticle = React.createClass({
         
         return <div className="col-md-6" id="main-content-container">
             <h2>{ p.title }</h2>
-            <p class="blog-post-meta">{ published_date } by { p.author.firstname }</p>
+            <p class="blog-post-meta">{ published_date } by <a href="http://www.emmaberg.com/" target="_new">{ p.author.firstname } { p.author.lastname }</a></p>
 
             <div class="article-content-container" dangerouslySetInnerHTML={{__html: p.content }}>            
             </div>

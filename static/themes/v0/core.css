@@ -69,8 +69,9 @@ h1#welcome-header {
     	color:#313131;
         font-size: 18px;
         margin-top: 0px;
-        margin-bottom: 5x;
+        margin-bottom: 5px;
         font-weight: bold;
+        line-height: 1.25em
     }
     #panel-closet p {
         line-height: 1.25em;
@@ -85,6 +86,10 @@ h1#welcome-header {
 /* Signup Bits */
 #panel-signup {
     margin-bottom: 20px;
+}
+#panel-signup p {
+    line-height:1.25em;
+    margin-top: 5px;
 }
 #panel-signup .panel-header {    
 	background-color:#ffe0f2;

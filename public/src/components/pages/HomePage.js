@@ -23,7 +23,7 @@ var PrimaryJive = React.createClass({
         return <div className="col-md-6" id="main-content-container">
             <div id="panel-blurb">
         	    <h2>mplsart is returning!</h2>
-        	    <p>Look for a new calendar this Spring and keep submitting  your events to  <a href="mailto:calendar@mplsart.com">calendar@mplsart.com</a></p>
+        	    <p>Look for a new calendar this Spring and keep submitting  your events to  <strong><a href="mailto:calendar@mplsart.com">calendar@mplsart.com</a></strong></p>
             </div>
 
             <div id="panel-closet">
