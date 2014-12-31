@@ -43,6 +43,9 @@ routes.extend([
     (r'/api/events/upcoming', 'cal.controllers.EventsUpcomingHandler'),
     (r'/api/events/nowshowing', 'cal.controllers.EventsNowShowingHandler'),
     (r'/api/events/([a-zA-Z0-9-_]+)', 'cal.controllers.EventDetailApiHandler'),
+
+    # File Service Routes
+    (r'/api/files/upload_url', 'files.controllers.UploadUrlHandler'),
 ])
 
 

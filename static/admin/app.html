@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="mainApp">
+<html>
   <head>
 
     <meta charset="utf-8" />
@@ -17,9 +17,8 @@
 	<!-- important bits -->
 	<meta name="google-site-verification" content="5rh0RiNkYuPuVOdrIXk4mY4AQ87uS7Ad_ZigdjDNBp0" />
 
-
 	<!-- Search/Social Meta -->
-    <title>mplsart | returning soon...</title>
+    <title>mplsart admin</title>
     <meta name="description" content="The Very Best Events and Gallery Listings for Minneapolis" />
     <meta name="keywords" content="minneapolis, twin cities, art, galleries, scene, painting, visual arts, drawing, purchase, coffee shop, shows, exhibition" />
     <!-- <meta name="author" content="Blaine and Katie Garrett" /> -->
@@ -67,9 +66,177 @@
 	    </div>
 	<!-- End Top Nav -->
 	
+	
+	
+	
+	
+	
 	<!-- Start Main Content Container -->
     <div class="container">
-		<div ng-view>
+
+
+
+		<style>
+		html, body { height: 100%;}
+
+		/* So that the modal is displayed in the preview.. You can probably remove this and the above rule */
+		.img-modal {
+		  display: block;
+		}
+
+		.img-modal .modal-dialog {
+		    /* An arbitrary minimum height. Feel free to modify this one as well */
+		    min-height: 350px;
+			height: 99%;
+		}
+
+		.img-modal .modal-content, .img-modal .modal-body, .img-modal .row, .img-modal .modal-image {
+		    height: 100%;
+		}
+
+		.modal-content {
+		    border-radius: 0;
+		}
+
+		.modal-body {
+		    padding-top: 0;
+		    padding-bottom: 0;
+		}
+
+		.modal-image {
+		    background: #000;
+		    padding :0;
+		}
+
+		.modal-image img {
+		    margin: 0 auto;
+		    max-height: 100%;
+		    max-width: 100%;
+
+		    position: relative;
+		    top: 50%;
+		    -webkit-transform: translateY(-50%);
+		    -ms-transform: translateY(-50%);
+		    transform: translateY(-50%);
+		}
+
+		.img-modal .img-modal-btn {
+		    display: block;
+		    position: absolute;
+		    top: 0;
+		    bottom: 0;
+		    background: black;
+		    opacity: 0;
+		    font-size: 1.5em;
+		    width: 45px;
+		    color: #fff;
+		    transition: opacity .2s ease-in;
+		}
+
+		.img-modal .modal-image:hover .img-modal-btn {
+		    opacity: 0.4;  
+		}
+
+		.img-modal .modal-image:hover .img-modal-btn:hover {
+		   opacity: 0.75;   
+		}
+
+		.img-modal .img-modal-btn.right {
+		    right: 0;
+		}
+
+		.img-modal .img-modal-btn i {
+		    position: absolute;
+		    top: 50%;
+		    left: 0;
+		    right: 0;
+		    text-align: center;
+		    margin-top: -.75em;
+		}
+
+		.img-modal .modal-meta {
+		    position: relative;   
+		    height: 100%;
+		}
+
+		.img-modal .modal-meta-top {
+		    position: absolute;
+		    top: 0;
+		    left: 0;
+		    right: 0;
+		    bottom: 45px;
+		    padding: 5px 10px;
+		    overflow-y: auto;
+		}
+
+		.img-modal .modal-meta-top .img-poster img {
+		    height: 70px;
+		    width: 70px;
+		    float: left;
+		    margin-right: 15px;
+		}
+
+		.img-modal .modal-meta-top .img-poster strong {
+		    display: block; 
+		    padding-top: 15px;
+		}
+
+		.img-modal .modal-meta-top .img-poster span {
+		    display: block;   
+		    color: #aaa;
+		    font-size:.9em;
+		}
+
+		.img-modal .modal-meta-bottom {
+		    position: absolute;
+		    bottom: 0;
+		    left: 0;
+		    right: 0;
+		    padding: 5px;
+		    border-top: solid 1px #ccc;
+		}
+
+		.img-modal .img-comment-list {
+		    list-style: none;  
+		    padding: 0;
+		}
+		.img-modal .img-comment-list li {
+		    margin:0;
+		    margin-top:10px;
+		}
+
+		.img-modal .img-comment-list li > div {
+		    display:table-cell;
+		}
+
+		.img-modal .img-comment-list img {
+		    border-radius:50%;
+		    width: 42px;
+		    height: 42px;
+		    margin-right: 10px;
+		    margin-top: 20px;
+		}
+
+		.img-modal .img-comment-list p {
+		    margin: 0;
+		}
+
+		.img-modal .img-comment-list span {
+		    font-size: .8em; 
+		    color: #aaa;
+		}
+		</style>
+
+
+
+
+
+
+
+
+
+
+	 	<div id="main_content">
 			loading ...
 		</div>
     </div><!--/.container-->
@@ -80,23 +247,9 @@
     <!-- Placed at the end of the document so the pages load faster -->
 	
 	<!-- angular -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.18/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.18/angular-route.js"></script>
-
-    <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.12.0/react.js"></script>
-    <script src="/static/admin/js/ngReact.js"></script>
-
-	<script src="/static/admin/app/app.js"></script>
-	<script src="/static/admin/app/controllers.js"></script>
-
-	<script src="/static/admin/js/moment.js"></script>	
 	
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	
-	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-
-	<script type="text/javascript" src="/static/admin/js/react/build/griddle.js"></script>
-
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script type="text/javascript" src="/static/admin/js/react/build/main.js"></script>
 
 
 	<style>
@@ -318,6 +471,169 @@
 	.bootstrap-datetimepicker-widget ul.list-unstyled li div.timepicker div.timepicker-picker table.table-condensed tbody > tr > td {
 	  padding: 0px !important;
 	}
+	
+
+	.typeahead,
+	.tt-query,
+	.tt-hint {
+	  width: 396px;
+	  height: 30px;
+	  padding: 8px 12px;
+	  font-size: 24px;
+	  line-height: 30px;
+	  border: 2px solid #ccc;
+	  -webkit-border-radius: 8px;
+	     -moz-border-radius: 8px;
+	          border-radius: 8px;
+	  outline: none;
+	}
+
+	.typeahead {
+	  background-color: #fff;
+	}
+
+	.typeahead:focus {
+	  border: 2px solid #0097cf;
+	}
+
+	.tt-query {
+	  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	}
+
+	.tt-hint {
+	  color: #999
+	}
+
+	.tt-dropdown-menu {
+	  width: 422px;
+	  margin-top: 12px;
+	  padding: 8px 0;
+	  background-color: #fff;
+	  border: 1px solid #ccc;
+	  border: 1px solid rgba(0, 0, 0, 0.2);
+	  -webkit-border-radius: 8px;
+	     -moz-border-radius: 8px;
+	          border-radius: 8px;
+	  -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+	     -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+	          box-shadow: 0 5px 10px rgba(0,0,0,.2);
+	}
+
+	.tt-suggestion {
+	  padding: 3px 20px;
+	  font-size: 18px;
+	  line-height: 24px;
+	}
+
+	.tt-suggestion.tt-cursor {
+	  color: #fff;
+	  background-color: #0097cf;
+
+	}
+
+	.tt-suggestion p {
+	  margin: 0;
+	}
+
+	</style>
+
+
+
+	<style>
+	/* http://bootsnipp.com/snippets/featured/material-cards */
+
+	body {
+		background-image: none;
+	}
+	.card {
+	  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+	}
+
+	.card {
+	  margin-top: 10px;
+	  box-sizing: border-box;
+	  border-radius: 2px;
+	  background-clip: padding-box;
+	}
+	.card div.card-title {
+	    color: #fff;
+	    font-size: 24px;
+	    font-weight: 100;
+	    text-transform: uppercase;
+	}
+	.card div.card-title a { color: #fff; }
+	.card div.card-title a:hover {
+		color: #FF7BC8;
+		text-decoration: none;
+	}
+
+	.card .card-image {
+	  position: relative;
+	  overflow: hidden;
+	}
+	.card .card-image img {
+	  border-radius: 2px 2px 0 0;
+	  background-clip: padding-box;
+	  position: relative;
+	  z-index: -1;
+	  max-width: none;
+	  width: 100% !important;
+	}
+	.card .card-image div.card-title {
+	  position: absolute;
+	  bottom: 0;
+	  left: 0;
+	  padding: 16px;
+	  width:100%;
+	}
+	.card .card-content {
+	  padding: 16px;
+	  border-radius: 0 0 2px 2px;
+	  background-clip: padding-box;
+	  box-sizing: border-box;
+	  background-color: #fff;
+	}
+
+	.card .card-content p {
+	  margin: 0;
+	  color: inherit;
+	}
+	.card .card-content span.card-title {
+	  line-height: 48px;
+	}
+	.card .card-action {
+	  border-top: 1px solid rgba(160, 160, 160, 0.2);
+	  padding: 16px;
+	  background-color: #777;
+	}
+	.card .card-action a {
+	  color: #ffab40;
+	  margin-right: 16px;
+	  transition: color 0.3s ease;
+	  text-transform: uppercase;
+	}
+	.card .card-action a:hover {
+	  color: #ffd8a6;
+	  text-decoration: none;
+	}
+	
+	.card div.card-title {
+		/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+		background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMC42NSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+		background: -moz-linear-gradient(top,  rgba(0,0,0,0) 0%, rgba(0,0,0,0.65) 100%); /* FF3.6+ */
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.65))); /* Chrome,Safari4+ */
+		background: -webkit-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* Chrome10+,Safari5.1+ */
+		background: -o-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* Opera 11.10+ */
+		background: -ms-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* IE10+ */
+		background: linear-gradient(to bottom,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* W3C */
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#a6000000',GradientType=0 ); /* IE6-8 */
+	}
+
+
+
+
 	</style>
 
 
