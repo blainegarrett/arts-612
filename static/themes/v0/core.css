@@ -14,14 +14,18 @@ body {
 a { color: #0096BE; }
 
 /* Nav Var */
-.navbar-brand { font-size:32px; }
+.navbar-inverse .navbar-brand {
+    font-size:32px;
+    color: #dfdfdf;
+    line-height: 32px;
+    
+}
 #est-stamp { font-size: 14px; }
 
 
 /* Top Rail Welcome Header */
 #welcome-header-container { margin-bottom:20px; }
 h1#welcome-header {
-	font-weight:bold;
 	background-color:#ffe0f2;
 	/* background opacity?*/
 	color:#313131;
@@ -98,7 +102,8 @@ h1#welcome-header {
 #panel-signup .panel-content { }
 
 #panel-contact .panel-content, #panel-social .panel-content {
-    padding:10px;
+    min-height: 60px;
+    padding:17px;
     margin-bottom:20px;
     font-size:14px;
 }
