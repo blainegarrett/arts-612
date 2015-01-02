@@ -46,6 +46,7 @@ routes.extend([
 
     # File Service Routes
     (r'/api/files/upload_url', 'files.controllers.UploadUrlHandler'),
+    (r'/api/files/upload_callback', 'files.controllers.UploadCallbackHandler'),
 ])
 
 

@@ -47,7 +47,7 @@ class Resource(object):
         if not obj:
             obj = None
 
-        if obj and not isinstance(obj, ndb.Model):
+        if obj and not isinstance(obj, (ndb.Model, dict)):
             raise TypeError('Resource requires a object of type ndb.Model. Received: %s' % obj)
 
         self.obj = obj
@@ -130,9 +130,14 @@ class RestField(object):
         self.output_only = output_only
         self.required = required # Required on input
 
+        import logging
+        logging.error(self.prop)
+
         if isinstance(self.prop, ndb.model.Property):
             self.key = self.key or self.prop._name
         elif isinstance(self, (ResourceUrlField, ResourceIdField)):
+            self.key = self.prop
+        elif isinstance(self.prop, basestring):
             self.key = self.prop
         else:
             raise Exception('Rest Property not supported %s', prop)
@@ -152,7 +157,8 @@ class RestField(object):
         """
         Default handler for properties
         """
-
+        if isinstance(obj, dict):
+            return obj.get(field)
         return getattr(obj, field)
 
     def to_resource(self, data):
@@ -160,9 +166,13 @@ class RestField(object):
         Input a field to a dict value
         """
 
+        import logging
+        logging.warning(data);
+        
         value = data.get(self.key) # TODO: Need to figure out Required to exist vs. Not None
 
         if not value and self.required:
+            logging.warning(bool(value));
             raise Exception('Field "%s" is a required input field.' % self.key)
 
         if value and self.output_only:
@@ -212,6 +222,33 @@ class ResourceIdField(RestField):
             logging.error(obj)
         return key
 
+
+class UploadField(RestField):
+    """
+    """
+    def __init__(self, prop, **kwargs):
+        super(UploadField, self).__init__(prop, **kwargs)
+
+    def to_resource(self, data):
+        val = super(UploadField, self).to_resource(data)
+        
+        if val:
+            return ndb.GeoPt(lat=val['lat'], lon=val['lon'])
+        return None
+
+    def from_resource(self, obj, field):
+        """
+        Outout a field to dic value
+        """
+        
+        #FieldStorage(u'the_file', u'title_bar.jpg') evals to false for some reason...
+
+        val = super(UploadField, self).from_resource(obj, field)
+
+        if not val:
+            return None
+
+        return {'lat': val.lat, 'lon': val.lon}
 
 class GeoField(RestField):
     """

@@ -32,8 +32,15 @@ class RestHandlerBase(webapp2.RequestHandler):
         """
 
         # Process Request Payload
+        logging.error(self.request.headers['Content-Type'])
+
+        # Convert: body into native format
         if self.request.body:
-            self.data = json.loads(self.request.body)
+            if 'application/json' in self.request.headers['Content-Type']:
+                self.data = json.loads(self.request.body)
+            elif 'multipart/form-data' in self.request.headers['Content-Type']:
+                self.data = self.request.POST.mixed()
+                logging.error(self.data)
 
         try:
             super(RestHandlerBase, self).dispatch()

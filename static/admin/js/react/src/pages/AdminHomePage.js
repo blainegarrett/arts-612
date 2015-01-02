@@ -2,6 +2,9 @@ var React = require('react');
 var ReactRouter = require('flux-react-router');
 var B = require('react-bootstrap')
 
+var FileUploader = require('./../components/FileUploader');
+
+
 var CustomModalTrigger = React.createClass({
   mixins: [B.OverlayMixin],
 
@@ -63,6 +66,12 @@ var AdminHomePage = React.createClass({
             </div>
         </div>
 
+
+        <div className="row">
+            <div className="col-md-6">
+                <FileUploader callback_url="/api/files/upload_callback" />
+            </div>
+        </div>
 
 
         <div className="row">
