@@ -12,10 +12,7 @@ var CalendarPage = React.createClass({
     render: function() {
         return <div>
         <h2>Calendar</h2>
-        
-        <a onClick={ReactRouter.deferTo('/galleries')}>Galleries</a>
-        <a onClick={ReactRouter.deferTo('/written')}>Written</a>
-        <a onClick={ReactRouter.deferTo('/')}>Home</a>
+        <p>Returning soon</p>
         </div>;
     },
     componentDidMount: function() {

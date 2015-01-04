@@ -28,7 +28,6 @@ var TempExtras = React.createClass({
 </div>
 
 
-
 <div id="panel-social">
 	<div className="panel-content">
 		<a href="https://www.facebook.com/mplsart" id="fb-link" target="_new">
@@ -47,6 +46,19 @@ var TempExtras = React.createClass({
 		&nbsp;&nbsp;Stay Connected to mplsart during the rebuild.
 	</div>
 </div>
+
+
+<div id="panel-hashtag">
+    <div className="row">
+        <div className="solid-bg col-sm-4">
+            #mplsart
+        </div>
+        <div className="solid-white col-sm-8">
+            If you're making art or looking at art in the Twin Cities, use the hashtag to show it off
+        </div>
+    </div>
+</div>
+
 
 </div>
 

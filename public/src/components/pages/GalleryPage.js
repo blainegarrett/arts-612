@@ -36,19 +36,17 @@ var GalleryPage = React.createClass({
         'title': 'Galleries',
         'description': 'These are some galleries.'
     },
+
     render: function() {
         
         var galleries = []
+        var rc = this;
 
         if (this.state.galleries.results != undefined) {
             galleries = this.state.galleries.results.map(function (g) {
-                return <li key={g.resource_id} name={g.name}><a onClick={ReactRouter.deferTo('/galleries/' + g.slug)}>{g.name}</a></li>;
+                return <li key={g.resource_id} name={g.name}><a href={'/galleries/' + g.slug} onClick={rc.getRoute}>{g.name}</a></li>;
             });
         }
-
-
-
-
 
         return <div className="row">
             <h2>Twin Cities Galleries</h2>

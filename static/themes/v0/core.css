@@ -14,14 +14,18 @@ body {
 a { color: #0096BE; }
 
 /* Nav Var */
-.navbar-brand { font-size:32px; }
+.navbar-inverse .navbar-brand {
+    font-size:32px;
+    color: #dfdfdf;
+    line-height: 32px;
+    
+}
 #est-stamp { font-size: 14px; }
 
 
 /* Top Rail Welcome Header */
 #welcome-header-container { margin-bottom:20px; }
 h1#welcome-header {
-	font-weight:bold;
 	background-color:#ffe0f2;
 	/* background opacity?*/
 	color:#313131;
@@ -32,18 +36,40 @@ h1#welcome-header {
 /* Panel Defaults */
 .panel-header {
     padding:5px;
-    padding-left: 10px;
+    padding-left: 20px;
 }
 .panel-content {
     background-color: #ffffff;
-    padding:5px;
-    padding-left: 10px;
+    padding:20px;
 }
+
+/* Call Out */
+#panel-call-out {
+    background-color: #ffffff;
+}
+    #panel-call-out h2 {
+        font-size:30px;
+        line-height: 30px;
+        background-color: #ff0099;
+        color : #fff;
+        padding:20px;
+    }
+    #panel-call-out .panel-content {
+        margin-bottom:20px;
+    }
+
+    #panel-call-out .bigyo {
+        font-size:30px;
+    }
+        #panel-call-out .bigyo a {
+            font-weight: bold;
+        }
+
 
 /* Blurb Text */
 #panel-blurb {
     color:#313131;
-    margin-bottom:75px;
+    margin-bottom:20px;
     font-size:30px;
 }
     #panel-blurb h2 {
@@ -53,13 +79,67 @@ h1#welcome-header {
     #panel-blurb p {
         line-height: 1.25em;
     }
-    #panel-blurb .blurb-signature {
+
+
+
+/* Closet announcement text */
+#panel-closet {
+    color:#313131;
+    margin-bottom:20px;
+    line-height: 1.25em;
+}
+
+#panel-closet .panel-content { }
+
+    #panel-closet h2 {
+    	color:#313131;
         font-size: 18px;
+        margin-top: 0px;
+        margin-bottom: 5px;
+        font-weight: bold;
+        line-height: 1.25em
     }
+    #panel-closet p {
+        line-height: 1.25em;
+        padding-bottom: .5em;
+    }
+
+    #panel-closet .pod-readmore {
+        font-weight: bold;
+    }
+
+/* Hashtag */
+#panel-hashtag {
+    background-color: #ff0099;
+    margin-bottom: 20px;
+}
+
+#panel-hashtag .row {
+    margin-right: 0px;
+    margin-left: 0px;
+}
+#panel-hashtag .solid-white {
+    padding:20px;
+    background-color: #fff;
+}
+
+#panel-hashtag .solid-bg {
+    padding:20px;
+    height: 100%;
+    color: #ffffff;
+    font-size:30px;
+    padding-top:30px;
+    text-align:center;
+}
+
 
 /* Signup Bits */
 #panel-signup {
     margin-bottom: 20px;
+}
+#panel-signup p {
+    line-height:1.25em;
+    margin-top: 5px;
 }
 #panel-signup .panel-header {    
 	background-color:#ffe0f2;
@@ -68,7 +148,6 @@ h1#welcome-header {
 #panel-signup .panel-content { }
 
 #panel-contact .panel-content, #panel-social .panel-content {
-    padding:10px;
     margin-bottom:20px;
     font-size:14px;
 }
