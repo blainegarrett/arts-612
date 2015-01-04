@@ -47,6 +47,19 @@ var TempExtras = React.createClass({
 	</div>
 </div>
 
+
+<div id="panel-hashtag">
+    <div className="row">
+        <div className="solid-bg col-sm-4">
+            #mplsart
+        </div>
+        <div className="solid-white col-sm-8">
+            If you're making art or looking at art in the Twin Cities, use the hashtag to show it off
+        </div>
+    </div>
+</div>
+
+
 </div>
 
     }
