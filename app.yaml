@@ -1,6 +1,6 @@
 application: arts-612
 
-version: master-20150104
+version: master-20150105
 
 runtime: python27
 api_version: 1
