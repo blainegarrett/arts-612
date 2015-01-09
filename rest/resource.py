@@ -51,6 +51,7 @@ class Resource(object):
         if obj and not isinstance(obj, ndb.Model):
             raise TypeError('Resource requires a object of type ndb.Model. Received: %s' % obj)
 
+
         self.obj = obj
         self.fields = fields
 
@@ -107,6 +108,8 @@ class Resource(object):
         result = {}
 
         obj = self.obj
+        if not obj:
+            return result
 
         for field in self.fields:
             result[field.key] = field.from_resource(obj, field.key)
@@ -210,6 +213,7 @@ class ResourceIdField(RestField):
         except:
             logging.error('Attempting to get ResourceID for a non ndb Entity...')
             logging.error(obj)
+            key = None
         return key
 
 

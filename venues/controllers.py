@@ -99,7 +99,6 @@ class GalleriesApiHandler(GalleryApiHandlerBase):
 
 
         if q:
-            raise Exception('Querying by str doesn\'t currently work..')
             results = vsearch.simple_search(q)
             # hydrate the search results
             keys_to_fetch = []

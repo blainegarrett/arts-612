@@ -219,22 +219,6 @@ class EventsNowShowingHandler(RestHandlerBase):
         self.serve_success(results)
 
 
-class EventsWeeksApiHandler(RestHandlerBase):
-    """
-    Not currently in use
-    """
-
-    def _get(self):
-        raise Exception('This endpoint is not in use...')
-
-        results = []
-        events = events_api.get_this_week()
-        for event in events:
-            results.append(create_resource_from_entity(event))
-
-        self.serve_success(results)
-
-
 class EventsApiHandler(RestHandlerBase):
     """
     Main Handler for Events Endpoint

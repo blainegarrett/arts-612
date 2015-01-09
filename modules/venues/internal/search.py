@@ -55,7 +55,7 @@ def simple_search(querystring):
     TODO: "term", "near", "by type", "now" and any combo
     """
 
-    raise Exception('Searching for Venues is disabled for the time being.')
+    #raise Exception('Searching for Venues is disabled for the time being.')
 
     search_query = search.Query(query_string=querystring, options=search.QueryOptions(limit=10))
 
