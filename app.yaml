@@ -1,6 +1,6 @@
 application: arts-612
 
-version: master-20150105
+version: master-lockdown
 
 runtime: python27
 api_version: 1
@@ -154,9 +154,9 @@ handlers:
   upload: static/admin/app\.html
   login: admin
 
-- url: /import.*
-  script: import.main.app
-  secure: optional
+#- url: /import.*
+#  script: import.main.app
+#  secure: optional
 
 - url: /robots\.txt
   static_files: static/robots.txt

@@ -6,6 +6,7 @@ from google.appengine.api import memcache
 from google.appengine.ext import ndb
 from pytz import timezone
 import datetime
+import logging
 
 from auth.decorators import rest_login_required
 from rest.controllers import RestHandlerBase
@@ -128,19 +129,6 @@ def create_resource_from_entity(e, verbose=False):
     return Resource(e, REST_RULES).to_dict()
 
 
-class EventsWeeksApiHandler(RestHandlerBase):
-    """
-    """
-
-    def _get(self):
-        results = []
-        events = events_api.get_events()
-        for event in events:
-            results.append(create_resource_from_entity(event))
-
-        self.serve_success(results)
-
-
 class EventDetailApiHandler(RestHandlerBase):
     """
     """
@@ -193,10 +181,13 @@ class EventsUpcomingHandler(RestHandlerBase):
 
         results = []
         cached_events = memcache.get(UPCOMING_CACHE_KEY)
+
         if cached_events is not None:
             results = cached_events
         else:
+            logging.warning('Upcoming Events were not cached. Querying for new list.')
             events = events_api.upcoming_events()
+
             for event in events:
                 results.append(create_resource_from_entity(event))
             memcache.add(UPCOMING_CACHE_KEY, results)
@@ -218,7 +209,9 @@ class EventsNowShowingHandler(RestHandlerBase):
         if cached_events is not None:
             results = cached_events
         else:
+            logging.warning('Nowshowing Events were not cached. Querying for new list.')
             events = events_api.now_showing()
+
             for event in events:
                 results.append(create_resource_from_entity(event))
             memcache.add(NOWSHOWING_CACHE_KEY, results)
@@ -232,6 +225,8 @@ class EventsWeeksApiHandler(RestHandlerBase):
     """
 
     def _get(self):
+        raise Exception('This endpoint is not in use...')
+
         results = []
         events = events_api.get_this_week()
         for event in events:
@@ -275,6 +270,7 @@ class EventsApiHandler(RestHandlerBase):
         result = create_resource_from_entity(e)
         self.serve_success(result)
 
+    @rest_login_required
     def _get(self):
         """
         Main Endpoint
@@ -297,8 +293,8 @@ class EventsApiHandler(RestHandlerBase):
         self.serve_success(results)
 
 
-# Web Handlers
 
+# Web Handlers
 class CalendarMainHandler(MerkabahBaseController):
     """
     Main Handler For Calendar Listings
@@ -313,6 +309,19 @@ class CalendarMainHandler(MerkabahBaseController):
 
         template_values = {'pagemeta': pagemeta}
         self.render_template('templates/index.html', template_values)
+
+
+class EventsWeeksApiHandler(RestHandlerBase):
+    """
+    """
+
+    def _get(self):
+        results = []
+        events = events_api.get_events()
+        for event in events:
+            results.append(create_resource_from_entity(event))
+
+        self.serve_success(results)
 
 
 class CalendarDetailHandler(MerkabahBaseController):

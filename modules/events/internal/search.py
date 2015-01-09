@@ -8,6 +8,8 @@
 # Things happening tonight near...
 
 import datetime
+import logging
+
 from pytz import timezone
 
 from google.appengine.api import search
@@ -103,7 +105,9 @@ def build_index(event):
             raise Exception('Venue with key %s not found' % ed.venue_slug)
 
         # Decide to unfold for gallery hours or not?
+        """
         if ed.category == CATEGORY.ONGOING:
+            
             hours = venue.hours
             if hours:
 
@@ -134,8 +138,7 @@ def build_index(event):
 
                     i += 1
                     test_dt = test_dt + datetime.timedelta(days=1)
-
-        # If it was ongoing, it'll remain so for search purposes
+        """
 
         i += 1
         return_documents.append(_build_event_date(i, event, ed, venue, ed.start, ed.end))
@@ -176,11 +179,11 @@ def simple_search(querystring=None, start=None, end=None, category=None, limit=1
         else:    
             querystring += 'category: %s' % category
 
-
     #DISTANCE_LIMIT = int(3 * 111) # 3 KM - 3 * 10,000km per 90 degrees
     #querystring += ' AND distance(venue_geo, geopoint(%s,%s)) < %s' % (44.958815,-93.238138, DISTANCE_LIMIT)
-    
+
     sort_expressions = []
+
     if sort:
         direction = search.SortExpression.ASCENDING
 
@@ -193,6 +196,8 @@ def simple_search(querystring=None, start=None, end=None, category=None, limit=1
     sort_options = search.SortOptions(expressions=sort_expressions)
 
     q_options = search.QueryOptions(limit=limit, sort_options=sort_options)
+
+    logging.warning('Performing a search with querystring: %s' % querystring)
 
     search_query = search.Query(query_string=querystring, options=q_options)
 
