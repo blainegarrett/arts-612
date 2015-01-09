@@ -153,7 +153,6 @@ def edit_venue(venue, data, operator=None):
 
     venue_key = venue.key
 
-
     # Prep go data...
     if data.get('geo', None):
         if isinstance(data['geo'], ndb.GeoPt): # Lazy...
