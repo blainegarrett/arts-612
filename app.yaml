@@ -1,6 +1,6 @@
 application: arts-612
 
-version: master-lockdown
+version: master-20150108
 
 runtime: python27
 api_version: 1
