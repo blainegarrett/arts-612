@@ -32,10 +32,9 @@ class RestHandlerBase(webapp2.RequestHandler):
         """
 
         # Process Request Payload
-        logging.error(self.request.headers['Content-Type'])
 
         # Convert: body into native format
-        if self.request.body:
+        if len(self.request.body) > 0:
             if 'application/json' in self.request.headers['Content-Type']:
                 self.data = json.loads(self.request.body)
             elif 'multipart/form-data' in self.request.headers['Content-Type']:
