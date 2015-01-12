@@ -60,8 +60,6 @@ web_routes += [
     RedirectRoute('/written/', 'controllers.written.WrittenMainHandler', strict_slash=True, name="written"),
     RedirectRoute(r'/written/<year:[\d]+>/<month:[\d]+>/<slug:[a-z0-9-_]+>/', 'controllers.written.WrittenArticleHandler', strict_slash=True, name="written_article"),
 
-    #(r'/import/galleries', 'loaddata.GalleryData'), # These are handled in app.yaml
-    #(r'/import/events', 'loaddata.EventData'), # These are handled in app.yaml
     (r'/', 'auth.controllers.MainHandler'),
     (r'.*', 'controllers.Error404Handler'),
     ]

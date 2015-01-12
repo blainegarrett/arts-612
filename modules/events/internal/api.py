@@ -48,7 +48,10 @@ def get_event_by_slug(slug):
 
 def get_events():
     # Currently used to populate the admin page...
-    return search_helper()
+
+    events = Event.query().fetch(1000)
+    bulk_dereference_venues(events)
+    return events
 
 
 def tonight(category=None, limit=5):
@@ -109,6 +112,9 @@ def get_this_week():
 
 
 def search_helper(start=None, end=None, category=None, sort=None, limit=1000):
+    """
+    Helper method to perform search and populate items from datastore
+    """
 
     search_results = event_search.simple_search(start=start, end=end, category=category, sort=sort)
     events = event_search.get_events_from_event_search_docs(search_results['index_results'])
@@ -117,13 +123,19 @@ def search_helper(start=None, end=None, category=None, sort=None, limit=1000):
 
     return events
 
+
 def bulk_dereference_venues(events):
+    """
+    """
+
     return_one = False
+
     if not isinstance(events, list):
         return_one = True
         events = [events]
 
     # Iterate over the event dates and collect venue keys
+
     venue_keys_to_fetch = []
     for event in events:
         for ed in event.event_dates:
@@ -135,8 +147,12 @@ def bulk_dereference_venues(events):
             venue_keys_to_fetch.append(venue_key)
 
     # Fetch all the venue keys
+
     venues = ndb.get_multi(venue_keys_to_fetch)
-    venue_map = {v.slug: v for v in venues}
+    venue_map = {}
+    for v in venues:
+        if v:
+            venue_map[v.slug] = v
 
     # Iterate over the event dates and set venues
     for event in events:
@@ -191,6 +207,15 @@ def edit_event(entity, data):
         ed.category = d_data['category']
         ed.venue_slug = d_data['venue_slug']
 
+        
+        # Check to ensure that venue_slug exists...
+        v = venue_api.get_venue_by_slug(d_data['venue_slug'])
+        if not v:
+            raise Exception("%s is not a know venue slug." % d_data['venue_slug'])
+        
+        # TODO: Also check if start is before end, etc
+
+
         ed.label = d_data['label']
         ed.type = str(d_data['type']) # This is not a long term solution...
         ed.start = d_data['start'].replace(tzinfo=None) # Expected to be a DateTime or None
@@ -209,7 +234,7 @@ def edit_event(entity, data):
 
     return entity
     
-    
+
 def create_event(data):
     """
     Create an event
@@ -243,6 +268,14 @@ def create_event(data):
 
         ed.category = d_data['category']
         ed.venue_slug = d_data['venue_slug']
+        
+        # Check to ensure that venue_slug exists...
+        v = venue_api.get_venue_by_slug(d_data['venue_slug'])
+        if not v:
+            raise Exception("%s is not a know venue slug." % d_data['venue_slug'])
+        
+        # TODO: Also check if start is before end, etc
+
 
         ed.label = d_data['label']
         ed.type = str(d_data['type']) # This is not a long term solution...

@@ -54,7 +54,7 @@ var TempExtras = React.createClass({
             #mplsart
         </div>
         <div className="solid-white col-sm-8">
-            If you're making art or looking at art in the Twin Cities, use the hashtag to show it off
+            If you're making art or looking at art in the Twin Cities, use the hashtag to show it off.
         </div>
     </div>
 </div>

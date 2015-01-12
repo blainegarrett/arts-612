@@ -5,6 +5,7 @@ Note: This is designed to work similar django Forms
 
 from google.appengine.ext import ndb
 import voluptuous
+import logging
 
 
 NON_FIELD_ERRORS = '__all__'
@@ -49,6 +50,7 @@ class Resource(object):
 
         if obj and not isinstance(obj, (ndb.Model, dict)):
             raise TypeError('Resource requires a object of type ndb.Model. Received: %s' % obj)
+
 
         self.obj = obj
         self.fields = fields
@@ -106,6 +108,8 @@ class Resource(object):
         result = {}
 
         obj = self.obj
+        if not obj:
+            return result
 
         for field in self.fields:
             result[field.key] = field.from_resource(obj, field.key)
@@ -213,13 +217,13 @@ class ResourceIdField(RestField):
         """
         Outout a field to dic value
         """
-        import logging
-        logging.error(obj)
 
         try:
             key = obj.key.urlsafe()
         except:
+            logging.error('Attempting to get ResourceID for a non ndb Entity...')
             logging.error(obj)
+            key = None
         return key
 
 
@@ -257,7 +261,6 @@ class GeoField(RestField):
 
     def __init__(self, prop, **kwargs):
         super(GeoField, self).__init__(prop, **kwargs)
-
 
     def to_resource(self, data):
         val = super(GeoField, self).to_resource(data)

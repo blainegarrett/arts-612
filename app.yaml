@@ -1,6 +1,6 @@
 application: arts-612
 
-version: master-closet
+version: master-20150108
 
 runtime: python27
 api_version: 1
@@ -11,6 +11,9 @@ libraries:
   version: latest
 - name: jinja2
   version: latest
+
+builtins:
+  - remote_api: on
 
 #
 #  handlers:
@@ -154,9 +157,9 @@ handlers:
   upload: static/admin/app\.html
   login: admin
 
-- url: /import.*
-  script: import.main.app
-  secure: optional
+#- url: /import.*
+#  script: import.main.app
+#  secure: optional
 
 - url: /robots\.txt
   static_files: static/robots.txt

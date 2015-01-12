@@ -72,7 +72,7 @@ var TempEvent = React.createClass({
     		<div><a href={this.props.url} target="_blank"><span className="event-title">{this.props.name}</span></a></div>
             <div className="event-time"><NiceDate start={ ed.start } end={ ed.end } eventdate_type={ ed.type } /></div>
             <div className="event-venue-name">{ed.venue.name}</div>
-            <div className="event-address">{ed.venue.address}</div>
+            <div className="event-address">{ed.venue.address + ', ' + ed.venue.city }</div>
     	</li>);
     }    
 });

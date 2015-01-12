@@ -8,12 +8,13 @@
 # Things happening tonight near...
 
 import datetime
+import logging
+
 from pytz import timezone
 
 from google.appengine.api import search
 from google.appengine.ext import ndb
 
-from modules.events.internal.models import Event
 from modules.events.constants import EVENT_SEARCH_INDEX, CATEGORY
 from modules.venues.internal import api as venue_api
 
@@ -33,7 +34,6 @@ def _build_event_date(i, event, ed, venue, start, end, is_hours=False):
     category = ed.category
     if is_hours:
         category = CATEGORY.HOURS
-
 
     fields = []
 
@@ -103,7 +103,9 @@ def build_index(event):
             raise Exception('Venue with key %s not found' % ed.venue_slug)
 
         # Decide to unfold for gallery hours or not?
+        """
         if ed.category == CATEGORY.ONGOING:
+            
             hours = venue.hours
             if hours:
 
@@ -134,8 +136,7 @@ def build_index(event):
 
                     i += 1
                     test_dt = test_dt + datetime.timedelta(days=1)
-
-        # If it was ongoing, it'll remain so for search purposes
+        """
 
         i += 1
         return_documents.append(_build_event_date(i, event, ed, venue, ed.start, ed.end))
@@ -176,11 +177,11 @@ def simple_search(querystring=None, start=None, end=None, category=None, limit=1
         else:    
             querystring += 'category: %s' % category
 
-
     #DISTANCE_LIMIT = int(3 * 111) # 3 KM - 3 * 10,000km per 90 degrees
     #querystring += ' AND distance(venue_geo, geopoint(%s,%s)) < %s' % (44.958815,-93.238138, DISTANCE_LIMIT)
-    
+
     sort_expressions = []
+
     if sort:
         direction = search.SortExpression.ASCENDING
 
@@ -193,6 +194,8 @@ def simple_search(querystring=None, start=None, end=None, category=None, limit=1
     sort_options = search.SortOptions(expressions=sort_expressions)
 
     q_options = search.QueryOptions(limit=limit, sort_options=sort_options)
+
+    logging.warning('Performing a search with querystring: %s' % querystring)
 
     search_query = search.Query(query_string=querystring, options=q_options)
 
@@ -209,7 +212,9 @@ def simple_search(querystring=None, start=None, end=None, category=None, limit=1
 
 def get_events_from_event_search_docs(event_docs):
     """
-    
+    Given a list of search docs, fetch the resulting ndb objects
+    # Note: I'd like to redo this so that we could leverage the doc id to get the key
+        Then we wouldn't need to fetch actual search docs, just the ids
     """
 
     from modules.events.internal.api import get_event_key_by_keystr
@@ -223,6 +228,10 @@ def get_events_from_event_search_docs(event_docs):
 
 
 def unix_time(dt):
+    """
+    Create a Unix Timestamp of a date
+    """
+
     if isinstance(dt, basestring):
         try:
             fmt = '%Y-%m-%d %H:%M:%S'
@@ -237,67 +246,3 @@ def unix_time(dt):
     
     delta = dt - epoch
     return delta.total_seconds()
-
-
-def unix_time_millis(dt):
-    return unix_time(dt) * 1000.0
-
-
-def build_event_index(event, event_dates, venue):
-    """
-    Construct a search index for the event
-    """
-    fields = []
-
-    ed = event_dates[0]
-    venue_geo = search.GeoPoint(venue.geo.lat, venue.geo.lon)
-    fields.append(search.TextField(name='event_slug', value=event.slug))
-    fields.append(search.TextField(name='event_title', value=event.title))
-    fields.append(search.TextField(name='event_date_label', value=ed.label))
-    fields.append(search.NumberField(name='event_date_start_datetime', value=unix_time(ed.start_datetime)))
-    fields.append(search.NumberField(name='event_date_end_datetime', value=unix_time(ed.end_datetime)))
-    fields.append(search.GeoField(name='venue_geo', value=venue_geo))
-
-    '''
-    fields = [
-        search.TextField(name='slug', value='222'),
-        
-        
-        search.DateField(name='updated', value=datetime.datetime.now().date()),
-        search.TextField(name='name', value='Signed 0003'),
-        search.TextField(name='desc', value='uncool'),
-        search.AtomField(name='category', value='showing'),
-        search.GeoField(name='venuelocation', value=geopoint),
-        search.NumberField(name='start_time', value=55),
-        search.NumberField(name='end_time', value=67)
-        ]
-    '''
-
-    return search.Document(doc_id=event.slug, fields=fields)
-
-
-
-def put_search_doc(event):
-    """
-    Rebuild Search Doc for a single Event (and it's date rules)
-    """
-
-    search_index = get_search_index()
-    search_doc = build_index(event)
-    search_index.put([search_doc])
-    return event
-
-
-
-def build_indexes():
-    # TODO: Batch this for actual use
-    venues = Event.query().fetch(1000)
-    index = get_search_index()
-
-    docs_to_put = []
-    for v in venues:
-        doc = build_index(v)
-        docs_to_put.append(doc)
-
-    return index.put(docs_to_put)
-    #raise Exception(add_result) # [search.PutResult(code='OK', id=u'666'), search.PutResult(code='OK', id=u'777')]

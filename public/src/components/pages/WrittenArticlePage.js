@@ -49,7 +49,7 @@ var FullArticle = React.createClass({
             <div id="panel-call-out">
                 <h2>CALL FOR CONTENT</h2>
                 <div className="panel-content">
-                    <p>In order to build the best arts calendar in the Twin Cities, we’re looking for writers, art critics, photographers, Instagrammers, curators, and other tastemakers with a deep appreciation for local the local art scene.</p>
+                    <p>In order to build the best arts calendar in the Twin Cities, we’re looking for writers, art critics, photographers, Instagrammers, curators, and other tastemakers with a deep appreciation for the local art scene.</p>
                     <p>
                         To help promote local art, send a note of interest to: <br />
                         <span className="bigyo"><a href="mailto:contribute@mplsart.com">contribute@mplsart.com</a></span>

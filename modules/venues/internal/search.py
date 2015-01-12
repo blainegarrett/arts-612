@@ -4,7 +4,6 @@ import datetime
 
 from google.appengine.api import search
 
-from modules.venues.internal.models import Venue
 from modules.venues.constants import VENUE_SEARCH_INDEX
 
 
@@ -56,7 +55,7 @@ def simple_search(querystring):
     TODO: "term", "near", "by type", "now" and any combo
     """
 
-    #querystring = self.request.GET.get('q')
+    #raise Exception('Searching for Venues is disabled for the time being.')
 
     search_query = search.Query(query_string=querystring, options=search.QueryOptions(limit=10))
 
@@ -67,7 +66,11 @@ def simple_search(querystring):
     returned_count = len(search_results.results)
     number_found = search_results.number_found
 
-    return {'number_found': number_found, 'returned_count': returned_count, 'index_results': search_results}
+    return {
+        'number_found': number_found,
+        'returned_count': returned_count,
+        'index_results': search_results
+    }
 
 
 def unix_time(dt):
@@ -86,8 +89,12 @@ def put_search_doc(venue):
     search_index.put([search_doc])
     return venue
 
-
+'''
 def build_indexes():
+    """
+    Simple Helper to repopulate search docs for all venues
+    """
+
     # TODO: Batch this for actual use
     venues = Venue.query().fetch(1000)
     index = get_search_index()
@@ -98,3 +105,4 @@ def build_indexes():
         docs_to_put.append(doc)
 
     return index.put(docs_to_put)
+'''
