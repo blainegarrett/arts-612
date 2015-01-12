@@ -58,6 +58,7 @@ web_routes += [
     (r'/calendar', 'cal.controllers.CalendarMainHandler'),
 
     RedirectRoute('/written/', 'controllers.written.WrittenMainHandler', strict_slash=True, name="written"),
+    RedirectRoute('/written/feed/', 'controllers.written.WrittenMainRssFeedHandler', strict_slash=True, name="written_rss_main"),
     RedirectRoute(r'/written/<year:[\d]+>/<month:[\d]+>/<slug:[a-z0-9-_]+>/', 'controllers.written.WrittenArticleHandler', strict_slash=True, name="written_article"),
 
     (r'/', 'auth.controllers.MainHandler'),
