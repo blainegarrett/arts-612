@@ -117,7 +117,7 @@ BaseField  = {
         }
         var widget = React.createElement(this.state.widget, props);
 
-        return <div className="form-group">
+        return <div className="form-group" id={'form-group-' + id}>
              <label htmlFor={'id_' +  id } className="col-sm-2 control-label">{ label }</label>
              <div className="col-sm-10">
                  { widget }

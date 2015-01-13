@@ -209,6 +209,9 @@ class GalleryDetailApiHandler(GalleryApiHandlerBase):
             self.serve_404('Gallery Not Found')
             return False
 
+        if not self.cleaned_data['slug'] == key.id():
+            raise Exception('Unable to edit slugs on venues at this time. Please change slug to: %s' % key.id())
+
         venue = venues_api.edit_venue(venue, self.cleaned_data)
         result = create_resource_from_entity(venue)
         self.serve_success(result)

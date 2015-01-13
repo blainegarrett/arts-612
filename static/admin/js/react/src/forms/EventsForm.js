@@ -23,7 +23,8 @@ EventDateForm =  React.createClass({
             data: this.props.event_date,
             prefix: this.props.prefix
         }
-    },    
+    },
+
     render: function() {
 
         var category_choices = [
