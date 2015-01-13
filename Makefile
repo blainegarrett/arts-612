@@ -11,11 +11,12 @@ clean-pyc:
 	find . -name '*~' -exec rm -f {} +
 
 install:
-    npm install
+	npm install
 	@echo "npm packages installed! Installing python packages..."
 	pip install -r requirements_dev.txt
 	linkenv $(PYTHON_SITE_PACKAGES_PATH) external
 	@echo "Yay! Everything installed."
+
 unit:
 	nosetests --cover-package=modules,rest -vs --without-sandbox --with-gae --with-yanc --with-xunit --xunit-file=unit_results.xml --nologcapture --verbosity=3 --cover-html --logging-level=ERROR --with-coverage --with-yanc tests
 
@@ -26,3 +27,4 @@ client-dev:
 admin-dev:
 	# Builds the Phase 2 client 
 
+common-oasis-rachel-andrzejewski-krista-braam

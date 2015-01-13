@@ -21,7 +21,10 @@ BaseField  = {
             val = this.props.defaultValue;
         }
 
+        var onChangeCallback = this.props.onChangeCallback;
+
         return {
+            'onChangeCallback': onChangeCallback,
             'label': label,
             'field_id': id,
             'classes': this.props.classes,
@@ -70,6 +73,12 @@ BaseField  = {
           this.setState({val: this.toResource(value)});
      },
 
+     setValue: function(val) {
+         /* Public helper to set the value of the Field */
+
+         this.setState({val: val});
+         this.refs.widget.setValue(val);
+     },
      getValue: function() {
          /* Get value of specific field.. if you have more than one input or need custom
             rendering, implement your own.
@@ -101,7 +110,7 @@ BaseField  = {
         var placeholder = this.state.placeholder || "";
         var val = this.state.val;
 
-        var props = {id: id, field: this, form: this.state.form, ref: "widget", val: this.fromResource()}
+        var props = {id: id, field: this, form: this.state.form, ref: "widget", val: this.fromResource(), onChangeCallback: this.state.onChangeCallback}
 
         if (this.props.choices) {
             props['choices'] = this.props.choices

@@ -9,6 +9,7 @@ BaseWidgetMixin = {
         }
 
         state = {
+            onChangeCallback: this.props.onChangeCallback,
             'label': label,
             'field_id': id,
             'classes': this.props.classes,
@@ -23,6 +24,12 @@ BaseWidgetMixin = {
 
         return state
     },
+    setValue: function (val) {
+        /* Set the val of the field. This probably isn't supported by all Widgets? */
+        
+        this.refs.input.getDOMNode().value = val;
+        this.setState({'val': val});
+    },
      getValue: function() {
         if (typeof(this._getValue) == 'function') {
             return this._getValue();
@@ -30,8 +37,10 @@ BaseWidgetMixin = {
         return this.refs.input.getDOMNode().value;
      },
       handleChange: function(event) {
-
-          console.log('Inside BaseWidgetMixin.handleChange');
+          
+          if (typeof(this.state.onChangeCallback) == 'function') {
+              this.state.onChangeCallback(event);
+          }
 
           if (typeof(this._handleChange) == 'function') {
               return this._handleChange(event.target.value);

@@ -1,9 +1,10 @@
 var React = require('react');
 var TextField = require('./../utilities/forms/fields/TextField');
+var SlugField = require('./../utilities/forms/fields/SlugField');
 var ChoiceField = require('./../utilities/forms/fields/ChoiceField');
 var GeoPtField = require('./../utilities/forms/fields/GeoPtField');
 var CheckboxWidget = require('./../utilities/forms/widgets/CheckboxWidget');
-
+var SlugWidget = require('./../utilities/forms/widgets/SlugWidget');
 
 VenuesForm = React.createClass({
     propTypes: {
@@ -26,9 +27,9 @@ VenuesForm = React.createClass({
         }
     },
 
-    getInitialState: function(){
-        console.log(this.props);
-
+    getInitialState: function () {
+        /* Sets up initial form state */
+        
         return {
             save_callback: this.props.save_callback,
             errors: [],
@@ -82,6 +83,25 @@ VenuesForm = React.createClass({
         });
 
     },
+    sluggable_helper:  function(event) {
+        // If it is a new item, update the slug prop
+
+        if (this.state.is_edit ){
+            return;
+        }
+
+        var title_value = event.target.value;
+        
+        title_value = title_value.toLowerCase()
+            .trim()
+            .replace(/[^\w ]+/g, ' ')
+            .trim()
+            .replace(/ +/g, '-');
+
+        this.refs['field.slug'].setValue(title_value);
+
+    },
+
     render: function(){
         if (this.state.is_edit && !this.state.data.results.name) {
             return <div>Loading...</div>
@@ -104,8 +124,8 @@ VenuesForm = React.createClass({
 
         return <form role="form" className="form-horizontal" action="#" onSubmit={this.submitHandler}>
             { errors }
-          <TextField id="name"  ref="field.name" val={this.state.data.results.name } form={this} placeholder="Enter Venue Name"/>
-          <TextField id="slug" form={this}  ref="field.slug"  val={this.state.data.results.slug } />
+          <TextField id="name"  ref="field.name" val={this.state.data.results.name } form={this} placeholder="Enter Venue Name" onChangeCallback={this.sluggable_helper} />
+          <SlugField id="slug" form={this}  ref="field.slug"  val={this.state.data.results.slug } widget={SlugWidget} />
           <ChoiceField id="category" form={this} ref="field.category"  val={this.state.data.results.category } widget={CheckboxWidget} choices={category_choices} />
           <TextField id="address" form={this}  ref="field.address"  val={this.state.data.results.address } />
           <TextField id="address2" form={this}  ref="field.address2"  val={this.state.data.results.address2 } />
