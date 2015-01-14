@@ -1472,8 +1472,8 @@ DateRangeWidget = React.createClass({
             react_element.handleChange(picker_event);
         });
        
-       // Bind the Time Picker
-      $(time_input).timepicker({defaultTime: '9:00 PM', disableFocus: true})
+       // Bind the Time Picker - defaultTime: False allows for null Times...
+      $(time_input).timepicker({defaultTime: false, disableFocus: true})
           .on('changeTime.timepicker', function(e) { 
                 react_element.getValue();
                 react_element.handleChange(e);
@@ -1489,7 +1489,6 @@ DateRangeWidget = React.createClass({
 
         var time_input = $(this.refs.time_input.getDOMNode());
         $(time_input).timepicker('showWidget');
-
     },
 
     render: function() { 
