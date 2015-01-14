@@ -134,9 +134,6 @@ class RestField(object):
         self.output_only = output_only
         self.required = required # Required on input
 
-        import logging
-        logging.error(self.prop)
-
         if isinstance(self.prop, ndb.model.Property):
             self.key = self.key or self.prop._name
         elif isinstance(self, (ResourceUrlField, ResourceIdField)):
@@ -170,9 +167,6 @@ class RestField(object):
         Input a field to a dict value
         """
 
-        import logging
-        logging.warning(data);
-        
         value = data.get(self.key) # TODO: Need to figure out Required to exist vs. Not None
 
         if not value and self.required:
