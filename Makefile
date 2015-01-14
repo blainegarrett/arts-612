@@ -12,9 +12,10 @@ clean-pyc:
 
 install:
 	npm install
+	pwd
 	@echo "npm packages installed! Installing python packages..."
 	pip install -r requirements_dev.txt
-	linkenv $(PYTHON_SITE_PACKAGES_PATH) external
+	linkenv $(PYTHON_SITE_PACKAGES_PATH) app/external
 	@echo "Yay! Everything installed."
 
 unit:

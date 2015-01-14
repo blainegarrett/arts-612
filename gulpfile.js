@@ -7,12 +7,12 @@ var uglify = require('gulp-uglify');
 gulp.task('scripts', function() {
     // Single entry point to browserify
     
-    gulp.src('./public/src/main.js')
+    gulp.src('./app/public/src/main.js')
         .pipe(browserify({
             insertGlobals : true,
             debug: true
         }))
-        .pipe(gulp.dest('./public/build'))
+        .pipe(gulp.dest('./app/public/build'))
  
 });
 
@@ -24,33 +24,33 @@ gulp.task('enable-watch-mode', function(){
 
 gulp.task('browserify', watchify(function(watchify) {
     // Single entry point to browserify
-    return gulp.src('./public/src/main.js')
+    return gulp.src('./app/public/src/main.js')
         .pipe(watchify({
             watching : watching,
             insertGlobals : true,
             debug: true
         }))
-        .pipe(gulp.dest('./public/build'))
+        .pipe(gulp.dest('./app/public/build'))
  
 }));
 
 gulp.task('browserify-min', function() {
     // Single entry point to browserify
-    return gulp.src('./public/src/main.js')
+    return gulp.src('./app/public/src/main.js')
         .pipe(browserify())
         .pipe(uglify())
-        .pipe(gulp.dest('./public/build'))
+        .pipe(gulp.dest('./app/public/build'))
  
 });
 
 gulp.task('admin-browserify', watchify(function(watchify) {
     // Single entry point to browserify
-    return gulp.src('./static/admin/js/react/src/main.js')
+    return gulp.src('./app/static/admin/js/react/src/main.js')
         .pipe(watchify({
             watching : watching,
             insertGlobals : true,
             debug: true
         }))
-        .pipe(gulp.dest('./static/admin/js/react/build'))
+        .pipe(gulp.dest('./app/static/admin/js/react/build'))
  
 }));
