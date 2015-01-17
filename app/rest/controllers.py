@@ -8,6 +8,7 @@ import logging
 
 from rest import errors
 from rest.resource import Resource
+from rest.params import ResourceParams
 
 
 class RestHandlerBase(webapp2.RequestHandler):
@@ -15,7 +16,7 @@ class RestHandlerBase(webapp2.RequestHandler):
     Base Class for All Rest Endpoints
     """
 
-    data = {} # Payload data
+    data = {} # Payload data - I think we can remove this line?
 
     def validate_payload(self): # aka Form.clean
         """
@@ -26,11 +27,22 @@ class RestHandlerBase(webapp2.RequestHandler):
         rules = self.get_rules()
         self.cleaned_data = Resource(None, rules).from_dict(self.data)
 
+    def validate_params(self):
+        """
+        """
+        param_schema = self.get_param_schema()
+        self.cleaned_params = ResourceParams(param_schema).from_dict(self.params)
+
     def dispatch(self):
         """
         Dispatcher for checking various things
         """
-
+        
+        self.data = {}
+        self.cleaned_data = {}
+        self.params = {}
+        self.cleaned_params = {}
+ 
         # Process Request Payload
 
         # Convert: body into native format
@@ -40,6 +52,12 @@ class RestHandlerBase(webapp2.RequestHandler):
             elif 'multipart/form-data' in self.request.headers['Content-Type']:
                 self.data = self.request.POST.mixed()
                 logging.error(self.data)
+        
+        # Query parameters
+        self.params = self.request.GET
+        
+        self.validate_params()
+        
 
         try:
             super(RestHandlerBase, self).dispatch()

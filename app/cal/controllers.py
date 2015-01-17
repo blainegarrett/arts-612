@@ -224,6 +224,16 @@ class EventsApiHandler(RestHandlerBase):
     Main Handler for Events Endpoint
     """
 
+    def get_param_schema(self):
+        import voluptuous
+
+        schema = voluptuous.Schema({
+            'fish' : voluptuous.coerce(int)
+        })
+        
+        
+        return schema
+
     def get_rules(self):
         return REST_RULES
 
