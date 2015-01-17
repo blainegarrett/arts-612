@@ -46,12 +46,23 @@ def get_event_by_slug(slug):
     return event
 
 
-def get_events():
-    # Currently used to populate the admin page...
+def get_events(cursor=None, limit=20):
+    """
+    Fetch a list of events doing a ndb query (vs. search api)
 
-    events = Event.query().fetch(1000)
+    Currently used to populate the admin page...
+    
+    :raises BadRequestError: If cursor is invalid
+    """
+    
+    if not limit:
+        limit = 20
+
+    q = Event.query()
+
+    events, cursor, more = q.fetch_page(limit, start_cursor=cursor)
     bulk_dereference_venues(events)
-    return events
+    return events, cursor, more
 
 
 def tonight(category=None, limit=5):

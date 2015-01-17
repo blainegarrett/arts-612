@@ -2,6 +2,7 @@
 
 # Each Date record will have its own search document
 
+from rest.params import coerce_to_cursor
 from google.appengine.api import memcache
 from google.appengine.ext import ndb
 from pytz import timezone
@@ -228,7 +229,8 @@ class EventsApiHandler(RestHandlerBase):
         import voluptuous
 
         schema = voluptuous.Schema({
-            'fish' : voluptuous.coerce(int)
+            'limit' : voluptuous.Coerce(int),
+            'cursor': coerce_to_cursor
         })
         
         
@@ -276,15 +278,15 @@ class EventsApiHandler(RestHandlerBase):
 
         cash_key = 'testing_events_cache'
         cached_events = memcache.get(cash_key)
-        if cached_events is not None:
+        if False and cached_events is not None:
             results = cached_events
         else:
-            events = events_api.get_events()
+            events, cursor, more = events_api.get_events(cursor=self.cleaned_params.get('cursor', None), limit=self.cleaned_params.get('limit', None))
             for event in events:
                 results.append(create_resource_from_entity(event))
             memcache.add(cash_key, results, 60)
 
-        self.serve_success(results)
+        self.serve_success(results, {'cursor': cursor.urlsafe(), 'more': more})
 
 
 

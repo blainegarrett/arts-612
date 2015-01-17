@@ -16,7 +16,20 @@ class RestHandlerBase(webapp2.RequestHandler):
     Base Class for All Rest Endpoints
     """
 
-    data = {} # Payload data - I think we can remove this line?
+    def get_param_schema(self):
+        """
+        If you want query params, you must implement this
+        """
+
+        return {}
+
+    def validate_params(self):
+        """
+        Run Validation on query params
+        """
+
+        param_schema = self.get_param_schema()
+        self.cleaned_params = ResourceParams(param_schema).from_dict(self.params)
 
     def validate_payload(self): # aka Form.clean
         """
@@ -27,40 +40,33 @@ class RestHandlerBase(webapp2.RequestHandler):
         rules = self.get_rules()
         self.cleaned_data = Resource(None, rules).from_dict(self.data)
 
-    def validate_params(self):
-        """
-        """
-        param_schema = self.get_param_schema()
-        self.cleaned_params = ResourceParams(param_schema).from_dict(self.params)
-
     def dispatch(self):
         """
         Dispatcher for checking various things
         """
-        
-        self.data = {}
-        self.cleaned_data = {}
-        self.params = {}
-        self.cleaned_params = {}
- 
-        # Process Request Payload
-
-        # Convert: body into native format
-        if len(self.request.body) > 0:
-            if 'application/json' in self.request.headers['Content-Type']:
-                self.data = json.loads(self.request.body)
-            elif 'multipart/form-data' in self.request.headers['Content-Type']:
-                self.data = self.request.POST.mixed()
-                logging.error(self.data)
-        
-        # Query parameters
-        self.params = self.request.GET
-        
-        self.validate_params()
-        
-
         try:
+            self.data = {}
+            self.cleaned_data = {}
+            self.params = {}
+            self.cleaned_params = {}
+
+            # Process Request Payload
+
+            # Convert: body into native format
+            if len(self.request.body) > 0:
+                if 'application/json' in self.request.headers['Content-Type']:
+                    self.data = json.loads(self.request.body)
+                elif 'multipart/form-data' in self.request.headers['Content-Type']:
+                    self.data = self.request.POST.mixed()
+                    logging.error(self.data)
+
+            # Query parameters
+            self.params = self.request.GET.mixed()
+            self.validate_params()
+
+            # Attempt to run handler
             super(RestHandlerBase, self).dispatch()
+
         except errors.MethodNotAllowed, e:
             self.serve_error(e, status=405)
         except Exception, e:
@@ -105,11 +111,11 @@ class RestHandlerBase(webapp2.RequestHandler):
             raise errors.MethodNotAllowed('Method Not Allowed.')
         self._get(*args, **kwargs)
 
-    def serve_success(self, result):
-        self.serve_response(200, result)
+    def serve_success(self, result, extra_fields={}):
+        self.serve_response(200, result, extra_fields=extra_fields)
 
     def serve_404(self, msg='Page Not Found'):
-        self.serve_response(404, [], msg)
+        self.serve_response(404, [], messages=msg)
 
     def serve_error(self, exception, status=500):
         # TODO: Pass in exception stack
@@ -117,10 +123,10 @@ class RestHandlerBase(webapp2.RequestHandler):
         exc_type, exc_value, exc_traceback = sys.exc_info()
         formatted_lines = traceback.format_exc().splitlines()
 
-        self.serve_response(status, formatted_lines, [str(exception)])
+        self.serve_response(status, formatted_lines, messages=[str(exception)])
         logging.exception(exception)
 
-    def serve_response(self, status, result, messages=None):
+    def serve_response(self, status, result, messages=None, extra_fields={}):
         """
         Serve the response
         """
@@ -129,7 +135,9 @@ class RestHandlerBase(webapp2.RequestHandler):
             messages = [messages]
 
 
-        payload = {'status': status, 'results': result, 'messages': messages}
+        # TODO: Validate that extra_fields doesn't contain bad props
+        payload = extra_fields
+        payload.update({'status': status, 'results': result, 'messages': messages})
 
         self.response.set_status(status)
         self.response.headers['Content-Type'] = 'application/json'
