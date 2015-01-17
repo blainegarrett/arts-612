@@ -80,8 +80,7 @@ def tonight(category=None, limit=5):
 def upcoming_events(limit=5):
     # end is greater than this morning with category = reception and venue_category
 
-    today = datetime.datetime.now()
-    today = timezone('US/Central').localize(today)
+    today = datetime.datetime.now(timezone('US/Central'))
     today = today.replace(hour=3, minute=0, second=0)
 
     #querystring = 'end >= %s AND (category: %s OR category: event)' % (unix_time(end), )
