@@ -4,7 +4,6 @@ PYTHON_SITE_PACKAGES_PATH := \
 help:
 	@echo "TODO: Write the install help"
 
-
 clean-pyc:
 	find . -name '*.pyc' -exec rm -f {} +
 	find . -name '*.pyo' -exec rm -f {} +
@@ -18,8 +17,11 @@ install:
 	linkenv $(PYTHON_SITE_PACKAGES_PATH) app/external
 	@echo "Yay! Everything installed."
 
+
 unit:
-	nosetests --cover-package=modules,rest -vs --without-sandbox --with-gae --with-yanc --with-xunit --xunit-file=unit_results.xml --nologcapture --verbosity=3 --cover-html --logging-level=ERROR --with-coverage --with-yanc tests
+	nosetests -sv --with-gae --gae-application=app --with-yanc --with-coverage  --cover-package=app --cover-eras
+
+
 
 client-dev:
 	# Builds the Phase 2 client 
