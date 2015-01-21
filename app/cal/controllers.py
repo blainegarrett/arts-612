@@ -1,7 +1,7 @@
 # Events Module Controllers
 
 # Each Date record will have its own search document
-
+import voluptuous
 from rest.params import coerce_to_cursor
 from google.appengine.api import memcache
 from google.appengine.ext import ndb
@@ -17,7 +17,7 @@ from rest.resource import RestField, SlugField, ResourceIdField, ResourceUrlFiel
 from modules.events.internal import api as events_api
 from modules.events.internal.models import Event
 
-from modules.events.constants import UPCOMING_CACHE_KEY, NOWSHOWING_CACHE_KEY
+from modules.events.constants import UPCOMING_CACHE_KEY, NOWSHOWING_CACHE_KEY, CATEGORY
 
 from venues.controllers import create_resource_from_entity as v_resource
 from modules.venues.internal.api import get_venue_by_slug
@@ -170,10 +170,43 @@ class EventDetailApiHandler(RestHandlerBase):
         result = create_resource_from_entity(e)
         self.serve_success(result)
 
+def coerce_to_category(val):
+    """
+    """
+    # TODO: Validate that category is set on CATEGORY
+    #    val.upper() is pretty lame...
+
+    cats = val.split(',')
+    return_cats = []
+    for cat in cats:
+        cat = cat.strip()
+
+        if not hasattr(CATEGORY, cat.upper()):
+            raise voluptuous.Invalid('Invalid filter value for category filter "%s" in "%s"' % (cat, val))
+        
+        return_cats.append(cat)
+
+    return return_cats
+
+
+def coerce_to_date(val):
+    return convert_rest_dt_to_datetime(val)
+
 
 class EventsUpcomingHandler(RestHandlerBase):
     """
     """
+
+    def get_param_schema(self):
+        return {
+            'limit' : voluptuous.Coerce(int),
+            'cursor': coerce_to_cursor,
+            'sort': voluptuous.Coerce(str),
+            'category':  coerce_to_category,
+            'start': coerce_to_date,
+            'end': coerce_to_date,
+            'venue_slug': voluptuous.Coerce(str),
+        }
 
     def _get(self):
         """
@@ -183,11 +216,29 @@ class EventsUpcomingHandler(RestHandlerBase):
         results = []
         cached_events = memcache.get(UPCOMING_CACHE_KEY)
 
-        if cached_events is not None:
+        if False and cached_events is not None:
             results = cached_events
         else:
+
             logging.warning('Upcoming Events were not cached. Querying for new list.')
-            events = events_api.upcoming_events()
+            #events = events_api.upcoming_events(limit=self.cleaned_params.get('limit', None))
+            
+            today = datetime.datetime.now(timezone('US/Central'))
+            today = today.replace(hour=3, minute=0, second=0)
+
+            #querystring = 'end >= %s AND (category: %s OR category: event)' % (unix_time(end), )
+            end = today
+
+            params = {
+                'limit': self.cleaned_params.get('limit', None),
+                'end':self.cleaned_params.get('end', None),
+                'start':self.cleaned_params.get('start', None),
+                'category': self.cleaned_params.get('category', None), # ['performance', 'reception', 'sale'],
+                'sort': self.cleaned_params.get('sort', 'start'),
+                'venue_slug': self.cleaned_params.get('venue_slug', None)
+            }
+            
+            events = events_api.generic_search(**params)
 
             for event in events:
                 results.append(create_resource_from_entity(event))
@@ -202,16 +253,16 @@ class EventsNowShowingHandler(RestHandlerBase):
 
     def _get(self):
         """
-        Temp handler for upcoming events
+        Temp handler for Now Showing events
         """
 
         results = []
         cached_events = memcache.get(NOWSHOWING_CACHE_KEY)
-        if cached_events is not None:
+        if False and cached_events is not None:
             results = cached_events
         else:
             logging.warning('Nowshowing Events were not cached. Querying for new list.')
-            events = events_api.now_showing()
+            events = events_api.now_showing(limit=self.cleaned_params.get('limit', None))
 
             for event in events:
                 results.append(create_resource_from_entity(event))
@@ -220,21 +271,13 @@ class EventsNowShowingHandler(RestHandlerBase):
         self.serve_success(results)
 
 
+
 class EventsApiHandler(RestHandlerBase):
     """
     Main Handler for Events Endpoint
     """
 
-    def get_param_schema(self):
-        import voluptuous
 
-        schema = voluptuous.Schema({
-            'limit' : voluptuous.Coerce(int),
-            'cursor': coerce_to_cursor
-        })
-        
-        
-        return schema
 
     def get_rules(self):
         return REST_RULES
@@ -284,9 +327,11 @@ class EventsApiHandler(RestHandlerBase):
             events, cursor, more = events_api.get_events(cursor=self.cleaned_params.get('cursor', None), limit=self.cleaned_params.get('limit', None))
             for event in events:
                 results.append(create_resource_from_entity(event))
+            if cursor:
+                cursor = cursor.urlsafe()
             memcache.add(cash_key, results, 60)
 
-        self.serve_success(results, {'cursor': cursor.urlsafe(), 'more': more})
+        self.serve_success(results, {'cursor': cursor, 'more': more})
 
 
 

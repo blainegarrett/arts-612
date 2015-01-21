@@ -1796,7 +1796,7 @@ AutoCompleteWidget = React.createClass({
     mixins: [BaseWidgetMixin],
 
     addState: function(state) {
-        state['choices'] = [['fart', 'fart'], ['goat', 'goat']]
+        state['choices'] = []
         return state;
     },
 
@@ -1816,6 +1816,9 @@ AutoCompleteWidget = React.createClass({
 
     componentDidMount: function() {
         // TODO: This isn't working yet...
+        // TODO: This needs to be unbound in componentDidUnmount
+
+        var rc = this;
 
       $(this.getDOMNode()).typeahead(null,
       {
@@ -1841,9 +1844,13 @@ AutoCompleteWidget = React.createClass({
 
             });
         }
+     }).bind('typeahead:selected', function(e) {
+        /* We have to bind the jquery handler event for the selection to set the state of input */
+         rc.handleChange(e);
      });
-    }
 
+     // end of componentDidMount
+    }
 });
 
 module.exports = AutoCompleteWidget;

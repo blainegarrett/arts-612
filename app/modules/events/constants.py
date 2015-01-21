@@ -8,6 +8,8 @@ EVENT_SEARCH_INDEX = 'events_index'
 UPCOMING_CACHE_KEY = 'upcoming_rest_cache'
 NOWSHOWING_CACHE_KEY = 'nowshowing_rest_cache'
 
+QUERY_LIMIT = 25
+
 class CATEGORY(object):
     """
     Event Date Category

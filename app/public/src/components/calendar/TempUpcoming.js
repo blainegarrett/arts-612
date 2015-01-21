@@ -128,7 +128,12 @@ var TempUpcoming = React.createClass({
     mixins: [TempEventsListMixin],
 
     getInitialState: function(){
-        return {ed_filter: 'timed', 'col_name': 'OPENINGS & EVENTS', event_data: [], 'resource_url': '/api/events/upcoming'};
+        return {
+            ed_filter: 'timed',
+            col_name: 'OPENINGS & EVENTS',
+            event_data: [], 
+            resource_url: '/api/events/upcoming?sort=start&category=performance,reception,sale&end=2015-01-19T09:00:00Z'
+        };
     },
 
     render: function () {

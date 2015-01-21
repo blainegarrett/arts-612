@@ -15,6 +15,7 @@ from pytz import timezone
 from google.appengine.api import search
 from google.appengine.ext import ndb
 
+from modules.events.constants import QUERY_LIMIT
 from modules.events.constants import EVENT_SEARCH_INDEX, CATEGORY
 from modules.venues.internal import api as venue_api
 
@@ -144,10 +145,12 @@ def build_index(event):
     return return_documents
 
 
-def simple_search(querystring=None, start=None, end=None, category=None, limit=100, sort=None):
+def simple_search(querystring=None, start=None, end=None, category=None, venue_slug=None, limit=100, sort=None):
     """
     TODO: "term", "near", "by type", "now" and any combo
     """
+
+    logging.warning([start, end])
 
     if not querystring:
         querystring = ''
@@ -161,6 +164,11 @@ def simple_search(querystring=None, start=None, end=None, category=None, limit=1
         if querystring:
             querystring += ' AND '
         querystring += 'end >= %s' % unix_time(end)
+
+    if venue_slug:
+        if querystring:
+            querystring += ' AND '
+        querystring += ' venue_slug: %s' % venue_slug
 
     if category:
         if querystring:

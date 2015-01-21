@@ -23,6 +23,8 @@ BaseField  = {
 
         var onChangeCallback = this.props.onChangeCallback;
 
+        console.log(onChangeCallback);
+
         return {
             'onChangeCallback': onChangeCallback,
             'label': label,

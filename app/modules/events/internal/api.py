@@ -10,6 +10,7 @@ from modules.utils import get_entity_key_by_keystr
 from modules.events.internal.models import Event, EventDate
 from modules.events.internal import search as event_search
 from modules.events.constants import EVENT_KIND
+from modules.events.constants import QUERY_LIMIT
 from modules.events.constants import CATEGORY, UPCOMING_CACHE_KEY, NOWSHOWING_CACHE_KEY
 from modules.venues.internal import api as venue_api
 
@@ -46,7 +47,7 @@ def get_event_by_slug(slug):
     return event
 
 
-def get_events(cursor=None, limit=20):
+def get_events(cursor=None, limit=QUERY_LIMIT):
     """
     Fetch a list of events doing a ndb query (vs. search api)
 
@@ -56,7 +57,7 @@ def get_events(cursor=None, limit=20):
     """
     
     if not limit:
-        limit = 20
+        limit = QUERY_LIMIT
 
     q = Event.query()
 
@@ -65,7 +66,11 @@ def get_events(cursor=None, limit=20):
     return events, cursor, more
 
 
-def tonight(category=None, limit=5):
+def generic_search(**kwargs):
+    return search_helper(**kwargs)
+
+
+def tonight(category=None, limit=QUERY_LIMIT):
     """
     TODO: Use `today`
     """
@@ -74,10 +79,10 @@ def tonight(category=None, limit=5):
     end = dt # 3pm
     start = end + datetime.timedelta(hours=12) # 3am
 
-    return search_helper(start=start, end=end, category=category, sort='start')
+    return search_helper(start=start, end=end, category=category, sort='start', iimit=limit)
 
 
-def upcoming_events(limit=5):
+def upcoming_events(limit=QUERY_LIMIT):
     # end is greater than this morning with category = reception and venue_category
 
     today = datetime.datetime.now(timezone('US/Central'))
@@ -85,27 +90,27 @@ def upcoming_events(limit=5):
 
     #querystring = 'end >= %s AND (category: %s OR category: event)' % (unix_time(end), )
     end = today
-    return search_helper(end=end, category=[CATEGORY.PERFORMANCE, CATEGORY.RECEPTION, CATEGORY.SALE], sort='start')
+    return search_helper(end=end, category=[CATEGORY.PERFORMANCE, CATEGORY.RECEPTION, CATEGORY.SALE], sort='start', limit=limit)
 
 
-def now_showing():
+def now_showing(limit=QUERY_LIMIT):
     """
     Find all the events happening today (11pm UTC) - already started but haven't ended yet
     """
 
     today = datetime.datetime.now().replace(hour=0, minute=0, second=0, tzinfo=timezone('US/Central'))
     end = start = today
-    return search_helper(end=end, start=start, category=CATEGORY.ONGOING, sort='end')
+    return search_helper(end=end, start=start, category=CATEGORY.ONGOING, sort='end', limit=limit)
 
 
-def going_on_now(limit=5):
+def going_on_now(limit=QUERY_LIMIT):
     # Going on "Now" or during some other date
     start = datetime.datetime(year=2014, month=11, day=15, hour=18, minute=0)
     end = start
-    return search_helper(start=start, end=end, sort='end')
+    return search_helper(start=start, end=end, sort='end', limit=limit)
 
 
-def get_this_week():
+def get_this_week(limit=QUERY_LIMIT):
     #return upcoming_events()
     #return tonight(category='reception')
     #return tonight()
@@ -117,16 +122,19 @@ def get_this_week():
     start = end + datetime.timedelta(days=7)
 
     # "Tonight"
-    results = search_helper(start=start, end=end, category=[CATEGORY.ONGOING, CATEGORY.RECEPTION])
+    results = search_helper(start=start, end=end, category=[CATEGORY.ONGOING, CATEGORY.RECEPTION], limit=limit)
     return results
 
 
-def search_helper(start=None, end=None, category=None, sort=None, limit=1000):
+def search_helper(start=None, end=None, category=None, venue_slug=None, sort=None, limit=QUERY_LIMIT):
     """
     Helper method to perform search and populate items from datastore
     """
 
-    search_results = event_search.simple_search(start=start, end=end, category=category, sort=sort)
+    if not limit:
+        limit = QUERY_LIMIT
+
+    search_results = event_search.simple_search(start=start, end=end, venue_slug=venue_slug, category=category, sort=sort, limit=limit)
     events = event_search.get_events_from_event_search_docs(search_results['index_results'])
 
     bulk_dereference_venues(events)

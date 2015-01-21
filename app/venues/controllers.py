@@ -1,8 +1,11 @@
 """
 Rest API for Venues/Galleries
 """
+
 import logging
+import voluptuous
 from auth.decorators import rest_login_required
+
 
 from google.appengine.ext import ndb
 
@@ -62,11 +65,21 @@ class GalleriesApiHandler(GalleryApiHandlerBase):
     Main Handler for Galleries Endpoint
     """
 
+
+    def get_param_schema(self):
+        return {
+            #'limit' : voluptuous.Coerce(int),
+            #'cursor': coerce_to_cursor,
+            #'sort': voluptuous.Coerce(str),
+            'get_by_slug': voluptuous.Coerce(str),
+            'q': voluptuous.Coerce(str)
+        }
+
     @rest_login_required
     def _get(self):
 
         # Check if there is a query filter, etc
-        get_by_slug = self.request.get('get_by_slug', None)
+        get_by_slug = self.cleaned_params.get('get_by_slug', None)
         
         if get_by_slug:
             venue = venues_api.get_venue_by_slug(get_by_slug)
@@ -78,7 +91,7 @@ class GalleriesApiHandler(GalleryApiHandlerBase):
             self.serve_success(resource)
             return
 
-        q = self.request.get('q', None)
+        q = self.cleaned_params.get('q', None)
 
 
         # Um.. is this dublicated???

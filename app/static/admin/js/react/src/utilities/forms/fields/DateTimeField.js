@@ -21,15 +21,16 @@ DateTimeField = React.createClass({
             //field_value = 'zebradicks';
         }
 
-        if (!field_value) {
-            return "";
+        field_value = field_value.trim();
+
+        if (!field_value || field_value == '') {
+            return null;
         }
+
+
 
         date_obj = moment(field_value); // string is local format
         date_obj.local().utc() //2014-11-15T01:00:00Z
-
-        console.log('---------------xx-x---')
-        console.log(date_obj)
         
         return date_obj.format('YYYY-MM-DD[T]HH:mm:ss[Z]')
 
@@ -37,9 +38,12 @@ DateTimeField = React.createClass({
 
     fromResourceX: function() {
         // convert to local time for display...
+        if (this.state.val != '') {
+            var date_obj = moment(this.state.val);
+            return date_obj.format('lll');
+        }
 
-        var date_obj = moment(this.state.val);
-        return date_obj.format('lll');
+        return ''
     },    
 
 });

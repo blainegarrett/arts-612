@@ -7,13 +7,14 @@ SlugWidget = React.createClass({
 
     addState: function(state) {
         /* Add/Update state props as needed */
+
         return state;
     },
 
     render: function () {
 
         var input = <div className="">
-            http://mplsart.com/galleries/
+            { this.props.field.props.url_root } 
             <input value={this.state.val} ref="input" className="form-control slug-field" onChange={this.handleChange} onBlur={this.onBlur} onFocus={this.onFocus} />
             </div>;
         

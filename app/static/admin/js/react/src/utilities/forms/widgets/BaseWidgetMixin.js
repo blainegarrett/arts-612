@@ -37,7 +37,7 @@ BaseWidgetMixin = {
         return this.refs.input.getDOMNode().value;
      },
       handleChange: function(event) {
-          
+          /* */
           if (typeof(this.state.onChangeCallback) == 'function') {
               this.state.onChangeCallback(event);
           }

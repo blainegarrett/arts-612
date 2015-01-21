@@ -5,6 +5,7 @@ var DateTimeField = require('./../utilities/forms/fields/DateTimeField');
 //var CheckboxWidget = require('./../utilities/forms/widgets/CheckboxWidget');
 var DateRangeWidget = require('./../utilities/forms/widgets/DateRangeWidget');
 var AutoCompleteWidget = require('./../utilities/forms/widgets/AutoCompleteWidget');
+var SlugWidget = require('./../utilities/forms/widgets/SlugWidget');
 
 
 EventDateForm =  React.createClass({
@@ -144,6 +145,25 @@ EventsForm = React.createClass({
             data: {'results': {}}
         }
     },
+    sluggable_helper:  function(event) {
+        // If it is a new item, update the slug prop
+        // TODO: Make this more general and refactor into a helper
+
+        if (this.state.is_edit ){
+            return;
+        }
+
+        var title_value = event.target.value;
+        
+        title_value = title_value.toLowerCase()
+            .trim()
+            .replace(/[^\w ]+/g, ' ')
+            .trim()
+            .replace(/ +/g, '-');
+
+        this.refs['field.slug'].setValue(title_value);
+
+    },
     submitHandler: function(e) {
         var method;
 
@@ -214,10 +234,15 @@ EventsForm = React.createClass({
 
         var event_date_forms = '';
         
+        
+        console.log(this.sluggable_helper);
+        
         return <form role="form" className="form-horizontal" action="#" onSubmit={this.submitHandler}>
             { errors }
-          <TextField id="name"  ref="field.name" val={this.state.data.results.name } form={this} placeholder="Enter Venue Name"/>
-          <TextField id="slug" form={this}  ref="field.slug"  val={this.state.data.results.slug } />
+
+          <TextField id="name"  ref="field.name" val={this.state.data.results.name } form={this} placeholder="Enter Event Name" onChangeCallback={this.sluggable_helper} />
+          <SlugField id="slug" form={this}  ref="field.slug"  val={this.state.data.results.slug } widget={SlugWidget} url_root="http://mplsart.com/events/" />
+
           <TextField id="url" form={this} ref="field.url"  val={this.state.data.results.url } />
           <EventDateFormsInterface id="event_dates" form={this}  ref="field.event_dates"  val={this.state.data.results.event_dates } />
 

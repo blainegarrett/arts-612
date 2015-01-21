@@ -85,6 +85,7 @@ VenuesForm = React.createClass({
     },
     sluggable_helper:  function(event) {
         // If it is a new item, update the slug prop
+        // TODO: Make this more general and refactor into a helper
 
         if (this.state.is_edit ){
             return;
@@ -125,7 +126,7 @@ VenuesForm = React.createClass({
         return <form role="form" className="form-horizontal" action="#" onSubmit={this.submitHandler}>
             { errors }
           <TextField id="name"  ref="field.name" val={this.state.data.results.name } form={this} placeholder="Enter Venue Name" onChangeCallback={this.sluggable_helper} />
-          <SlugField id="slug" form={this}  ref="field.slug"  val={this.state.data.results.slug } widget={SlugWidget} />
+          <SlugField id="slug" form={this}  ref="field.slug"  val={this.state.data.results.slug } widget={SlugWidget} url_root="http://mplsart.com/galleries/"/>
           <ChoiceField id="category" form={this} ref="field.category"  val={this.state.data.results.category } widget={CheckboxWidget} choices={category_choices} />
           <TextField id="address" form={this}  ref="field.address"  val={this.state.data.results.address } />
           <TextField id="address2" form={this}  ref="field.address2"  val={this.state.data.results.address2 } />

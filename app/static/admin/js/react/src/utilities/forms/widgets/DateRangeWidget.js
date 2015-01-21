@@ -1480,9 +1480,9 @@ DateRangeWidget = React.createClass({
       }); 
 
     },
-    show_date_picker: function() {
+    show_date_picker: function(e) {
         var date_input = $(this.refs.date_input.getDOMNode());
-        $(date_input).data("DateTimePicker").show();
+        $(date_input).data("DateTimePicker").show(e);
 
     },
     show_time_picker: function() {
@@ -1498,21 +1498,32 @@ DateRangeWidget = React.createClass({
         var classes = this.state.classes || "";
         var placeholder = this.state.placeholder || "";
         var val = this.state.val;
-        var date_type = this.state.form.refs['field.type'].state.val;
+        var date_type = null
+        
+        // Todo: This really forces this to be bound to the event creation form... make more generic
+        if (this.state.form.refs['field.type']) {
+            date_type = this.state.form.refs['field.type'].state.val;
+        }
 
         date_obj = moment(val);
 
-        //var show_time_picker = true;
-        var time_val = date_obj.format('h:mm A');
-        var date_val = date_obj.format('YYYY-MM-DD');
+        var time_val = null;
+        var date_val = null;
 
-        if ((date_type == 'reoccurring' || date_type == '') && time_val == '12:00 AM') {
-            //show_time_picker = false;
-            time_val = '';
+        if (val != '') {
+
+            //var show_time_picker = true;
+            var time_val = date_obj.format('h:mm A');
+            var date_val = date_obj.format('YYYY-MM-DD');
+
+            if ((date_type == 'reoccurring' || date_type == '') && time_val == '12:00 AM') {
+                //show_time_picker = false;
+                time_val = '';
+            }
         }
 
         return <div className="form-group has-feedback">
-                <div className="col-sm-3 input-append date">
+                <div className="col-sm-6 input-append date">
                     <input type="text" className={ 'form-control has-success has-feedback ' + classes } 
                         id={'id_' +  id } placeholder={ placeholder } value={ date_val } 
                         onChange={function(e){alert('hi'); }} 
@@ -1521,11 +1532,12 @@ DateRangeWidget = React.createClass({
                     <span className="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true" onClick={this.show_date_picker}></span>
                 </div>
 
-                <div className="col-sm-3 input-append bootstrap-timepicker">
+                <div className="col-sm-6 input-append bootstrap-timepicker">
                     <input type="text" className={ 'form-control ' + classes } id={'id_' +  id } value={ time_val } onChange={this.handleChange} onBlur={this.onBlur} onFocus={this.onFocus} ref="time_input" placeholder="Add Time?" />
                 <span className="glyphicon glyphicon-time form-control-feedback" aria-hidden="true" onClick={this.show_time_picker}></span>
                 </div>
-                <div className="col-sm-6 input-append bootstrap-timepicker">
+                
+                <div className="col-sm-12 input-append bootstrap-timepicker">
                 ({ date_val } { time_val })
                 </div>
             </div>;

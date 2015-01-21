@@ -12,6 +12,7 @@ var VenuesEditPage = require('./pages/VenuesEditPage');
 var EventsMainPage = require('./pages/EventsMainPage');
 var EventsCreatePage = require('./pages/EventsCreatePage');
 var EventsEditPage = require('./pages/EventsEditPage');
+var EventsSearchDebugger = require('./pages/EventsSearchDebugger')
 
 ReactRouter.createRoute('/admin', function (params) {
     React.unmountComponentAtNode( document.getElementById('main_content'));
@@ -29,6 +30,8 @@ ReactRouter.createRoute('/admin/venues/create', function (params) {
     React.unmountComponentAtNode( document.getElementById('main_content'));
     React.render(<VenuesCreatePage  />, document.getElementById('main_content'));    
 });
+
+
 ReactRouter.createRoute('/admin/venues/{keystr}/edit', function (params) {
     React.unmountComponentAtNode( document.getElementById('main_content'));
     React.render(<VenuesEditPage keystr={params.keystr} />, document.getElementById('main_content'));    
@@ -40,6 +43,14 @@ ReactRouter.createRoute('/admin/events', function (params) {
     React.unmountComponentAtNode( document.getElementById('main_content'));
     React.render(<EventsMainPage />, document.getElementById('main_content'));    
 });
+
+
+ReactRouter.createRoute('/admin/events/debugger', function (params) {
+    React.unmountComponentAtNode( document.getElementById('main_content'));
+    React.render(<EventsSearchDebugger keystr={params.keystr} />, document.getElementById('main_content'));    
+});
+
+
 ReactRouter.createRoute('/admin/events/create', function (params) {
     React.unmountComponentAtNode( document.getElementById('main_content'));
     React.render(<EventsCreatePage  />, document.getElementById('main_content'));    
