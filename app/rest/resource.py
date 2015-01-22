@@ -1,6 +1,7 @@
 """
 REST Resource and Feild Types
-Note: This is designed to work similar django Forms
+
+Note: This is designed to work similar django Forms - try to keep it that way
 """
 
 from google.appengine.ext import ndb
@@ -9,6 +10,7 @@ import logging
 
 
 NON_FIELD_ERRORS = '__all__'
+VALID_RESORCE_TYPES = (ndb.Model, dict) # None: is also allowed
 
 
 class RestValueException(Exception):
@@ -24,6 +26,19 @@ class RestValueException(Exception):
     def __str__(self):
         return 'Invalid value "%s" for "prop" %s. Error: %s' % (self.value, self.field.key,
                                                                 self.error)
+
+class RequiredFieldError(Exception):
+    pass
+
+
+class UnknownFieldError(Exception):
+    pass
+
+class UnsupportedFieldProp(Exception):
+    pass
+
+class OutputOnlyError(Exception):
+    pass
 
 
 class ResourceList(object):
@@ -41,29 +56,35 @@ class Resource(object):
     def __init__(self, obj, fields):
         """
         :param obj:
-            Instance of ndb.Model or None when attempting to validate a resource payload
+            Instance of ndb.Model, dict or None when attempting to validate a resource payload
         """
 
-        # Make sure entities is a list
+        # Step 1: Make sure entities is a list
         if not obj:
             obj = None
 
-        if obj and not isinstance(obj, (ndb.Model, dict)):
-            raise TypeError('Resource requires a object of type ndb.Model. Received: %s' % obj)
+        #Step 2: Do some type checking
+        if obj and not isinstance(obj, VALID_RESORCE_TYPES):
+            err = 'Resource() requires a instance of %s or None. Received %s, %s.'
+            raise TypeError(err % (VALID_RESORCE_TYPES, type(obj), obj))
 
+        if not (isinstance(fields, list)):
+            err = 'Resource requires list. Received %s, %s.'
+            raise TypeError(err % (type(list), fields))
 
+        #Step 3:  Set params as instance properties
         self.obj = obj
         self.fields = fields
 
         self.errors = {}
-        #_errors
         self.cleaned_data = {}
 
     def from_dict(self, data):
         """
         Loads in a Rest Resource from a dictionary of a values
-
-        Validates it too
+        
+        TODO: Add validation at this level too
+        TODO: Throw OutputOnlyError if a field is output_only=True
         """
 
         # First validate that all input keys are allowed input fields
@@ -85,16 +106,16 @@ class Resource(object):
 
         for key in given_field_keys.difference(allowed_input_field_keys):
             # TODO: Collect these and present them as a single error dict
-            raise Exception('key "%s" is not an allowed input field for a resource.' % key)
+            raise UnknownFieldError('key "%s" is not an allowed input field for a resource.' % key)
 
         # Next validate that required keys are not abscent
         for key in required_input_field_keys.difference(given_field_keys):
             # TODO: Collect these and present them as a single error dict
-            raise Exception('key "%s" is a required input field for a resource.' % key)
+            raise RequiredFieldError('key "%s" is a required input field for a resource.' % key)
 
         #Next Validate the various properties
         for field in self.fields:
-            if not field.output_only:
+            if (not field.output_only) and field.key in data:
                 value = field.to_resource(data)
                 self.cleaned_data[field.key] = value
 
@@ -141,23 +162,31 @@ class RestField(object):
         elif isinstance(self.prop, basestring):
             self.key = self.prop
         else:
-            raise Exception('Rest Property not supported %s', prop)
+            raise UnsupportedFieldProp('Rest Property not supported %s', prop)
 
     def validate(self, value):
+        # TODO: I don't think this is in use yet...
+
         # TODO: Have this throw errors django forms style
         # TODO: This does not yet look at self.required
 
-        try:
-            is_valid = voluptuous.Schema(self.validator, required=True)(value)
-        except Exception, e:
-            raise RestValueException(self, value, e)
+        if self.validator:
+            try:
+                value = voluptuous.Schema(self.validator, required=self.required)(value)
+            except Exception, e:
+                raise RestValueException(self, value, e)
 
-        return is_valid
+        return value
 
     def from_resource(self, obj, field):
         """
         Default handler for properties
+        
+        TODO: Arg field should be self.key ?
+        TODO: Are from_resource and to_resource conceptually named the opposite?
+        TODO: Raise a uniform Error
         """
+
         if isinstance(obj, dict):
             return obj.get(field)
         return getattr(obj, field)
@@ -170,11 +199,14 @@ class RestField(object):
         value = data.get(self.key) # TODO: Need to figure out Required to exist vs. Not None
 
         if not value and self.required:
-            logging.warning(bool(value));
-            raise Exception('Field "%s" is a required input field.' % self.key)
+            raise RequiredFieldError('Field "%s" is a required input field.' % self.key)
 
         if value and self.output_only:
-            raise Exception('Field "%s" is not an allowed input field.' % self.key)
+            raise OutputOnlyError('Field "%s" is not an allowed input field.' % self.key)
+        
+        # Validate Type
+        value = self.validate(value)
+        
         return value
 
 

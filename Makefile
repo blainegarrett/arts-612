@@ -19,7 +19,11 @@ install:
 
 
 unit:
+	nosetests -sv -a is_unit --with-gae --gae-application=app --with-yanc
+
+integrations:
 	nosetests -sv --with-gae --gae-application=app --with-yanc
+
 
 coverage:
 	nosetests -sv --with-gae --gae-application=app --with-yanc --with-coverage  --cover-package=app --cover-erase

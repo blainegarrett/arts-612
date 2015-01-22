@@ -1,17 +1,15 @@
+"""
+Test Suite for mpls server code
+"""
+
 import unittest
-import logging
-import jinja2
 import os
 import sys
 
-# Add the external libs
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../app/'))
-
-
 from google.appengine.ext import testbed
 
-#from modules.events.internal.api import Event
-#import rest
+# Add the external libs
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../app/'))
 
 
 class BaseCase(unittest.TestCase):
