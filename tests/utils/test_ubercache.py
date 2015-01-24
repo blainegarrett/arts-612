@@ -1,5 +1,7 @@
 """
 Tests for uber cache module
+
+# TODO: Add Test for when memcache_miss and entity is expired
 """
 import datetime
 
@@ -11,9 +13,9 @@ from utils import ubercache
 from tests import BaseCase
 
 
-
 @patch('utils.ubercache.datetime')
 class TestUbercache(BaseCase):
+
     def test_fork(self, m_dt):
 
         m_dt.now.return_value = datetime.datetime(year=2015, month=1, day=1)
@@ -78,7 +80,7 @@ class TestUbercache(BaseCase):
         self.assertEqual(entity.expires, None)
         self.assertEqual(entity.category, []) # Categories
         self.assertEqual(entity.value, val) # Categories
-    
+
     def test_no_cached_value(self, m_dt):
         """
         Test Behavior when there is a memcache miss. Specifically test that memcache.set called
@@ -93,15 +95,15 @@ class TestUbercache(BaseCase):
         with patch('utils.ubercache.cache_set') as m_set:
             self.assertEqual(ubercache.cache_get('baseball'), val)
             m_set.assert_called_once_with('baseball', val, None, write_entity=False)
-    
+
     def test_delete(self, m_dt):
         val = 'some cool data'
         self.assertTrue(ubercache.cache_set('baseball', val, None, category=None))
-        
+
         self.assertEqual(ubercache.cache_get('baseball'), val)
         ubercache.cache_delete('baseball')
         self.assertEqual(ubercache.cache_get('baseball'), None)
-    
+
     def test_invalidate(self, m_dt):
         val = 'some cool data'
 
@@ -118,4 +120,3 @@ class TestUbercache(BaseCase):
         key = ndb.Key('MemcacheEntity', 'baseball') # Implicitly tests key
         entity = key.get()
         self.assertEqual(entity, None)
-    
