@@ -314,6 +314,6 @@ class SlugField(RestField):
     """
 
     def __init__(self, prop, **kwargs):
-        kwargs['validator'] = int
+        kwargs['validator'] = voluptuous.Coerce(str)
 
         super(SlugField, self).__init__(prop, **kwargs)

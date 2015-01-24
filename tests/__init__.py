@@ -16,6 +16,7 @@ class BaseCase(unittest.TestCase):
     """
     Base Unit Test Case
     """
+    is_unit = True
 
     def setUp(self):
         self.testbed = testbed.Testbed()
@@ -23,6 +24,7 @@ class BaseCase(unittest.TestCase):
 
         self.testbed.init_datastore_v3_stub()
         self.testbed.init_taskqueue_stub()
+        self.testbed.init_memcache_stub()
 
     def tearDown(self):
         self.testbed.deactivate()

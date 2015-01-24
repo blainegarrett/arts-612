@@ -1,5 +1,7 @@
 from voluptuous import Schema
 from google.appengine.datastore.datastore_query import Cursor
+import datetime
+from pytz import timezone
 
 class ResourceParams(object):
     def __init__(self, schema):
@@ -27,3 +29,20 @@ def coerce_to_cursor(val):
 
     cursor = Cursor(urlsafe=val)
     return cursor
+
+
+def coerce_to_datetime(dt):
+    """
+    Helper to convert a input datetime string to a UTC datetime
+    """
+
+    try:
+        fmt = '%Y-%m-%dT%H:%M:%SZ'
+        dt = datetime.datetime.strptime(dt, fmt)
+    except ValueError:
+        # Attempt full day method
+        fmt = '%Y-%m-%d'
+        dt = datetime.datetime.strptime(dt, fmt)
+
+    dt = timezone('UTC').localize(dt)
+    return dt #.replace(tzinfo=None)

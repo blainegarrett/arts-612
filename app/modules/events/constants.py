@@ -4,9 +4,7 @@ EVENT_KIND = 'Event'
 
 EVENT_SEARCH_INDEX = 'events_index'
 
-# Temp cache keys
-UPCOMING_CACHE_KEY = 'upcoming_rest_cache'
-NOWSHOWING_CACHE_KEY = 'nowshowing_rest_cache'
+UBERCACHE_CATEGORY = 'events'
 
 QUERY_LIMIT = 25
 

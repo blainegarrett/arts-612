@@ -1,5 +1,6 @@
 # Events Module Controllers
 
+
 # Each Date record will have its own search document
 import voluptuous
 from rest.params import coerce_to_cursor
@@ -10,103 +11,23 @@ import datetime
 import logging
 
 from auth.decorators import rest_login_required
+
 from rest.controllers import RestHandlerBase
+
 from rest.resource import Resource
 from rest.resource import RestField, SlugField, ResourceIdField, ResourceUrlField
+from rest.params import coerce_to_datetime
 
 from modules.events.internal import api as events_api
 from modules.events.internal.models import Event
-
-from modules.events.constants import UPCOMING_CACHE_KEY, NOWSHOWING_CACHE_KEY, CATEGORY
-
-from venues.controllers import create_resource_from_entity as v_resource
-from modules.venues.internal.api import get_venue_by_slug
+from modules.events.constants import CATEGORY
 
 from framework.controllers import MerkabahBaseController
 
+from cal.rest_helpers import EventDateField
+
+
 resource_url = 'http://localhost:8080/api/events/%s' #TODO: HRM?
-
-
-def convert_rest_dt_to_datetime(dt):
-    """
-    Helper to convert a input datetime string to a UTC datetime
-    """
-
-    try:
-        fmt = '%Y-%m-%dT%H:%M:%SZ'
-        dt = datetime.datetime.strptime(dt, fmt)
-    except ValueError:
-        # Attempt full day method
-        fmt = '%Y-%m-%d'
-        dt = datetime.datetime.strptime(dt, fmt)
-
-    dt = timezone('UTC').localize(dt)
-    return dt #.replace(tzinfo=None)
-
-
-class EventDateField(RestField):
-    """
-    Temporary workaround until we can get subfields working
-    """
-
-    def to_resource(self, data):
-        """
-        Until we get subfields figured out - manually validate the props
-        """
-
-        val = super(EventDateField, self).to_resource(data)
-
-        return_value = []
-        for event_date in val:
-            event_date_resource = {}
-
-            event_date_resource['start'] = convert_rest_dt_to_datetime(event_date['start'])
-            event_date_resource['end'] = convert_rest_dt_to_datetime(event_date['end'])
-
-            # Janky Validation
-            if (event_date_resource['end'] < event_date_resource['start']):
-                # Should be a rest validation form error...
-                raise Exception('End time cannot occur before start time')
-
-            event_date_resource['type'] = event_date['type']
-            event_date_resource['category'] = event_date['category']
-            event_date_resource['label'] = event_date['label']
-            event_date_resource['venue_slug'] = event_date['venue_slug']
-            return_value.append(event_date_resource)
-
-        return return_value
-
-    def from_resource(self, obj, field):
-        """
-        Outout a field to dic value
-        """
-
-        val = super(EventDateField, self).from_resource(obj, field)
-
-        return_value = []
-        for event_date in val:
-
-            # Resolve VenueResource
-            v = getattr(event_date, 'venue', None)
-            if not isinstance(v, Resource): # TODO: Should be Resource base class
-                v = get_venue_by_slug(event_date.venue_slug)
-                event_date.venue = v_resource(v)
-
-            event_date_resource = {}
-
-            event_date_resource['start'] = event_date.start.isoformat() + 'Z'
-            event_date_resource['end'] = event_date.end.isoformat() + 'Z'
-
-            event_date_resource['type'] = event_date.type
-            event_date_resource['category'] = event_date.category
-            event_date_resource['label'] = event_date.label
-            event_date_resource['venue_slug'] = event_date.venue_slug
-            event_date_resource['venue'] = event_date.venue
-
-            return_value.append(event_date_resource)
-
-        return return_value
-
 
 # verbosity vs. input vs. output
 
@@ -189,12 +110,9 @@ def coerce_to_category(val):
     return return_cats
 
 
-def coerce_to_date(val):
-    return convert_rest_dt_to_datetime(val)
-
-
 class EventsUpcomingHandler(RestHandlerBase):
     """
+
     """
 
     def get_param_schema(self):
@@ -203,8 +121,8 @@ class EventsUpcomingHandler(RestHandlerBase):
             'cursor': coerce_to_cursor,
             'sort': voluptuous.Coerce(str),
             'category':  coerce_to_category,
-            'start': coerce_to_date,
-            'end': coerce_to_date,
+            'start': coerce_to_datetime,
+            'end': coerce_to_datetime,
             'venue_slug': voluptuous.Coerce(str),
         }
 
@@ -213,36 +131,33 @@ class EventsUpcomingHandler(RestHandlerBase):
         Temp handler for upcoming events
         """
 
-        results = []
-        cached_events = memcache.get(UPCOMING_CACHE_KEY)
+        # This is temp code...
+        # TODO: Figure out something for defaults...
+        params = self.cleaned_params
+        params['sort'] = self.cleaned_params.get('sort', 'start')
 
-        if False and cached_events is not None:
+        # Serialize the params for cache key
+        from utils import ubercache
+        import json
+
+        d = params.items()
+
+        key = str(hash(json.dumps(self.params)))
+
+        cached_events = ubercache.cache_get(key)
+        if cached_events:
             results = cached_events
         else:
-
+            
             logging.warning('Upcoming Events were not cached. Querying for new list.')
-            #events = events_api.upcoming_events(limit=self.cleaned_params.get('limit', None))
-            
-            today = datetime.datetime.now(timezone('US/Central'))
-            today = today.replace(hour=3, minute=0, second=0)
 
-            #querystring = 'end >= %s AND (category: %s OR category: event)' % (unix_time(end), )
-            end = today
-
-            params = {
-                'limit': self.cleaned_params.get('limit', None),
-                'end':self.cleaned_params.get('end', None),
-                'start':self.cleaned_params.get('start', None),
-                'category': self.cleaned_params.get('category', None), # ['performance', 'reception', 'sale'],
-                'sort': self.cleaned_params.get('sort', 'start'),
-                'venue_slug': self.cleaned_params.get('venue_slug', None)
-            }
-            
+            results = []
             events = events_api.generic_search(**params)
 
             for event in events:
                 results.append(create_resource_from_entity(event))
-            memcache.add(UPCOMING_CACHE_KEY, results)
+
+            ubercache.cache_set(key, results, category='events')
 
         self.serve_success(results)
 

@@ -13,7 +13,6 @@ class TestObj(object):
 class RestBaseCase(BaseCase):
     """
     """
-    is_unit = True
 
 
 class ResourceTestCase(RestBaseCase):

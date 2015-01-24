@@ -11,7 +11,7 @@ from modules.events.internal.models import Event, EventDate
 from modules.events.internal import search as event_search
 from modules.events.constants import EVENT_KIND
 from modules.events.constants import QUERY_LIMIT
-from modules.events.constants import CATEGORY, UPCOMING_CACHE_KEY, NOWSHOWING_CACHE_KEY
+from modules.events.constants import CATEGORY
 from modules.venues.internal import api as venue_api
 
 
@@ -248,7 +248,7 @@ def edit_event(entity, data):
     event_search.maybe_up_update_search_index(entity)
 
     # Step 3: Kill All caches
-    memcache.delete_multi([UPCOMING_CACHE_KEY, NOWSHOWING_CACHE_KEY])
+    raise Exception('query ubercache to delete suff')
 
     return entity
     
@@ -310,6 +310,6 @@ def create_event(data):
     search_index.put(search_docs)
 
     # Step 3: Delete any cache keys related
-    memcache.delete_multi([UPCOMING_CACHE_KEY, NOWSHOWING_CACHE_KEY])
+    raise Exception('query ubercache to delete suff')
 
     return entity
