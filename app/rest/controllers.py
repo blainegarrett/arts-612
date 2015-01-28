@@ -6,6 +6,9 @@ import traceback
 import sys
 import logging
 
+from urlparse import urlparse
+from google.appengine.api import users
+
 from rest import errors
 from rest.resource import Resource
 from rest.params import ResourceParams
@@ -15,6 +18,16 @@ class RestHandlerBase(webapp2.RequestHandler):
     """
     Base Class for All Rest Endpoints
     """
+
+    def is_same_origin(self):
+        """
+        Helper Method to determine if referrer is the same as the host
+        This is to support 'dumb' REST permissions to prevent attacking REST Services
+        """
+        if not self.request.referer:
+            return False
+
+        return urlparse(self.request.referer)[1] == self.request.host
 
     def get_param_schema(self):
         """
@@ -44,11 +57,17 @@ class RestHandlerBase(webapp2.RequestHandler):
         """
         Dispatcher for checking various things
         """
+
         try:
             self.data = {}
             self.cleaned_data = {}
             self.params = {}
             self.cleaned_params = {}
+
+            # Do basic access checks
+            cur_user = users.get_current_user() # Eventually put this on the request
+            if not (self.is_same_origin() or cur_user):
+                raise errors.RestError('Invalid referrer: %s' % self.request.referer)
 
             # Process Request Payload
 

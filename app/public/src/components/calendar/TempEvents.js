@@ -59,7 +59,6 @@ var TempEvent = React.createClass({
             if (this.props.event_dates[i].type == this.props.ed_filter) {
                 ed = this.props.event_dates[i];
             }
-            
         }
         
         if (!ed) {
@@ -105,6 +104,7 @@ var TempEventsListMixin = {
 }
 
 var TempEventList = React.createClass({
+    
     getInitialState: function () {
         return {ed_filter: this.props.ed_filter, event_data: this.props.event_data };
     },
@@ -124,6 +124,7 @@ var TempEventList = React.createClass({
     }
 });
 
+// TODO: Delete this...
 var TempUpcoming = React.createClass({
     mixins: [TempEventsListMixin],
 
@@ -136,11 +137,28 @@ var TempUpcoming = React.createClass({
     }
 });
 
+
+
 var TempEvents = React.createClass({
     mixins: [TempEventsListMixin],
 
-    getInitialState: function(){
-        return {ed_filter: 'reoccurring', 'col_name': 'NOW SHOWING', 'event_data': [], 'resource_url': '/api/events/nowshowing'};
+    get_target_end_date: function () {
+      // Today
+      date = moment().utc().hour(0).minute(0).second(0);
+      return date;  
+    },
+
+    getInitialState: function() {
+
+        var target_end_date = this.get_target_end_date();
+        target_end_date = target_end_date.format('YYYY-MM-DD[T]HH:mm:ss[Z]');
+
+        return {
+            ed_filter: 'reoccurring',
+            col_name: 'NOW SHOWING',
+            event_data: [],
+            resource_url: '/api/events/upcoming?sort=end&category=ongoing&end=' + target_end_date + '&start=' + target_end_date
+        };
     },
 
     render: function () {

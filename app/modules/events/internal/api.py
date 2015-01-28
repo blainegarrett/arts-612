@@ -6,6 +6,8 @@ from google.appengine.api import memcache
 
 from pytz import timezone
 
+from utils import ubercache
+
 from modules.utils import get_entity_key_by_keystr
 from modules.events.internal.models import Event, EventDate
 from modules.events.internal import search as event_search
@@ -233,7 +235,6 @@ def edit_event(entity, data):
         
         # TODO: Also check if start is before end, etc
 
-
         ed.label = d_data['label']
         ed.type = str(d_data['type']) # This is not a long term solution...
         ed.start = d_data['start'].replace(tzinfo=None) # Expected to be a DateTime or None
@@ -248,7 +249,7 @@ def edit_event(entity, data):
     event_search.maybe_up_update_search_index(entity)
 
     # Step 3: Kill All caches
-    raise Exception('query ubercache to delete suff')
+    ubercache.cache_invalidate('events')
 
     return entity
     
@@ -294,7 +295,6 @@ def create_event(data):
         
         # TODO: Also check if start is before end, etc
 
-
         ed.label = d_data['label']
         ed.type = str(d_data['type']) # This is not a long term solution...
         ed.start = d_data['start'].replace(tzinfo=None) # Expected to be a DateTime or None
@@ -310,6 +310,6 @@ def create_event(data):
     search_index.put(search_docs)
 
     # Step 3: Delete any cache keys related
-    raise Exception('query ubercache to delete suff')
+    ubercache.cache_invalidate('events')
 
     return entity

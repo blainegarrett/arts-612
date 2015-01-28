@@ -126,13 +126,22 @@ var TempEventList = React.createClass({
 
 var TempUpcoming = React.createClass({
     mixins: [TempEventsListMixin],
+    
+    get_target_end_date: function () {
+      // 3AM CST "today"
+      date = moment().utc().hour(9).minute(0).second(0)
+      return date;  
+    },
+    getInitialState: function() {
 
-    getInitialState: function(){
+        var target_end_date = this.get_target_end_date();
+        target_end_date = target_end_date.format('YYYY-MM-DD[T]HH:mm:ss[Z]');
+
         return {
             ed_filter: 'timed',
             col_name: 'OPENINGS & EVENTS',
             event_data: [], 
-            resource_url: '/api/events/upcoming?sort=start&category=performance,reception,sale&end=2015-01-19T09:00:00Z'
+            resource_url: '/api/events/upcoming?sort=start&category=performance,reception,sale&end=' + target_end_date
         };
     },
 
@@ -141,6 +150,7 @@ var TempUpcoming = React.createClass({
     }
 });
 
+// Note: This is garbage...
 var TempEvents = React.createClass({
     mixins: [TempEventsListMixin],
 

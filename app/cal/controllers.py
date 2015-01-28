@@ -170,6 +170,7 @@ class EventsNowShowingHandler(RestHandlerBase):
         """
         Temp handler for Now Showing events
         """
+        raise Exception('Don\'t use this...')
 
         results = []
         cached_events = memcache.get(NOWSHOWING_CACHE_KEY)

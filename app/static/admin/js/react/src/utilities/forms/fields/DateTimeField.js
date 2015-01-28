@@ -11,14 +11,13 @@ DateTimeField = React.createClass({
     toResourceX: function(field_value) {
         if (!field_value) {
 
-            console.log('-------------jesus party------------------');
+            console.log('-------------BEFOREd------------------');
             field_value = this.refs.widget.toResourceX();
 
             console.log(field_value);
 
             console.log('------------------------------------------');
 
-            //field_value = 'zebradicks';
         }
 
         field_value = field_value.trim();
