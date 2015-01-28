@@ -5,3 +5,5 @@ unicode-slugify==0.1.1
 pytz
 voluptuous
 git+git://github.com/Workiva/furious.git#egg=furious
+google-api-python-client
+GoogleAppEngineCloudStorageClient
