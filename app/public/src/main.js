@@ -59,3 +59,10 @@ ReactRouter.init();
 React.render(<PageMeta />, document.getElementById('page_meta'));
 //React.render(<PageMeta />, document.getElementById('meta_debug'));
 //React.render(<PrimaryMenu />, document.getElementById('navbar'));
+
+
+$(window).on("scroll touchmove", function () {
+    /* Neato Scrolling effect */
+  $('#header_nav').toggleClass('tiny', $(document).scrollTop() > 375);
+  console.log('scrooooling...');
+});
