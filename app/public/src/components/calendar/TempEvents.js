@@ -143,8 +143,12 @@ var TempEvents = React.createClass({
     mixins: [TempEventsListMixin],
 
     get_target_end_date: function () {
-      // Today
-      date = moment().utc().hour(0).minute(0).second(0);
+      // Today - not this yields a time of 6AM UTC at the moment due to CST time diff...
+      date = moment().hour(0).minute(0).second(0);
+      date = moment.utc(date);
+
+     //date = moment.utc().hour(0).minute(0).second(0);
+
       return date;  
     },
 

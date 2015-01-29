@@ -1,6 +1,6 @@
 application: arts-612
 
-version: master-20150127-queryparams
+version: master-20150129
 
 runtime: python27
 api_version: 1
