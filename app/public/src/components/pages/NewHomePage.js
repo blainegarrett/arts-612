@@ -55,7 +55,17 @@ var FeaturedEventsPod = React.createClass({
         <div className="card-content">
             <p>Cards for display in portfolio style material design by Google.</p>
         </div>
+        <div className="card-image">
+            <a href="#"><img className="img-responsive" src="http://cdn.mplsart.com/written/temp/mplsart_fbimg_foursome.jpg" /></a>
+            <div className="card-title"><a href="#">Material Cards</a></div>
         </div>
+
+        <div className="card-content">
+            <p>Cards for display in portfolio style material design by Google.</p>
+        </div>
+
+        </div>
+        
     }
 });
 
@@ -106,27 +116,6 @@ var Pod = React.createClass({
 
     	</div>
     }
-
-    /*
-
-
-
-
-    render: function() {
-        
-        var pod = React.createElement(podComponentMap[this.state.data.podClass], this.state);
-        return pod;
-        
-        var style = {'width': '100%', 'minHeight': '200px'};
-
-        return <div className={'item col-sm-' + this.state.data.colspan}>
-    		<div className="item-container">
-    			<h3 id="download-sass">{ this.state.data.pos }. Sass <button onClick={this.addmore}>Add More</button></h3>
-                <img style={style} src={this.state.data.img_url} />
-    		</div>
-    	</div>
-    }
-    */
 });
 
 var HomePods = React.createClass({
@@ -220,7 +209,10 @@ var NewHomePage = React.createClass({
         this.setMeta();
         
         $(window).on("scroll touchmove", function () {
-            var scroll_flag = $('.card:first').offset().top + $('.card:first').height() - 50;
+            var featured_card = $('.card:first');
+            var scroll_flag = featured_card.offset().top + featured_card.height() - 170;
+            console.log(scroll_flag);
+
           $('#header_nav').toggleClass('show-nav', $(document).scrollTop() > scroll_flag);
         });
     }
