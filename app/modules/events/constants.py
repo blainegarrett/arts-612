@@ -6,7 +6,7 @@ EVENT_SEARCH_INDEX = 'events_index'
 
 UBERCACHE_CATEGORY = 'events'
 
-QUERY_LIMIT = 25
+QUERY_LIMIT = 500
 
 class CATEGORY(object):
     """
