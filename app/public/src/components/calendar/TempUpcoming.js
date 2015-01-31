@@ -129,7 +129,10 @@ var TempUpcoming = React.createClass({
     
     get_target_end_date: function () {
       // 3AM CST "today"
-      date = moment().utc().hour(9).minute(0).second(0)
+      date = moment().hour(9).minute(0).second(0);
+      date = moment.utc(date);
+
+      //date = moment().utc().hour(9).minute(0).second(0)
       return date;  
     },
     getInitialState: function() {
