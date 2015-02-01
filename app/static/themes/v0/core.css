@@ -9,8 +9,13 @@ body {
     font-size: 18px;
     font-weight: 100;
     line-height: 1.5em;
-    /* background-image:url('/static/themes/v0/bg_pink_stripe.jpg'); */
 }
+    body.beta {
+        background-image:url('/static/themes/v0/bg_pink_stripe.jpg');
+    }
+
+
+
 a { color: #0096BE; }
 
 /* Nav Var */

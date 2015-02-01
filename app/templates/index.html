@@ -33,7 +33,7 @@
 
   </head>
 
-  <body>
+  <body class="beta">
 
 	<!-- Start Top Nav -->
 	<div id="header_nav" class="navbar navbar-fixed-top navbar-inverse" role="navigation">
@@ -57,7 +57,7 @@
 
 
 
-		<div id="header_nav_cards_container" style="background-color:#000; box-shadow: 0px 10px 16px #000;">
+		<div id="header_nav_cards_container" style="background-color:#000; box-shadow: 0 27px 68px #555;">
 	      <div id="header_nav_cards" class="container" style="">
 			<div class="row">
 				<div class="col-sm-8">
@@ -66,7 +66,14 @@
 					          
 							
 							<style>
-							
+							#header_nav {
+								background-color : #555;
+							}
+							#header_nav_cards .row .row .item {
+								overflow: hidden;
+								padding:0px;
+								position:relative;
+							}
 							#header_nav_cards {
 								opacity: 0;
 								height:0;
@@ -80,16 +87,82 @@
 								  transition: height .5s ease-in;
 									height:55px;
 									overflow:hidden;
-									padding-top:5px;
 							}
 								#header_nav_cards .item a {
 									display:block;
-									height: 55px;
 									width: 100%;
 									background-size: cover;
 									background-position-y: 50%;
-									color: blue;
+									z-index : 10;
 								}
+								#header_nav_cards .item a:hover {
+									text-decoration:none;
+								}
+								#header_nav_cards .item a:hover span {
+									color: #ff0099;
+								}
+								
+								#header_nav_cards .item a span {
+									color:#fff;
+									height: 55px;
+									width: 55px;
+									background-color: #000;
+									display:block;
+									font-size:10px;
+									text-align:center;
+									padding-top: 13px;
+									z-index: 15;
+								}
+								#header_nav_cards .item a span:before  {
+								    content: '';
+								    height: 55px;
+								    width: 55px;
+								    background-color: #000;
+								    position: absolute;
+								    bottom: 0;
+								    left: 55px;
+								    transform: skewY(-60deg);
+									-webkit-transform: skewY(-60eg);
+									  -moz-transform: skewY(-60deg);
+									  -ms-transform: skewY(-60deg);
+									  -o-transform: skewY(-60deg);
+								    transform-origin: left;
+									z-index: 14;
+								}
+								#header_nav_cards .item a  div {
+									height : 55px;
+									width: 100%;
+									position:absolute;
+									top:0;
+									left:0;
+									background-color : #fff;
+									opacity:.8;
+									text-align:center;
+									z-index: 14;
+									display: none;
+								}
+
+								#header_nav_cards .item a:hover  div {
+									display:block;
+								}
+								/*
+								#header_nav_cards .item a:hover span:before, #header_nav_cards .item a:hover span  {
+									display:none;
+								}
+								*/
+
+
+
+								#home-marquee-row {
+									padding-bottom: 30px;
+									border-bottom: 10px solid #555;
+									
+								}
+
+
+
+
+								
 								
 							</style>
 							
@@ -98,25 +171,30 @@
 								
 
 									
-								<div class="item col-sm-4">
+								<div class="item col-sm-3">
+									<a href="#" style="background:url(http://www.bockleygallery.com/exhibit_temporary/images/exhibition_home.jpg); background-size: cover; background-position-y: 50%;">
+										<span>01/03</span>
+										<div>Totally Cool</div>
+							         </a>
+								</div>
+								
+								<div class="item col-sm-3">
 									<a href="#" style="background:url(http://cdn.mplsart.com/written/temp/mplsart_fbimg_foursome.jpg); background-size: cover; background-position-y: 50%;">
-										sdfsds
+										<span>01/05</span>
 							          </a>
 								</div>
 								
-								<div class="item col-sm-4">
+								<div class="item col-sm-3">
 									<a href="#" style="background:url(http://cdn.mplsart.com/written/temp/mplsart_fbimg_foursome.jpg); background-size: cover; background-position-y: 50%;">
-										sdfsds
+										<span>01/06</span>
 							          </a>
 								</div>
-								
-								<div class="item col-sm-4">
+
+								<div class="item col-sm-3">
 									<a href="#" style="background:url(http://cdn.mplsart.com/written/temp/mplsart_fbimg_foursome.jpg); background-size: cover; background-position-y: 50%;">
-										sdfsds
+										<span>01/06</span>
 							          </a>
 								</div>
-									
-									
 							</div>
 
 

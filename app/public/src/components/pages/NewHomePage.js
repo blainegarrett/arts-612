@@ -188,6 +188,72 @@ var NewHomePage = React.createClass({
         });
 
         return <div id="HomePageWrapper">
+            <div className="row" id="home-marquee-row">
+            
+            
+                <div className="item col-sm-8">
+                
+                
+    
+    
+    
+    
+    
+                <div className="bs-example" data-example-id="carousel-with-captions">
+                    <div id="carousel-example-captions" className="carousel slide" data-ride="carousel">
+                      <ol className="carousel-indicators">
+                        <li data-target="#carousel-example-captions" data-slide-to="0" className="active"></li>
+                        <li data-target="#carousel-example-captions" data-slide-to="1" className=""></li>
+                        <li data-target="#carousel-example-captions" data-slide-to="2" className=""></li>
+                      </ol>
+                      <div className="carousel-inner" role="listbox">
+                        <div className="item active">
+                          <img data-src="holder.js/900x500/auto/#777:#777" alt="900x500" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iOTAwIiBoZWlnaHQ9IjUwMCIgdmlld0JveD0iMCAwIDkwMCA1MDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iOTAwIiBoZWlnaHQ9IjUwMCIgZmlsbD0iIzc3NyIvPjxnPjx0ZXh0IHg9IjM0MC45OTIxODc1IiB5PSIyNTAiIHN0eWxlPSJmaWxsOiM3Nzc7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LWZhbWlseTpBcmlhbCwgSGVsdmV0aWNhLCBPcGVuIFNhbnMsIHNhbnMtc2VyaWYsIG1vbm9zcGFjZTtmb250LXNpemU6NDJwdDtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj45MDB4NTAwPC90ZXh0PjwvZz48L3N2Zz4=" data-holder-rendered="true" />
+                          <div className="carousel-caption">
+                            <h3>First slide label</h3>
+                            <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                          </div>
+                        </div>
+                        <div className="item">
+                          <img data-src="holder.js/900x500/auto/#666:#666" alt="900x500" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iOTAwIiBoZWlnaHQ9IjUwMCIgdmlld0JveD0iMCAwIDkwMCA1MDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iOTAwIiBoZWlnaHQ9IjUwMCIgZmlsbD0iIzY2NiIvPjxnPjx0ZXh0IHg9IjM0MC45OTIxODc1IiB5PSIyNTAiIHN0eWxlPSJmaWxsOiM2NjY7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LWZhbWlseTpBcmlhbCwgSGVsdmV0aWNhLCBPcGVuIFNhbnMsIHNhbnMtc2VyaWYsIG1vbm9zcGFjZTtmb250LXNpemU6NDJwdDtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj45MDB4NTAwPC90ZXh0PjwvZz48L3N2Zz4=" data-holder-rendered="true" />
+                          <div className="carousel-caption">
+                            <h3>Second slide label</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                          </div>
+                        </div>
+                        <div className="item">
+                          <img data-src="holder.js/900x500/auto/#555:#5555" alt="900x500" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iOTAwIiBoZWlnaHQ9IjUwMCIgdmlld0JveD0iMCAwIDkwMCA1MDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iOTAwIiBoZWlnaHQ9IjUwMCIgZmlsbD0iIzU1NSIvPjxnPjx0ZXh0IHg9IjM0MC45OTIxODc1IiB5PSIyNTAiIHN0eWxlPSJmaWxsOiM1NTU1O2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjQycHQ7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+OTAweDUwMDwvdGV4dD48L2c+PC9zdmc+" data-holder-rendered="true" />
+                          <div className="carousel-caption">
+                            <h3>Third slide label</h3>
+                            <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+                          </div>
+                        </div>
+                      </div>
+                      <a className="left carousel-control" href="#carousel-example-captions" role="button" data-slide="prev">
+                        <span className="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                        <span className="sr-only">Previous</span>
+                      </a>
+                      <a className="right carousel-control" href="#carousel-example-captions" role="button" data-slide="next">
+                        <span className="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                        <span className="sr-only">Next</span>
+                      </a>
+                    </div>
+                  </div>
+    
+    
+    
+    
+                
+                
+                
+                
+                
+                </div>
+                <div className="item col-sm-4">
+                    <img src="http://placehold.it/500x500" className="img-responsive" />
+                </div>
+            </div>
+
             <div className="row">
             
                 <InfiniteScroll
@@ -205,16 +271,23 @@ var NewHomePage = React.createClass({
             <Footer />
         </div>;
     },
+
     componentDidMount: function () {
         this.setMeta();
         
+        $('body').removeClass('beta');
+        
         $(window).on("scroll touchmove", function () {
-            var featured_card = $('.card:first');
+            var featured_card = $('#home-marquee-row');
             var scroll_flag = featured_card.offset().top + featured_card.height() - 170;
             console.log(scroll_flag);
 
           $('#header_nav').toggleClass('show-nav', $(document).scrollTop() > scroll_flag);
         });
+    },
+    
+    componentWillUnmount: function() {
+        $('body').addClass('beta');
     }
 });
 module.exports = NewHomePage;
