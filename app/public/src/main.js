@@ -11,6 +11,7 @@ var GalleryViewPage = require('./components/pages/GalleryViewPage');
 var Error404Page = require('./components/pages/Error404Page');
 
 var PageMeta = require('./components/pages/PageMeta');
+var NavCardsContainer = require('./components/NavCardsContainer').NavCardsContainer;
 var PrimaryMenu = require('./components/pages/PrimaryMenu')
 
 
@@ -59,6 +60,8 @@ ReactRouter.init();
 React.render(<PageMeta />, document.getElementById('page_meta'));
 //React.render(<PageMeta />, document.getElementById('meta_debug'));
 //React.render(<PrimaryMenu />, document.getElementById('navbar'));
+React.render(<NavCardsContainer />, document.getElementById('header_nav_cards'));
+
 
 
 $(window).on("scroll touchmove", function () {

@@ -1,7 +1,10 @@
 /*
  * Style tweaks
  * --------------------------------------------------
+ Color and Style Guide:
+ 
  */
+
 
 body {
     font-family: 'Bryant', sans-serif;
@@ -10,23 +13,28 @@ body {
     font-weight: 100;
     line-height: 1.5em;
 }
-    body.beta {
-        background-image:url('/static/themes/v0/bg_pink_stripe.jpg');
-    }
-
-
 
 a { color: #0096BE; }
 
+
 /* Nav Var */
-.navbar-inverse .navbar-brand {
-    font-size:32px;
-    color: #dfdfdf;
-    line-height: 32px;
-    
-}
+
+#header_nav { background-color : #555; }
+    #header_nav .navbar-brand {
+        font-size:32px;
+        color: #dfdfdf;
+        line-height: 32px;    
+    }
 #est-stamp { font-size: 14px; }
 
+
+.brand-title-art {
+    color: #ff0099;
+    text-transform: lowercase;
+}
+    .brand-title-art:before {
+        content: ' ';
+    }
 
 /* Top Rail Welcome Header */
 #welcome-header-container { margin-bottom:20px; }
@@ -254,7 +262,7 @@ footer {
 
 @media screen and (min-width: 400px) {
     body {
-        padding-top: 65px;
+        padding-top: 70px;
         padding-bottom: 70px;
     }
 }
@@ -378,3 +386,137 @@ footer {
 	background: linear-gradient(to bottom,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#a6000000',GradientType=0 ); /* IE6-8 */
 }
+
+
+/* Nav Bar Card Bits */
+#header_nav_cards { background-color: #000; box-shadow: 0 27px 68px #555; }
+    #header_nav_cards .container {
+        opacity: 0;
+        height:0;
+        overflow:hidden;
+        transition: opacity .5s ease-in;
+        transition: height .5s ease-in;
+    }
+
+	.show-nav #header_nav_cards .container {
+        opacity: 1;
+        transition: opacity .5s ease-in;
+        transition: height .5s ease-in;
+        height:55px;
+        overflow:hidden;
+    }
+
+    /* Sidecard */
+    .sidecard a {
+        background:url(https://fbcdn-sphotos-a-a.akamaihd.net/hphotos-ak-xaf1/v/t1.0-9/10152433_10154107872845357_9126802419535311414_n.jpg?oh=1ff0dd0512ff5d89f45378c3108de5e9&oe=55166AF7&__gda__=1427244355_579859ab5a0384fddb8afc40e0313d47);
+        background-size: cover;
+        background-position-y: 33%;
+    }
+
+
+
+    #slider-thumbs, #slider-thumbs .row {
+        margin-right : 0px;
+        margin-left : 0px;
+    }
+	#header_nav_cards .row .row .item, #slider-thumbs .row .item {
+		overflow: hidden;
+		padding:0px;
+		position:relative;
+	}
+
+		#header_nav_cards .item a, #slider-thumbs .item a {
+			display:block;
+			width: 100%;
+			background-size: cover;
+			background-position-y: 50%;
+			z-index : 10;
+		}
+		#header_nav_cards .item a:hover, #slider-thumbs .item a:hover {
+			text-decoration:none;
+		}
+		#header_nav_cards .item a:hover span, #slider-thumbs .item a:hover span {
+			color: #ff0099;
+		}
+		
+		#header_nav_cards .item a span, #slider-thumbs .item a span {
+			color:#fff;
+			height: 55px;
+			width: 55px;
+			background-color: #000;
+			display:block;
+			font-size:10px;
+			text-align:center;
+			padding-top: 13px;
+			z-index: 15;
+		}
+		#header_nav_cards .item a span:before, #slider-thumbs .item a span:before {
+		    content: '';
+		    height: 55px;
+		    width: 55px;
+		    background-color: #000;
+		    position: absolute;
+		    bottom: 0;
+		    left: 55px;
+		    transform: skewY(-60deg);
+			-webkit-transform: skewY(-60eg);
+			  -moz-transform: skewY(-60deg);
+			  -ms-transform: skewY(-60deg);
+			  -o-transform: skewY(-60deg);
+		    transform-origin: left;
+			z-index: 14;
+		}
+		#header_nav_cards .item a  div, #slider-thumbs .item a  div {
+			height : 55px;
+			width: 100%;
+			position:absolute;
+			top:0;
+			left:0;
+			background-color : #fff;
+			opacity:.8;
+			text-align:center;
+			z-index: 14;
+			display: none;
+		}
+
+		#header_nav_cards .item a:hover  div, #slider-thumbs .item a:hover  div {
+			display:block;
+		}
+		/*
+		#header_nav_cards .item a:hover span:before, #header_nav_cards .item a:hover span  {
+			display:none;
+		}
+		*/
+
+		#home-marquee-row .rule {
+		    background-color: #555;
+		    height: 10px;
+            margin-top: 10px;
+            margin-bottom: 0px;
+            padding-right: 5px;
+            padding-left: 5px;
+            margin-left: -10px;
+            margin-right: -10px;
+		}
+
+
+/* Sliders */
+
+.hide-bullets {
+    list-style:none;
+    margin-left: -40px;
+    margin-top:20px;
+}
+
+
+
+
+
+
+
+/* Beta Specific styles we can turn off */
+
+body.beta { background-image:url('/static/themes/v0/bg_pink_stripe.jpg'); }
+body.beta #header_nav { background-color: #222; }
+body.beta .brand-title-art { color: inherit; text-transform: uppercase;}
+    body.beta .brand-title-art:before { content: ''; }
