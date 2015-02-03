@@ -8,7 +8,7 @@ var CarouselSliderPanel = React.createClass({
             'background' : 'url(' +  this.props.url + ');',
             'background-size': 'cover;',
             'background-position-y': '50%;',
-            'height': '325px',
+            'height': '305px',
             'width': '100%'
         };
 
@@ -17,7 +17,7 @@ var CarouselSliderPanel = React.createClass({
             classNames = classNames += ' active';
         }
 
-        return <div className={classNames} data-slide-number={ this.props.pos}>
+        return <div className={classNames} data-slide-number={ this.props.pos }>
             <div style={ style }></div>
         </div>
     }
@@ -31,12 +31,14 @@ var HomePageCarousel = React.createClass({
             interval: 5000
         });
 
-
         //Handles the carousel thumbnails
         $('#slider-thumbs [id^=carousel-selector-]').click( function(){
             var id = this.id.substr(this.id.lastIndexOf("-") + 1);
             var id = parseInt(id);
+
             $('#myCarousel').carousel(id);
+            console.log(id);
+            return false;
         });
     },
     render: function () {
@@ -55,7 +57,7 @@ var HomePageCarousel = React.createClass({
                                 <CarouselSliderPanel pos="0" url="http://cdn.mplsart.com/written/temp/mplsart_fbimg_foursome.jpg" />
                                 <CarouselSliderPanel pos="1" url="http://www.bockleygallery.com/exhibit_temporary/images/exhibition_home.jpg" />
                                 <CarouselSliderPanel pos="2" url="http://commondatastorage.googleapis.com/dim-media/artwork/sized/as_we_leave.jpg" />
-                                <CarouselSliderPanel pos="3" url="http://commondatastorage.googleapis.com/dim-media/artwork/sized/48e8c04fd31eb62fe66ca77cec3ee0cf.jpg" />
+                                <CarouselSliderPanel pos="3" url="http://commondatastorage.googleapis.com/dim-media/artwork/sized/cone.jpg" />
 
                             </div>
 

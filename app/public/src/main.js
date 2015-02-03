@@ -67,5 +67,4 @@ React.render(<NavCardsContainer />, document.getElementById('header_nav_cards'))
 $(window).on("scroll touchmove", function () {
     /* Neato Scrolling effect */
   $('#header_nav').toggleClass('tiny', $(document).scrollTop() > 375);
-  console.log('scrooooling...');
 });

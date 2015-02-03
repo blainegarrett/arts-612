@@ -388,7 +388,7 @@ footer {
 
 
 /* Nav Bar Card Bits */
-#header_nav_cards { background-color: transparent; box-shadow: 0 27px 68px #555; }
+#header_nav_cards { background-color: black; box-shadow: 0 27px 68px #555; }
     #header_nav_cards .container {
         opacity: 0;
         height:0;
@@ -407,15 +407,23 @@ footer {
 
     /* Sidecard */
     .sidecard .card {
-        border: 1px solid blue;
         margin-top: 0px;
-        height: 55px;
+        border-top:1px solid black;
     }
     .sidecard a {
         background:url(https://fbcdn-sphotos-a-a.akamaihd.net/hphotos-ak-xaf1/v/t1.0-9/10152433_10154107872845357_9126802419535311414_n.jpg?oh=1ff0dd0512ff5d89f45378c3108de5e9&oe=55166AF7&__gda__=1427244355_579859ab5a0384fddb8afc40e0313d47);
         background-size: cover;
         background-position-y: 33%;
+        display: block;
+        width: 100%;
+        background-size: cover;
+        background-position-y: 50%;
+        z-index: 10;
+        height: 55px;
     }
+        .sidecard span {
+            display:none;
+        }
 
     #slider-thumbs, #slider-thumbs .row {
         /*
@@ -427,12 +435,25 @@ footer {
 	/* #header_nav_cards .row .row .item, #slider-thumbs .row .item { */
 	#header_nav_cards .row .item, #slider-thumbs .item {
 		overflow: hidden;
-		/* padding:0px; */
+		padding:0px;
 		position:relative;
+		border-left:1px solid white;
 	}
+	
+    #header_nav_cards .row .item {
+		border-left:1px solid black;
+	}
+	    .row-shim {
+	        overflow: auto;
+            border-top: 1px solid white;
+            margin-right: 15px;
+            margin-left: 14px;
+	    }
+
 	    #header_nav_cards .row-shim {
-            margin-right: -15px;
-            margin-left: -15px;
+            margin-right: 0px;
+            margin-left: -1px;
+            border-top: 1px solid black;
 	    }
 
 		#header_nav_cards .item a, #slider-thumbs .item a {
@@ -467,7 +488,7 @@ footer {
 		    background-color: #000;
 		    position: absolute;
 		    bottom: 0;
-		    left: 60px;
+		    left: 45px;
 		    transform: skewY(-60deg);
 			-webkit-transform: skewY(-60eg);
 			  -moz-transform: skewY(-60deg);
@@ -501,8 +522,8 @@ footer {
 		#home-marquee-row .rule {
 		    background-color: #555;
 		    height: 15px;
-            margin-top: 15px;
-            margin-bottom: 5px;
+            margin-top: 20px;
+            margin-bottom: -10px;
             /*
             padding-right: 5px;
             padding-left: 5px;

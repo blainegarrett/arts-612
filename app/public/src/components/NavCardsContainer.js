@@ -26,7 +26,7 @@ var CoolCardSet = React.createClass({
             <CoolCard pos="0" url="http://cdn.mplsart.com/written/temp/mplsart_fbimg_foursome.jpg" />
             <CoolCard pos="1" url="http://www.bockleygallery.com/exhibit_temporary/images/exhibition_home.jpg" />
             <CoolCard pos="2" url="http://commondatastorage.googleapis.com/dim-media/artwork/sized/as_we_leave.jpg" />
-            <CoolCard pos="3" url="http://commondatastorage.googleapis.com/dim-media/artwork/sized/48e8c04fd31eb62fe66ca77cec3ee0cf.jpg" />
+            <CoolCard pos="3" url="http://commondatastorage.googleapis.com/dim-media/artwork/sized/cone.jpg" />
         </div>;
         
     }
@@ -34,12 +34,16 @@ var CoolCardSet = React.createClass({
 
 var CoolSideCard = React.createClass({
     render: function () {
+        var styles = {
+            'background' : 'url(http://placehold.it/500x500);',
+            'background-size': 'cover;',
+            'background-position': '50% 50%;'
+        };
+        
         return <div className="card">
-        	<div className="card-image">
-                  <a href="#">
+                  <a href="#" style={ styles }>
                     <span>derp</span>
                   </a>
-              </div>
         </div>        
     }
 });
