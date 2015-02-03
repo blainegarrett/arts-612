@@ -43,11 +43,9 @@ var HomePageCarousel = React.createClass({
         return <div>
 
         <div className="row">
-            <div className="col-xs-12" id="slider">
 
 
 
-                <div className="row">
                     <div className="col-sm-12" id="carousel-bounding-box">
                         <div className="carousel slide" id="myCarousel">
 
@@ -73,8 +71,6 @@ var HomePageCarousel = React.createClass({
                     </div>
 
                 </div>
-            </div>
-        </div>
 
 
         <div className="row hidden-xs" id="slider-thumbs">

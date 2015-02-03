@@ -22,7 +22,7 @@ var CoolCard = React.createClass({
 var CoolCardSet = React.createClass({
     render: function () {
 
-        return <div className="row">
+        return <div className="row-shim">
             <CoolCard pos="0" url="http://cdn.mplsart.com/written/temp/mplsart_fbimg_foursome.jpg" />
             <CoolCard pos="1" url="http://www.bockleygallery.com/exhibit_temporary/images/exhibition_home.jpg" />
             <CoolCard pos="2" url="http://commondatastorage.googleapis.com/dim-media/artwork/sized/as_we_leave.jpg" />
