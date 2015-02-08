@@ -8,6 +8,7 @@ import json
 import logging
 import cloudstorage as gcs
 from google.appengine.ext import blobstore
+from google.appengine.api import images
 
 #from auth.decorators import rest_login_required
 
@@ -27,6 +28,51 @@ TODO:
 [ ] Add rest_login_required to endpoints
 [ ]
 """
+
+
+
+def rescale(img_data, width, height, halign='middle', valign='middle'):
+  """Resize then optionally crop a given image.
+
+  Attributes:
+    img_data: The image data
+    width: The desired width
+    height: The desired height
+    halign: Acts like photoshop's 'Canvas Size' function, horizontally
+            aligning the crop to left, middle or right
+    valign: Verticallly aligns the crop to top, middle or bottom
+
+  """
+
+  image = images.Image(img_data)      
+
+  desired_wh_ratio = float(width) / float(height)
+  wh_ratio = float(image.width) / float(image.height)
+
+  if desired_wh_ratio > wh_ratio:
+    # resize to width, then crop to height
+    image.resize(width=width)
+    image.execute_transforms()
+    trim_y = (float(image.height - height) / 2) / image.height
+    if valign == 'top':
+      image.crop(0.0, 0.0, 1.0, 1 - (2 * trim_y))
+    elif valign == 'bottom':
+      image.crop(0.0, (2 * trim_y), 1.0, 1.0)
+    else:
+      image.crop(0.0, trim_y, 1.0, 1 - trim_y)
+  else:
+    # resize to height, then crop to width
+    image.resize(height=height)
+    image.execute_transforms()
+    trim_x = (float(image.width - width) / 2) / image.width
+    if halign == 'left':
+      image.crop(0.0, 0.0, 1 - (2 * trim_x), 1.0)
+    elif halign == 'right':
+      image.crop((2 * trim_x), 0.0, 1.0, 1.0)
+    else:
+      image.crop(trim_x, 0.0, 1 - trim_x, 1.0)
+
+  return image.execute_transforms()
 
 
 class UploadUrlField(RestField):
@@ -177,9 +223,30 @@ class UploadCallbackHandler(MerkabahBaseController):
         Helper to put an image on the Cloud
         """
 
+        # Original Image
         new_gcs_filename = fs.write(dest_filename, data, content_type)
         logging.warning(new_gcs_filename)
 
+
+        # Thumbnail
+        file_content = rescale(data, 365, 235, halign='middle', valign='middle')
+        thumbnail_filename = dest_filename + '.thumb'
+        #'artwork/thumbnail/%s.%s' % (slug, extension)
+
+        logging.debug(thumbnail_filename)
+        fs.write(thumbnail_filename, file_content, content_type)
+
+        # Sized Images
+        img = images.Image(data)
+        img.resize(width=1000, height=1000)
+        img.im_feeling_lucky()
+        file_content = img.execute_transforms(output_encoding=images.JPEG)
+
+        #sized_filename = 'artwork/sized/%s.%s' % (slug, extension)
+        sized_filename = dest_filename + '.sized'
+
+        logging.debug(sized_filename)
+        fs.write(sized_filename, file_content, content_type)
 
         file_obj = FileContainer(
             content_type=content_type,
@@ -209,6 +276,7 @@ class UploadCallbackHandler(MerkabahBaseController):
             logging.warning(blob_key)
 
             data = fs.read(gs_object_name.replace('/gs', ''))
+
             #logging.warning(data)
             # What we want to do now is create a copy of the file with our own info
             dest_filename = 'juniper/%s' % original_filename
