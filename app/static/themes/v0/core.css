@@ -19,7 +19,7 @@ a { color: #0096BE; }
 
 /* Nav Var */
 
-#header_nav { background-color : #555; }
+#header_nav { background-color : #222; }
     #header_nav .navbar-brand {
         font-size:32px;
         color: #dfdfdf;
@@ -388,7 +388,7 @@ footer {
 
 
 /* Nav Bar Card Bits */
-#header_nav_cards { background-color: black; box-shadow: 0 27px 68px #555; }
+#header_nav_cards { background-color: #222; box-shadow: 0 27px 68px #555; padding-bottom: 25px; }
     #header_nav_cards .container {
         opacity: 0;
         height:0;
