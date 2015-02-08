@@ -3,91 +3,107 @@ Rest API for Venues/Galleries
 """
 #from __future__ import absolute_import
 
+import cgi
+import json
 import logging
-from auth.decorators import rest_login_required
+import cloudstorage as gcs
+from google.appengine.ext import blobstore
 
-from google.appengine.ext import ndb
+#from auth.decorators import rest_login_required
 
 from rest.controllers import RestHandlerBase
 from rest.resource import Resource
-from rest.resource import RestField, SlugField, ResourceIdField, ResourceUrlField, GeoField, UploadField
-from google.appengine.ext.webapp import blobstore_handlers
-
-from modules.venues.internal import api as venues_api
-from modules.venues.internal import search as vsearch
-from modules.venues.internal.models import Venue
+from rest.resource import RestField
 
 from framework.controllers import MerkabahBaseController
+from files.models import FileContainer
 
 resource_url = 'http://localhost:8080/api/galleries/%s' #TODO: HRM?
 
+BUCKET_NAME = 'cdn.mplsart.com'
+
+"""
+TODO:
+[ ] Add rest_login_required to endpoints
+[ ]
+"""
+
 
 class UploadUrlField(RestField):
+    """
+    Resource Field to handle retrieving a file upload url
+    """
+
     def to_resource(self, data):
         """
         Until we get subfields figured out - manually validate the props
         """
 
-        val = super(UploadUrlField, self).to_resource(data)        
+        val = super(UploadUrlField, self).to_resource(data)
         return val
 
     def from_resource(self, obj, field):
         """
-        Outout a field to dic value
+        Outout a field to dict value
         """
-        import cloudstorage
-        from google.appengine.ext import blobstore
-
         success_path = obj['callback_url']
-        bucket = 'cdn.mplsart.com'
-        upload_path = '%s%s' % (bucket, '/testing')
+        upload_path = '%s%s' % (BUCKET_NAME, '/testing')
         val = blobstore.create_upload_url(success_path, gs_bucket_name=upload_path)
 
         return val
 
 
-REST_RULES = [
-    UploadUrlField('upload_url', output_only=True),
-    RestField('callback_url', required=True)
-]
-
-
-class GalleryApiHandlerBase(RestHandlerBase):
-    """
-    Base Handler for all Gallery API endpoints
-    """
-
-    def get_rules(self):
-        return REST_RULES
-        
 class UploadUrlHandler(RestHandlerBase):
     """
     """
 
     def get_rules(self):
-        return REST_RULES
+        return [UploadUrlField('upload_url', output_only=True),
+                RestField('callback_url', required=True)]
 
     def _post(self):
         # TODO: Abstract this a bit more out into a rest-like service...
 
-        resource = Resource(self.cleaned_data, REST_RULES).to_dict()
+        resource = Resource(self.cleaned_data, self.get_rules()).to_dict()
         self.serve_success(resource)
-
-
 
 """
 Filestystem Interfaces for Merkabah
 
 """
 
-import logging
-from google.appengine.ext.blobstore import parse_file_info, parse_blob_info
-import cgi
 
 class Filesystem(object):
     """
     Base Filesystem Class. To add a Filesystem, extend this class and implement its methods
     """
+
+    def __init__(self, bucket):
+         #self.DEFAULT_UPLOAD_FOLDER = '/tmp'
+         self.bucket = bucket
+
+    def read(self, filename):
+        """
+        """
+        gcs_file = gcs.open(filename)
+        return gcs_file.read()
+
+    def write(self, filename, content, content_type):
+        """
+        TODO: Check if filename has leading slash.
+        """
+
+        # Prep the filename
+        filename = "/%s/%s" % (self.bucket, filename)
+        write_retry_params = gcs.RetryParams(backoff_factor=1.1)
+        gcs_file = gcs.open(filename,
+                            'w',
+                            content_type=content_type,
+                            options={'x-goog-acl': 'public-read', 'x-goog-meta-bar': 'bar'},
+                            retry_params=write_retry_params)
+        gcs_file.write(content)
+        gcs_file.close()
+        return filename
 
     def get_uploads(self, request, field_name=None, populate_post=False):
         """Get uploads sent to this handler.
@@ -102,11 +118,11 @@ class Filesystem(object):
           Empty list if there are no blob-info records for field_name.
         """
 
-        if hasattr(request,'__uploads') == False:
-            #request.META['wsgi.input'].seek(0) 
+        if hasattr(request, '__uploads') == False:
+            #request.META['wsgi.input'].seek(0)
             #fields = cgi.FieldStorage(request.META['wsgi.input'], environ=request.META)
-            
-            fields = request.POST.mixed();
+
+            fields = request.POST.mixed()
 
             request.__uploads = {}
             #if populate_post:
@@ -122,7 +138,7 @@ class Filesystem(object):
                     #if field.type_options['blob-key'].find('encoded_gs_file:') == 0:
                     if True:
                         # This is a Cloud Store Upload
-                        file_info = parse_file_info(field)
+                        file_info = blobstore.parse_file_info(field)
                         logging.warning(file_info)
                         request.__uploads.setdefault(key, []).append(file_info)
                     #else:
@@ -145,8 +161,6 @@ class Filesystem(object):
             return results
 
 
-
-
 class UploadCallbackHandler(MerkabahBaseController):
     """
     """
@@ -157,9 +171,29 @@ class UploadCallbackHandler(MerkabahBaseController):
     ]
     """
 
+
+    def create_image(self, fs, data, dest_filename, content_type, size):
+        """
+        Helper to put an image on the Cloud
+        """
+
+        new_gcs_filename = fs.write(dest_filename, data, content_type)
+        logging.warning(new_gcs_filename)
+
+
+        file_obj = FileContainer(
+            content_type=content_type,
+            size=size,
+            filename=dest_filename,
+            gcs_filename = dest_filename)
+
+        file_obj.put()
+
+        return file_obj
+
     def post(self):
-        
-        fs = Filesystem()
+
+        fs = Filesystem(BUCKET_NAME)
 
         has_files = fs.get_uploads(self.request, 'the_file', populate_post=True)
 
@@ -169,10 +203,36 @@ class UploadCallbackHandler(MerkabahBaseController):
             original_filename = file_info.filename
             content_type = file_info.content_type
             size = file_info.size
-            gs_object_name = file_info.gs_object_name # Using this we could urlfetch, but the file isn't public...
+            gs_object_name = file_info.gs_object_name # We could urlfetch this, but file not public
+            blob_key = blobstore.create_gs_key(gs_object_name)
+            
+            logging.warning(blob_key)
+
+            data = fs.read(gs_object_name.replace('/gs', ''))
+            #logging.warning(data)
+            # What we want to do now is create a copy of the file with our own info
+            dest_filename = 'juniper/%s' % original_filename
+
+            # Prep the file object
+            file_obj = self.create_image(fs, data, dest_filename, content_type, size)
+
+            # Finally delete the tmp file
+            #data = fs.delete(gs_object_name.replace('/gs', ''))
+
+            # This isn't really a rest resource...
+            payload = {
+                'file_key': file_obj.key.urlsafe(), # This should be a resource id
+                'gcs_filename': dest_filename
+            }
+            self.response.set_status(200)
+            self.response.headers['Content-Type'] = 'application/json'
+            self.response.write(json.dumps(payload))
+            return
+
+
+
+
             #blob_key = blobstore.create_gs_key(gs_object_name)
             #logging.warning(blob_key)
 
-        raise Exception([original_filename, content_type, size, gs_object_name, ])
-    
-    
+        #raise Exception([dest_filename, content_type, size, gs_object_name ])
