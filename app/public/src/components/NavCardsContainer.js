@@ -10,15 +10,20 @@ var CoolCard = React.createClass({
         };
 
         var id = "carousel-selector-" + this.props.pos;
+        var classes = '';
+        if  (this.props.pos == 0) {
+            classes = 'active';
+        }
 
         return <div className="item col-sm-3">
-            <a href="#" style={ styles } id={id}>
+            <a href="#" style={ styles } id={id} className={classes}>
                 <span>01/03</span>
-                <div>Totally xxx</div>
+                <div></div>
             </a>
         </div>;
     }
 });
+
 var CoolCardSet = React.createClass({
     render: function () {
 

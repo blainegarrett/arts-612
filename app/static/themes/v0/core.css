@@ -23,9 +23,24 @@ a { color: #0096BE; }
     #header_nav .navbar-brand {
         font-size:32px;
         color: #dfdfdf;
-        line-height: 32px;    
+        line-height: 32px;
+        padding: 10px;
     }
-#est-stamp { font-size: 14px; }
+
+.navbar-text.navbar-right {
+    margin-top:10px;
+    margin-bottom:10px;
+}
+    #est-stamp {
+        font-size: 14px;
+        line-height: 45px;
+        /* padding-top: 73px; */
+        display: block;
+        float: right;
+        height: 32px;
+    }
+
+
 
 
 .brand-title-art {
@@ -262,7 +277,7 @@ footer {
 
 @media screen and (min-width: 400px) {
     body {
-        padding-top: 85px;
+        padding-top: 70px;
         padding-bottom: 70px;
     }
 }
@@ -388,7 +403,7 @@ footer {
 
 
 /* Nav Bar Card Bits */
-#header_nav_cards { background-color: #222; box-shadow: 0 27px 68px #555; padding-bottom: 25px; }
+#header_nav_cards { background-color: #222; box-shadow: 0 27px 40px #555; }
     #header_nav_cards .container {
         opacity: 0;
         height:0;
@@ -401,7 +416,7 @@ footer {
         opacity: 1;
         transition: opacity .5s ease-in;
         transition: height .5s ease-in;
-        height:55px;
+        height:60px;
         overflow:hidden;
     }
 
@@ -419,7 +434,7 @@ footer {
         background-size: cover;
         background-position-y: 50%;
         z-index: 10;
-        height: 55px;
+        height: 40px;
     }
         .sidecard span {
             display:none;
@@ -446,8 +461,8 @@ footer {
 	    .row-shim {
 	        overflow: auto;
             border-top: 1px solid white;
-            margin-right: 15px;
-            margin-left: 14px;
+            margin-right: 10px;
+            margin-left: 9px;
 	    }
 
 	    #header_nav_cards .row-shim {
@@ -472,23 +487,23 @@ footer {
 		
 		#header_nav_cards .item a span, #slider-thumbs .item a span {
 			color:#fff;
-			height: 55px;
-			width: 45px;
+			height: 40px;
+			width: 60px;
 			background-color: #000;
 			display:block;
 			font-size:10px;
-			text-align:right;
-			padding-top: 13px;
+			text-align:center;
+			padding-top: 7px;
 			z-index: 15;
 		}
 		#header_nav_cards .item a span:before, #slider-thumbs .item a span:before {
 		    content: '';
-		    height: 55px;
+		    height: 40px;
 		    width: 55px;
 		    background-color: #000;
 		    position: absolute;
 		    bottom: 0;
-		    left: 45px;
+		    left: 60px;
 		    transform: skewY(-60deg);
 			-webkit-transform: skewY(-60eg);
 			  -moz-transform: skewY(-60deg);
@@ -503,14 +518,14 @@ footer {
 			position:absolute;
 			top:0;
 			left:0;
-			background-color : #fff;
+			background-color : #000;
 			opacity:.8;
 			text-align:center;
 			z-index: 14;
 			display: none;
 		}
 
-		#header_nav_cards .item a:hover  div, #slider-thumbs .item a:hover  div {
+		#header_nav_cards .item a:hover  div {
 			display:block;
 		}
 		/*
@@ -533,18 +548,17 @@ footer {
 		}
 
 
-/* Sliders */
-
-.hide-bullets {
-    list-style:none;
-    margin-left: -40px;
-    margin-top:20px;
+/* Carousel */
+.hide-bullets { list-style:none; margin-left: -40px; margin-top:20px; }
+.carousel-control .icon-next, .carousel-control .icon-prev { font-size: 75px; }
+#slider-thumbs .item a  div { display:block; }
+#slider-thumbs .item a.active  div { display:none; }
+.carousel-caption {
+    text-align:left;
+    border: 1px solid red;
+    float:left;
+    left:10%;
 }
-
-
-
-
-
 
 
 /* Beta Specific styles we can turn off */
@@ -553,3 +567,12 @@ body.beta { background-image:url('/static/themes/v0/bg_pink_stripe.jpg'); }
 body.beta #header_nav { background-color: #222; }
 body.beta .brand-title-art { color: inherit; text-transform: uppercase;}
     body.beta .brand-title-art:before { content: ''; }
+
+
+
+.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+

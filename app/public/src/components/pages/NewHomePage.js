@@ -189,6 +189,28 @@ var NewHomePage = React.createClass({
             return <Pod data={pod_data} container={container} />;
         });
 
+
+        /*
+        return <div>
+            <div className="row">
+                <div className="item col-sm-1"><div>1</div></div>
+                <div className="item col-sm-1"><div>2</div>
+                <div className="item col-sm-1"><div>3</div></div>
+                <div className="item col-sm-1"><div>4</div></div>
+                <div className="item col-sm-1"><div>5</div></div>
+                <div className="item col-sm-1"><div>6</div></div>
+                <div className="item col-sm-1"><div>7</div></div>
+                <div className="item col-sm-1"><div>8</div></div>
+                <div className="item col-sm-1"><div>9</div></div>
+                <div className="item col-sm-1"><div>10</div></div>
+                <div className="item col-sm-1"><div>11</div></div>
+                <div className="item col-sm-1"><div>12</div></div>
+
+            </div>
+        </div>
+        */
+
+
         return <div id="HomePageWrapper">
             <div className="row" id="home-marquee-row">
                 <div className="item col-sm-8">

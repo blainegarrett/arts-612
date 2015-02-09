@@ -8,7 +8,7 @@ var CarouselSliderPanel = React.createClass({
             'background' : 'url(' +  this.props.url + ');',
             'background-size': 'cover;',
             'background-position-y': '50%;',
-            'height': '305px',
+            'height': '403px',
             'width': '100%'
         };
 
@@ -18,7 +18,12 @@ var CarouselSliderPanel = React.createClass({
         }
 
         return <div className={classNames} data-slide-number={ this.props.pos }>
-            <div style={ style }></div>
+            <div style={ style }>
+                <div className="carousel-caption">
+                    <h2>sdfsdfsdfsd</h2>
+                    <p>sfsdfSD</p>
+                </div>
+            </div>
         </div>
     }
 });
@@ -32,7 +37,7 @@ var HomePageCarousel = React.createClass({
         });
 
         //Handles the carousel thumbnails
-        $('#slider-thumbs [id^=carousel-selector-]').click( function(){
+        $('#slider-thumbs [id^=carousel-selector-]').bind('click', function (){
             var id = this.id.substr(this.id.lastIndexOf("-") + 1);
             var id = parseInt(id);
 
@@ -40,6 +45,16 @@ var HomePageCarousel = React.createClass({
             console.log(id);
             return false;
         });
+        
+        
+        $('#myCarousel').on('slid.bs.carousel', function () {
+            var active_slide_id = $('.active', this).data('slide-number');
+            $('#slider-thumbs [id^=carousel-selector-]').removeClass('active');
+            $('#slider-thumbs #carousel-selector-' + active_slide_id + '').addClass('active');
+
+        });
+        
+        
     },
     render: function () {
         return <div>
@@ -61,11 +76,14 @@ var HomePageCarousel = React.createClass({
 
                             </div>
 
-                            <a className="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-                                <span className="glyphicon glyphicon-chevron-left"></span>                                       
+
+
+                            <a className="left carousel-control icon-prev" href="#myCarousel" role="button" data-slide="prev">
+                                <span className="fa fa-angle-left icon-prev"></span>                                       
                             </a>
+
                             <a className="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-                                <span className="glyphicon glyphicon-chevron-right"></span>                                       
+                                <span className="fa fa-angle-right icon-next"></span>                                       
                             </a>
 
 
