@@ -22,60 +22,55 @@ from framework.controllers import MerkabahBaseController
 from files.models import FileContainer
 from google.appengine.ext import ndb
 
-resource_url = 'http://' + get_domain() + '/api/files/%s' #TODO: HRM?
-
+resource_url = 'http://' + get_domain() + '/api/files/%s'
 BUCKET_NAME = 'cdn.mplsart.com'
-
-"""
-TODO:
-[ ] Add rest_login_required to endpoints
-[ ]
-"""
-
 
 
 def rescale(img_data, width, height, halign='middle', valign='middle'):
-  """Resize then optionally crop a given image.
+    """
+    Resize then optionally crop a given image.
 
-  Attributes:
+    Attributes:
     img_data: The image data
     width: The desired width
     height: The desired height
     halign: Acts like photoshop's 'Canvas Size' function, horizontally
-            aligning the crop to left, middle or right
+        aligning the crop to left, middle or right
     valign: Verticallly aligns the crop to top, middle or bottom
 
-  """
+    #TODO: Move to a lib...
 
-  image = images.Image(img_data)      
+    """
 
-  desired_wh_ratio = float(width) / float(height)
-  wh_ratio = float(image.width) / float(image.height)
+    image = images.Image(img_data)
 
-  if desired_wh_ratio > wh_ratio:
-    # resize to width, then crop to height
-    image.resize(width=width)
-    image.execute_transforms()
-    trim_y = (float(image.height - height) / 2) / image.height
-    if valign == 'top':
-      image.crop(0.0, 0.0, 1.0, 1 - (2 * trim_y))
-    elif valign == 'bottom':
-      image.crop(0.0, (2 * trim_y), 1.0, 1.0)
+    desired_wh_ratio = float(width) / float(height)
+    wh_ratio = float(image.width) / float(image.height)
+
+    if desired_wh_ratio > wh_ratio:
+        # resize to width, then crop to height
+        image.resize(width=width)
+        image.execute_transforms()
+        trim_y = (float(image.height - height) / 2) / image.height
+
+        if valign == 'top':
+            image.crop(0.0, 0.0, 1.0, 1 - (2 * trim_y))
+        elif valign == 'bottom':
+            image.crop(0.0, (2 * trim_y), 1.0, 1.0)
+        else:
+            image.crop(0.0, trim_y, 1.0, 1 - trim_y)
     else:
-      image.crop(0.0, trim_y, 1.0, 1 - trim_y)
-  else:
-    # resize to height, then crop to width
-    image.resize(height=height)
-    image.execute_transforms()
-    trim_x = (float(image.width - width) / 2) / image.width
-    if halign == 'left':
-      image.crop(0.0, 0.0, 1 - (2 * trim_x), 1.0)
-    elif halign == 'right':
-      image.crop((2 * trim_x), 0.0, 1.0, 1.0)
-    else:
-      image.crop(trim_x, 0.0, 1 - trim_x, 1.0)
-
-  return image.execute_transforms()
+        # resize to height, then crop to width
+        image.resize(height=height)
+        image.execute_transforms()
+        trim_x = (float(image.width - width) / 2) / image.width
+        if halign == 'left':
+            image.crop(0.0, 0.0, 1 - (2 * trim_x), 1.0)
+        elif halign == 'right':
+            image.crop((2 * trim_x), 0.0, 1.0, 1.0)
+        else:
+            image.crop(trim_x, 0.0, 1 - trim_x, 1.0)
+    return image.execute_transforms()
 
 
 class UploadUrlField(RestField):
@@ -128,8 +123,8 @@ class Filesystem(object):
     """
 
     def __init__(self, bucket):
-         #self.DEFAULT_UPLOAD_FOLDER = '/tmp'
-         self.bucket = bucket
+        #self.DEFAULT_UPLOAD_FOLDER = '/tmp'
+        self.bucket = bucket
 
     def read(self, filename):
         """
@@ -220,7 +215,6 @@ class UploadCallbackHandler(MerkabahBaseController):
     ]
     """
 
-
     def create_image(self, fs, data, dest_filename, content_type, size):
         """
         Helper to put an image on the Cloud
@@ -255,7 +249,7 @@ class UploadCallbackHandler(MerkabahBaseController):
             content_type=content_type,
             size=size,
             filename=dest_filename,
-            gcs_filename = dest_filename)
+            gcs_filename=dest_filename)
 
         file_obj.put()
 
@@ -275,8 +269,6 @@ class UploadCallbackHandler(MerkabahBaseController):
             size = file_info.size
             gs_object_name = file_info.gs_object_name # We could urlfetch this, but file not public
             blob_key = blobstore.create_gs_key(gs_object_name)
-            
-            logging.warning(blob_key)
 
             data = fs.read(gs_object_name.replace('/gs', ''))
 
@@ -293,8 +285,8 @@ class UploadCallbackHandler(MerkabahBaseController):
             # This isn't really a rest resource...
             payload = {
                 'file_key': file_obj.key.urlsafe(), # This should be a resource id
-                'gcs_filename': dest_filename
-            }
+                'gcs_filename': dest_filename}
+
             self.response.set_status(200)
             self.response.headers['Content-Type'] = 'application/json'
             self.response.write(json.dumps(payload))
@@ -307,9 +299,6 @@ class UploadCallbackHandler(MerkabahBaseController):
             #logging.warning(blob_key)
 
         #raise Exception([dest_filename, content_type, size, gs_object_name ])
-
-
-
 
 REST_RESOURCE_RULES = [
 
@@ -336,11 +325,11 @@ class ListResourceHandler(RestHandlerBase):
         # TODO: Abstract this a bit more out into a rest-like service...
 
         files = FileContainer.query().fetch(1000)
-        
+
         resource_list = []
         for f in files:
             resource_list.append(Resource(f, self.get_rules()).to_dict())
-        
+
         self.serve_success(resource_list)
 
 
@@ -360,7 +349,7 @@ class FileDetailHandler(RestHandlerBase):
             raise Exception('File Not Found')
 
         self.serve_success(Resource(f, self.get_rules()).to_dict())
-    
+
     def _post(self, resource_id):
         f_key = ndb.Key(urlsafe=resource_id)
         f = f_key.get()
@@ -379,4 +368,3 @@ class FileDetailHandler(RestHandlerBase):
             f.put()
 
         self.serve_success(Resource(f, self.get_rules()).to_dict())
-        
