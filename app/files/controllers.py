@@ -9,17 +9,20 @@ import logging
 import cloudstorage as gcs
 from google.appengine.ext import blobstore
 from google.appengine.api import images
+from utils import get_domain
 
 #from auth.decorators import rest_login_required
 
 from rest.controllers import RestHandlerBase
 from rest.resource import Resource
 from rest.resource import RestField
+from rest.resource import ResourceIdField, ResourceUrlField, DatetimeField
 
 from framework.controllers import MerkabahBaseController
 from files.models import FileContainer
+from google.appengine.ext import ndb
 
-resource_url = 'http://localhost:8080/api/galleries/%s' #TODO: HRM?
+resource_url = 'http://' + get_domain() + '/api/files/%s' #TODO: HRM?
 
 BUCKET_NAME = 'cdn.mplsart.com'
 
@@ -304,3 +307,76 @@ class UploadCallbackHandler(MerkabahBaseController):
             #logging.warning(blob_key)
 
         #raise Exception([dest_filename, content_type, size, gs_object_name ])
+
+
+
+
+REST_RESOURCE_RULES = [
+
+    ResourceIdField(output_only=True),
+    ResourceUrlField(resource_url, output_only=True),
+    RestField(FileContainer.filename, required=False),
+    RestField(FileContainer.caption, required=False),
+    RestField(FileContainer.gcs_filename, required=False),
+    RestField(FileContainer.size, required=False),
+    DatetimeField(FileContainer.created_date, output_only=True),
+    DatetimeField(FileContainer.modified_date, output_only=True),
+]
+
+
+class ListResourceHandler(RestHandlerBase):
+    """
+    """
+
+    def get_rules(self):
+        return REST_RESOURCE_RULES
+
+    def _get(self):
+
+        # TODO: Abstract this a bit more out into a rest-like service...
+
+        files = FileContainer.query().fetch(1000)
+        
+        resource_list = []
+        for f in files:
+            resource_list.append(Resource(f, self.get_rules()).to_dict())
+        
+        self.serve_success(resource_list)
+
+
+class FileDetailHandler(RestHandlerBase):
+    """
+    Handler for a specific file
+    """
+
+    def get_rules(self):
+        return REST_RESOURCE_RULES
+
+    def _get(self, resource_id):
+        # TODO: Abstract this a bit more out into a rest-like service...
+        f_key = ndb.Key(urlsafe=resource_id)
+        f = f_key.get()
+        if not f:
+            raise Exception('File Not Found')
+
+        self.serve_success(Resource(f, self.get_rules()).to_dict())
+    
+    def _post(self, resource_id):
+        f_key = ndb.Key(urlsafe=resource_id)
+        f = f_key.get()
+        if not f:
+            raise Exception('File Not Found')
+
+        do_put = False # Only do put if something changed
+        for prop, val in self.cleaned_data.items():
+            if getattr(f, prop) == val:
+                continue
+
+            do_put = True
+            setattr(f, prop, val)
+
+        if do_put:
+            f.put()
+
+        self.serve_success(Resource(f, self.get_rules()).to_dict())
+        

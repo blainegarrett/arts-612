@@ -61,18 +61,23 @@ var AdminHomePage = React.createClass({
                 <h2>Hello!</h2>
                 <p> This is the super temporary admin page. It will get better. I swear.</p>
                 <ul>
-                    <li><a href="/admin/venues/">Manage Venues</a></li><li><a href="/admin/events/">Manage Events</a></li>
+                    <li><a href="/admin/venues/">Manage Venues</a></li>
+                    <li><a href="/admin/events/">Manage Events</a></li>
+                    <li><a href="/admin/files/">Manage Files</a></li>
                 </ul>
                 
                 <h2>Tools</h2>
                 <ul>
                     <li><a href="/admin/events/debugger/">Event Search API Debugger</a></li>
                 </ul>
-                
+
+                <h2>Settings</h2>
+                <dl className="dl-horizontal">
+                    <dt>Is Appspot: </dt><dd>{ settings.is_appspot.toString() }</dd>
+                    <dt>Domain: </dt><dd>{ settings.domain.toString() }</dd>
+                </dl>
             </div>
         </div>
-
-
 
 
         <div className="row">

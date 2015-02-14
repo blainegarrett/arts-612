@@ -52,8 +52,9 @@ var File = React.createClass({
             //alert('lets get the upload url...');
 
             //console.log(this.state.callback_url);
+            console.log(settings.domain);
 
-        	var resource_url = 'http://localhost:8080/api/files/upload_url';
+        	var resource_url = 'http://' + settings.domain  + '/api/files/upload_url';
             var restData = {"callback_url": callback_url};
 
             $.ajax({
@@ -325,9 +326,8 @@ var FileUploader = React.createClass({
     signalFileAdded: function (payload) {
         return AppDispatcher.handleSetMeta({signal: 'ADDFILES', payload: payload})
     },
-    
+
     render: function() {
-        console.log(this.state.callback_url);
 
         // Add any files that are default ... this will be called from rest api...
 
@@ -336,10 +336,10 @@ var FileUploader = React.createClass({
             {'path': "http://placehold.it/300x300"}
         ];
 
-        this.signalFileAdded(data_from_rest_resource)
+        //this.signalFileAdded(data_from_rest_resource)
 
         return <div>
-            <input id="files" onChange={this.file_selection_handler } name="files[]" multiple="" type="file" />
+            <input id="files" onChange={this.file_selection_handler } name="files[]" multiple="true" type="file" />
             
             <FileList />
         

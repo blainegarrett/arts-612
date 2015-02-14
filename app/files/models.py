@@ -14,3 +14,4 @@ class FileContainer(ndb.Model):
     #creator = ndb.KeyProperty(kind=User)
     created_date = ndb.DateTimeProperty(auto_now_add=True)
     modified_date = ndb.DateTimeProperty(auto_now=True)
+    caption = ndb.StringProperty()
