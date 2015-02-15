@@ -90,6 +90,15 @@ var FileRecord = React.createClass({
 
 var FilesMainPage = React.createClass({
 
+    upload_error_callback: function() {
+        alert('ERROR CALLBACK FIRING');
+    },
+
+    upload_success_callback: function(file_resource) {
+        alert('SUCCESS CALLBACK FIRING');
+        console.log(file_resource);
+    },    
+
     getInitialState: function(){
         var state = {
             data: [], 
@@ -122,10 +131,18 @@ var FilesMainPage = React.createClass({
             });
         }
         
-        return <div>
+        return <div className="row">
+        
+            <h2><a href="/admin">Admin</a> / Files</h2>
+                
             <b>Files Home Page</b>
 
-            <FileUploader callback_url="/api/files/upload_callback" />
+            <FileUploader
+                allow_multiple={ true }
+                callback_url="/api/files/upload_callback" 
+                
+                upload_success_callback = { this.upload_success_callback }
+                upload_error_callback = { this.upload_error_callback } />
             
             <div className="container">
                  <div className="row" id="thumbs">

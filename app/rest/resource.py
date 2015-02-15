@@ -9,7 +9,6 @@ import voluptuous
 import logging
 from rest.params import coerce_to_datetime, coerce_from_datetime
 
-
 NON_FIELD_ERRORS = '__all__'
 VALID_RESORCE_TYPES = (ndb.Model, dict) # None: is also allowed
 
@@ -318,6 +317,7 @@ class SlugField(RestField):
         kwargs['validator'] = voluptuous.Coerce(str)
 
         super(SlugField, self).__init__(prop, **kwargs)
+
 
 class DatetimeField(RestField):
     """

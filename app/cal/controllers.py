@@ -23,11 +23,10 @@ from modules.events.internal.models import Event
 from modules.events.constants import CATEGORY
 
 from framework.controllers import MerkabahBaseController
-
 from cal.rest_helpers import EventDateField
+from utils import get_domain
 
-
-resource_url = 'http://localhost:8080/api/events/%s' #TODO: HRM?
+resource_url = 'http://' + get_domain()  + '/api/events/%s' #TODO: HRM?
 
 # verbosity vs. input vs. output
 

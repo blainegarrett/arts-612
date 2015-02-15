@@ -9,7 +9,6 @@ import logging
 import cloudstorage as gcs
 from google.appengine.ext import blobstore
 from google.appengine.api import images
-from utils import get_domain
 
 #from auth.decorators import rest_login_required
 
@@ -22,7 +21,9 @@ from framework.controllers import MerkabahBaseController
 from files.models import FileContainer
 from google.appengine.ext import ndb
 
-resource_url = 'http://' + get_domain() + '/api/files/%s'
+from modules.venues.internal.models import Venue
+from files.rest_helpers import REST_RESOURCE_RULES
+
 BUCKET_NAME = 'cdn.mplsart.com'
 
 
@@ -278,39 +279,49 @@ class UploadCallbackHandler(MerkabahBaseController):
 
             # Prep the file object
             file_obj = self.create_image(fs, data, dest_filename, content_type, size)
+            file_obj_key = file_obj.key.urlsafe()
 
             # Finally delete the tmp file
             #data = fs.delete(gs_object_name.replace('/gs', ''))
 
-            # This isn't really a rest resource...
+            # "Return" a rest resource of sorts
             payload = {
-                'file_key': file_obj.key.urlsafe(), # This should be a resource id
-                'gcs_filename': dest_filename}
+                'status': 200,
+                'messages': [],
+                'results': Resource(file_obj, REST_RESOURCE_RULES).to_dict()
+            }
 
             self.response.set_status(200)
             self.response.headers['Content-Type'] = 'application/json'
             self.response.write(json.dumps(payload))
+
+            # Handle Attachment to Resource
+            attach_to_resource_id = self.request.get('attach_to_resource', None)
+
+
+            # TODO: This should be done in a txn - especially when there are multiple uploads
+            if attach_to_resource_id:
+                attachment_resource_key = ndb.Key(urlsafe=attach_to_resource_id)
+                attachment_resource = attachment_resource_key.get()
+
+                if not attachment_resource:
+                    raise Exception('Resource with key %s not found. File was uploaded...' % attach_to_resource_id)
+
+                
+                if not attachment_resource.attachment_resources:
+                    attachment_resource.attachment_resources = []
+
+                # Update attachments
+                attachment_resource.attachment_resources.append(file_obj_key)
+
+                target_property = self.request.get('target_property', None)
+                if target_property:
+                    setattr(attachment_resource, target_property, file_obj_key)
+
+                attachment_resource.put()
+
             return
 
-
-
-
-            #blob_key = blobstore.create_gs_key(gs_object_name)
-            #logging.warning(blob_key)
-
-        #raise Exception([dest_filename, content_type, size, gs_object_name ])
-
-REST_RESOURCE_RULES = [
-
-    ResourceIdField(output_only=True),
-    ResourceUrlField(resource_url, output_only=True),
-    RestField(FileContainer.filename, required=False),
-    RestField(FileContainer.caption, required=False),
-    RestField(FileContainer.gcs_filename, required=False),
-    RestField(FileContainer.size, required=False),
-    DatetimeField(FileContainer.created_date, output_only=True),
-    DatetimeField(FileContainer.modified_date, output_only=True),
-]
 
 
 class ListResourceHandler(RestHandlerBase):

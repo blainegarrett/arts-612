@@ -12,14 +12,16 @@ from google.appengine.ext import ndb
 from rest.controllers import RestHandlerBase
 from rest.resource import Resource
 from rest.resource import RestField, SlugField, ResourceIdField, ResourceUrlField, GeoField
+from files.rest_helpers import FileField
 
 from modules.venues.internal import api as venues_api
 from modules.venues.internal import search as vsearch
 from modules.venues.internal.models import Venue
 
 from framework.controllers import MerkabahBaseController
+from utils import get_domain
 
-resource_url = 'http://localhost:8080/api/galleries/%s' #TODO: HRM?
+resource_url = 'http://' + get_domain()  + '/api/galleries/%s'
 
 REST_RULES = [
     ResourceIdField(output_only=True),
@@ -39,6 +41,8 @@ REST_RULES = [
     RestField(Venue.category, required=True),
     RestField(Venue.hours, required=False),
     GeoField(Venue.geo, required=False),
+    RestField(Venue.primary_image_resource_id, required=False),
+    FileField('primary_image_resource', required=False, output_only=True, resource_id_prop='primary_image_resource_id'),
 ]
 
 

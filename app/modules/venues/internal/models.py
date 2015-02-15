@@ -22,3 +22,6 @@ class Venue(ndb.Model):
     email = ndb.StringProperty()
     category = ndb.StringProperty()
     hours = ndb.JsonProperty()
+
+    primary_image_resource_id = ndb.StringProperty()
+    attachment_resources =  ndb.StringProperty(repeated=True)
