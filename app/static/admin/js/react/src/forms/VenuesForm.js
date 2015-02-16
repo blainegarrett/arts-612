@@ -35,8 +35,8 @@ VenuesForm = React.createClass({
             save_callback: this.props.save_callback,
             errors: [],
             is_edit: this.props.is_edit,
-            data: {'results': {}};
-        }
+            data: {results: {}}
+        };
     },
 
     submitHandler: function(e) {
@@ -139,15 +139,11 @@ VenuesForm = React.createClass({
         ];
 
         var img_src = {};
-        if (settings.is_appspot){
-            img_src = 'http://cdn.mplsart.com/' + this.state.data.results.primary_image_resource.filename + '.sized';
-        }
-        else {
-            img_src = '/_ah/gcs/cdn.mplsart.com/' + this.state.data.results.primary_image_resource.filename + '.sized';
-        }
+        console.log(this.state.data.results.primary_image_resource);
 
-
-        console.log(this.state.data);
+        if (this.state.data.results.primary_image_resource.versions) {
+            img_src = this.state.data.results.primary_image_resource.versions.CARD_LARGE.url;
+        }
 
         var uploader = null;
         if (this.state.data && this.state.data.results && this.state.data.results.resource_id ) {

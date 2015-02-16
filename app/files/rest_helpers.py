@@ -17,12 +17,10 @@ REST_RESOURCE_RULES = [
 
     ResourceIdField(output_only=True),
     ResourceUrlField(resource_url, output_only=True),
-    RestField(FileContainer.filename, required=False),
     RestField(FileContainer.caption, required=False),
-    RestField(FileContainer.gcs_filename, required=False),
-    RestField(FileContainer.size, required=False),
     DatetimeField(FileContainer.created_date, output_only=True),
     DatetimeField(FileContainer.modified_date, output_only=True),
+    RestField(FileContainer.versions, required=False),
 ]
 
 

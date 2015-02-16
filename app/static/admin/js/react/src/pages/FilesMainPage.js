@@ -62,17 +62,11 @@ var FileRecord = React.createClass({
             }.bind(this)
 
         });
-
     },
 
     render: function(){
         var styles = {}
-        if (settings.is_appspot){
-            styles['background-image'] = 'url("http://cdn.mplsart.com/' + this.state.file.filename + '.sized")';
-        }
-        else {
-            styles['background-image'] = 'url("/_ah/gcs/cdn.mplsart.com/' + this.state.file.filename + '.sized")';
-        }
+        styles['background-image'] = 'url("' + this.state.file.versions.THUMB.url + '")';
 
         var overlay = <B.Popover title={ this.state.file.filename }>
                 <textarea className="form-control inline-editable" disabled={this.state.saving} type="text" placeholder="Click to Edit Caption" value={ this.state.file.caption } onBlur={ this.changeHandler } onChange={ this.typeHandler } />

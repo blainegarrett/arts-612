@@ -9,6 +9,7 @@ import logging
 import cloudstorage as gcs
 from google.appengine.ext import blobstore
 from google.appengine.api import images
+from utils import is_appspot, get_domain
 
 #from auth.decorators import rest_login_required
 
@@ -25,6 +26,20 @@ from modules.venues.internal.models import Venue
 from files.rest_helpers import REST_RESOURCE_RULES
 
 BUCKET_NAME = 'cdn.mplsart.com'
+
+KEY = 'key'
+HEIGHT = 'height'
+WIDTH = 'width'
+MIME_JPEG = 'image/jpeg'
+MIME_PNG = 'image/png'
+
+
+class VERSIONS(object):
+    FULL = {'key': 'FULL', 'height': 1200, 'width': 1200}
+    SIZED = {'key': 'SIZED', 'height': 700, 'width': 700}
+    CARD_LARGE = {'key': 'CARD_LARGE', 'height': 524, 'width': 1000}
+    CARD_SMALL = {'key': 'CARD_SMALL', 'height': 367, 'width': 700}
+    THUMB = {'key': 'THUMB', 'height': 160, 'width': 160}
 
 
 def rescale(img_data, width, height, halign='middle', valign='middle'):
@@ -71,7 +86,9 @@ def rescale(img_data, width, height, halign='middle', valign='middle'):
             image.crop((2 * trim_x), 0.0, 1.0, 1.0)
         else:
             image.crop(trim_x, 0.0, 1 - trim_x, 1.0)
-    return image.execute_transforms()
+
+    final_data = image.execute_transforms(output_encoding=images.PNG)
+    return final_data, image.height, image.width
 
 
 class UploadUrlField(RestField):
@@ -133,22 +150,24 @@ class Filesystem(object):
         gcs_file = gcs.open(filename)
         return gcs_file.read()
 
-    def write(self, filename, content, content_type):
+    def write(self, filepath, content, content_type):
         """
         TODO: Check if filename has leading slash.
+        filepath is relative to bucket/
         """
 
         # Prep the filename
-        filename = "/%s/%s" % (self.bucket, filename)
+        
+        destination_path = "/%s/%s" % (self.bucket, filepath)
         write_retry_params = gcs.RetryParams(backoff_factor=1.1)
-        gcs_file = gcs.open(filename,
+        gcs_file = gcs.open(destination_path,
                             'w',
                             content_type=content_type,
                             options={'x-goog-acl': 'public-read', 'x-goog-meta-bar': 'bar'},
                             retry_params=write_retry_params)
         gcs_file.write(content)
         gcs_file.close()
-        return filename
+        return filepath
 
     def get_uploads(self, request, field_name=None, populate_post=False):
         """Get uploads sent to this handler.
@@ -216,47 +235,118 @@ class UploadCallbackHandler(MerkabahBaseController):
     ]
     """
 
-    def create_image(self, fs, data, dest_filename, content_type, size):
+    def create_image(self, fs, temp_file_data, dest_filename):
         """
         Helper to put an image on the Cloud
+        # FULL and SIZED are JPGs at 85 quality (DEFAULT)
+        # CARD_* and THUMB are PNGs
         """
 
-        # Original Image
-        new_gcs_filename = fs.write(dest_filename, data, content_type)
-        logging.warning(new_gcs_filename)
+        versions_data = {
+            VERSIONS.FULL[KEY]: '',
+            VERSIONS.SIZED[KEY]: '',
+            VERSIONS.CARD_LARGE[KEY]: '',
+            VERSIONS.CARD_SMALL[KEY]: '',
+            VERSIONS.THUMB[KEY]: ''}
 
+        '''
+        FULL: no crop scaled to max 1500 width ("original")
+        SIZED: no crop scaled to 700  width ("sized")
+        CARD_LARGE: 1200 631
+        CARD_SMALL: 600 x 312
+        THUMB: 160 x 160
+        '''
 
-        # Thumbnail
-        file_content = rescale(data, 365, 235, halign='middle', valign='middle')
-        thumbnail_filename = dest_filename + '.thumb'
-        #'artwork/thumbnail/%s.%s' % (slug, extension)
-
-        logging.debug(thumbnail_filename)
-        fs.write(thumbnail_filename, file_content, content_type)
+        ids = FileContainer.allocate_ids(size=1)
+        file_obj_key = ndb.Key('FileContainer', ids[0]) # TODO: coerce_to_resource_id
+        resource_id = file_obj_key.urlsafe()
+        dest_folder_name = 'file_container/%s/' % (resource_id)
 
         # Sized Images
-        img = images.Image(data)
-        img.resize(width=1000, height=1000)
-        img.im_feeling_lucky()
-        file_content = img.execute_transforms(output_encoding=images.JPEG)
+        #img = images.Image(data)
+        #img.resize(width=1500, height=1500)
+        #file_content = img.execute_transforms(output_encoding=images.JPEG)
 
-        #sized_filename = 'artwork/sized/%s.%s' % (slug, extension)
-        sized_filename = dest_filename + '.sized'
+        img = images.Image(temp_file_data) # TODO: Take in filename= or blob_key=
 
-        logging.debug(sized_filename)
-        fs.write(sized_filename, file_content, content_type)
+        # VERSION.FULL - scaled to max dimension 1200px
+        img.resize(width=VERSIONS.FULL[WIDTH], height=VERSIONS.FULL[HEIGHT])
+        full_data = img.execute_transforms(output_encoding=images.JPEG)
+        full_height, full_width = img.height, img.width
 
-        file_obj = FileContainer(
-            content_type=content_type,
-            size=size,
+        # Write FULL version file ASAP so as not to lose it
+
+        full_filename = fs.write(dest_folder_name + 'full.jpg', full_data, MIME_JPEG)
+        logging.warning(full_filename)
+
+        #SIZED VERSION:
+        img.resize(width=VERSIONS.SIZED[WIDTH], height=VERSIONS.SIZED[HEIGHT])
+        sized_data = img.execute_transforms(output_encoding=images.JPEG)
+        sized_filename = fs.write(dest_folder_name + 'sized.jpg', sized_data, MIME_JPEG) # TODO: filename
+        sized_height, sized_width = img.height, img.width
+
+        # CARD_LARGE
+        card_large_data, card_large_height, card_large_width = rescale(full_data, VERSIONS.CARD_LARGE[WIDTH], VERSIONS.CARD_LARGE[HEIGHT], halign='middle', valign='middle')
+        card_large_filename = fs.write(dest_folder_name + 'card_large.png', card_large_data, MIME_PNG) # TODO: filename
+
+        # CARD_SMALL
+        card_small_data, card_small_height, card_small_width = rescale(card_large_data, VERSIONS.CARD_SMALL[WIDTH], VERSIONS.CARD_SMALL[HEIGHT], halign='middle', valign='middle')
+        card_small_filename = fs.write(dest_folder_name + 'card_small.png', card_small_data, MIME_PNG) # TODO: filename
+
+        # THUMB
+        thumb_data, thumb_height, thumb_width = rescale(sized_data, VERSIONS.THUMB[WIDTH], VERSIONS.THUMB[HEIGHT], halign='middle', valign='middle')
+        thumb_filename = fs.write(dest_folder_name + 'thumb.png', thumb_data, MIME_PNG) # TODO: filename
+
+        # Prep the data to be stored
+        url_prefx = ''
+        if is_appspot():
+            url_prefix = 'http://%s/' % BUCKET_NAME
+        else:
+            url_prefix = 'http://%s/_ah/gcs/%s/' % (get_domain(), BUCKET_NAME)
+
+        full_url = url_prefix + full_filename
+        sized_url = url_prefix + sized_filename
+        card_large_url = url_prefix + card_large_filename
+        card_small_url = url_prefix + card_small_filename
+        thumb_url = url_prefix + thumb_filename
+
+        versions_data[VERSIONS.FULL[KEY]] = {'url': full_url,
+                                             'height': full_height,
+                                             'width': full_width}
+
+        versions_data[VERSIONS.SIZED[KEY]] = {'url': sized_url,
+                                              'height': sized_height,
+                                              'width': sized_width}
+
+        versions_data[VERSIONS.CARD_LARGE[KEY]] = {'url': card_large_url,
+                                                   'height': card_large_height,
+                                                   'width': card_large_width}
+
+        versions_data[VERSIONS.CARD_SMALL[KEY]] = {'url': card_small_url,
+                                                   'height': card_small_height,
+                                                   'width': card_small_width}
+
+        versions_data[VERSIONS.THUMB[KEY]] = {'url': thumb_url,
+                                              'height': thumb_height,
+                                              'width': thumb_width}        
+
+
+        # Create Datastore entity
+        file_obj = FileContainer(key=file_obj_key,
             filename=dest_filename,
-            gcs_filename=dest_filename)
+            gcs_filename=dest_filename,
+            versions=versions_data,
+            file_type='image'
+        )
 
         file_obj.put()
 
         return file_obj
 
     def post(self):
+        """
+        Callback for a successful upload... keep this lightweight
+        """
 
         fs = Filesystem(BUCKET_NAME)
 
@@ -273,12 +363,11 @@ class UploadCallbackHandler(MerkabahBaseController):
 
             data = fs.read(gs_object_name.replace('/gs', ''))
 
-            #logging.warning(data)
             # What we want to do now is create a copy of the file with our own info
             dest_filename = 'juniper/%s' % original_filename
 
             # Prep the file object
-            file_obj = self.create_image(fs, data, dest_filename, content_type, size)
+            file_obj = self.create_image(fs, data, dest_filename)
             file_obj_key = file_obj.key.urlsafe()
 
             # Finally delete the tmp file
@@ -295,9 +384,11 @@ class UploadCallbackHandler(MerkabahBaseController):
             self.response.headers['Content-Type'] = 'application/json'
             self.response.write(json.dumps(payload))
 
-            # Handle Attachment to Resource
-            attach_to_resource_id = self.request.get('attach_to_resource', None)
 
+            # Handle Attachment to Resource
+
+            # Do this in a deferred task?
+            attach_to_resource_id = self.request.get('attach_to_resource', None)
 
             # TODO: This should be done in a txn - especially when there are multiple uploads
             if attach_to_resource_id:
@@ -307,7 +398,6 @@ class UploadCallbackHandler(MerkabahBaseController):
                 if not attachment_resource:
                     raise Exception('Resource with key %s not found. File was uploaded...' % attach_to_resource_id)
 
-                
                 if not attachment_resource.attachment_resources:
                     attachment_resource.attachment_resources = []
 
@@ -321,7 +411,6 @@ class UploadCallbackHandler(MerkabahBaseController):
                 attachment_resource.put()
 
             return
-
 
 
 class ListResourceHandler(RestHandlerBase):
