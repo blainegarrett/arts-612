@@ -141,7 +141,7 @@ VenuesForm = React.createClass({
         var img_src = {};
         console.log(this.state.data.results.primary_image_resource);
 
-        if (this.state.data.results.primary_image_resource.versions) {
+        if (this.state.data.results.primary_image_resource) {
             img_src = this.state.data.results.primary_image_resource.versions.CARD_LARGE.url;
         }
 

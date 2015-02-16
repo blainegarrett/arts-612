@@ -6,8 +6,6 @@ import voluptuous
 from rest.params import coerce_to_cursor
 from google.appengine.api import memcache
 from google.appengine.ext import ndb
-from pytz import timezone
-import datetime
 import logging
 
 from auth.decorators import rest_login_required
@@ -17,6 +15,7 @@ from rest.controllers import RestHandlerBase
 from rest.resource import Resource
 from rest.resource import RestField, SlugField, ResourceIdField, ResourceUrlField
 from rest.params import coerce_to_datetime
+from files.rest_helpers import FileField
 
 from modules.events.internal import api as events_api
 from modules.events.internal.models import Event
@@ -37,7 +36,9 @@ REST_RULES = [
     RestField(Event.name, required=True),
 
     RestField(Event.url, required=False),
-    EventDateField(Event.event_dates, required=True)
+    EventDateField(Event.event_dates, required=True),
+    RestField(Event.primary_image_resource_id, required=False),
+    FileField('primary_image_resource', required=False, output_only=True, resource_id_prop='primary_image_resource_id')
 ]
 
 
@@ -138,8 +139,6 @@ class EventsUpcomingHandler(RestHandlerBase):
         # Serialize the params for cache key
         from utils import ubercache
         import json
-
-        d = params.items()
 
         key = str(hash(json.dumps(self.params)))
 

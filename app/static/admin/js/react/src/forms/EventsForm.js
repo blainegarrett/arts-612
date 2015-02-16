@@ -6,7 +6,7 @@ var DateTimeField = require('./../utilities/forms/fields/DateTimeField');
 var DateRangeWidget = require('./../utilities/forms/widgets/DateRangeWidget');
 var AutoCompleteWidget = require('./../utilities/forms/widgets/AutoCompleteWidget');
 var SlugWidget = require('./../utilities/forms/widgets/SlugWidget');
-
+var FileUploader = require('./../components/FileUploader');
 
 EventDateForm =  React.createClass({
     toResource: function() {
@@ -212,6 +212,19 @@ EventsForm = React.createClass({
         });
 
     },
+    upload_success_callback: function (file_resource) {
+        // File Uploaded... set src, hidden fields, etc
+
+        var data = this.state.data;
+        data.results.primary_image_resource = file_resource;
+        
+        this.setState({data: data})
+    },
+    upload_error_callback: function () {
+        alert('There was an error uploading stuff...');
+    },
+
+
     render: function(){
         if (this.state.is_edit && !this.state.data.results.name) {
             return <div>Loading...</div>
@@ -232,28 +245,52 @@ EventsForm = React.createClass({
         ];
 
 
+        var img_src = {};
+
+        if (this.state.data.results.primary_image_resource) {
+            img_src = this.state.data.results.primary_image_resource.versions.CARD_LARGE.url;
+        }
+
+        var uploader = null;
+        if (this.state.data && this.state.data.results && this.state.data.results.resource_id ) {
+            uploader = <FileUploader
+                allow_multiple={ false }
+                callback_url={'/api/files/upload_callback?attach_to_resource=' + this.state.data.results.resource_id  + '&target_property=primary_image_resource_id'}
+
+                upload_success_callback = { this.upload_success_callback }
+                upload_error_callback = { this.upload_error_callback } />
+        }
+
         var event_date_forms = '';
         
-        
-        console.log(this.sluggable_helper);
-        
-        return <form role="form" className="form-horizontal" action="#" onSubmit={this.submitHandler}>
-            { errors }
+        return <div className="row">
+            <div className="col-lg-8">
+                <form role="form" className="form-horizontal" action="#" onSubmit={this.submitHandler}>
+                    { errors }
+                    
+              <img src={ img_src } className="img-responsive" />
 
-          <TextField id="name"  ref="field.name" val={this.state.data.results.name } form={this} placeholder="Enter Event Name" onChangeCallback={this.sluggable_helper} />
-          <SlugField id="slug" form={this}  ref="field.slug"  val={this.state.data.results.slug } widget={SlugWidget} url_root="http://mplsart.com/events/" />
+              <TextField id="name"  ref="field.name" val={this.state.data.results.name } form={this} placeholder="Enter Event Name" onChangeCallback={this.sluggable_helper} />
+              <SlugField id="slug" form={this}  ref="field.slug"  val={this.state.data.results.slug } widget={SlugWidget} url_root="http://mplsart.com/events/" />
 
-          <TextField id="url" form={this} ref="field.url"  val={this.state.data.results.url } />
-          <EventDateFormsInterface id="event_dates" form={this}  ref="field.event_dates"  val={this.state.data.results.event_dates } />
+              <TextField id="url" form={this} ref="field.url"  val={this.state.data.results.url } />
+              <EventDateFormsInterface id="event_dates" form={this}  ref="field.event_dates"  val={this.state.data.results.event_dates } />
 
 
-          <div className="pull-right">
-              <button type="submit" className="btn btn-primary">Submit</button>
-              &nbsp;
-              &nbsp;
-              <a href="/admin/events/" className="small">cancel</a>
-         </div>
-        </form> 
+              <div className="pull-right">
+                  <button type="submit" className="btn btn-primary">Submit</button>
+                  &nbsp;
+                  &nbsp;
+                  <a href="/admin/events/" className="small">cancel</a>
+             </div>
+            </form>
+        </div>
+            <div className="col-lg-4">
+                { uploader }
+            </div>
+
+        </div>;
+
     }
     
 });

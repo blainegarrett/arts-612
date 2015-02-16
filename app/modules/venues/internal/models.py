@@ -23,5 +23,8 @@ class Venue(ndb.Model):
     category = ndb.StringProperty()
     hours = ndb.JsonProperty()
 
+    created_date = ndb.DateTimeProperty(auto_now_add=True)
+    modified_date = ndb.DateTimeProperty(auto_now=True)
+
     primary_image_resource_id = ndb.StringProperty()
     attachment_resources =  ndb.StringProperty(repeated=True)
