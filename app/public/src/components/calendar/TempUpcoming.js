@@ -66,9 +66,15 @@ var TempEvent = React.createClass({
             ed = this.props.event_dates[0];
             console.error('Warning: Failed to find an ed for the below event with a ed.type matching "' + this.props.ed_filter  + '". Defaulting to first found one. ');
             console.error(this.props);
-        }        
+        }
+
+
+        if (this.props.primary_image_resource) {
+            image = <img src={ this.props.primary_image_resource.versions.CARD_SMALL.url } className="img-responsive" />
+        }
 
         return (<li className="event">
+            { image }
     		<div><a href={this.props.url} target="_blank"><span className="event-title">{this.props.name}</span></a></div>
             <div className="event-time"><NiceDate start={ ed.start } end={ ed.end } eventdate_type={ ed.type } /></div>
             <div className="event-venue-name">{ed.venue.name}</div>
@@ -106,7 +112,10 @@ var TempEventsListMixin = {
 
 var TempEventList = React.createClass({
     getInitialState: function () {
-        return {ed_filter: this.props.ed_filter, event_data: this.props.event_data };
+        return {
+            ed_filter: this.props.ed_filter, 
+            event_data: this.props.event_data
+        };
     },
     render: function (){
         var eventNodes;
@@ -114,7 +123,7 @@ var TempEventList = React.createClass({
 
         if (this.props.event_data.results != undefined) {
             eventNodes = this.props.event_data.results.map(function (event) {
-                return <TempEvent key={event.resource_id} name={event.name} ed_filter={ed_filter} url={event.url} event_dates={ event.event_dates }/>;
+                return <TempEvent key={event.resource_id} primary_image_resource={event.primary_image_resource} name={event.name} ed_filter={ed_filter} url={event.url} event_dates={ event.event_dates } />;
             });
         }
         
