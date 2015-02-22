@@ -5,6 +5,7 @@ var ChoiceField = require('./../utilities/forms/fields/ChoiceField');
 var GeoPtField = require('./../utilities/forms/fields/GeoPtField');
 var CheckboxWidget = require('./../utilities/forms/widgets/CheckboxWidget');
 var SlugWidget = require('./../utilities/forms/widgets/SlugWidget');
+var FileUploader = require('./../components/FileUploader');
 
 VenuesForm = React.createClass({
     propTypes: {
@@ -34,8 +35,8 @@ VenuesForm = React.createClass({
             save_callback: this.props.save_callback,
             errors: [],
             is_edit: this.props.is_edit,
-            data: {'results': {}}
-        }
+            data: {results: {}}
+        };
     },
 
     submitHandler: function(e) {
@@ -103,6 +104,20 @@ VenuesForm = React.createClass({
 
     },
 
+
+    upload_success_callback: function (file_resource) {
+        // File Uploaded... set src, hidden fields, etc
+
+        var data = this.state.data;
+        data.results.primary_image_resource = file_resource;
+        
+        this.setState({data: data})
+    },
+    upload_error_callback: function () {
+        alert('There was an error uploading stuff...');
+    },
+
+
     render: function(){
         if (this.state.is_edit && !this.state.data.results.name) {
             return <div>Loading...</div>
@@ -123,28 +138,58 @@ VenuesForm = React.createClass({
             ['studios', 'studios']
         ];
 
-        return <form role="form" className="form-horizontal" action="#" onSubmit={this.submitHandler}>
-            { errors }
-          <TextField id="name"  ref="field.name" val={this.state.data.results.name } form={this} placeholder="Enter Venue Name" onChangeCallback={this.sluggable_helper} />
-          <SlugField id="slug" form={this}  ref="field.slug"  val={this.state.data.results.slug } widget={SlugWidget} url_root="http://mplsart.com/galleries/"/>
-          <ChoiceField id="category" form={this} ref="field.category"  val={this.state.data.results.category } widget={CheckboxWidget} choices={category_choices} />
-          <TextField id="address" form={this}  ref="field.address"  val={this.state.data.results.address } />
-          <TextField id="address2" form={this}  ref="field.address2"  val={this.state.data.results.address2 } />
-          <TextField id="city" form={this}  ref="field.city" val={this.state.data.results.city }   defaultValue="Minneapolis" />
-          <TextField id="state" form={this}  ref="field.state"  val={this.state.data.results.state } defaultValue="MN" />
-          <TextField id="country" form={this} ref="field.country"  val={this.state.data.results.country } defaultValue="USA"/>
-          <GeoPtField id="geo" form={this} ref="field.geo"  val={this.state.data.results.geo } />
-          <TextField id="phone" form={this} ref="field.phone"  val={this.state.data.results.phone } />
-          <TextField id="email" form={this} ref="field.email"  val={this.state.data.results.email } />
-          <TextField id="website" form={this} ref="field.website"  val={this.state.data.results.website } />
+        var img_src = {};
+        console.log(this.state.data.results.primary_image_resource);
 
-          <div className="pull-right">
-              <button type="submit" className="btn btn-primary">Submit</button>
-              &nbsp;
-              &nbsp;
-              <a href="/admin/venues/" className="small">cancel</a>
-         </div>
-        </form> 
+        if (this.state.data.results.primary_image_resource) {
+            img_src = this.state.data.results.primary_image_resource.versions.CARD_LARGE.url;
+        }
+
+        var uploader = null;
+        if (this.state.data && this.state.data.results && this.state.data.results.resource_id ) {
+            uploader = <FileUploader
+                allow_multiple={ false }
+                callback_url={'/api/files/upload_callback?attach_to_resource=' + this.state.data.results.resource_id  + '&target_property=primary_image_resource_id'}
+
+                upload_success_callback = { this.upload_success_callback }
+                upload_error_callback = { this.upload_error_callback } />
+        }
+
+        return <div className="row">
+        
+        <div className="col-lg-8">
+            <form role="form" className="form-horizontal" action="#" onSubmit={this.submitHandler}>
+                { errors }
+
+              <img src={ img_src } className="img-responsive" />
+            
+              <TextField id="name"  ref="field.name" val={this.state.data.results.name } form={this} placeholder="Enter Venue Name" onChangeCallback={this.sluggable_helper} />
+              <SlugField id="slug" form={this}  ref="field.slug"  val={this.state.data.results.slug } widget={SlugWidget} url_root="http://mplsart.com/galleries/"/>
+              <ChoiceField id="category" form={this} ref="field.category"  val={this.state.data.results.category } widget={CheckboxWidget} choices={category_choices} />
+              <TextField id="address" form={this}  ref="field.address"  val={this.state.data.results.address } />
+              <TextField id="address2" form={this}  ref="field.address2"  val={this.state.data.results.address2 } />
+              <TextField id="city" form={this}  ref="field.city" val={this.state.data.results.city }   defaultValue="Minneapolis" />
+              <TextField id="state" form={this}  ref="field.state"  val={this.state.data.results.state } defaultValue="MN" />
+              <TextField id="country" form={this} ref="field.country"  val={this.state.data.results.country } defaultValue="USA"/>
+              <GeoPtField id="geo" form={this} ref="field.geo"  val={this.state.data.results.geo } />
+              <TextField id="phone" form={this} ref="field.phone"  val={this.state.data.results.phone } />
+              <TextField id="email" form={this} ref="field.email"  val={this.state.data.results.email } />
+              <TextField id="website" form={this} ref="field.website"  val={this.state.data.results.website } />
+
+              <div className="pull-right">
+                  <button type="submit" className="btn btn-primary">Submit</button>
+                  &nbsp;
+                  &nbsp;
+                  <a href="/admin/venues/" className="small">cancel</a>
+             </div>
+            </form>
+        </div>
+
+        <div className="col-lg-4">
+            { uploader }
+        </div>
+
+    </div>;
     }    
 });
 

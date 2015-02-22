@@ -24,6 +24,11 @@ class Event(ndb.Model):
     url = ndb.StringProperty() # Main external url for the event
 
     event_dates = ndb.StructuredProperty(EventDate, repeated=True)
+    primary_image_resource_id = ndb.StringProperty()
+    attachment_resources =  ndb.StringProperty(repeated=True)
+    created_date = ndb.DateTimeProperty(auto_now_add=True)
+    modified_date = ndb.DateTimeProperty(auto_now=True)
+
     
     '''
     event_date is a list of dicts for the different event_dates

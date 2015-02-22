@@ -21,11 +21,13 @@ var AlphaEventRenderer = React.createClass({
     mixins: [EventRendererMixin],
 
     render_empty: function () {
-        return <li className="event">
-        	<div><a target="_blank"><span className="event-title">Xxxxxxx Xxxxx Xxxxxxxx</span></a></div>
-            <div className="event-time">Xxxx XXxxx - XXxxx</div>
-            <div className="event-venue-name">Xxx xxx Xxxx Xxxx</div>
-            <div className="event-address">XXXX X Xxx Xxxxx, Xxxxxx</div>
+        return <li className="event ghost-load">
+            <div className="event-info">
+            	<div><a target="_blank"><span className="event-title">&#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;</span></a></div>
+                <div className="event-time">&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632;&#9632;</div>
+                <div className="event-venue-name">&#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;</div>
+                <div className="event-address">&#9632;&#9632;&#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632;&#9632;&#9632;</div>
+            </div>
         </li>;
     },
 
@@ -53,11 +55,29 @@ var AlphaEventRenderer = React.createClass({
             console.error(this.state);
         };
 
+        var image_node;
+        if (e.primary_image_resource && e.primary_image_resource.versions.CARD_SMALL) {
+            var im_resource = e.primary_image_resource.versions.CARD_SMALL;
+
+            padding_percent = parseFloat(im_resource.height)/parseFloat(im_resource.width) * 100;
+            padding_percent += '%';
+
+            var img_style = {paddingBottom: padding_percent};
+            var image_node = <div className="event-image">
+                <a href={e.url} style={ img_style } target="_blank">
+                    <img src={im_resource.url} />
+                </a>
+            </div>;
+        }
+
         return <li className="event">
-        	<div><a href={e.url} target="_blank"><span className="event-title">{e.name}</span></a></div>
-            <div className="event-time"><NiceDate start={ target_event_date.start } end={ target_event_date.end } eventdate_type={ target_event_date.type } /></div>
-            <div className="event-venue-name">{target_event_date.venue.name}</div>
-            <div className="event-address">{target_event_date.venue.address + ', ' + target_event_date.venue.city }</div>
+            { image_node }
+            <div className="event-info">
+            	<div><a href={e.url} target="_blank"><span className="event-title">{e.name}</span></a></div>
+                <div className="event-time"><NiceDate start={ target_event_date.start } end={ target_event_date.end } eventdate_type={ target_event_date.type } /></div>
+                <div className="event-venue-name">{target_event_date.venue.name}</div>
+                <div className="event-address">{target_event_date.venue.address + ', ' + target_event_date.venue.city }</div>
+            </div>
         </li>;
     }
 
@@ -89,7 +109,7 @@ var DefaultEventRenderer = React.createClass({
             console.error(this.props);
         }        
 
-        return (<li className="event">
+        return (<li className="event">        
     		<div><a href={this.props.url} target="_blank"><span className="event-title">{this.props.name}</span></a></div>
             <div className="event-time"><NiceDate start={ ed.start } end={ ed.end } eventdate_type={ ed.type } /></div>
             <div className="event-venue-name">{ed.venue.name}</div>

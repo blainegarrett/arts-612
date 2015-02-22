@@ -31,18 +31,24 @@ def coerce_to_cursor(val):
     return cursor
 
 
-def coerce_to_datetime(dt):
+def coerce_to_datetime(dtstr):
     """
     Helper to convert a input datetime string to a UTC datetime
     """
 
     try:
         fmt = '%Y-%m-%dT%H:%M:%SZ'
-        dt = datetime.datetime.strptime(dt, fmt)
+        dt = datetime.datetime.strptime(dtstr, fmt)
     except ValueError:
         # Attempt full day method
         fmt = '%Y-%m-%d'
-        dt = datetime.datetime.strptime(dt, fmt)
+        dt = datetime.datetime.strptime(dtstr, fmt)
 
     dt = timezone('UTC').localize(dt)
     return dt #.replace(tzinfo=None)
+
+def coerce_from_datetime(dt):
+    """
+    Helper to convert a input UTC datetime to a string
+    """
+    return dt.strftime('%Y-%m-%dT%H:%M:%SZ')

@@ -3,12 +3,10 @@
 
 # Each Date record will have its own search document
 import voluptuous
+import logging
+
 from rest.params import coerce_to_cursor
 from google.appengine.api import memcache
-from google.appengine.ext import ndb
-from pytz import timezone
-import datetime
-import logging
 
 from auth.decorators import rest_login_required
 
@@ -17,17 +15,19 @@ from rest.controllers import RestHandlerBase
 from rest.resource import Resource
 from rest.resource import RestField, SlugField, ResourceIdField, ResourceUrlField
 from rest.params import coerce_to_datetime
+from rest.utils import get_key_from_resource_id
+
+from files.rest_helpers import FileField
 
 from modules.events.internal import api as events_api
 from modules.events.internal.models import Event
 from modules.events.constants import CATEGORY
 
 from framework.controllers import MerkabahBaseController
-
 from cal.rest_helpers import EventDateField
+from utils import get_domain
 
-
-resource_url = 'http://localhost:8080/api/events/%s' #TODO: HRM?
+resource_url = 'http://' + get_domain()  + '/api/events/%s' #TODO: HRM?
 
 # verbosity vs. input vs. output
 
@@ -38,7 +38,9 @@ REST_RULES = [
     RestField(Event.name, required=True),
 
     RestField(Event.url, required=False),
-    EventDateField(Event.event_dates, required=True)
+    EventDateField(Event.event_dates, required=True),
+    RestField(Event.primary_image_resource_id, required=False),
+    FileField('primary_image_resource', required=False, output_only=True, resource_id_prop='primary_image_resource_id')
 ]
 
 
@@ -62,7 +64,8 @@ class EventDetailApiHandler(RestHandlerBase):
     def _put(self, slug):
         # Edit an event
 
-        key = ndb.Key(urlsafe=slug)
+        resource_id = slug
+        key = get_key_from_resource_id(resource_id)
 
         if not key:
             raise Exception('404 - TODO: Throw legit 404') # or Resource Not Found
@@ -77,7 +80,8 @@ class EventDetailApiHandler(RestHandlerBase):
 
         #slug = long(slug)
         #key = events_api.get_event_key(slug)
-        key = ndb.Key(urlsafe=slug)
+        resource_id = slug
+        key = get_key_from_resource_id(resource_id)
 
         if not key:
             raise Exception('404 - TODO: Throw legit 404') # or Resource Not Found
@@ -139,8 +143,6 @@ class EventsUpcomingHandler(RestHandlerBase):
         # Serialize the params for cache key
         from utils import ubercache
         import json
-
-        d = params.items()
 
         key = str(hash(json.dumps(self.params)))
 

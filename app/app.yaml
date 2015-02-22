@@ -1,6 +1,6 @@
 application: arts-612
 
-version: master-20150217
+version: images
 
 runtime: python27
 api_version: 1
@@ -153,8 +153,8 @@ handlers:
   secure: optional
 
 - url: /admin.*
-  static_files: static/admin/app.html
-  upload: static/admin/app\.html
+  script: admin.main.app
+  secure: optional
   login: admin
 
 #- url: /import.*

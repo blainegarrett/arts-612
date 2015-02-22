@@ -9,10 +9,10 @@ function getFileListState() {
 var callback_url = '';
 
 var File = React.createClass({
-    
+
     signalFileUpdated: function (payload) {
         // payload is a list of Files to update
-        //alert('update the store???!?!?!');
+
         return AppDispatcher.handleSetMeta({signal: 'UPDATEFILES', payload: payload})
     },
 
@@ -48,12 +48,8 @@ var File = React.createClass({
 
         get_upload_url_for_file: function(fileObj) {
             // Fetch the upload url from the server
-            
-            //alert('lets get the upload url...');
 
-            //console.log(this.state.callback_url);
-
-        	var resource_url = 'http://localhost:8080/api/files/upload_url';
+        	var resource_url = 'http://' + settings.domain  + '/api/files/upload_url';
             var restData = {"callback_url": callback_url};
 
             $.ajax({
@@ -111,8 +107,6 @@ var File = React.createClass({
         		//var thumb = $('#thumbs a[data-temp_id="' + fileObj.temp_id + '"]');
         		//reader.readAsDataURL(fileObj);
 
-                //alert('jive');
-
         		// Tell the FileStore we have updates - specifically a new path for image
         		this.signalFileUpdated([{
         		        store_id: this.state.store_id,
@@ -123,7 +117,6 @@ var File = React.createClass({
         		    }]);
  
         		// Fire off a call to fetch an upload url for google cloud storage
-        		//console.log(this);
         		this.get_upload_url_for_file(fileObj);
         	}.bind(this)
         },
@@ -177,28 +170,34 @@ var File = React.createClass({
         			      }
         			    }, false);
         			    return xhr;
-        			},
+        			}.bind(this),
         	        success: function(data, textStatus, jqXHR) {
-        	            alert('uploaded??!?!??!?!');
-        	        },
+                        if (typeof(this.state.upload_success_callback) == 'function') {
+                            this.state.upload_success_callback(data.results)
+                        }
+        	        }.bind(this),
         	        error: function(data, textStatus, errorThrown) {
-        	            alert('errored???!?!??!?!');
-        	        }
+                        if (typeof(this.state.upload_error_callback) == 'function') {
+                            this.state.upload_error_callback(data)
+                        }
+                        else {
+                            console.log('upload failed...');
+                        }
+        	        }.bind(this)
         	    });
 
         },
     
     componentWillReceiveProps: function (new_props){
         // Update the state with the new props when the element is re-rendered
-
         this.setState(new_props)
     },
 
     componentDidMount: function() {
         // If this is a file upload, we need to trigger the reading of the local file
 
-        if (this.state.fileObj) { // D
-            this.readFile();            
+        if (this.state.fileObj) {
+            this.readFile();
         }
     },
 
@@ -212,8 +211,12 @@ var File = React.createClass({
             is_loading: this.props.is_loading || false,
             path: this.props.path || "http://placehold.it/100x100",
             percent_loaded: this.props.percent_loaded || 100,
-            fileObj: this.props.fileObj
+            fileObj: this.props.fileObj,
+            upload_success_callback: this.props.upload_success_callback,
+            upload_error_callback: this.props.upload_error_callback
         }
+
+        // TODO: Add callbacks and error handlers...        
         
         if (this.props.percent_loaded == undefined) {
             state.percent_loaded = 100;
@@ -221,13 +224,11 @@ var File = React.createClass({
         else {
             state.percent_loaded = this.props.percent_loaded;
         }
+
         return state;
     },
 
     render: function () {
-        //alert('render');
-        console.log('File.render - state:');
-        console.log(this.state);
 
         var style_data = {'backgroundImage': 'url(' + this.state.path + ')'}
         var loader_style = {'height': (100 - this.state.percent_loaded) + '%'}
@@ -253,6 +254,8 @@ var FileList = React.createClass({
         var files = getFileListState();
         
         return {
+            upload_success_callback: this.props.upload_success_callback,
+            upload_error_callback: this.props.upload_error_callback,
             files: files
         };
     },
@@ -272,14 +275,20 @@ var FileList = React.createClass({
     render: function () {
 
         var rendered_files = [];
-        
-        console.log('FileList.render - logging state: ');
-        console.log(this.state);
 
         for (var key in this.state.files.jive) {
+
             file = this.state.files.jive[key];
-            console.log(file);
-            rendered_files.push(<File key={key} store_id={file.store_id} path={file.path} is_loading={file.is_loading} fileObj={file.fileObj} ref={'file' + file.store_id} percent_loaded={file.percent_loaded} />);
+            rendered_files.push(<File key={key} 
+                store_id={file.store_id}
+                path={file.path}
+                is_loading={file.is_loading}
+                fileObj={file.fileObj}
+                ref={'file' + file.store_id}
+                percent_loaded={file.percent_loaded}
+                upload_success_callback={ this.state.upload_success_callback }
+                upload_error_callback={ this.state.upload_error_callback }
+                />);
         }
         
         return <div className="row">{rendered_files}</div>        
@@ -287,19 +296,22 @@ var FileList = React.createClass({
 });
 
 var FileUploader = React.createClass({
+    
     getInitialState: function () {
-        callback_url = this.props.callback_url;
+        callback_url = this.props.callback_url; // Global var...
 
         return {
-            callback_url: this.props.callback_url
+            callback_url: this.props.callback_url,
+            allow_multiple: this.props.allow_multiple || false,
+            upload_success_callback: this.props.upload_success_callback,
+            upload_error_callback: this.props.upload_error_callback
         }
     },
 
     file_selection_handler: function (event) {
         var selected_files = event.target.files; // FileList object
         var rc = this;
-        console.log(rc);
-        
+
         for (var i = 0; i < selected_files.length; i++) {
             fileObj = selected_files[i];
 
@@ -308,16 +320,7 @@ var FileUploader = React.createClass({
     		//	return;
     		//}
 
-            result = this.signalFileAdded([{'path': '', is_loading: true, percent_loaded: 0, fileObj: fileObj}])
-
-
-    		//Generate a random temp id so we can reconnect things later
-    		//fileObj.temp_id = Math.floor((Math.random() * 100000000) + 1);
-
-    		// Output a prelim image placeholder while the file system reads the image from disk
-    		//var new_thumb = $('<a href="#" data-temp_id="' + fileObj.temp_id + '"><div class="upload-indicator" style="height:100%;top:0"></div></a>');
-    	    //var thumblist = $('#thumbs');
-    		//thumblist.append(new_thumb);
+            result = this.signalFileAdded([{'path': '', is_loading: true, percent_loaded: 0, fileObj: fileObj}]);
 
     	}
     },
@@ -325,23 +328,19 @@ var FileUploader = React.createClass({
     signalFileAdded: function (payload) {
         return AppDispatcher.handleSetMeta({signal: 'ADDFILES', payload: payload})
     },
-    
+
     render: function() {
-        console.log(this.state.callback_url);
 
         // Add any files that are default ... this will be called from rest api...
 
-        var data_from_rest_resource = [
-            {'path': "http://placehold.it/300x150"},
-            {'path': "http://placehold.it/300x300"}
-        ];
-
-        this.signalFileAdded(data_from_rest_resource)
-
         return <div>
-            <input id="files" onChange={this.file_selection_handler } name="files[]" multiple="" type="file" />
-            
-            <FileList />
+            <input id="files" 
+                onChange={this.file_selection_handler } 
+                name="files[]" 
+                multiple={ this.state.allow_multiple } type="file" />
+
+            <FileList     upload_success_callback = { this.state.upload_success_callback }
+                upload_error_callback = { this.state.upload_error_callback } />
         
         </div>
     }

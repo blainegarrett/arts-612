@@ -7,7 +7,8 @@ Note: This is designed to work similar django Forms - try to keep it that way
 from google.appengine.ext import ndb
 import voluptuous
 import logging
-
+from rest.params import coerce_to_datetime, coerce_from_datetime
+from rest.utils import get_resource_id_from_key
 
 NON_FIELD_ERRORS = '__all__'
 VALID_RESORCE_TYPES = (ndb.Model, dict) # None: is also allowed
@@ -226,7 +227,7 @@ class ResourceUrlField(RestField):
         Outout a field to dic value
         """
 
-        return self.url_template % obj.key.urlsafe()
+        return self.url_template % get_resource_id_from_key(obj.key)
 
 
 class ResourceIdField(RestField):
@@ -245,12 +246,12 @@ class ResourceIdField(RestField):
         """
 
         try:
-            key = obj.key.urlsafe()
+            resource_id = get_resource_id_from_key(obj.key)
         except:
             logging.error('Attempting to get ResourceID for a non ndb Entity...')
             logging.error(obj)
-            key = None
-        return key
+            resource_id = None
+        return resource_id
 
 
 class UploadField(RestField):
@@ -317,3 +318,33 @@ class SlugField(RestField):
         kwargs['validator'] = voluptuous.Coerce(str)
 
         super(SlugField, self).__init__(prop, **kwargs)
+
+
+class DatetimeField(RestField):
+    """
+    Field to support a Geo coordinate property
+    """
+
+    def __init__(self, prop, **kwargs):
+        super(DatetimeField, self).__init__(prop, **kwargs)
+
+    def to_resource(self, data):
+        val = super(DatetimeField, self).to_resource(data)
+
+        if val:
+            # Make a datetime
+            return coerce_to_datetime(val)
+        return None
+
+    def from_resource(self, obj, field):
+        """
+        Outout a datetime to str val
+        """
+
+        val = super(DatetimeField, self).from_resource(obj, field)
+
+        if not val:
+            return None
+
+        # Make a String from datetime
+        return coerce_from_datetime(val)

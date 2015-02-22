@@ -13,6 +13,10 @@ body {
 }
 a { color: #0096BE; }
 
+.ghost-load {
+    opacity: .5;
+}
+
 /* Nav Var */
 .navbar-inverse .navbar-brand {
     font-size:32px;
@@ -189,7 +193,9 @@ footer {
     background-color:#eeeeee;
 }
 .panel-events .panel-content {
-    
+    padding:0px;
+    background-color: transparent;
+    padding-top:10px;
 }
 .panel-events .panel-content ul, .panel-events .panel-content li {
     padding:0px;
@@ -197,8 +203,28 @@ footer {
 }
 
 .event {
-    margin-bottom:20px;
+    margin-bottom:15px;
 }
+
+.event .event-info {
+    padding:20px;
+    background-color: #fff;
+}
+
+.event .event-image a {
+    width: 100%;
+    display:block;
+    position:relative;
+}
+
+.event .event-image img {
+    position: absolute;
+    width:100%;
+    height: 100%;
+}
+
+
+
 .event span {
     display: block;
 }

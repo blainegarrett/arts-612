@@ -14,6 +14,12 @@ var EventsCreatePage = require('./pages/EventsCreatePage');
 var EventsEditPage = require('./pages/EventsEditPage');
 var EventsSearchDebugger = require('./pages/EventsSearchDebugger')
 
+
+var FilesMainPage = require('./pages/FilesMainPage');
+var FilesEditPage = require('./pages/FilesEditPage');
+var FilesViewPage = require('./pages/FilesViewPage');
+
+
 ReactRouter.createRoute('/admin', function (params) {
     React.unmountComponentAtNode( document.getElementById('main_content'));
     React.render(<AdminHomePage />, document.getElementById('main_content'));    
@@ -36,6 +42,23 @@ ReactRouter.createRoute('/admin/venues/{keystr}/edit', function (params) {
     React.unmountComponentAtNode( document.getElementById('main_content'));
     React.render(<VenuesEditPage keystr={params.keystr} />, document.getElementById('main_content'));    
 });
+
+// Files
+ReactRouter.createRoute('/admin/files', function (params) {
+    React.unmountComponentAtNode( document.getElementById('main_content'));
+    React.render(<FilesMainPage />, document.getElementById('main_content'));    
+});
+
+ReactRouter.createRoute('/admin/files/{keystr}/edit', function (params) {
+    React.unmountComponentAtNode( document.getElementById('main_content'));
+    React.render(<FilesEditPage keystr={params.keystr} />, document.getElementById('main_content'));    
+});
+
+ReactRouter.createRoute('/admin/files/{keystr}', function (params) {
+    React.unmountComponentAtNode( document.getElementById('main_content'));
+    React.render(<FilesViewPage keystr={params.keystr} />, document.getElementById('main_content'));    
+});
+
 
 
 // Events
