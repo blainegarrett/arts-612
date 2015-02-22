@@ -17,12 +17,15 @@ from rest.controllers import RestHandlerBase
 from rest.resource import Resource
 from rest.resource import RestField
 from rest.resource import ResourceIdField, ResourceUrlField, DatetimeField
+from rest.utils import get_key_from_resource_id, get_resource_id_from_key
 
 from framework.controllers import MerkabahBaseController
 from files.models import FileContainer
 from google.appengine.ext import ndb
 
 from modules.venues.internal.models import Venue
+from modules.events.internal.models import Event
+
 from files.rest_helpers import REST_RESOURCE_RULES
 
 BUCKET_NAME = 'cdn.mplsart.com'
@@ -258,8 +261,8 @@ class UploadCallbackHandler(MerkabahBaseController):
         '''
 
         ids = FileContainer.allocate_ids(size=1)
-        file_obj_key = ndb.Key('FileContainer', ids[0]) # TODO: coerce_to_resource_id
-        resource_id = file_obj_key.urlsafe()
+        file_obj_key = ndb.Key('FileContainer', ids[0])
+        resource_id = get_resource_id_from_key(file_obj_key)
         dest_folder_name = 'file_container/%s/' % (resource_id)
 
         # Sized Images
@@ -267,9 +270,10 @@ class UploadCallbackHandler(MerkabahBaseController):
         #img.resize(width=1500, height=1500)
         #file_content = img.execute_transforms(output_encoding=images.JPEG)
 
-        img = images.Image(temp_file_data) # TODO: Take in filename= or blob_key=
+        #img = images.Image(temp_file_data) # TODO: Take in filename= or blob_key=
 
         # VERSION.FULL - scaled to max dimension 1200px
+        '''
         img.resize(width=VERSIONS.FULL[WIDTH], height=VERSIONS.FULL[HEIGHT])
         full_data = img.execute_transforms(output_encoding=images.JPEG)
         full_height, full_width = img.height, img.width
@@ -288,13 +292,14 @@ class UploadCallbackHandler(MerkabahBaseController):
         # CARD_LARGE
         card_large_data, card_large_height, card_large_width = rescale(full_data, VERSIONS.CARD_LARGE[WIDTH], VERSIONS.CARD_LARGE[HEIGHT], halign='middle', valign='middle')
         card_large_filename = fs.write(dest_folder_name + 'card_large.png', card_large_data, MIME_PNG) # TODO: filename
+        '''
 
         # CARD_SMALL
-        card_small_data, card_small_height, card_small_width = rescale(card_large_data, VERSIONS.CARD_SMALL[WIDTH], VERSIONS.CARD_SMALL[HEIGHT], halign='middle', valign='middle')
+        card_small_data, card_small_height, card_small_width = rescale(temp_file_data, VERSIONS.CARD_SMALL[WIDTH], VERSIONS.CARD_SMALL[HEIGHT], halign='middle', valign='middle')
         card_small_filename = fs.write(dest_folder_name + 'card_small.png', card_small_data, MIME_PNG) # TODO: filename
 
         # THUMB
-        thumb_data, thumb_height, thumb_width = rescale(sized_data, VERSIONS.THUMB[WIDTH], VERSIONS.THUMB[HEIGHT], halign='middle', valign='middle')
+        thumb_data, thumb_height, thumb_width = rescale(temp_file_data, VERSIONS.THUMB[WIDTH], VERSIONS.THUMB[HEIGHT], halign='middle', valign='middle')
         thumb_filename = fs.write(dest_folder_name + 'thumb.png', thumb_data, MIME_PNG) # TODO: filename
 
         # Prep the data to be stored
@@ -304,12 +309,13 @@ class UploadCallbackHandler(MerkabahBaseController):
         else:
             url_prefix = 'http://%s/_ah/gcs/%s/' % (get_domain(), BUCKET_NAME)
 
-        full_url = url_prefix + full_filename
-        sized_url = url_prefix + sized_filename
-        card_large_url = url_prefix + card_large_filename
+        #full_url = url_prefix + full_filename
+        #sized_url = url_prefix + sized_filename
+        #card_large_url = url_prefix + card_large_filename
         card_small_url = url_prefix + card_small_filename
         thumb_url = url_prefix + thumb_filename
 
+        '''
         versions_data[VERSIONS.FULL[KEY]] = {'url': full_url,
                                              'height': full_height,
                                              'width': full_width}
@@ -318,9 +324,11 @@ class UploadCallbackHandler(MerkabahBaseController):
                                               'height': sized_height,
                                               'width': sized_width}
 
+
         versions_data[VERSIONS.CARD_LARGE[KEY]] = {'url': card_large_url,
                                                    'height': card_large_height,
                                                    'width': card_large_width}
+        '''
 
         versions_data[VERSIONS.CARD_SMALL[KEY]] = {'url': card_small_url,
                                                    'height': card_small_height,
@@ -329,7 +337,6 @@ class UploadCallbackHandler(MerkabahBaseController):
         versions_data[VERSIONS.THUMB[KEY]] = {'url': thumb_url,
                                               'height': thumb_height,
                                               'width': thumb_width}        
-
 
         # Create Datastore entity
         file_obj = FileContainer(key=file_obj_key,
@@ -368,7 +375,8 @@ class UploadCallbackHandler(MerkabahBaseController):
 
             # Prep the file object
             file_obj = self.create_image(fs, data, dest_filename)
-            file_obj_key = file_obj.key.urlsafe()
+            file_obj_key = file_obj.key
+            resource_id = get_resource_id_from_key(file_obj_key)
 
             # Finally delete the tmp file
             #data = fs.delete(gs_object_name.replace('/gs', ''))
@@ -392,7 +400,7 @@ class UploadCallbackHandler(MerkabahBaseController):
 
             # TODO: This should be done in a txn - especially when there are multiple uploads
             if attach_to_resource_id:
-                attachment_resource_key = ndb.Key(urlsafe=attach_to_resource_id)
+                attachment_resource_key = get_key_from_resource_id(attach_to_resource_id)
                 attachment_resource = attachment_resource_key.get()
 
                 if not attachment_resource:
@@ -402,11 +410,11 @@ class UploadCallbackHandler(MerkabahBaseController):
                     attachment_resource.attachment_resources = []
 
                 # Update attachments
-                attachment_resource.attachment_resources.append(file_obj_key)
+                attachment_resource.attachment_resources.append(resource_id)
 
                 target_property = self.request.get('target_property', None)
                 if target_property:
-                    setattr(attachment_resource, target_property, file_obj_key)
+                    setattr(attachment_resource, target_property, resource_id)
 
                 attachment_resource.put()
 

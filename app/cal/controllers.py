@@ -3,10 +3,10 @@
 
 # Each Date record will have its own search document
 import voluptuous
+import logging
+
 from rest.params import coerce_to_cursor
 from google.appengine.api import memcache
-from google.appengine.ext import ndb
-import logging
 
 from auth.decorators import rest_login_required
 
@@ -15,6 +15,8 @@ from rest.controllers import RestHandlerBase
 from rest.resource import Resource
 from rest.resource import RestField, SlugField, ResourceIdField, ResourceUrlField
 from rest.params import coerce_to_datetime
+from rest.utils import get_key_from_resource_id
+
 from files.rest_helpers import FileField
 
 from modules.events.internal import api as events_api
@@ -62,7 +64,8 @@ class EventDetailApiHandler(RestHandlerBase):
     def _put(self, slug):
         # Edit an event
 
-        key = ndb.Key(urlsafe=slug)
+        resource_id = slug
+        key = get_key_from_resource_id(resource_id)
 
         if not key:
             raise Exception('404 - TODO: Throw legit 404') # or Resource Not Found
@@ -77,7 +80,8 @@ class EventDetailApiHandler(RestHandlerBase):
 
         #slug = long(slug)
         #key = events_api.get_event_key(slug)
-        key = ndb.Key(urlsafe=slug)
+        resource_id = slug
+        key = get_key_from_resource_id(resource_id)
 
         if not key:
             raise Exception('404 - TODO: Throw legit 404') # or Resource Not Found

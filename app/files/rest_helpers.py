@@ -8,6 +8,7 @@ from utils import get_domain
 from rest.resource import Resource
 from rest.resource import ResourceIdField, ResourceUrlField, DatetimeField
 from rest.resource import RestField
+from rest.utils import get_key_from_resource_id
 
 from files.models import FileContainer
 
@@ -43,6 +44,6 @@ class FileField(RestField):
 
         if not resource_id:
             return None
-        
-        resource_key = ndb.Key(urlsafe=resource_id)
+
+        resource_key = get_key_from_resource_id(resource_id)        
         return Resource(resource_key.get(), REST_RESOURCE_RULES).to_dict()

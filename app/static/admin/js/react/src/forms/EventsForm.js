@@ -248,7 +248,7 @@ EventsForm = React.createClass({
         var img_src = {};
 
         if (this.state.data.results.primary_image_resource) {
-            img_src = this.state.data.results.primary_image_resource.versions.CARD_LARGE.url;
+            img_src = this.state.data.results.primary_image_resource.versions.CARD_SMALL.url;
         }
 
         var uploader = null;

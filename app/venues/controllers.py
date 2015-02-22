@@ -12,6 +12,8 @@ from google.appengine.ext import ndb
 from rest.controllers import RestHandlerBase
 from rest.resource import Resource
 from rest.resource import RestField, SlugField, ResourceIdField, ResourceUrlField, GeoField
+from rest.utils import get_key_from_resource_id
+
 from files.rest_helpers import FileField
 
 from modules.venues.internal import api as venues_api
@@ -181,7 +183,9 @@ class GalleryDetailApiHandler(GalleryApiHandlerBase):
     def _get(self, slug):
         # TODO: Abstract this a bit more out into a rest-like service...
 
-        key = ndb.Key(urlsafe=slug)
+        resource_id = slug
+
+        key = get_key_from_resource_id(resource_id) #ndb.Key(urlsafe=slug)
         e = key.get()
 
         #e = venues_api.get_venue_by_slug(slug)
@@ -218,7 +222,9 @@ class GalleryDetailApiHandler(GalleryApiHandlerBase):
             "category": "gallery"
         }
         """
-        key = ndb.Key(urlsafe=slug)
+
+        resource_id = slug
+        key = get_key_from_resource_id(resource_id) #ndb.Key(urlsafe=slug)
         venue = key.get()
 
         #venue = venues_api.get_venue_by_slug(slug)
