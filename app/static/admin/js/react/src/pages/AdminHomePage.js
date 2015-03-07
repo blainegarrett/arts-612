@@ -63,6 +63,7 @@ var AdminHomePage = React.createClass({
                 <ul>
                     <li><a href="/admin/venues/">Manage Venues</a></li>
                     <li><a href="/admin/events/">Manage Events</a></li>
+                    <li><a href="/admin/blog/">Manage Blog</a></li>
                     <li><a href="/admin/files/">Manage Files</a></li>
                 </ul>
                 

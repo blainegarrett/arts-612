@@ -5,15 +5,17 @@ var ChoiceField = require('./../utilities/forms/fields/ChoiceField');
 var GeoPtField = require('./../utilities/forms/fields/GeoPtField');
 var CheckboxWidget = require('./../utilities/forms/widgets/CheckboxWidget');
 var SlugWidget = require('./../utilities/forms/widgets/SlugWidget');
+var TextareaWidget = require('./../utilities/forms/widgets/TextareaWidget');
 var FileUploader = require('./../components/FileUploader');
 
-VenuesForm = React.createClass({
+BlogPostForm = React.createClass({
     propTypes: {
-      resource_url: React.PropTypes.string.isRequired,
-      is_edit: React.PropTypes.bool.isRequired
+        resource_url: React.PropTypes.string.isRequired,
+        is_edit: React.PropTypes.bool.isRequired
     },
 
     componentDidMount: function(){
+        
         if (this.state.is_edit) {
             $.ajax({
                 url: this.props.resource_url,
@@ -119,7 +121,7 @@ VenuesForm = React.createClass({
 
 
     render: function(){
-        if (this.state.is_edit && !this.state.data.results.name) {
+        if (this.state.is_edit && !this.state.data.results.title) {
             return <div>Loading...</div>
         }
 
@@ -128,19 +130,7 @@ VenuesForm = React.createClass({
         });
         var errors = <p className="bg-danger">{ rendered_errors }</p>;
 
-        var category_choices = [
-            ['museum', 'museum'],
-            ['gallery', 'gallery'],
-            ['business', 'business'],
-            ['public', 'public'],
-            ['private', 'private'],
-            ['popup', 'popup'],
-            ['studios', 'studios']
-        ];
-
         var img_src = {};
-        console.log(this.state.data.results.primary_image_resource);
-
         if (this.state.data.results.primary_image_resource) {
             img_src = this.state.data.results.primary_image_resource.versions.CARD_SMALL.url;
         }
@@ -155,7 +145,9 @@ VenuesForm = React.createClass({
                 upload_error_callback = { this.upload_error_callback } />
         }
 
+
         return <div className="row">
+        
         
         <div className="col-lg-8">
             <form role="form" className="form-horizontal" action="#" onSubmit={this.submitHandler}>
@@ -163,24 +155,18 @@ VenuesForm = React.createClass({
 
               <img src={ img_src } className="img-responsive" />
             
-              <TextField id="name"  ref="field.name" val={this.state.data.results.name } form={this} placeholder="Enter Venue Name" onChangeCallback={this.sluggable_helper} />
-              <SlugField id="slug" form={this}  ref="field.slug"  val={this.state.data.results.slug } widget={SlugWidget} url_root="http://mplsart.com/galleries/"/>
-              <ChoiceField id="category" form={this} ref="field.category"  val={this.state.data.results.category } widget={CheckboxWidget} choices={category_choices} />
-              <TextField id="address" form={this}  ref="field.address"  val={this.state.data.results.address } />
-              <TextField id="address2" form={this}  ref="field.address2"  val={this.state.data.results.address2 } />
-              <TextField id="city" form={this}  ref="field.city" val={this.state.data.results.city }   defaultValue="Minneapolis" />
-              <TextField id="state" form={this}  ref="field.state"  val={this.state.data.results.state } defaultValue="MN" />
-              <TextField id="country" form={this} ref="field.country"  val={this.state.data.results.country } defaultValue="USA"/>
-              <GeoPtField id="geo" form={this} ref="field.geo"  val={this.state.data.results.geo } />
-              <TextField id="phone" form={this} ref="field.phone"  val={this.state.data.results.phone } />
-              <TextField id="email" form={this} ref="field.email"  val={this.state.data.results.email } />
-              <TextField id="website" form={this} ref="field.website"  val={this.state.data.results.website } />
+              <TextField id="title"  ref="field.title" val={this.state.data.results.title } form={this} placeholder="Enter Post Title" onChangeCallback={this.sluggable_helper} />
+              <SlugField id="slug" form={this}  ref="field.slug"  val={this.state.data.results.slug } widget={SlugWidget} url_root="http://mplsart.com/written/"/>
+
+              <TextField id="summary"  ref="field.summary" val={this.state.data.results.summary } form={this} widget={TextareaWidget} placeholder="Post Summary" />
+              <TextField id="content"  ref="field.content" val={this.state.data.results.content } form={this} widget={TextareaWidget} placeholder="Post content" />
+
 
               <div className="pull-right">
                   <button type="submit" className="btn btn-primary">Submit</button>
                   &nbsp;
                   &nbsp;
-                  <a href="/admin/venues/" className="small">cancel</a>
+                  <a href="/admin/blog/" className="small">cancel</a>
              </div>
             </form>
         </div>
@@ -193,4 +179,4 @@ VenuesForm = React.createClass({
     }    
 });
 
-module.exports = VenuesForm;
+module.exports = BlogPostForm;

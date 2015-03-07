@@ -9,6 +9,10 @@ var VenuesMainPage = require('./pages/VenuesMainPage');
 var VenuesCreatePage = require('./pages/VenuesCreatePage');
 var VenuesEditPage = require('./pages/VenuesEditPage');
 
+var BlogMainPage = require('./pages/BlogMainPage');
+var BlogPostCreatePage = require('./pages/BlogPostCreatePage');
+var BlogPostEditPage = require('./pages/BlogPostEditPage');
+
 var EventsMainPage = require('./pages/EventsMainPage');
 var EventsCreatePage = require('./pages/EventsCreatePage');
 var EventsEditPage = require('./pages/EventsEditPage');
@@ -42,6 +46,25 @@ ReactRouter.createRoute('/admin/venues/{keystr}/edit', function (params) {
     React.unmountComponentAtNode( document.getElementById('main_content'));
     React.render(<VenuesEditPage keystr={params.keystr} />, document.getElementById('main_content'));    
 });
+
+
+// Blog
+ReactRouter.createRoute('/admin/blog', function (params) {
+    React.unmountComponentAtNode( document.getElementById('main_content'));
+    React.render(<BlogMainPage />, document.getElementById('main_content'));    
+});
+
+ReactRouter.createRoute('/admin/blog/create', function (params) {
+    React.unmountComponentAtNode( document.getElementById('main_content'));
+    React.render(<BlogPostCreatePage  />, document.getElementById('main_content'));    
+});
+
+
+ReactRouter.createRoute('/admin/blog/{keystr}/edit', function (params) {
+    React.unmountComponentAtNode( document.getElementById('main_content'));
+    React.render(<BlogPostEditPage keystr={params.keystr} />, document.getElementById('main_content'));    
+});
+
 
 // Files
 ReactRouter.createRoute('/admin/files', function (params) {

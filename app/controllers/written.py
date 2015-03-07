@@ -1,8 +1,21 @@
 """
 Controllers for the Written section
 """
+import voluptuous
 
 from controllers import BaseController
+
+from rest.controllers import RestHandlerBase
+from rest.resource import Resource
+from rest.resource import RestField, SlugField, ResourceIdField, ResourceUrlField, DatetimeField
+from rest.utils import get_key_from_resource_id
+
+from files.rest_helpers import FileField
+
+from modules.blog.internal import api as blog_api
+from modules.blog.internal.models import BlogPost
+
+from utils import get_domain
 
 
 class WrittenMainHandler(BaseController):
@@ -84,3 +97,117 @@ class WrittenMainRssFeedHandler(BaseController):
         
         self.response.headers['Content-Type'] = 'application/xml'
         self.response.write(output)
+
+
+
+
+
+
+
+# Rest Controllers
+
+resource_url = 'http://' + get_domain()  + '/api/posts/%s'
+
+REST_RULES = [
+    ResourceIdField(output_only=True),
+    ResourceUrlField(resource_url, output_only=True),
+    SlugField(BlogPost.slug, required=True),
+    RestField(BlogPost.title, required=True),
+
+    RestField(BlogPost.content),
+    RestField(BlogPost.summary),
+
+    DatetimeField(BlogPost.created_date, output_only=True),
+    DatetimeField(BlogPost.modified_date, output_only=True),
+    DatetimeField(BlogPost.published_date, output_only=True),
+
+    RestField(BlogPost.primary_image_resource_id, required=False),
+    FileField('primary_image_resource', required=False, output_only=True, resource_id_prop='primary_image_resource_id'),
+]
+
+
+
+
+
+class PostsApiHandler(RestHandlerBase):
+    """
+    Blog Posts Collection REST Endpoint
+    """
+
+    def get_param_schema(self):
+        return {
+            #'limit' : voluptuous.Coerce(int),
+            #'cursor': coerce_to_cursor,
+            #'sort': voluptuous.Coerce(str),
+            'get_by_slug': voluptuous.Coerce(str),
+            #'q': voluptuous.Coerce(str)
+        }
+
+    def get_rules(self):
+        return REST_RULES
+
+    def _get(self):
+        """
+        Get a list of Blog Posts
+        """
+
+        # Check if there is a query filter, etc
+        get_by_slug = self.cleaned_params.get('get_by_slug', None)
+
+        if get_by_slug:
+            post = blog_api.get_post_by_slug(get_by_slug)
+            if not post:
+                self.serve_404('Post Not Found')
+                return False
+
+            self.serve_success(Resource(post, REST_RULES).to_dict())
+            return
+
+
+
+
+        entities = blog_api.get_posts()
+
+        # Create A set of results based upon this result set - iterator??
+        results = []
+        for e in entities:
+            results.append(Resource(e, REST_RULES).to_dict())
+
+        self.serve_success(results)
+    
+    def _post(self):
+        """
+        Create a Post
+        """
+
+        e = blog_api.create_post(self.cleaned_data)
+        self.serve_success(Resource(e, REST_RULES).to_dict())
+        
+    
+class PostDetailApiHandler(RestHandlerBase):
+    """
+    Blog Post Resource Endpoint
+    """
+    
+    def get_rules(self):
+        return REST_RULES
+
+
+    def _get(self, resource_id):
+        key = get_key_from_resource_id(resource_id)
+        e = key.get()
+        self.serve_success(Resource(e, REST_RULES).to_dict())
+
+    
+    def _put(self, resource_id):
+        """
+        Edit a Post
+        """
+
+        key = get_key_from_resource_id(resource_id)
+        e = key.get()
+
+        e = blog_api.edit_post(e, self.cleaned_data)
+
+        self.serve_success(Resource(e, REST_RULES).to_dict())
+

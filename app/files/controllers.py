@@ -25,6 +25,7 @@ from google.appengine.ext import ndb
 
 from modules.venues.internal.models import Venue
 from modules.events.internal.models import Event
+from modules.blog.internal.models import BlogPost
 
 from files.rest_helpers import REST_RESOURCE_RULES
 
