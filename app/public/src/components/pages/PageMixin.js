@@ -6,6 +6,7 @@ var React = require('react');
 var PageMixin = {
     setMeta: function() {
         AppDispatcher.handleSetMeta(this.default_meta);
+        global.current_page = this;
     },
     getRoute: function (event) {
         // Helper to Emulate the click event to control rest routes

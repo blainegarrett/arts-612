@@ -12,6 +12,7 @@ var Error404Page = require('./components/pages/Error404Page');
 var PageMeta = require('./components/pages/PageMeta');
 var PrimaryMenu = require('./components/pages/PrimaryMenu')
 
+global.current_page = null; // This is set by PageMixin to the current page for use in widgets
 
 /* Figure out what to do with Routes... This is fugly... */
 ReactRouter.createRoute('/', function () {

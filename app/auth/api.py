@@ -28,4 +28,5 @@ def edit_user(user, data):
     for k, v in data.iteritems():
         setattr(user, k, v)
 
+    user.put()
     return user

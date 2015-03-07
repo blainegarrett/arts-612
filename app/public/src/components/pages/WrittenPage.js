@@ -1,9 +1,14 @@
 var React = require('react');
 var ReactRouter = require('flux-react-router');
-var PageMixin = require('./PageMixin');
+var moment = require('moment');
 
+var PageMixin = require('./PageMixin');
 var Footer = require('../temp/Footer');
 var GoodNewsBanner = require('../temp/GoodNewsBanner');
+
+var ArticleGoober = require('./../DataTypes/Article').ArticleGoober;
+var ListArticleRenderer = require('./../DataTypes/Article').ListArticleRenderer;
+
 
 var WrittenPage2 = React.createClass({
     mixins: [PageMixin],
@@ -13,7 +18,7 @@ var WrittenPage2 = React.createClass({
         'description': 'These are some galleries.'
     },
 
-    render: function() {
+    render: function () {
         return <div>
         <h2>Written</h2>
         
@@ -22,7 +27,7 @@ var WrittenPage2 = React.createClass({
         </div>;
 
     },
-    componentDidMount: function() {
+    componentDidMount: function () {
         this.setMeta();
     }
 });
@@ -60,19 +65,19 @@ var WrittenPage = React.createClass({
         });
     },
 
-    render: function() {
+    render: function () {
         
         var articles = []
         var rc = this;
 
         if (this.state.articles.results != undefined) {
-            articles = this.state.articles.results.map(function (g) {
-                return <li key={g.resource_id} name={g.title}><a href={'/written/' + g.slug} onClick={rc.getRoute}>{g.title}</a></li>;
+            articles = this.state.articles.results.map(function (post) {
+                return <ArticleGoober key={ post.resource_id } resource={ post } renderer={ ListArticleRenderer } />
             });
         }
 
         return <div className="row">
-            <h2>Twin Cities Galleries</h2>
+            <h2>Articles</h2>
             { articles }
         </div>;
 

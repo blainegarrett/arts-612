@@ -13,6 +13,10 @@ var BlogMainPage = require('./pages/BlogMainPage');
 var BlogPostCreatePage = require('./pages/BlogPostCreatePage');
 var BlogPostEditPage = require('./pages/BlogPostEditPage');
 
+var UsersMainPage = require('./pages/UsersMainPage');
+var UserCreatePage = require('./pages/UserCreatePage');
+var UserEditPage = require('./pages/UserEditPage');
+
 var EventsMainPage = require('./pages/EventsMainPage');
 var EventsCreatePage = require('./pages/EventsCreatePage');
 var EventsEditPage = require('./pages/EventsEditPage');
@@ -63,6 +67,23 @@ ReactRouter.createRoute('/admin/blog/create', function (params) {
 ReactRouter.createRoute('/admin/blog/{keystr}/edit', function (params) {
     React.unmountComponentAtNode( document.getElementById('main_content'));
     React.render(<BlogPostEditPage keystr={params.keystr} />, document.getElementById('main_content'));    
+});
+
+// Users
+ReactRouter.createRoute('/admin/users', function (params) {
+    React.unmountComponentAtNode( document.getElementById('main_content'));
+    React.render(<UsersMainPage />, document.getElementById('main_content'));    
+});
+
+
+ReactRouter.createRoute('/admin/users/create', function (params) {
+    React.unmountComponentAtNode( document.getElementById('main_content'));
+    React.render(<UserCreatePage  />, document.getElementById('main_content'));    
+});
+
+ReactRouter.createRoute('/admin/users/{keystr}/edit', function (params) {
+    React.unmountComponentAtNode( document.getElementById('main_content'));
+    React.render(<UserEditPage keystr={params.keystr} />, document.getElementById('main_content'));    
 });
 
 

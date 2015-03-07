@@ -22,14 +22,13 @@ var DefaultArticleRenderer = React.createClass({
     mixins: [ArticleRendererMixin],
 
     render_empty: function () {
-        return <li className="event ghost-load">
-            <div className="event-info">
-            	<div><a target="_blank"><span className="event-title">&#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;</span></a></div>
-                <div className="event-time">&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632;&#9632;</div>
-                <div className="event-venue-name">&#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;</div>
-                <div className="event-address">&#9632;&#9632;&#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632;&#9632;&#9632;</div>
-            </div>
-        </li>;
+        return <div className="ghost-load">
+            <h2>&#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;</h2>
+            <p className="blog-post-meta">&#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;</p>
+            <p className="lead">&#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;</p>
+            <br />
+            <div className="article-content-container">&#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;</div>
+        </div>;
     },
 
     render: function() {
@@ -41,18 +40,63 @@ var DefaultArticleRenderer = React.createClass({
 
         var article = this.state.resource;
         published_date = moment(Date.parse(article.created_date)).format('MMMM, Do YYYY');
+        
+        var image = null;
+        var image_url = null;
 
-        // TODO: This needs to come from the api
-        article.author = {firstname: 'Emma', lastname: 'Berg'};
+        if (article.primary_image_resource) {
+            image_url = article.primary_image_resource.versions.CARD_SMALL.url;
+            image = <img src={image_url} className="img-responsive" />
+        }
+        
 
         return <div>
             <h2>{ article.title }</h2>
-            <p className="blog-post-meta">{ published_date }  by <a href="http://www.emmaberg.com/" target="_new">{ article.author.firstname } { article.author.lastname }</a></p>
+            <p className="blog-post-meta">{ published_date }  by <a href={article.author_resource.website} target="_new">{ article.author_resource.firstname } { article.author_resource.lastname }</a></p>
+            <p className="lead">{ article.summary }</p>
+            { image }
+            <br />
             <div className="article-content-container" dangerouslySetInnerHTML={{__html: article.content }}></div>
         </div>;
     }
 });
 
+
+var ListArticleRenderer = React.createClass({
+    /* Simple Renderer for when displaying in a list */
+
+    mixins: [ArticleRendererMixin],
+
+    render_empty: function () {
+        return <li className="article ghost-load">...</li>;
+    },
+
+    render: function() {
+
+        if (!this.state.resource_loaded) {
+            // Render something that resembles real content
+            return this.render_empty();
+        }
+
+        var article = this.state.resource;
+        published_date = moment(Date.parse(article.created_date)).format('MMMM, Do YYYY');
+        
+        var image = null;
+        var image_url = null;
+
+        if (article.primary_image_resource) {
+            image_url = article.primary_image_resource.versions.CARD_SMALL.url;
+            image = <img src={image_url} className="img-responsive" />
+        }
+
+        // TODO: Case out if published or not...
+        var m = moment(article.modified_date);
+        var date_slug = m.format('YYYY/MM/');
+
+        var post_url = '/written/' + date_slug + article.slug;
+        return <li key={article.resource_id} title={article.title}><a href={post_url} onClick={global.current_page.getRoute }>{article.title}</a>  {published_date} </li>;
+    }
+});
 
 var ArticleGoober = React.createClass({
     /* Goober for Article - Handles listeners, etc */
@@ -87,5 +131,6 @@ var ArticleGoober = React.createClass({
 
 module.exports = {
     ArticleGoober: ArticleGoober,
-    DefaultArticleRenderer: DefaultArticleRenderer
+    DefaultArticleRenderer: DefaultArticleRenderer,
+    ListArticleRenderer: ListArticleRenderer
 };

@@ -9,6 +9,7 @@ import voluptuous
 import logging
 from rest.params import coerce_to_datetime, coerce_from_datetime
 from rest.utils import get_resource_id_from_key
+from rest.utils import get_key_from_resource_id
 
 NON_FIELD_ERRORS = '__all__'
 VALID_RESORCE_TYPES = (ndb.Model, dict) # None: is also allowed
@@ -252,6 +253,30 @@ class ResourceIdField(RestField):
             logging.error(obj)
             resource_id = None
         return resource_id
+
+
+class ResourceField(RestField):
+    """
+    Resource Field - similar to a Reference Property
+    """
+
+    def __init__(self, prop, resource_id_prop, resource_rules, **kwargs):
+        self.resource_id_prop = resource_id_prop
+        self.resource_rules = resource_rules
+        super(ResourceField, self).__init__(prop, **kwargs)
+
+
+    def from_resource(self, obj, field):
+        """
+        """
+
+        resource_id = super(ResourceField, self).from_resource(obj, self.resource_id_prop)
+
+        if not resource_id:
+            return None
+
+        resource_key = get_key_from_resource_id(resource_id)
+        return Resource(resource_key.get(), self.resource_rules).to_dict()
 
 
 class UploadField(RestField):

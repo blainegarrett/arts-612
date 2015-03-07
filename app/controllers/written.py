@@ -8,25 +8,30 @@ from controllers import BaseController
 from rest.controllers import RestHandlerBase
 from rest.resource import Resource
 from rest.resource import RestField, SlugField, ResourceIdField, ResourceUrlField, DatetimeField
+
+from rest.resource import ResourceField
 from rest.utils import get_key_from_resource_id
 
 from files.rest_helpers import FileField
-
+from auth.controllers import REST_RULES as USER_REST_RULES
 from modules.blog.internal import api as blog_api
 from modules.blog.internal.models import BlogPost
-
 from utils import get_domain
 
 
 class WrittenMainHandler(BaseController):
     """
-    Serverside Controller logic for written section
+    Serverside Controller logic for written section main page
     """
 
     def get(self):
+        """
+        Written Main Page Web Handler
+        """
+
         pagemeta = {
             'title': 'Written',
-            'description': 'Crtique, Reviews, and Observations of the Minneapolis / St. Paul Arts Scene',
+            'description': 'Crtique',
             'image': 'http://phase-0.arts-612.appspot.com/static/themes/v0/mplsart_fbimg.jpg'}
 
         template_values = {'pagemeta': pagemeta}
@@ -35,17 +40,37 @@ class WrittenMainHandler(BaseController):
 
 class WrittenArticleHandler(BaseController):
     """
+    Written Article Web Handler
     """
 
     def get(self, year, month, slug):
+        """
+        Web handler for direct requests, search, facebook, etc
+        """
+
+        post = blog_api.get_post_by_slug(slug)
+
+        if not post:
+            return self.serve_404('Post Not Found')
+
+        # TODO: Redirection Logic ...
+
+        # Page Meta
+        image_url = None
+        image_id = post.primary_image_resource_id
+        if image_id:
+            key = get_key_from_resource_id(image_id)
+            image = key.get()
+            if image and image.versions['CARD_SMALL']:
+                image_url = image.versions['CARD_SMALL']['url']
+
         pagemeta = {
-            'title': 'A message from mplsart.com founder, Emma Berg',
-            'description': 'It is with great pleasure that we introduce you to the new owners of mplsart.com',
-            'image': 'http://cdn.mplsart.com/written/temp/mplsart_fbimg_foursome.jpg'}
+            'title': post.title,
+            'description': post.summary,
+            'image': image_url}
 
         template_values = {'pagemeta': pagemeta}
         self.render_template('./templates/index.html', template_values)
-
 
 
 class WrittenMainRssFeedHandler(BaseController):
@@ -94,19 +119,13 @@ class WrittenMainRssFeedHandler(BaseController):
         		</item>
         	</channel>
         </rss>"""
-        
+
         self.response.headers['Content-Type'] = 'application/xml'
         self.response.write(output)
 
-
-
-
-
-
-
 # Rest Controllers
 
-resource_url = 'http://' + get_domain()  + '/api/posts/%s'
+resource_url = 'http://' + get_domain() + '/api/posts/%s'
 
 REST_RULES = [
     ResourceIdField(output_only=True),
@@ -124,11 +143,12 @@ REST_RULES = [
     RestField(BlogPost.primary_image_resource_id, required=False),
     RestField(BlogPost.author_resource_id, required=False),
 
-    FileField('primary_image_resource', required=False, output_only=True, resource_id_prop='primary_image_resource_id'),
+
+    ResourceField('author_resource', required=False, output_only=True,
+        resource_id_prop='author_resource_id', resource_rules=USER_REST_RULES),
+    FileField('primary_image_resource', required=False, output_only=True,
+        resource_id_prop='primary_image_resource_id'),
 ]
-
-
-
 
 
 class PostsApiHandler(RestHandlerBase):
@@ -165,9 +185,6 @@ class PostsApiHandler(RestHandlerBase):
             self.serve_success(Resource(post, REST_RULES).to_dict())
             return
 
-
-
-
         entities = blog_api.get_posts()
 
         # Create A set of results based upon this result set - iterator??
@@ -176,7 +193,7 @@ class PostsApiHandler(RestHandlerBase):
             results.append(Resource(e, REST_RULES).to_dict())
 
         self.serve_success(results)
-    
+
     def _post(self):
         """
         Create a Post
@@ -184,23 +201,21 @@ class PostsApiHandler(RestHandlerBase):
 
         e = blog_api.create_post(self.cleaned_data)
         self.serve_success(Resource(e, REST_RULES).to_dict())
-        
+
 
 class PostDetailApiHandler(RestHandlerBase):
     """
     Blog Post Resource Endpoint
     """
-    
+
     def get_rules(self):
         return REST_RULES
-
 
     def _get(self, resource_id):
         key = get_key_from_resource_id(resource_id)
         e = key.get()
         self.serve_success(Resource(e, REST_RULES).to_dict())
 
-    
     def _put(self, resource_id):
         """
         Edit a Post
@@ -212,4 +227,3 @@ class PostDetailApiHandler(RestHandlerBase):
         e = blog_api.edit_post(e, self.cleaned_data)
 
         self.serve_success(Resource(e, REST_RULES).to_dict())
-

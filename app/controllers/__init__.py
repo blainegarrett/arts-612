@@ -18,13 +18,8 @@ class BaseController(webapp2.RequestHandler):
 
         template = default_jinja_env.get_template(template_path)
         self.response.write(template.render(template_context))
-        
-
-class Error404Handler(BaseController):
-    """
-    """
     
-    def get(self, *args, **kwargs):
+    def serve_404(self, message):
         pagemeta = {
             'title': 'Page Not Found',
             'description': 'Unable to find page, please check your url',
@@ -33,5 +28,14 @@ class Error404Handler(BaseController):
         template_values = {'pagemeta': pagemeta}
         self.response.set_status(404)
         self.render_template('./templates/index.html', template_values)
+
+
+class Error404Handler(BaseController):
+    """
+    """
+    
+    def get(self, *args, **kwargs):
+        self.serve_404('Page Not Found')
+        return
 
     

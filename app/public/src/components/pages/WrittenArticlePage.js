@@ -19,11 +19,9 @@ var WrittenArticlePage = React.createClass({
 
     // TODO: More logical defaults and match to server...
     default_meta: {
-        /*
-        title: post.title,
-        description: post.summary,
-        image: post.primary_image
-        */
+        title: 'Article',
+        description: 'Article Descripton',
+        image: 'http://Default Article URL'
     },
 
     getInitialState: function () {
@@ -32,23 +30,43 @@ var WrittenArticlePage = React.createClass({
         return {
             resource_url: '/api/posts?get_by_slug=' + this.props.slug,
             content_loaded: false,
+            content_not_found: false,
             results: null,
             data: null
         };
     },
 
+    set_meta_for_resource: function() {
+        // Set the Page Meta for this specific post
+
+        post = this.state.results;
+
+        this.default_meta =  {
+            title: post.title,
+            description: post.summary
+        }
+        
+        if (post.primary_image_resource) {
+            // TODO: Do better error checking...
+            this.default_meta['image'] = post.primary_image_resource.versions.CARD_SMALL.url;
+        }
+
+        this.setMeta();
+    },
     componentDidMount: function () {
+        var rc = this;
 
         $.ajax({
             url: this.state.resource_url,
             dataType: 'json',
             success:  function (data) {
                 this.setState({data:data, content_loaded:true, results:data.results});
-                console.log(data);
+                rc.set_meta_for_resource();
 
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error(this.state.resource_url, status, err.toString());
+                this.setState({content_not_found:true, content_loaded:true})
             }.bind(this)
             
         });
@@ -57,7 +75,14 @@ var WrittenArticlePage = React.createClass({
     render: function() {
         var rendered_article;
 
-        if (this.state.results != undefined) {
+        
+        if (this.state.content_not_found) {
+            rendered_article = (<div>
+                <h2>Article Not Found</h2>
+                <p>We were unable to find this article. If you are looking for an old article, they'll be returning in the next few months. </p>
+            </div>);
+        }
+        else if (this.state.results != undefined) {
             var post = this.state.results
             rendered_article = <ArticleGoober key={ post.resource_id } resource={ post } renderer={ DefaultArticleRenderer } />
         }
