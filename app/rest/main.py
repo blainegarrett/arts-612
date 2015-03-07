@@ -44,12 +44,9 @@ routes.extend([
     (r'/api/events/nowshowing', 'cal.controllers.EventsNowShowingHandler'),
     (r'/api/events/([a-zA-Z0-9-_]+)', 'cal.controllers.EventDetailApiHandler'),
 
-
     # Posts Routes
     (r'/api/posts', 'controllers.written.PostsApiHandler'),
     (r'/api/posts/([a-zA-Z0-9-_]+)', 'controllers.written.PostDetailApiHandler'),
-
-
 
     # File Service Routes
     (r'/api/files', 'files.controllers.ListResourceHandler'),
@@ -57,6 +54,9 @@ routes.extend([
     (r'/api/files/upload_callback', 'files.controllers.UploadCallbackHandler'),
     (r'/api/files/([a-zA-Z0-9-_]+)', 'files.controllers.FileDetailHandler'),
 
+    # Private 
+    (r'/api/users', 'auth.controllers.UsersApiHandler'),
+    (r'/api/users/([a-zA-Z0-9-_]+)', 'auth.controllers.UserDetailApiHandler'),
 
 ])
 

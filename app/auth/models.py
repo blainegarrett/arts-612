@@ -1,3 +1,6 @@
+# Models for Users/Authentication, etc
+
+
 from google.appengine.ext import ndb
 
 
@@ -10,11 +13,20 @@ class BlogPost(ndb.Model):
     slug = ndb.StringProperty() # Post slug for permalinks
     content = ndb.TextProperty()
     summary = ndb.TextProperty()
-
-    author_resource_id = ndb.StringProperty()
-
+    # author
+    # primary_image
     primary_image_resource_id = ndb.StringProperty()
     attachment_resources =  ndb.StringProperty(repeated=True)
     created_date = ndb.DateTimeProperty(auto_now_add=True)
     modified_date = ndb.DateTimeProperty(auto_now=True)
     published_date = ndb.DateTimeProperty()
+
+
+class User(ndb.Model):
+    """
+    Model representing a user
+    """
+    
+    firstname = ndb.StringProperty()
+    lastname = ndb.StringProperty()
+    website = ndb.StringProperty()

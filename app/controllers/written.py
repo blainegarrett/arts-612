@@ -122,6 +122,8 @@ REST_RULES = [
     DatetimeField(BlogPost.published_date, output_only=True),
 
     RestField(BlogPost.primary_image_resource_id, required=False),
+    RestField(BlogPost.author_resource_id, required=False),
+
     FileField('primary_image_resource', required=False, output_only=True, resource_id_prop='primary_image_resource_id'),
 ]
 
@@ -183,7 +185,7 @@ class PostsApiHandler(RestHandlerBase):
         e = blog_api.create_post(self.cleaned_data)
         self.serve_success(Resource(e, REST_RULES).to_dict())
         
-    
+
 class PostDetailApiHandler(RestHandlerBase):
     """
     Blog Post Resource Endpoint

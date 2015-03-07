@@ -4,6 +4,7 @@ var SlugField = require('./../utilities/forms/fields/SlugField');
 var ChoiceField = require('./../utilities/forms/fields/ChoiceField');
 var GeoPtField = require('./../utilities/forms/fields/GeoPtField');
 var CheckboxWidget = require('./../utilities/forms/widgets/CheckboxWidget');
+var ChoiceField = require('./../utilities/forms/fields/ChoiceField');
 var SlugWidget = require('./../utilities/forms/widgets/SlugWidget');
 var TextareaWidget = require('./../utilities/forms/widgets/TextareaWidget');
 var FileUploader = require('./../components/FileUploader');
@@ -16,6 +17,7 @@ BlogPostForm = React.createClass({
 
     componentDidMount: function(){
         
+        // Get the resource data
         if (this.state.is_edit) {
             $.ajax({
                 url: this.props.resource_url,
@@ -27,7 +29,20 @@ BlogPostForm = React.createClass({
                     console.error(this.props.resource_url, status, err.toString());
                 }.bind(this)
             });
-        }
+        };
+        
+        // Get Author data
+        $.ajax({
+            url: '/api/users',
+            dataType: 'json',
+            success:  function(data) {
+                this.setState({author_resources:data.results});
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(this.props.resource_url, status, err.toString());
+            }.bind(this)
+        });
+        
     },
 
     getInitialState: function () {
@@ -37,7 +52,8 @@ BlogPostForm = React.createClass({
             save_callback: this.props.save_callback,
             errors: [],
             is_edit: this.props.is_edit,
-            data: {results: {}}
+            data: {results: {}},
+            author_resources: []
         };
     },
 
@@ -121,6 +137,9 @@ BlogPostForm = React.createClass({
 
 
     render: function(){
+        if (this.state.author_resources.length == 0) {
+            return <div>Loading...</div>
+        }
         if (this.state.is_edit && !this.state.data.results.title) {
             return <div>Loading...</div>
         }
@@ -145,7 +164,13 @@ BlogPostForm = React.createClass({
                 upload_error_callback = { this.upload_error_callback } />
         }
 
+        // Temporary Author UI...
+        var author_resource_choices = [];
+        var author_resource_choices = this.state.author_resources.map(function (obj) {
+            return [obj.resource_id, obj.firstname + ' ' + obj.lastname + ' ' + obj.resource_id]
+        });
 
+        console.log(this.state.data);
         return <div className="row">
         
         
@@ -157,6 +182,7 @@ BlogPostForm = React.createClass({
             
               <TextField id="title"  ref="field.title" val={this.state.data.results.title } form={this} placeholder="Enter Post Title" onChangeCallback={this.sluggable_helper} />
               <SlugField id="slug" form={this}  ref="field.slug"  val={this.state.data.results.slug } widget={SlugWidget} url_root="http://mplsart.com/written/"/>
+              <ChoiceField id="author_resource_id" form={this} ref="field.author_resource_id"  val={this.state.data.results.author_resource_id } widget={CheckboxWidget} choices={author_resource_choices} />
 
               <TextField id="summary"  ref="field.summary" val={this.state.data.results.summary } form={this} widget={TextareaWidget} placeholder="Post Summary" />
               <TextField id="content"  ref="field.content" val={this.state.data.results.content } form={this} widget={TextareaWidget} placeholder="Post content" />

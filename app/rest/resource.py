@@ -189,8 +189,8 @@ class RestField(object):
         """
 
         if isinstance(obj, dict):
-            return obj.get(field)
-        return getattr(obj, field)
+            return obj.get(field, None)
+        return getattr(obj, field, None)
 
     def to_resource(self, data):
         """

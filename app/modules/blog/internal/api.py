@@ -32,7 +32,7 @@ def create_post(data):
     entity.summary = data['summary']
     entity.content = data['content']
     entity.published_date = data.get('published_date')
-
+    entity.author_resource_id = data.get('author_resource_id')
     entity.put()
 
     # Step 3: Delete any cache keys related
@@ -55,6 +55,7 @@ def edit_post(entity, data):
     entity.summary = data['summary']
     entity.content = data['content']
     entity.published_date = data.get('published_date')
+    entity.author_resource_id = data.get('author_resource_id')
     entity.put()
 
     # Step 2: Next update the search indexes incase anything affecting them has changed
