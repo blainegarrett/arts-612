@@ -11,7 +11,7 @@ var TempUpcoming = require('../calendar/TempUpcoming');
 var TempEvents = require('../calendar/TempEvents');
 
 var ArticleGoober = require('./../DataTypes/Article').ArticleGoober;
-var ListArticleRenderer = require('./../DataTypes/Article').ListArticleRenderer;
+var PodArticleRenderer = require('./../DataTypes/Article').PodArticleRenderer;
 
 
 var WrittenPage = React.createClass({
@@ -53,7 +53,7 @@ var WrittenPage = React.createClass({
 
         if (this.state.articles.results != undefined) {
             articles = this.state.articles.results.map(function (post) {
-                return <ArticleGoober key={ post.resource_id } resource={ post } renderer={ ListArticleRenderer } />
+                return <ArticleGoober key={ post.resource_id } resource={ post } renderer={ PodArticleRenderer } />
             });
         }
 
@@ -63,6 +63,11 @@ var WrittenPage = React.createClass({
             <div className="row">
 
                 <div className="col-md-6" id="main-content-container">
+                    
+                    <h2>Written</h2>
+                    
+                    <div className="alert alert-warning">Our Written section is returing soon including the archives from the old site. Stay tuned and enjoy these articles.</div>
+                    
                     { articles }
                     <br />
                     <br />

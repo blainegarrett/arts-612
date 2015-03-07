@@ -61,6 +61,37 @@ var DefaultArticleRenderer = React.createClass({
     }
 });
 
+var PodArticleRenderer = React.createClass({
+    /* Pod Renderer */
+
+    mixins: [ArticleRendererMixin],
+    render: function() {
+
+        if (!this.state.resource_loaded) {
+            // Render something that resembles real content
+            return this.render_empty();
+        }
+
+        var article = this.state.resource;
+        published_date = moment(Date.parse(article.created_date)).format('MMMM, Do YYYY');
+        
+        var image = null;
+        var image_url = null;
+
+        if (article.primary_image_resource) {
+            image_url = article.primary_image_resource.versions.CARD_SMALL.url;
+            image = <img src={image_url} className="img-responsive" />
+        }
+
+        // TODO: Case out if published or not...
+        var m = moment(article.modified_date);
+        var date_slug = m.format('YYYY/MM/');
+
+        var post_url = '/written/' + date_slug + article.slug;
+        return <li key={article.resource_id} title={article.title}><a href={post_url} onClick={global.current_page.getRoute }>{article.title}</a>  {published_date} </li>;
+    }
+    
+});
 
 var ListArticleRenderer = React.createClass({
     /* Simple Renderer for when displaying in a list */
@@ -132,5 +163,6 @@ var ArticleGoober = React.createClass({
 module.exports = {
     ArticleGoober: ArticleGoober,
     DefaultArticleRenderer: DefaultArticleRenderer,
-    ListArticleRenderer: ListArticleRenderer
+    ListArticleRenderer: ListArticleRenderer,
+    PodArticleRenderer: PodArticleRenderer
 };
