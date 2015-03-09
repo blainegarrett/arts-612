@@ -43,7 +43,7 @@ var PageMeta = React.createClass({
         meta_tags.push(<meta name="title" content={meta.title} />);
         meta_tags.push(<meta itemProp="name" content={meta.title } />);
         meta_tags.push(<meta property="og:title" content={ meta.title } />)
-        document.title = meta.title + ' | mplsart.com';
+        document.title = meta.title + ' | MPLSART.COM';
 
         // Description
         meta_tags.push(<meta name="description" content={meta.description} />);

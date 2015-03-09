@@ -48,6 +48,10 @@ routes.extend([
     (r'/api/posts', 'controllers.written.PostsApiHandler'),
     (r'/api/posts/([a-zA-Z0-9-_]+)', 'controllers.written.PostDetailApiHandler'),
 
+    # Homepage Waterfall
+    (r'/api/feed', 'controllers.feed.HomeApiHandler'),
+
+
     # File Service Routes
     (r'/api/files', 'files.controllers.ListResourceHandler'),
     (r'/api/files/upload_url', 'files.controllers.UploadUrlHandler'),

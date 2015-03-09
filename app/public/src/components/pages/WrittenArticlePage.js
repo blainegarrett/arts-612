@@ -45,7 +45,7 @@ var WrittenArticlePage = React.createClass({
             title: post.title,
             description: post.summary
         }
-        
+
         if (post.primary_image_resource) {
             // TODO: Do better error checking...
             this.default_meta['image'] = post.primary_image_resource.versions.CARD_SMALL.url;
@@ -55,6 +55,9 @@ var WrittenArticlePage = React.createClass({
     },
     componentDidMount: function () {
         var rc = this;
+
+        this.setMeta();
+
 
         $.ajax({
             url: this.state.resource_url,
@@ -75,11 +78,10 @@ var WrittenArticlePage = React.createClass({
     render: function() {
         var rendered_article;
 
-        
         if (this.state.content_not_found) {
             rendered_article = (<div>
                 <h2>Article Not Found</h2>
-                <p>We were unable to find this article. If you are looking for an old article, they'll be returning in the next few months. </p>
+                <p>We were unable to find this article. If you are looking for an old article, they will be returning in the next few months. </p>
             </div>);
         }
         else if (this.state.results != undefined) {
@@ -98,19 +100,6 @@ var WrittenArticlePage = React.createClass({
                 <div className="col-md-6" id="main-content-container">
                     { rendered_article }
                     <br />
-                    <br />
-
-                    <div id="panel-call-out">
-                        <h2>CALL FOR CONTENT</h2>
-                        <div className="panel-content">
-                            <p>In order to build the best arts calendar in the Twin Cities, we’re looking for writers, art critics, photographers, Instagrammers, curators, and other tastemakers with a deep appreciation for the local art scene.</p>
-                            <p>
-                                To help promote local art, send a note of interest to: <br />
-                                <span className="bigyo"><a href="mailto:contribute@mplsart.com">contribute@mplsart.com</a></span>
-                            </p>
-                        </div>
-                    </div>
-
                     <TempExtras />
 
                 </div>

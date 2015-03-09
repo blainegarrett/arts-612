@@ -195,7 +195,7 @@ class MainHandler(MerkabahBaseController):
 
     def get(self):
         pagemeta = {
-            'title': 'mplsart.com | Returning Spring 2015',
+            'title': 'MPLSART.COM | Returning Spring 2015',
             'description': 'The best art events and gallery listings for Minneapolis and St. Paul',
             'image': 'http://mplsart.com/static/themes/v0/mplsart_fbimg.jpg'}
 

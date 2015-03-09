@@ -22,30 +22,29 @@ var PrimaryJive = React.createClass({
     render: function() {
         return <div className="col-md-6" id="main-content-container">
             <div id="panel-blurb">
-        	    <h2>mplsart is returning!</h2>
+        	    <h2>We're re-building.</h2>
         	    <p>Look for a new calendar this Spring and keep submitting  your events to <a href="mailto:calendar@mplsart.com">calendar@mplsart.com</a></p>
             </div>
 
-            <div id="panel-closet">
-            	<div className="panel-content">
-                    <div className="row">
-                        <div className="pod">
-                        	<div className="col-xs-4 col-sm-3 col-md-4">
-                        	    <a href="/written/2015/01/new_beginnings_for_mplsart" onClick={this.getRoute} title="A message from mplsart.com founder, Emma Berg">
-                        	        <img src="http://cdn.mplsart.com/written/temp/hmpg_emmakris.png" className="img-responsive" alt="A message from mplsart.com founder, Emma Berg"/>
-                        	    </a>
-                        	</div>
-                            <div className="col-xs-8 col-sm-9 col-md-8">
-                                <h2 className="pod-title">A message from mplsart.com founder, Emma Berg:</h2>
-                                <p className="pod-descr">It is with great pleasure that we introduce you to the new owners of mplsart.com</p>
-                                <p className="pod-readmore"><a href="/written/2015/01/new_beginnings_for_mplsart" onClick={this.getRoute} title="A message from mplsart.com founder, Emma Berg">Read More ...</a></p>                
-                            </div>
-                        </div>
+            <div className="card big-card">
+                <div className="card-image">
+                    <a href="/written/2015/03/mplsart-com-launch-party-april-10th/" onClick={this.getRoute} title="MPLSART.COM Launch Party">
+                        <img src="http://cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fMjAwMDAwMQ/card_small.png" className="img-responsive" title="MPLSART.COM Launch Party" />
+                    </a>
+                </div>
+                <div className="card-content">
+                    <div className="card-title">
+                        <a href="/written/2015/03/mplsart-com-launch-party-april-10th/" onClick={this.getRoute} target="_new">MPLSART.COM Launch Party</a>
                     </div>
-            	</div>
+                    <div className="card-detail event-time">Friday, April 10th</div>
+                    <div className="card-detail event-venue-name">Public Functionary</div>
+                    <div className="card-detail event-address">1400 12th Ave NE, Minneapolis</div>
+                </div>
             </div>
 
-            <TempExtras p/>
+
+            <TempExtras />
+
         </div>
     }
 });
@@ -55,7 +54,7 @@ var HomePage = React.createClass({
     mixins: [PageMixin],
     
     default_meta: {
-        'title': 'mplsart.com | Returning Spring 2015',
+        'title': 'MPLSART.COM | Returning Spring 2015',
         'description': 'The best art events and gallery listings for Minneapolis and St. Paul',
         'image': 'http://mplsart.com/static/themes/v0/mplsart_fbimg.jpg'
     },

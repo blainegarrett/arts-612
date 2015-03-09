@@ -4,8 +4,8 @@ Along with: TempEventHelpers, TempEvents, TempUpcoming
 */
 
 var React = require('react');
-var EventGoober = require('./../DataTypes/Event').EventGoober;
-var AlphaEventRenderer = require('./../DataTypes/Event').AlphaEventRenderer;
+var EventGoober = require('./../DataTypes/Event').Goober;
+var PodRenderer = require('./../DataTypes/Event').PodRenderer;
 
 var TempEventsListMixin = {
     componentDidMount: function (){
@@ -46,19 +46,21 @@ var TempEventList = React.createClass({
         var ed_filter = this.state.ed_filter;
         if (this.props.event_data.results != undefined) {
             eventNodes = this.props.event_data.results.map(function (event) {
-                return <EventGoober key={ event.resource_id } resource={ event } ed_filter={ ed_filter } renderer={ AlphaEventRenderer } />
+                return <div className="card col-sm-12" key={ event.resource_id }>
+                    <EventGoober resource={ event } ed_filter={ ed_filter } renderer={ PodRenderer } />
+                    </div>
             });
         }
         else {
-            eventNodes.push(<EventGoober key={ 'xxx1' } resource={ null } ed_filter={ ed_filter } renderer={ AlphaEventRenderer } />)
-            eventNodes.push(<EventGoober key={ 'xxx2' } resource={ null } ed_filter={ ed_filter } renderer={ AlphaEventRenderer } />)
-            eventNodes.push(<EventGoober key={ 'xxx3' } resource={ null } ed_filter={ ed_filter } renderer={ AlphaEventRenderer } />)
-            eventNodes.push(<EventGoober key={ 'xxx4' } resource={ null } ed_filter={ ed_filter } renderer={ AlphaEventRenderer } />)
-            eventNodes.push(<EventGoober key={ 'xxx5' } resource={ null } ed_filter={ ed_filter } renderer={ AlphaEventRenderer } />)
-            eventNodes.push(<EventGoober key={ 'xxx6' } resource={ null } ed_filter={ ed_filter } renderer={ AlphaEventRenderer } />)
+            eventNodes.push(<div className="card col-sm-12" key={ 'xxx1' }><EventGoober resource={ null } ed_filter={ ed_filter } renderer={ PodRenderer } /></div>)
+            eventNodes.push(<div className="card col-sm-12" key={ 'xxx2' }><EventGoober resource={ null } ed_filter={ ed_filter } renderer={ PodRenderer } /></div>)
+            eventNodes.push(<div className="card col-sm-12" key={ 'xxx3' }><EventGoober resource={ null } ed_filter={ ed_filter } renderer={ PodRenderer } /></div>)
+            eventNodes.push(<div className="card col-sm-12" key={ 'xxx4' }><EventGoober resource={ null } ed_filter={ ed_filter } renderer={ PodRenderer } /></div>)
+            eventNodes.push(<div className="card col-sm-12" key={ 'xxx5' }><EventGoober resource={ null } ed_filter={ ed_filter } renderer={ PodRenderer } /></div>)
+            eventNodes.push(<div className="card col-sm-12" key={ 'xxx6' }><EventGoober resource={ null } ed_filter={ ed_filter } renderer={ PodRenderer } /></div>)
         };
 
-        return  <ul className="event-list">{ eventNodes }</ul>
+        return  <div className="row">{ eventNodes }</div>
     }
 });
 

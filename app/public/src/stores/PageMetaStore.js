@@ -10,8 +10,8 @@ var assign = require('object-assign');
 var CHANGE_EVENT = 'change';
 
 var _page_meta = {
-    'title': 'mplsart.com',
-    'description': 'blorf'
+    'title': 'MPLSART.COM',
+    'description': 'Twin Cities art and events'
 };
 
 /**

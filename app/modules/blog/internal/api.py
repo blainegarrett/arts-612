@@ -5,7 +5,7 @@ def get_posts():
     """
     Primary wrapper for fetching events
     """
-    return BlogPost.query().fetch(1000)
+    return BlogPost.query().order(-BlogPost.created_date).fetch(1000)
 
 
 def get_post_by_slug(slug):

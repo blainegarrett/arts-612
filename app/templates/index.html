@@ -17,26 +17,26 @@
 
 	<!-- fonts -->
 	<link href="/static/Bryant2Web/Bryant2Web_WOFF/Bryant.css" rel="stylesheet" type="text/css">
-	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
     <!-- Bootstrap core CSS -->
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 
     <!-- Custom styles for this template -->
-	<link rel="stylesheet" href="/static/themes/v0/core.css?9" />
+	<link rel="stylesheet" href="/static/themes/v0/core.css?17" />
 
 	<!-- important bits -->
 	<meta name="google-site-verification" content="5rh0RiNkYuPuVOdrIXk4mY4AQ87uS7Ad_ZigdjDNBp0" />
 
 	<!-- News Feeds -->
-	<link rel="alternate" type="application/rss+xml" title="mplsart.com Articles" href="/written/feed/" />
+	<link rel="alternate" type="application/rss+xml" title="MPLSART.COM Articles" href="/written/feed/" />
 
   </head>
 
-  <body>
+  <body class="beta">
 
 	<!-- Start Top Nav -->
-	<div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+	<div id="header_nav" class="navbar navbar-fixed-top navbar-inverse" role="navigation">
 	      <div class="container">
 	        <div class="navbar-header">
 			  <!--
@@ -47,13 +47,16 @@
 	            <span class="icon-bar"></span>
 	          </button>
 			  -->
-	          <a class="navbar-brand" href="/">MPLSART.COM</a>
+	          <a class="navbar-brand" href="/" title="MPLSART.COM Home Page"><span class="brand-title-mpls">MPLS</span><span class="brand-title-art">ART.COM</span></a>
 	        </div>
 			
 			<p class="navbar-text navbar-right">
 				<span id="est-stamp">EST. 2005</a>
 			</p>
 	      </div><!-- /.container -->
+
+		  <div id="header_nav_cards"></div>
+
 	    </div>
 	<!-- End Top Nav -->
 	
@@ -76,7 +79,7 @@
 	{% if not no_client %}
 	    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-		<script src="/public/build/main.js?9"></script>
+		<script src="/public/build/main.js?17"></script>
 	{% endif %}
 
 	<!-- start google analytics -->

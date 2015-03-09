@@ -24,10 +24,11 @@ var DefaultArticleRenderer = React.createClass({
     render_empty: function () {
         return <div className="ghost-load">
             <h2>&#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;</h2>
-            <p className="blog-post-meta">&#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;</p>
             <p className="lead">&#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;</p>
             <br />
             <div className="article-content-container">&#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;</div>
+            <br />
+            <p className="blog-post-meta">&#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;</p>
         </div>;
     },
 
@@ -52,11 +53,12 @@ var DefaultArticleRenderer = React.createClass({
 
         return <div>
             <h2>{ article.title }</h2>
-            <p className="blog-post-meta">{ published_date }  by <a href={article.author_resource.website} target="_new">{ article.author_resource.firstname } { article.author_resource.lastname }</a></p>
             <p className="lead">{ article.summary }</p>
             { image }
             <br />
             <div className="article-content-container" dangerouslySetInnerHTML={{__html: article.content }}></div>
+            <br />
+            <p className="blog-post-meta">--<br />Posted { published_date }  by <a href={article.author_resource.website} target="_new">{ article.author_resource.firstname } { article.author_resource.lastname }</a></p>
         </div>;
     }
 });
@@ -88,7 +90,33 @@ var PodArticleRenderer = React.createClass({
         var date_slug = m.format('YYYY/MM/');
 
         var post_url = '/written/' + date_slug + article.slug;
-        return <li key={article.resource_id} title={article.title}><a href={post_url} onClick={global.current_page.getRoute }>{article.title}</a>  {published_date} </li>;
+        
+        return <div>
+            <div className="card-image">
+                <a href={post_url} title={article.title} onClick={global.current_page.getRoute }>{ image }</a>
+            </div>
+
+            <div className="card-content">
+                <div className="card-title"><a href={ post_url } onClick={global.current_page.getRoute } target="_new">{article.title }</a></div>
+                <div className="card-detail">{ article.summary } <b><a href={post_url} title={article.title} onClick={global.current_page.getRoute }>Read More...</a></b></div>
+            </div>            
+        </div>;
+        
+        
+        /*
+        <li title={article.title}><a href={post_url} onClick={global.current_page.getRoute }>{article.title}</a>  {published_date} </li>;
+        render: function () {
+            return <div>
+
+
+            <div className="card-content">
+                <p>Cards for display in portfolio style material design by Google.</p>
+            </div>
+            </div>
+        }
+        */
+
+
     }
     
 });

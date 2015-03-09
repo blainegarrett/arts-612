@@ -2,6 +2,7 @@
 var React = require('react');
 var ReactRouter = require('flux-react-router');
 var HomePage = require('./components/pages/HomePage');
+var NewHomePage = require('./components/pages/NewHomePage');
 var CalendarPage = require('./components/pages/CalendarPage');
 var WrittenPage = require('./components/pages/WrittenPage');
 var WrittenArticlePage = require('./components/pages/WrittenArticlePage');
@@ -10,6 +11,7 @@ var GalleryViewPage = require('./components/pages/GalleryViewPage');
 var Error404Page = require('./components/pages/Error404Page');
 
 var PageMeta = require('./components/pages/PageMeta');
+var NavCardsContainer = require('./components/NavCardsContainer').NavCardsContainer;
 var PrimaryMenu = require('./components/pages/PrimaryMenu')
 
 global.current_page = null; // This is set by PageMixin to the current page for use in widgets
@@ -34,6 +36,11 @@ ReactRouter.createRoute('/galleries/{slug}', function (params) {
     React.render(<GalleryViewPage slug={params.slug} />, document.getElementById('main_content'));    
 });
 
+ReactRouter.createRoute('/home', function () {
+    React.unmountComponentAtNode( document.getElementById('main_content'));
+    React.render(<NewHomePage />, document.getElementById('main_content'));    
+});
+
 ReactRouter.createRoute('/written', function () {
     React.unmountComponentAtNode( document.getElementById('main_content'));
     React.render(<WrittenPage />, document.getElementById('main_content'));    
@@ -54,3 +61,11 @@ ReactRouter.init();
 React.render(<PageMeta />, document.getElementById('page_meta'));
 //React.render(<PageMeta />, document.getElementById('meta_debug'));
 //React.render(<PrimaryMenu />, document.getElementById('navbar'));
+React.render(<NavCardsContainer />, document.getElementById('header_nav_cards'));
+
+
+
+$(window).on("scroll touchmove", function () {
+    /* Neato Scrolling effect */
+  $('#header_nav').toggleClass('tiny', $(document).scrollTop() > 375);
+});

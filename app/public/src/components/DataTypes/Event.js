@@ -15,6 +15,80 @@ var EventRendererMixin = {
     },    
 }
 
+var PodRenderer = React.createClass({
+    /* Pod Renderer */
+
+    mixins: [EventRendererMixin],
+
+    render_empty: function () {
+        return <div className="ghost-load">
+            <div className="card-content">
+                <div className="card-title"><a href="#" target="_new">&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632; &#9632;&#9632;&#9632; &#9632;&#9632;&#9632;</a></div>
+
+                <div className="card-detail event-time">&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632;</div>
+                <div className="card-detail event-venue-name">&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632;</div>
+                <div className="card-detail event-address">&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632;</div>
+
+            </div>            
+        </div>
+    },
+
+    render: function() {
+        if (!this.state.resource_loaded) {
+            // Render something that resembles real content
+            return this.render_empty();
+        }
+
+        var e = this.state.resource;
+        var image = null;
+        var image_url = null;
+
+        // Isolate the targeted event_date
+        var target_event_date = null;
+
+        for (var i in e.event_dates) {
+            if (e.event_dates[i].type == this.state.ed_filter) {
+                target_event_date = e.event_dates[i];
+            }
+        };
+
+        // This is mostly for debugging...
+        if (!target_event_date) {
+            target_event_date = e.event_dates[0];
+            console.error('Warning: Failed to find an ed for the below event with a ed.type matching "' + this.state.ed_filter  + '". Defaulting to first found one. ');
+            console.error(this.state);
+        };
+
+
+        if (e.primary_image_resource) {
+            image_url = e.primary_image_resource.versions.CARD_SMALL.url;
+            image = <img src={image_url} className="img-responsive" title={e.name} />
+        }
+
+        //<div className="card-title"><a href={post_url} onClick={global.current_page.getRoute }>{e.name}</a></div>
+
+        var post_url = e.url;
+        return <div>
+            <div className="card-image">
+                <a href={post_url} title={e.name} onClick={global.current_page.getRoute }>{ image }</a>
+            </div>
+
+            <div className="card-content">
+                <div className="card-title"><a href={ post_url } target="_new">{e.name }</a></div>
+
+                <div className="card-detail event-time"><NiceDate start={ target_event_date.start } end={ target_event_date.end } eventdate_type={ target_event_date.type } /></div>
+                <div className="card-detail event-venue-name">{target_event_date.venue.name}</div>
+                <div className="card-detail event-address">{target_event_date.venue.address + ', ' + target_event_date.venue.city }</div>
+
+            </div>            
+        </div>;
+
+    }
+    
+});
+
+
+
 var AlphaEventRenderer = React.createClass({
     // Event Renderer for TempAlpha Site - pre April 2015 launch
 
@@ -83,7 +157,7 @@ var AlphaEventRenderer = React.createClass({
 
 });
 
-var DefaultEventRenderer = React.createClass({
+var DefaultRenderer = React.createClass({
     /* Default Event Renderer when none are given.
     TODO: We could probably do away with this... */
 
@@ -119,11 +193,11 @@ var DefaultEventRenderer = React.createClass({
 });
 
 
-var EventGoober = React.createClass({
+var Goober = React.createClass({
     /* Goober for Events - Handles listeners, etc */
 
     getDefaultProps: function() {
-        return { renderer: DefaultEventRenderer };
+        return { renderer: DefaultRenderer };
     },
 
     propTypes: {
@@ -152,7 +226,8 @@ var EventGoober = React.createClass({
 
 
 module.exports = {
-    EventGoober: EventGoober,
+    Goober: Goober,
     AlphaEventRenderer: AlphaEventRenderer,
-    DefaultEventRenderer: DefaultEventRenderer
+    DefaultRenderer: DefaultRenderer,
+    PodRenderer: PodRenderer
 };

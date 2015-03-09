@@ -12,6 +12,8 @@ from rest.utils import get_key_from_resource_id
 
 from files.models import FileContainer
 
+import logging
+
 resource_url = 'http://' + get_domain() + '/api/files/%s'
 
 REST_RESOURCE_RULES = [
@@ -45,5 +47,10 @@ class FileField(RestField):
         if not resource_id:
             return None
 
-        resource_key = get_key_from_resource_id(resource_id)        
+        try:
+            resource_key = get_key_from_resource_id(resource_id)
+        except ValueError:
+            logging.error('Invalid Resource Id %s' % resource_id)
+            return None
+
         return Resource(resource_key.get(), REST_RESOURCE_RULES).to_dict()

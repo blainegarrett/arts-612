@@ -44,6 +44,8 @@
     "react-infinite-scroll": "^0.1.5",
     "react-masonry-mixin": "^0.4.0",
     "react-tools": "^0.12.0",
+    "packery": "^1.3.0",
+    "react-packery-mixin": "^0.1.4",
     "reactify": "^0.15.2",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.0.0",

@@ -53,7 +53,7 @@ var WrittenPage = React.createClass({
 
         if (this.state.articles.results != undefined) {
             articles = this.state.articles.results.map(function (post) {
-                return <ArticleGoober key={ post.resource_id } resource={ post } renderer={ PodArticleRenderer } />
+                return <div className="card" key={ post.resource_id }><ArticleGoober key={ post.resource_id } resource={ post } renderer={ PodArticleRenderer } /></div>
             });
         }
 
@@ -69,19 +69,6 @@ var WrittenPage = React.createClass({
                     <div className="alert alert-warning">Our Written section is returing soon including the archives from the old site. Stay tuned and enjoy these articles.</div>
                     
                     { articles }
-                    <br />
-                    <br />
-
-                    <div id="panel-call-out">
-                        <h2>CALL FOR CONTENT</h2>
-                        <div className="panel-content">
-                            <p>In order to build the best arts calendar in the Twin Cities, we’re looking for writers, art critics, photographers, Instagrammers, curators, and other tastemakers with a deep appreciation for the local art scene.</p>
-                            <p>
-                                To help promote local art, send a note of interest to: <br />
-                                <span className="bigyo"><a href="mailto:contribute@mplsart.com">contribute@mplsart.com</a></span>
-                            </p>
-                        </div>
-                    </div>
 
                     <TempExtras />
 
