@@ -98,9 +98,13 @@ var WrittenArticlePage = React.createClass({
             <div className="row">
 
                 <div className="col-md-6" id="main-content-container">
-                    { rendered_article }
-                    <br />
-                    <TempExtras />
+                    <div className="row">
+                    
+                        <div className="col-xs-12">
+                            { rendered_article }
+                        </div>
+                        <TempExtras />
+                    </div>
 
                 </div>
                 <div className="col-md-3 panel-events"><TempUpcoming col_name="'Upcoming" /></div>

@@ -1,6 +1,6 @@
 application: arts-612
 
-version: betax
+version: betax-20150314
 
 runtime: python27
 api_version: 1

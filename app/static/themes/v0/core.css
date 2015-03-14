@@ -66,10 +66,22 @@ Pink "art" in MPLSart.com header
 
 /* Panel Defaults */
 .panel-header { padding:5px; padding-left: 20px; }
-.panel-content { background-color: #eee; padding:20px; margin-bottom: 20px; }
+.panel-content { background-color: #eee; /*padding:10px;*/ }
 
 /* Panel Social Links */
 #instagram-link i { font-size: 1.85em; }
+
+
+/* Temp Panel bits */
+
+#panel-contact, #panel-social {
+    margin-bottom:20px;
+}
+
+#panel-contact .panel-content, #panel-social .panel-content {
+    padding:10px;
+}
+
 
 /* Events Panels */
 .panel-events .panel-header {
@@ -77,14 +89,11 @@ Pink "art" in MPLSart.com header
     color: #fff;
 }
 .panel-events .panel-content {
-    padding:0px;
+    /*padding:0px;*/
     background-color: transparent;
     padding-top:10px;
 }
-    .panel-events .panel-content .row {
-        margin-right: 0;
-        margin-left: 0;
-    }
+    .panel-events .panel-content .row { }
 
 /* Call Out */
 #panel-call-out { background-color: #ffffff; }
@@ -93,7 +102,7 @@ Pink "art" in MPLSart.com header
         line-height: 30px;
         background-color: #ff0099;
         color : #fff;
-        padding:20px;
+        /* padding:20px; */
     }
     #panel-call-out .panel-content { margin-bottom:20px; }
     #panel-call-out .bigyo { font-size:30px; }
@@ -121,15 +130,13 @@ Pink "art" in MPLSart.com header
 
 /* Hashtag */
 #panel-hashtag {
-    background-color: #ff0099;
     margin-bottom: 20px;
 }
-
-#panel-hashtag .row { margin-right: -1px; margin-left: 0px; }
+#panel-hashtag .row {  margin-left: 0px; background-color: #ff0099; }
 #panel-hashtag .solid-white { padding:20px; background-color: #fff; }
 
 #panel-hashtag .solid-bg {
-    padding:20px;
+    /* padding:20px; */
     height: 100%;
     color: #ffffff;
     font-size:30px;
@@ -193,8 +200,6 @@ footer {
 
 .card {
     margin-bottom: 15px;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
 }
 
     .card .card-content {
@@ -414,10 +419,11 @@ body.beta .brand-title-art { color: inherit; text-transform: uppercase;}
     body.beta .brand-title-art:before { content: ''; }
 
 
-
+/*
 .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
     padding-right: 10px;
     padding-left: 10px;
 }
+*/
 
 

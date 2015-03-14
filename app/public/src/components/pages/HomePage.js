@@ -21,30 +21,34 @@ var PrimaryJive = React.createClass({
 
     render: function() {
         return <div className="col-md-6" id="main-content-container">
-            <div id="panel-blurb">
-        	    <h2>We're re-building.</h2>
-        	    <p>Look for a new calendar this Spring and keep submitting  your events to <a href="mailto:calendar@mplsart.com">calendar@mplsart.com</a></p>
-            </div>
-
-            <div className="card big-card">
-                <div className="card-image">
-                    <a href="/written/2015/03/mplsart-com-launch-party-april-10th/" onClick={this.getRoute} title="MPLSART.COM Launch Party">
-                        <img src="http://cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fMjAwMDAwMQ/card_small.png" className="img-responsive" title="MPLSART.COM Launch Party" />
-                    </a>
+            <div className="row">
+        
+        
+        
+                <div id="panel-blurb" className="col-xs-12">
+            	    <h2>We are re-building.</h2>
+            	    <p>Look for a new calendar this Spring and keep submitting  your events to <a href="mailto:calendar@mplsart.com">calendar@mplsart.com</a></p>
                 </div>
-                <div className="card-content">
-                    <div className="card-title">
-                        <a href="/written/2015/03/mplsart-com-launch-party-april-10th/" onClick={this.getRoute} target="_new">MPLSART.COM Launch Party</a>
+
+                <div className="card big-card col-xs-12">
+                    <div className="card-image">
+                        <a href="/written/2015/03/mplsart-com-launch-party-april-10th/" onClick={this.getRoute} title="MPLSART.COM Launch Party">
+                            <img src="http://cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fMjAwMDAwMQ/card_small.png" className="img-responsive" title="MPLSART.COM Launch Party" />
+                        </a>
                     </div>
-                    <div className="card-detail event-time">Friday, April 10th</div>
-                    <div className="card-detail event-venue-name">Public Functionary</div>
-                    <div className="card-detail event-address">1400 12th Ave NE, Minneapolis</div>
+                    <div className="card-content">
+                        <div className="card-title">
+                            <a href="/written/2015/03/mplsart-com-launch-party-april-10th/" onClick={this.getRoute} target="_new">MPLSART.COM Launch Party</a>
+                        </div>
+                        <div className="card-detail event-time">Friday, April 10th</div>
+                        <div className="card-detail event-venue-name">Public Functionary</div>
+                        <div className="card-detail event-address">1400 12th Ave NE, Minneapolis</div>
+                    </div>
                 </div>
+
+                <TempExtras />
+                
             </div>
-
-
-            <TempExtras />
-
         </div>
     }
 });
