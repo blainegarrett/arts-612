@@ -199,7 +199,7 @@ footer {
 }
 
 .card {
-    margin-bottom: 15px;
+    margin-bottom: 30px;
 }
 
     .card .card-content {
@@ -251,7 +251,12 @@ footer {
     font-size:18px;
 }
 
-
+.card .fundraiser-end-date {
+    font-weight:bold;
+    color:#313131;
+    font-size:14px;
+    padding-top:5px;
+}
 
 
 /* Nav Bar Card Bits */
