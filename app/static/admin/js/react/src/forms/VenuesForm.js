@@ -6,6 +6,8 @@ var GeoPtField = require('./../utilities/forms/fields/GeoPtField');
 var CheckboxWidget = require('./../utilities/forms/widgets/CheckboxWidget');
 var SlugWidget = require('./../utilities/forms/widgets/SlugWidget');
 var FileUploader = require('./../components/FileUploader');
+var TextareaWidget = require('./../utilities/forms/widgets/TextareaWidget');
+
 
 VenuesForm = React.createClass({
     propTypes: {
@@ -175,6 +177,10 @@ VenuesForm = React.createClass({
               <TextField id="phone" form={this} ref="field.phone"  val={this.state.data.results.phone } />
               <TextField id="email" form={this} ref="field.email"  val={this.state.data.results.email } />
               <TextField id="website" form={this} ref="field.website"  val={this.state.data.results.website } />
+
+              <TextField id="summary"  ref="field.summary" val={this.state.data.results.summary } form={this} widget={TextareaWidget} placeholder="Post Summary" />
+              <TextField id="content"  ref="field.content" val={this.state.data.results.content } form={this} widget={TextareaWidget} placeholder="Post content" />
+
 
               <div className="pull-right">
                   <button type="submit" className="btn btn-primary">Submit</button>

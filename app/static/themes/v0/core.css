@@ -20,27 +20,22 @@ a { color: #0096BE; }
 
 .ghost-load { opacity: .5; }
 
+.fancy-separator {
+    height: 30px;
+    background-color: black;
+    margin-bottom: 30px;
+}
 
 /* Nav Var */
 #header_nav { background-color : #222; }
     #header_nav .navbar-brand {
         font-size:32px;
         color: #dfdfdf;
-        line-height: 32px;
-        padding: 10px;
     }
-
-.navbar-text.navbar-right {
-    margin-top:10px;
-    margin-bottom:10px;
-}
-    #est-stamp {
-        font-size: 14px;
-        line-height: 45px;
-        /* padding-top: 73px; */
-        display: block;
-        float: right;
-        height: 32px;
+    
+    #header_nav .navbar-text {
+        margin-top:0px;
+        margin-bottom:0px;
     }
 
 /*
@@ -171,7 +166,7 @@ footer {
 
 @media screen and (min-width: 400px) {
     body {
-        padding-top: 70px;
+        padding-top: 75px;
         padding-bottom: 70px;
     }
 }
@@ -179,11 +174,9 @@ footer {
 /* Mobile */
 @media screen and (max-width: 500px) {
     body {
-        padding-top: 60px;
+        padding-top: 55px;
         padding-bottom: 15px;
     }
-
-    #est-stamp { display:none; }
     
     h1#welcome-header { font-size: 40px; }
 }
@@ -419,7 +412,6 @@ footer {
 
 
 /* Beta Specific styles we can turn off */
-body.beta #header_nav { background-color: #222; }
 body.beta .brand-title-art { color: inherit; text-transform: uppercase;}
     body.beta .brand-title-art:before { content: ''; }
 
@@ -432,3 +424,127 @@ body.beta .brand-title-art { color: inherit; text-transform: uppercase;}
 */
 
 
+
+#site-wrapper {
+position: relative;
+overflow: hidden;
+width: 100%;
+
+height: 5000px; /* Temp: Simulates a tall page. */
+}
+
+
+#site-canvas {
+    width: 100%;
+    height: 100%;
+    position: relative;
+
+    -moz-transform: translateX(0);
+    -ms-transform: translateX(0);
+    -o-transform: translateX(0);
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+
+    -moz-transform: translateZ(0) translateX(0);
+    -ms-transform: translateZ(0) translateX(0);
+    -o-transform: translateZ(0) translateX(0);
+    -webkit-transform: translateZ(0) translateX(0);
+    transform: translateZ(0) translateX(0);
+
+    -moz-transform: translate3d(0, 0, 0);
+    -ms-transform: translate3d(0, 0, 0);
+    -o-transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+
+    -moz-transition: 300ms ease all;
+    -ms-transition: 300ms ease all;
+    -o-transition: 300ms ease all;
+    -webkit-transition: 300ms ease all;
+    transition: 300ms ease all;
+
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    -o-backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+
+#site-canvas {
+
+}
+
+#site-menu {
+    width: 300px;
+    height: 100%;
+    position: fixed; /* This needs to be absolute for IE10*/
+    top: 0;
+    right: -300px;
+    background: #000;
+    color: #fff;
+    padding: 15px;
+}
+
+
+@media screen and (min-width: 1700px) {
+
+    #site-wrapper.show-nav #site-menu {
+        -webkit-transform: translateX(-300px);
+        transform: translateX(-300px);
+        zindex:10000;
+    }
+}
+@media screen and (max-width: 1700px) {
+
+    #site-wrapper.show-nav #site-canvas {
+
+
+        -moz-transform: translateX(-300px);
+        -ms-transform: translateX(-300px);
+        -o-transform: translateX(-300px);
+        -webkit-transform: translateX(-300px);
+        transform: translateX(-300px);
+
+        -moz-transform: translateZ(0) translateX(-300px);
+        -ms-transform: translateZ(0) translateX(-300px);
+        -o-transform: translateZ(0) translateX(-300px);
+        -webkit-transform: translateZ(0) translateX(-300px);
+        transform: translateZ(0) translateX(-300px);
+
+        -moz-transform: translate3d(-300px, 0, 0);
+        -ms-transform: translate3d(-300px, 0, 0);
+        -o-transform: translate3d(-300px, 0, 0);
+        -webkit-transform: translate3d(-300px, 0, 0);
+        transform: translate3d(-300px, 0, 0);
+
+
+
+
+    }
+}
+
+
+
+
+.navbar-toggle {
+  display: block;
+}
+.navbar-collapse {
+  border-top: 1px solid transparent;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+}
+.navbar-collapse.collapse {
+  display: none!important;
+}
+.navbar-nav {
+  float: none!important;
+  margin: 7.5px -15px;
+}
+.navbar-nav>li {
+  float: none;
+}
+.navbar-nav>li>a {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}

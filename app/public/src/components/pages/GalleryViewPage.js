@@ -55,14 +55,14 @@ var MapComponent = React.createClass({
                          '</div>'+
                          '<h1 id="firstHeading" class="firstHeading">' + c.state.gallery.name + '</h1>'+
                          '<div id="bodyContent">'+
-                         '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vitae porttitor felis. Cras sit amet interdum dolor.</p>'+
+                         '<p>' + c.state.gallery.summary +  '</p>'+
                          //'<p>Attribution: Uluru, <a href="http://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">'+
                          //'http://en.wikipedia.org/w/index.php?title=Uluru</a> '+
                          //'(last visited June 22, 2009).</p>'+
                          '</div>'+
                          '</div>'
                });
-              infowindow.open(map,marker); 
+              infowindow.open(map, marker); 
             
         });        
     },
@@ -103,7 +103,7 @@ var GalleryViewPage = React.createClass({
                 /* TODO: Add image and description */
                 this.default_meta = {
                     title: data.results.name,
-                    description: 'A super awesome gallery in mpls'
+                    description: data.results.summary
                 }
 
 
@@ -149,20 +149,34 @@ var GalleryViewPage = React.createClass({
         
         // If gallery not found by slug
         var g = this.state.gallery;
+        
+        var image = null;
+        var image_url = null;
+
+        if (g.primary_image_resource) {
+            image_url = g.primary_image_resource.versions.CARD_SMALL.url;
+            image = <img src={image_url} className="img-responsive" />
+        }
 
         return <div className="row">
-            <div className="col-md-8 panel-events">
+            <div className="col-md-6">
+
+            { image }
+            <br />
+
                 <div className="row">
                     <div className="col-md-4">
                         <img src="http://placehold.it/350x350" className="img-responsive" />
                     </div>
                     <div className="col-md-8">
-                        <h2>{g.name}</h2>
-                        <p>{ g.address } { g.address2 } -  { g.city }</p>
 
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vitae porttitor felis. Cras sit amet interdum dolor. Integer ut condimentum nibh. Praesent tristique tincidunt molestie. Aenean et justo placerat, suscipit mauris nec, lobortis mauris. Cras pulvina eget varius lectus commodo et. Donec iaculis orci quis sapien venenatis finibus.</p>
+                    
+                        
 
                         <p>Type: { g.category }</p>
+
+
+                        <p>{ g.content }</p>
 
                     </div>
                 </div>
@@ -175,7 +189,13 @@ var GalleryViewPage = React.createClass({
                     </div>
                 </div>
             </div>
-            <div className="col-md-4 panel-events">
+            <div className="col-md-6">
+
+                <h2>{g.name}</h2>
+                <p>{ g.address } { g.address2 } -  { g.city }</p>
+
+                <p>{ g.summary }</p>
+
                 <h3>Upcoming Events</h3>
                 <ul>
                     <li>Event 1</li>
@@ -192,12 +212,7 @@ var GalleryViewPage = React.createClass({
                 <p>Email: { g.email }</p>
                 <p>Website: { g.website }</p>
                 
-                
-                <h3>Photos</h3>
-                <img src="http://placehold.it/350x350" className="img-responsive" />
-                <img src="http://placehold.it/350x350" className="img-responsive" />
-                <img src="http://placehold.it/350x350" className="img-responsive" />
-                <img src="http://placehold.it/350x350" className="img-responsive" />                
+               
             </div>
         </div>;
 

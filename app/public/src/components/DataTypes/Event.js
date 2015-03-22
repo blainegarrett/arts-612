@@ -4,9 +4,9 @@
 var React = require('react');
 var NiceDate = require('./../../utils/NiceDate');
 
-
 var EventRendererMixin = {
     getInitialState: function () {
+
         return {
             resource_loaded: resource_loaded = Boolean(this.props.resource),
             resource: this.props.resource,
@@ -21,6 +21,8 @@ var PodRenderer = React.createClass({
     mixins: [EventRendererMixin],
 
     render_empty: function () {
+        
+        console.log(this.state);
         return <div className="ghost-load">
             <div className="card-content">
                 <div className="card-title"><a href="#" target="_new">&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632; &#9632;&#9632;&#9632; &#9632;&#9632;&#9632;</a></div>
@@ -38,6 +40,8 @@ var PodRenderer = React.createClass({
             // Render something that resembles real content
             return this.render_empty();
         }
+
+        console.log('dddddddddddddddddddddddd');
 
         var e = this.state.resource;
         var image = null;

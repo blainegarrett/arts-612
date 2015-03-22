@@ -29,7 +29,10 @@ class Event(ndb.Model):
     created_date = ndb.DateTimeProperty(auto_now_add=True)
     modified_date = ndb.DateTimeProperty(auto_now=True)
 
-    
+    content = ndb.TextProperty()
+    summary = ndb.TextProperty()
+
+
     '''
     event_date is a list of dicts for the different event_dates
     this is non queryable storage used to populate search indexes which are used for querying

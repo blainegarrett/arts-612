@@ -49,14 +49,11 @@ var GalleryPage = React.createClass({
         }
 
         return <div className="row">
-            <h2>Twin Cities Galleries</h2>
-
-            <a onClick={ReactRouter.deferTo('/calendar')}>Calendar</a>
-            <a onClick={ReactRouter.deferTo('/written')}>Written</a>
-            <a onClick={ReactRouter.deferTo('/')}>Home</a>
-            <br />
-        { galleries }
-        
+            <div className="col-md-12">
+                <h2>Twin Cities Galleries</h2>
+                <br />
+                { galleries }
+            </div>
         </div>;
 
     }

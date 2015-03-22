@@ -217,6 +217,9 @@ def edit_event(entity, data):
     entity.name = data['name']
     entity.url = data['url']
 
+    entity.summary = data['summary']
+    entity.content = data['content']
+
     # Create the Event Dates
     # TODO: As we add different event types, pull this into its own method
 
@@ -274,8 +277,9 @@ def create_event(data):
     entity.name = data['name']
     entity.url = data['url']
 
-    #entity.summary = 'This is Great'
-    #entity.description = 'Super Great'
+    entity.summary = data['summary']
+    entity.content = data['content']
+
     #entity.featured = True
 
     # Create the Event Dates

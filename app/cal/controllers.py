@@ -39,6 +39,10 @@ REST_RULES = [
 
     RestField(Event.url, required=False),
     EventDateField(Event.event_dates, required=True),
+
+    RestField(Event.content),
+    RestField(Event.summary),
+
     RestField(Event.primary_image_resource_id, required=False),
     FileField('primary_image_resource', required=False, output_only=True, resource_id_prop='primary_image_resource_id')
 ]

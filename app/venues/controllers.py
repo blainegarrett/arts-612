@@ -43,6 +43,10 @@ REST_RULES = [
     RestField(Venue.category, required=True),
     RestField(Venue.hours, required=False),
     GeoField(Venue.geo, required=False),
+
+    RestField(Venue.content),
+    RestField(Venue.summary),
+
     RestField(Venue.primary_image_resource_id, required=False),
     FileField('primary_image_resource', required=False, output_only=True, resource_id_prop='primary_image_resource_id'),
 ]

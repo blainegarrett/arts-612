@@ -23,6 +23,9 @@ class Venue(ndb.Model):
     category = ndb.StringProperty()
     hours = ndb.JsonProperty()
 
+    content = ndb.TextProperty()
+    summary = ndb.TextProperty()
+
     created_date = ndb.DateTimeProperty(auto_now_add=True)
     modified_date = ndb.DateTimeProperty(auto_now=True)
 

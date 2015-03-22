@@ -35,41 +35,62 @@
 
   <body class="beta">
 
-	<!-- Start Top Nav -->
-	<div id="header_nav" class="navbar navbar-fixed-top navbar-inverse" role="navigation">
-	      <div class="container">
-	        <div class="navbar-header">
-			  <!--
-	          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-	            <span class="sr-only">Toggle navigation</span>
-	            <span class="icon-bar"></span>
-	            <span class="icon-bar"></span>
-	            <span class="icon-bar"></span>
-	          </button>
-			  -->
-	          <a class="navbar-brand" href="/" title="MPLSART.COM Home Page"><span class="brand-title-mpls">MPLS</span><span class="brand-title-art">ART.COM</span></a>
-	        </div>
-			
-			<p class="navbar-text navbar-right">
-				<span id="est-stamp">EST. 2005</a>
-			</p>
-	      </div><!-- /.container -->
+		<!-- Start Top Nav -->
+		<div id="header_nav" class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+		      <div class="container">
+		        <div class="navbar-header">
+		          <a class="navbar-brand" href="/" title="MPLSART.COM Home Page"><span class="brand-title-mpls">MPLS</span><span class="brand-title-art">ART.COM</span></a>
+		        </div>
+		
+				<p class="navbar-text navbar-right">
+					<button id="side_nav_toggle" type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+			           <span class="sr-only">Toggle navigation</span>
+			           <span class="icon-bar"></span>
+			           <span class="icon-bar"></span>
+			           <span class="icon-bar"></span>
+			         </button>
+			          
+				</p>
+		      </div><!-- /.container -->
 
-		  <div id="header_nav_cards"></div>
+			  <div id="header_nav_cards"></div>
 
-	    </div>
-	<!-- End Top Nav -->
+		    </div>
+		<!-- End Top Nav -->
+
+	<div id="site-wrapper">
+		<div id="site-canvas">
+
+
+			<!-- Start Side Panel Context Menu -->
+			<div id="site-menu">
+				       <a href="#" class="toggle-nav" style="color: pink; font-size: 20px;"><i class="fa fa-times"></i></a>
+				       <h2>My Menu</h1>
+				       <p class="lead">Put any HTML you want here.</p>
+				       <p>Style it however you want.</p>
+
+				       <ul>
+				         <li>Free to scroll up and down</li>
+				         <li>But not left and write</li>
+				       </ul>
+
+			</div><!--/ #site-menu -->
+			<!-- End Side Panel Context Menu -->
+
 	
-	<!-- Start Main Content Container -->
-    <div class="container">
+			<!-- Start Main Content Container -->
+		    <div class="container">
 
-		<!-- Start of Primary Page Content -->
-		<div id="main_content">
-			Loading...
-		</div>
-		<!-- End of Primary Page Content -->
+				<!-- Start of Primary Page Content -->
+				<div id="main_content">
+					Loading...
+				</div>
+				<!-- End of Primary Page Content -->
 
-    </div><!--/.container-->
+		    </div><!--/.container-->
+			
+		</div><!--/ #site-canvas -->	
+	</div><!--/ #site-wrapper -->
 
 
     <!-- Bootstrap core JavaScript
@@ -81,6 +102,8 @@
 		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 		<script src="/public/build/main.js?19"></script>
 	{% endif %}
+
+
 
 	<!-- start google analytics -->
 	<script>

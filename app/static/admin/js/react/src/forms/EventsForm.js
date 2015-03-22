@@ -7,6 +7,7 @@ var DateRangeWidget = require('./../utilities/forms/widgets/DateRangeWidget');
 var AutoCompleteWidget = require('./../utilities/forms/widgets/AutoCompleteWidget');
 var SlugWidget = require('./../utilities/forms/widgets/SlugWidget');
 var FileUploader = require('./../components/FileUploader');
+var TextareaWidget = require('./../utilities/forms/widgets/TextareaWidget');
 
 EventDateForm =  React.createClass({
     toResource: function() {
@@ -274,6 +275,10 @@ EventsForm = React.createClass({
               <SlugField id="slug" form={this}  ref="field.slug"  val={this.state.data.results.slug } widget={SlugWidget} url_root="http://mplsart.com/events/" />
 
               <TextField id="url" form={this} ref="field.url"  val={this.state.data.results.url } />
+
+              <TextField id="summary"  ref="field.summary" val={this.state.data.results.summary } form={this} widget={TextareaWidget} placeholder="Post Summary" />
+              <TextField id="content"  ref="field.content" val={this.state.data.results.content } form={this} widget={TextareaWidget} placeholder="Post content" />
+
               <EventDateFormsInterface id="event_dates" form={this}  ref="field.event_dates"  val={this.state.data.results.event_dates } />
 
 

@@ -15,6 +15,47 @@ var TempExtras = require('../temp/TempExtras');
 /* Pod types ... */
 var EventModule = require('./../DataTypes/Event')
 
+var Separator = React.createClass({
+    render: function () {
+        return <div className="row">
+            <div className="col-sm-12">
+                <div className="fancy-separator"></div>
+            </div>
+        </div>
+    }
+});
+
+var HomepageFeaturedPanel = React.createClass({
+    render: function () {
+        return <div className="row" id="featured-hero-area">
+            <div className="col-sm-6">
+               <div className="row">
+
+                   <div className="card col-sm-6">
+                       <img src="/_ah/gcs/cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fNQ/card_small.png" className="img-responsive"/>
+                   </div>
+                   <div className="card col-sm-6">
+                       <img src="/_ah/gcs/cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fNQ/card_small.png" className="img-responsive"/>
+                   </div>
+                   <div className="card col-sm-6">
+                       <img src="/_ah/gcs/cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fNQ/card_small.png" className="img-responsive"/>
+                   </div>
+                   <div className="card col-sm-6">
+                       <img src="/_ah/gcs/cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fNQ/card_small.png" className="img-responsive"/>
+                   </div>
+
+                
+               
+               </div> 
+                
+            </div>
+            <div className="card col-sm-6">
+                <img src="/_ah/gcs/cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fNQ/card_small.png" className="img-responsive"/>
+            </div>
+
+        </div>;
+    }
+});
 
 var masonryOptions = {
     transitionDuration: 0,
@@ -88,19 +129,12 @@ var ImagePod = React.createClass({
     },
   render: function () {
       
+      console.log('------------------------------');
       console.log(this.state.resource);
 
       r = this.state.resource;
       
-      return <div>
-      <div className="card-image">
-          <a href="#"><img className="img-responsive" src="" /></a>
-          <div className="card-title"><a href="#">{r.name}</a></div>
-      </div>
-
-      <div className="card-content">
-          <p>Cards for display in portfolio style material design by Google.</p>
-      </div>
+      return <div>assfsdfsdfsdfsdfsdfsdfs
       </div>
   }
 });
@@ -109,7 +143,8 @@ var ImagePod = React.createClass({
 
 var podComponentMap = {
     'Image': ImagePod,
-    'FeaturedEvents': FeaturedEventsPod
+    'FeaturedEvents': FeaturedEventsPod,
+    'Event': EventModule
 };
 
 var Pod = React.createClass({
@@ -118,18 +153,15 @@ var Pod = React.createClass({
     },
 
     render: function () {
+        var compnentclass = podComponentMap[this.state.data['resource_type']];
+        if (!compnentclass) {
+            return <div className="card col-sm-2"></div>
+        }
 
-        var pod_content = React.createElement(podComponentMap[this.state.data.podClass], this.state);
+        var pod_props = {'resource': this.state.data, renderer: compnentclass.PodRenderer };
 
-        var resource = this.state.data;
-
-        return <div className="item col-sm-4">
-
-          <div className="card">
-              <EventModule.Goober key={ resource.resource_id } resource={ resource } renderer={ EventModule.PodRenderer } />
-          </div>
-
-    	</div>
+        var pod_content = React.createElement(compnentclass.Goober, pod_props);
+        return <div className="card col-sm-4">{ pod_content }</div>
     }
 });
 
@@ -175,7 +207,6 @@ var NewHomePage = React.createClass({
             error: function (xhr, status, err) {
                 console.error(this.state.resource_url, status, err.toString());
             }.bind(this)
-            
         });
     },
 
@@ -188,26 +219,16 @@ var NewHomePage = React.createClass({
         var pods = [];
         var container = this;
 
-        var pods = this.state.pod_data.map(function(pod_data){
-            console.log(pod_data)
+        var pods = this.state.pod_data.map(function (pod_data) {
             return <Pod data={pod_data} container={container} />;
         });
 
-
         return <div id="HomePageWrapper">
 
-            <div id="home-marquee-row" className="home page top thing">
-            sdfsdf
-            sdfdsf<br />
-            sdf<br />
-            sdf<br />
-            s<br />
-            f<br />
-            sf
-            sd</div>
+            <HomepageFeaturedPanel />
+            <Separator />
 
             <div className="row">
-            
                 <InfiniteScroll
                     pageStart={0}
                     loadMore={this.loadFunc}
@@ -230,6 +251,7 @@ var NewHomePage = React.createClass({
         
         $('body').removeClass('beta');
         
+        /*
         $(window).on("scroll touchmove", function () {
             var featured_card = $('#home-marquee-row');
             var scroll_flag = featured_card.offset().top + featured_card.height() - 170;
@@ -237,6 +259,7 @@ var NewHomePage = React.createClass({
 
           $('#header_nav').toggleClass('show-nav', $(document).scrollTop() > scroll_flag);
         });
+        */
     },
     
     componentWillUnmount: function() {

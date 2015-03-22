@@ -70,6 +70,11 @@ class Resource(object):
             err = 'Resource() requires a instance of %s or None. Received %s, %s.'
             raise TypeError(err % (VALID_RESORCE_TYPES, type(obj), obj))
 
+        self.resource_type = 'NonDefinedClass'
+
+        if (obj and isinstance(obj, ndb.Model)):
+            self.resource_type = obj.key.kind()
+
         if not (isinstance(fields, list)):
             err = 'Resource requires list. Received %s, %s.'
             raise TypeError(err % (type(list), fields))
@@ -136,6 +141,8 @@ class Resource(object):
 
         for field in self.fields:
             result[field.key] = field.from_resource(obj, field.key)
+
+        result['resource_type'] = self.resource_type
         return result
 
 

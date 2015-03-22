@@ -64,8 +64,42 @@ React.render(<PageMeta />, document.getElementById('page_meta'));
 React.render(<NavCardsContainer />, document.getElementById('header_nav_cards'));
 
 
+/* Code For Sliding Navs and Featured Widget */
+function toggleNav () {
+    if ($('#site-wrapper').hasClass('show-nav')) {
+        // Do things on Nav Close
+        $('#site-wrapper').removeClass('show-nav');
+    } 
+    else {
+        // Do things on Nav Open
+        $('#site-wrapper').addClass('show-nav');
+    }
+}
 
+
+$(function() {
+    /* Anything run here must act only on the chrome since nothing else is loaded... */
+	$('#side_nav_toggle').click(function() {
+		// Calling a function in case you want to expand upon this.
+		toggleNav();
+	});
+});
+
+/* On Homepage - check if we should show the featured section */
 $(window).on("scroll touchmove", function () {
     /* Neato Scrolling effect */
-  $('#header_nav').toggleClass('tiny', $(document).scrollTop() > 375);
+    
+    /* TODO: Optimize this so we don't have to calculate this every time */
+
+    var featured_hero = $('#featured-hero-area');
+    
+    if (featured_hero.length) {
+        // Page Has the featured hero section
+        var threshhold = featured_hero.offset().top + featured_hero.height();
+        $('#header_nav').toggleClass('show-nav', $(document).scrollTop() > threshhold);
+    }
+    else{
+        
+    }
+
 });
