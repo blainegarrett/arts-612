@@ -33,7 +33,7 @@ var PrimaryJive = React.createClass({
                 <div className="card big-card col-xs-12">
                     <div className="card-image">
                         <a href="/written/2015/03/mplsart-com-launch-party-april-10th/" onClick={this.getRoute} title="MPLSART.COM Launch Party">
-                            <img src="http://cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fMjAwMDAwMQ/card_small.png" className="img-responsive" title="MPLSART.COM Launch Party" />
+                            <img src="http://cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fNDAyMDAwMQ/card_small.png" className="img-responsive" title="MPLSART.COM Launch Party" />
                         </a>
                     </div>
                     <div className="card-content">
