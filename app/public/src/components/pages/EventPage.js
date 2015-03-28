@@ -40,7 +40,7 @@ var MapComponent = React.createClass({
 
             var map = new google.maps.Map(document.getElementById('map-canvas'), {
                 center: { lat: c.state.geo.lat, lng: c.state.geo.lon},
-                zoom: 17
+                zoom: 30
             });
 
             var marker = new google.maps.Marker({
@@ -67,7 +67,7 @@ var MapComponent = React.createClass({
         });        
     },
     render: function () {
-        return <div id="map-canvas"></div>
+        return <div id="map-canvas" className="map-small"></div>
     }
 });
 
@@ -150,6 +150,15 @@ var EventPage = React.createClass({
         // If event not found by slug
         var artEvent = this.state.event;
 
+        var eventDates = []
+
+        eventDates = artEvent.event_dates.map(function (eventDate) {
+            return <div className="event-date">
+                <span class="label">{ eventDate.label }</span>
+                <h2>{ eventDate.start } - { eventDate.end }</h2>
+            </div>
+        });
+
         var venue = artEvent.event_dates[0].venue;
         
         var image = null;
@@ -162,24 +171,24 @@ var EventPage = React.createClass({
 
         return <div className="row">
             <div className="col-md-6">
-
-            { image }
-
-            <h1>{ artEvent.name }</h1>
-            <div className="summary">{ artEvent.summary }</div>
-            <div className="content">{ artEvent.content }</div>
-                
                 <div className="row">
-                    <div className="col-md-12">
-                        <h2>{venue.name}</h2>
+                    <h1>{ artEvent.name }</h1>
+                    <div className="summary">{ artEvent.summary }</div>
+                </div>
+                <div className="row">
+                    <div className="col-md-6">
+                        { eventDates }
+                    </div>
+                    <div className="col-md-6">
+                        <h2><a href="{ venue.website }" _target="new">{venue.name}</a></h2>
                         <p>{ venue.address } { venue.address2 } -  { venue.city }</p>
                         <MapComponent gallery={venue} />
                     </div>
                 </div>
             </div>
             <div className="col-md-6">
-            Side Column!
-
+                { image }
+                <div className="content" dangerouslySetInnerHTML={{__html: artEvent.content}} />
             </div>
         </div>;
 
