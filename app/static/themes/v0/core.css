@@ -56,6 +56,7 @@ Pink "art" in MPLSart.com header
     	color:#fff;
     	text-align:center;
     	font-size:65px;
+    	margin-top:0px;
     }
 
 
@@ -422,7 +423,7 @@ height: 5000px; /* Temp: Simulates a tall page. */
     width: 100%;
     height: 100%;
     position: relative;
-    margin-top:50px;
+    margin-top:70px;
 
     -moz-transform: translateX(0);
     -ms-transform: translateX(0);

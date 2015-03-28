@@ -1,7 +1,7 @@
 var React = require('react');
 var PageMixin = require('./PageMixin');
 //var MasonryMixin = require('react-packery-mixin');
-//var MasonryMixin = require('react-masonry-mixin');
+var MasonryMixin = require('react-masonry-mixin');
 var InfiniteScroll = require('react-infinite-scroll')(React);
 
 var Footer = require('../temp/Footer');
@@ -31,23 +31,23 @@ var HomepageFeaturedPanel = React.createClass({
                <div className="row">
 
                    <div className="card col-sm-6">
-                       <img src="/_ah/gcs/cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fNQ/card_small.png" className="img-responsive"/>
+                       <img src="/_ah/gcs/cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fMQ/card_small.png" className="img-responsive"/>
                    </div>
                    <div className="card col-sm-6">
-                       <img src="/_ah/gcs/cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fNQ/card_small.png" className="img-responsive"/>
+                       <img src="/_ah/gcs/cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fMQ/card_small.png" className="img-responsive"/>
                    </div>
                    <div className="card col-sm-6">
-                       <img src="/_ah/gcs/cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fNQ/card_small.png" className="img-responsive"/>
+                       <img src="/_ah/gcs/cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fMQ/card_small.png" className="img-responsive"/>
                    </div>
                    <div className="card col-sm-6">
-                       <img src="/_ah/gcs/cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fNQ/card_small.png" className="img-responsive"/>
+                       <img src="/_ah/gcs/cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fMQ/card_small.png" className="img-responsive"/>
                    </div>
 
                </div>
                 
             </div>
             <div className="card col-sm-6">
-                <img src="/_ah/gcs/cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fNQ/card_small.png" className="img-responsive"/>
+                <img src="/_ah/gcs/cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fMQ/card_small.png" className="img-responsive"/>
             </div>
 
         </div>;
@@ -166,7 +166,7 @@ var Pod = React.createClass({
 //http://jsfiddle.net/mb9vJ/2/
 var NewHomePage = React.createClass({
 
-    mixins: [PageMixin, /*MasonryMixin('masonryContainer', masonryOptions) */],
+    mixins: [PageMixin, MasonryMixin('masonryContainer', masonryOptions)],
 
     getInitialState: function() {
         return {
@@ -188,7 +188,6 @@ var NewHomePage = React.createClass({
     },
 
     fetchpods: function() {
- 
         $.ajax({
             url: '/api/feed',
             dataType: 'json',
