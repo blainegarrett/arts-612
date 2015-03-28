@@ -24,31 +24,61 @@ var Separator = React.createClass({
     }
 });
 
+
+var MarqueeCard = React.createClass({
+    render: function() {
+        return <div className="card col-sm-6">
+
+            <div className="jive-card">
+                <div className="jive-card-image">
+                    <a href="#">
+                        <img className="img-responsive" src="/_ah/gcs/cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fMQ/card_small.png" />
+                        <div className="jive-card-title">
+                            <br />
+                            <div className="date">Sat, Mar 1st</div>
+                            <div className="title">Revolution Now Exhibit of Awesomeness</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+    }
+});
+
 var HomepageFeaturedPanel = React.createClass({
     render: function () {
         return <div className="row" id="featured-hero-area">
             <div className="col-sm-6">
                <div className="row">
 
-                   <div className="card col-sm-6">
-                       <img src="/_ah/gcs/cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fMQ/card_small.png" className="img-responsive"/>
-                   </div>
-                   <div className="card col-sm-6">
-                       <img src="/_ah/gcs/cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fMQ/card_small.png" className="img-responsive"/>
-                   </div>
-                   <div className="card col-sm-6">
-                       <img src="/_ah/gcs/cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fMQ/card_small.png" className="img-responsive"/>
-                   </div>
-                   <div className="card col-sm-6">
-                       <img src="/_ah/gcs/cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fMQ/card_small.png" className="img-responsive"/>
-                   </div>
-
+               <MarqueeCard />
+               <MarqueeCard />
+               <MarqueeCard />
+               <MarqueeCard />
                </div>
-                
             </div>
+
+
+
             <div className="card col-sm-6">
-                <img src="/_ah/gcs/cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fMQ/card_small.png" className="img-responsive"/>
+
+                <div className="jive-card">
+                    <div className="jive-card-image">
+                        <a href="#">
+                            <img className="img-responsive" src="http://cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fNDAyMDAwMQ/card_small.png" />
+                            <div className="jive-card-title">
+                                <br />
+                                <div className="date">Sat, Mar 1st</div>
+                                <div className="title">Revolution Now Exhibit of Awesomeness</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
             </div>
+
+
+
 
         </div>;
     }
