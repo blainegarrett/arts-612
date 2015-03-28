@@ -41,11 +41,11 @@ def get_event_key(event_id):
 def get_event_by_slug(slug):
     """
     Given an event slug, fetch the event entity
-    TODO: slug is not the key here but rather a property
     """
 
-    event_key = get_event_key(slug)
-    event = event_key.get()
+    q = Event.query()
+
+    event = q.filter(Event.slug==slug).get()
     return event
 
 

@@ -204,6 +204,15 @@ class EventsApiHandler(RestHandlerBase):
     def get_rules(self):
         return REST_RULES
 
+    def get_param_schema(self):
+        return {
+            #'limit' : voluptuous.Coerce(int),
+            #'cursor': coerce_to_cursor,
+            #'sort': voluptuous.Coerce(str),
+            'get_by_slug': voluptuous.Coerce(str),
+            #'q': voluptuous.Coerce(str)
+        }
+
     @rest_login_required
     def _post(self):
         """
@@ -238,6 +247,19 @@ class EventsApiHandler(RestHandlerBase):
 
         TODO: This has some really basic silly caching on it to prevent being slashdotted to death
         """
+
+        # Check if there is a query filter, etc
+        get_by_slug = self.cleaned_params.get('get_by_slug', None)
+        
+        if get_by_slug:
+            event = events_api.get_event_by_slug(get_by_slug)
+            if not event:
+                self.serve_404('Event Not Found')
+                return False
+
+            resource = create_resource_from_entity(event)
+            self.serve_success(resource)
+            return
 
         results = []
 
