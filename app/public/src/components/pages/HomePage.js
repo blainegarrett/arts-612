@@ -23,8 +23,6 @@ var PrimaryJive = React.createClass({
         return <div className="col-md-6" id="main-content-container">
             <div className="row">
         
-        
-        
                 <div id="panel-blurb" className="col-xs-12">
             	    <h2>We are re-building.</h2>
             	    <p>Look for a new calendar this Spring and keep submitting  your events to <a href="mailto:calendar@mplsart.com">calendar@mplsart.com</a></p>

@@ -65,32 +65,55 @@ React.render(<NavCardsContainer />, document.getElementById('header_nav_cards'))
 
 
 /* Code For Sliding Navs and Featured Widget */
-function toggleNav () {
-    if ($('#site-wrapper').hasClass('show-nav')) {
-        // Do things on Nav Close
-        $('#site-wrapper').removeClass('show-nav');
+global.closeMenu = function () {
+    // Do things on Nav Close
+    $('body').removeClass('show-menu');
+	$(".modal-backdrop").remove();
+}
+
+global.openMenu = function () {
+    // Do things on Nav Open
+    $('body').addClass('show-menu');
+	var modal = $('<div class="modal-backdrop"></div>');
+	
+	modal.bind('click tap', closeMenu)
+	modal.appendTo(document.body);
+}
+
+global.toggleNav = function () {
+    if ($('body').hasClass('show-menu')) {
+        closeMenu();
     } 
     else {
-        // Do things on Nav Open
-        $('#site-wrapper').addClass('show-nav');
+        openMenu()
     }
 }
 
 
+/* OnChromeLoad Bindings */
 $(function() {
     /* Anything run here must act only on the chrome since nothing else is loaded... */
+
+	$('#site-menu').bind('swiperight', function(e) { toggleNav() });
+
 	$('#side_nav_toggle').click(function() {
 		// Calling a function in case you want to expand upon this.
 		toggleNav();
 	});
+	
+	$('.internal-link').bind('click tap', navigateTo)
+	
+	
 });
 
-/* On Homepage - check if we should show the featured section */
-$(window).on("scroll touchmove", function () {
-    /* Neato Scrolling effect */
-    
-    /* TODO: Optimize this so we don't have to calculate this every time */
+global.navigateTo = function navigateTo (evt) {
+    /* Click Handler for when outside of react components */
+    current_page.getRoute(evt);
+}
 
+/* On Homepage - check if we should show the featured section */
+/*
+$(window).on("scroll touchmove", function () {
     var featured_hero = $('#featured-hero-area');
     
     if (featured_hero.length) {
@@ -101,5 +124,5 @@ $(window).on("scroll touchmove", function () {
     else{
         
     }
-
 });
+*/

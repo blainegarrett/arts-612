@@ -34,12 +34,13 @@
   </head>
 
   <body class="beta">
+		{% include './templates/side_menu.html' %}
 
 		<!-- Start Top Nav -->
 		<div id="header_nav" class="navbar navbar-fixed-top navbar-inverse" role="navigation">
-		      <div class="container">
+			<div class="container">
 		        <div class="navbar-header">
-		          <a class="navbar-brand" href="/" title="MPLSART.COM Home Page"><span class="brand-title-mpls">MPLS</span><span class="brand-title-art">ART.COM</span></a>
+		          <a class="navbar-brand internal-link" href="/" title="MPLSART.COM Home Page"><span class="brand-title-mpls">MPLS</span><span class="brand-title-art">ART.COM</span></a>
 		        </div>
 		
 				<p class="navbar-text navbar-right">
@@ -49,7 +50,6 @@
 			           <span class="icon-bar"></span>
 			           <span class="icon-bar"></span>
 			         </button>
-			          
 				</p>
 		      </div><!-- /.container -->
 
@@ -61,29 +61,12 @@
 	<div id="site-wrapper">
 		<div id="site-canvas">
 
-
-			<!-- Start Side Panel Context Menu -->
-			<div id="site-menu">
-				       <a href="#" class="toggle-nav" style="color: pink; font-size: 20px;"><i class="fa fa-times"></i></a>
-				       <h2>My Menu</h1>
-				       <p class="lead">Put any HTML you want here.</p>
-				       <p>Style it however you want.</p>
-
-				       <ul>
-				         <li>Free to scroll up and down</li>
-				         <li>But not left and write</li>
-				       </ul>
-
-			</div><!--/ #site-menu -->
-			<!-- End Side Panel Context Menu -->
-
-	
 			<!-- Start Main Content Container -->
 		    <div class="container">
 
 				<!-- Start of Primary Page Content -->
 				<div id="main_content">
-					Loading...
+					<div class="initial-loading-spinner"><i class="fa fa-spinner fa-pulse"></i></div>
 				</div>
 				<!-- End of Primary Page Content -->
 
@@ -98,11 +81,11 @@
     <!-- Placed at the end of the document so the pages load faster -->
 
 	{% if not no_client %}
-	    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	    <script src="/static/js/jquery.mobile-events.min.js"></script>
 		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 		<script src="/public/build/main.js?20"></script>
 	{% endif %}
-
 
 
 	<!-- start google analytics -->

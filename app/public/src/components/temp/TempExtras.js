@@ -81,37 +81,6 @@ var TempExtras = React.createClass({
                 <div className="row">
                     { fundraisers_rendered }
                 </div>
-            </div>        
-        
-            <div id="panel-contact" className="col-xs-12 card">
-	            <div className="card-content"><a href="mailto:calendar@mplsart.com"><b>Contact us</b></a> with questions and to submit event listings.</div>
-            </div>
-
-
-            <div id="panel-social" className="col-xs-12 card">
-            	<div className="card-content">
-            		<a href="https://www.facebook.com/mplsart" id="fb-link" target="_new">
-            			<span className="fa-stack fa-lg">
-            				<i className="fa fa-square-o fa-stack-2x"></i>
-            				<i className="fa fa-facebook fa-stack-1x"></i>
-            			</span>
-            		</a>
-
-            		<a href="https://twitter.com/mplsart" id="twitter-link" target="_new">  
-            			<span className="fa-stack fa-lg">
-            				<i className="fa fa-square-o fa-stack-2x"></i>
-            				<i className="fa fa-twitter fa-stack-1x"></i>
-            			</span>
-            		</a>
-
-            		<a href="http://instagram.com/mplsart" id="instagram-link" target="_new">  
-            			<span className="fa-stack fa-lg">
-            				<i className="fa fa-instagram fa-stack-2x"></i>
-            			</span>
-            		</a>
-
-            		&nbsp;&nbsp;Stay Connected to mplsart during the rebuild.
-            	</div>
             </div>
 
 
