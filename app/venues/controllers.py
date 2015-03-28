@@ -85,7 +85,6 @@ class GalleriesApiHandler(GalleryApiHandlerBase):
             'q': voluptuous.Coerce(str)
         }
 
-    @rest_login_required
     def _get(self):
 
         # Check if there is a query filter, etc
@@ -183,7 +182,6 @@ class GalleryDetailApiHandler(GalleryApiHandlerBase):
     """
     """
 
-    @rest_login_required
     def _get(self, slug):
         # TODO: Abstract this a bit more out into a rest-like service...
 
