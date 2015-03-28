@@ -41,8 +41,6 @@ var PodRenderer = React.createClass({
             return this.render_empty();
         }
 
-        console.log('dddddddddddddddddddddddd');
-
         var e = this.state.resource;
         var image = null;
         var image_url = null;
@@ -50,18 +48,24 @@ var PodRenderer = React.createClass({
         // Isolate the targeted event_date
         var target_event_date = null;
 
-        for (var i in e.event_dates) {
-            if (e.event_dates[i].type == this.state.ed_filter) {
-                target_event_date = e.event_dates[i];
-            }
-        };
+        if (this.state.ed_filter) {
+            for (var i in e.event_dates) {
+                if (e.event_dates[i].type == this.state.ed_filter) {
+                    target_event_date = e.event_dates[i];
+                }
+            };
 
-        // This is mostly for debugging...
-        if (!target_event_date) {
+            // This is mostly for debugging...
+            if (!target_event_date) {
+                target_event_date = e.event_dates[0];
+                console.error('Warning: Failed to find an ed for the below event with a ed.type matching "' + this.state.ed_filter  + '". Defaulting to first found one. ');
+                console.error(this.state);
+            };
+        }
+        else {
+            // TODO: Figure out the best one to show...
             target_event_date = e.event_dates[0];
-            console.error('Warning: Failed to find an ed for the below event with a ed.type matching "' + this.state.ed_filter  + '". Defaulting to first found one. ');
-            console.error(this.state);
-        };
+        }
 
 
         if (e.primary_image_resource) {
