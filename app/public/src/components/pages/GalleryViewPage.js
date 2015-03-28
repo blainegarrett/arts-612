@@ -67,7 +67,7 @@ var MapComponent = React.createClass({
         });        
     },
     render: function () {
-        return <div id="map-canvas"></div>
+        return <div id="map-canvas" className="map-large"></div>
     }
 });
 
