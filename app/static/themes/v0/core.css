@@ -21,9 +21,12 @@ a { color: #0096BE; }
 .ghost-load { opacity: .5; }
 
 .fancy-separator {
-    height: 30px;
-    background-color: black;
+    height: 15px;
+    background-color: #FD0595;
     margin-bottom: 30px;
+    background-image: url(/static/themes/v0/separator.png);
+    background-repeat: no-repeat;
+    background-position: 100% 0;
 }
 
 /* Nav Var */
@@ -145,26 +148,7 @@ footer {
     text-align:right;
 }
 
-/* Desktop */
 
-@media screen and (min-width: 400px) {
-    body {
-        /* 
-        padding-top: 75px;
-        padding-bottom: 70px;
-        */
-    }
-}
-
-/* Mobile */
-@media screen and (max-width: 500px) {
-    body {
-        /* padding-top: 55px; */
-        /* padding-bottom: 15px; */
-    }
-    
-    h1#welcome-header { font-size: 40px; }
-}
 @media (max-width:768px) {
     .navbar-header { float:left; }
     .navbar-right { float:right; }
@@ -432,24 +416,12 @@ body.beta .brand-title-art { color: inherit; text-transform: uppercase;}
 
 /* Featured Hero Cards */
 
-.jive-card {
-  box-sizing: border-box;
-  background-clip: padding-box;
-}
-
-    .jive-card div.jive-card-title {
-        color: #fff;
-    }
+.jive-card { box-sizing: border-box; background-clip: padding-box; }
+    .jive-card div.jive-card-title { color: #fff; }
 .jive-card div.jive-card-title a { color: #fff; }
-.jive-card div.jive-card-title a:hover {
-	color: #FF7BC8;
-	text-decoration: none;
-}
+.jive-card div.jive-card-title a:hover { color: #FF7BC8; text-decoration: none; }
 
-.jive-card .jive-card-image {
-  position: relative;
-  overflow: hidden;
-}
+.jive-card .jive-card-image { position: relative; overflow: hidden; }
 .jive-card .jive-card-image img {
   border-radius: 2px 2px 0 0;
   background-clip: padding-box;
@@ -484,6 +456,17 @@ body.beta .brand-title-art { color: inherit; text-transform: uppercase;}
     .jive-card .jive-card-image a:hover div.jive-card-title .title {
         color:#2a6496;
     }
+    .jive-card .jive-card-image a {
+        display:block;
+
+        width:100%;
+    }
+    
+    .featured-events-wrapper .jive-card .jive-card-image a {
+        height:131px;
+    }
+    
+    
 
 .jive-card div.jive-card-title {
 	/* IE9 SVG, needs conditional override of 'filter' to 'none' */
@@ -497,5 +480,28 @@ body.beta .brand-title-art { color: inherit; text-transform: uppercase;}
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#a6000000',GradientType=0 ); /* IE6-8 */
 }
 
+/* Mobile Overrides */
+@media screen and (max-width: 500px) {
+    h1#welcome-header { font-size: 40px; }
+}
+@media screen and (max-width: 650px) {
+    #site-canvas {
+      margin-top: 55px;
+    }
+    #featured-hero-area .card {
+        padding-right:5px;
+        padding-left:5px;
+        margin-bottom: 5px;
+    }
 
-
+    .featured-events-wrapper .jive-card .jive-card-image a {
+      height: 200px;
+    }
+    
+    .jive-card .jive-card-image div.jive-card-title .title {
+      font-size: 18px;
+     }
+     .jive-card .jive-card-image div.jive-card-title .date {
+      font-size: 16px;
+    }
+}
