@@ -1,6 +1,5 @@
 var React = require('react');
 
-
 var CoolCard = React.createClass({
     render: function () {
         var styles = {
@@ -15,11 +14,14 @@ var CoolCard = React.createClass({
             classes = 'active';
         }
 
-        return <div className="item col-sm-3">
-            <a href="#" style={ styles } id={id} className={classes}>
-                <span>01/03</span>
-                <div></div>
-            </a>
+        return <div className="item jive-card col-sm-2">
+            <div className="jive-card-image">
+                <a href="#" style={ styles } id={id} className={classes}>
+                    <div className="jive-card-title">
+                        <div className="date">Sat, Mar 1st</div>
+                    </div>
+                </a>
+            </div>
         </div>;
     }
 });
@@ -58,9 +60,7 @@ var NavCardsContainer = React.createClass({
     render: function () {
         return <div className="container">
     	    <div className="row">
-    		    <div className="col-sm-8">
-    		        <CoolCardSet />
-    		    </div>
+    		    <CoolCardSet />
 
     		    <div className="col-sm-4 sidecard">
     		        <CoolSideCard />

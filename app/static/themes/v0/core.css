@@ -402,18 +402,6 @@ body.beta .brand-title-art { color: inherit; text-transform: uppercase;}
     color: #ff0099;
 }
 
-
-/* */
-#header_nav_cards { background-color: #222; box-shadow: 0 27px 40px #555; }
-    #header_nav_cards .container {
-        opacity: 0;
-        height:0;
-        overflow:hidden;
-        transition: opacity .5s ease-in;
-        transition: height .5s ease-in;
-    }
-
-
 /* Featured Hero Cards */
 
 .jive-card { box-sizing: border-box; background-clip: padding-box; }
@@ -465,8 +453,6 @@ body.beta .brand-title-art { color: inherit; text-transform: uppercase;}
     .featured-events-wrapper .jive-card .jive-card-image a {
         height:131px;
     }
-    
-    
 
 .jive-card div.jive-card-title {
 	/* IE9 SVG, needs conditional override of 'filter' to 'none' */
@@ -505,3 +491,79 @@ body.beta .brand-title-art { color: inherit; text-transform: uppercase;}
       font-size: 16px;
     }
 }
+
+
+/*************************************
+    Header Nav Featured Cards
+**************************************/
+#header_nav_cards { background-color: #222; box-shadow: 0 27px 40px #555; }
+    #header_nav_cards .container {
+        opacity: 0;
+        height:0;
+        overflow:hidden;
+        transition: opacity .5s ease-in;
+        transition: height .5s ease-in;
+    }
+
+	.show-nav #header_nav_cards .container {
+        opacity: 1;
+        transition: opacity .5s ease-in;
+        transition: height .5s ease-in;
+        height:60px;
+        overflow:hidden;
+    }
+
+
+    /* Sidecard */
+    .sidecard .card {
+        margin-top: 0px;
+        border-top:1px solid black;
+    }
+    .sidecard a {
+        background:url(https://fbcdn-sphotos-a-a.akamaihd.net/hphotos-ak-xaf1/v/t1.0-9/10152433_10154107872845357_9126802419535311414_n.jpg?oh=1ff0dd0512ff5d89f45378c3108de5e9&oe=55166AF7&__gda__=1427244355_579859ab5a0384fddb8afc40e0313d47);
+        background-size: cover;
+        background-position-y: 33%;
+        display: block;
+        width: 100%;
+        background-size: cover;
+        background-position-y: 50%;
+        z-index: 10;
+        height: 40px;
+    }
+        .sidecard span {
+            display:none;
+        }
+
+    		#header_nav_cards .item a {
+    			display:block;
+    			width: 100%;
+    			background-size: cover;
+    			background-position-y: 50%;
+    			z-index : 10;
+    			height:40px;
+    		}
+    		#header_nav_cards .item a:hover {
+    			text-decoration:none;
+    		}
+    		#header_nav_cards .item a:hover span {
+    			color: #ff0099;
+    		}
+
+    		#header_nav_cards .item a span {
+    			color:#fff;
+    			height: 40px;
+    			width: 60px;
+    			background-color: #000;
+    			display:block;
+    			font-size:10px;
+    			text-align:center;
+    			padding-top: 7px;
+    			z-index: 15;
+    		}
+    		
+    		#header_nav_cards .jive-card .jive-card-image div.jive-card-title .date {
+    		    text-align:center;
+    		}
+    		#header_nav_cards .jive-card .jive-card-image a:hover div.jive-card-title .date {
+    		    color: #2a6496;;
+    		}

@@ -112,17 +112,18 @@ global.navigateTo = function navigateTo (evt) {
 }
 
 /* On Homepage - check if we should show the featured section */
-/*
 $(window).on("scroll touchmove", function () {
     var featured_hero = $('#featured-hero-area');
     
+    $('#header_nav').toggleClass('show-nav');
+
     if (featured_hero.length) {
         // Page Has the featured hero section
         var threshhold = featured_hero.offset().top + featured_hero.height();
         $('#header_nav').toggleClass('show-nav', $(document).scrollTop() > threshhold);
+        console.log($(document).scrollTop());
     }
     else{
         
     }
 });
-*/
