@@ -38,4 +38,18 @@ class Error404Handler(BaseController):
         self.serve_404('Page Not Found')
         return
 
+
+
+class AboutMainHandler(BaseController):
+    """
+    About Web Handler
+    """
     
+    def get(self, *args, **kwargs):
+        pagemeta = {
+            'title': 'About MPLSART.COM and Our Mission',
+            'description': 'This is our mission.',
+            'image': 'http://phase-0.arts-612.appspot.com/static/themes/v0/mplsart_fbimg.jpg'}
+
+        template_values = {'pagemeta': pagemeta}
+        self.render_template('./templates/index.html', template_values)

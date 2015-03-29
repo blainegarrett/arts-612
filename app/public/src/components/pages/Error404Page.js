@@ -14,7 +14,7 @@ var Error404Page = React.createClass({
         return <div>
         <h2>Content Not Found</h2>
         
-        <p>The Page you were looking for could not be found. Try returning to <a href="/" onClick={this.getRoute}>mplsart.com</a>.</p>
+        <p>The Page you were looking for could not be found. Try returning to <a href="/" onClick={global.routeTo}>mplsart.com</a>.</p>
         </div>;
     },
     componentDidMount: function() {

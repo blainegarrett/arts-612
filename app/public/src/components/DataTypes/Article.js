@@ -93,18 +93,18 @@ var PodArticleRenderer = React.createClass({
         
         return <div>
             <div className="card-image">
-                <a href={post_url} title={article.title} onClick={global.current_page.getRoute }>{ image }</a>
+                <a href={post_url} title={article.title} onClick={global.routeTo }>{ image }</a>
             </div>
 
             <div className="card-content">
-                <div className="card-title"><a href={ post_url } onClick={global.current_page.getRoute } target="_new">{article.title }</a></div>
-                <div className="card-detail">{ article.summary } <b><a href={post_url} title={article.title} onClick={global.current_page.getRoute }>Read More...</a></b></div>
+                <div className="card-title"><a href={ post_url } onClick={global.routeTo } target="_new">{article.title }</a></div>
+                <div className="card-detail">{ article.summary } <b><a href={post_url} title={article.title} onClick={global.routeTo }>Read More...</a></b></div>
             </div>            
         </div>;
         
         
         /*
-        <li title={article.title}><a href={post_url} onClick={global.current_page.getRoute }>{article.title}</a>  {published_date} </li>;
+        <li title={article.title}><a href={post_url} onClick={global.routeTo }>{article.title}</a>  {published_date} </li>;
         render: function () {
             return <div>
 
@@ -153,7 +153,7 @@ var ListArticleRenderer = React.createClass({
         var date_slug = m.format('YYYY/MM/');
 
         var post_url = '/written/' + date_slug + article.slug;
-        return <li key={article.resource_id} title={article.title}><a href={post_url} onClick={global.current_page.getRoute }>{article.title}</a>  {published_date} </li>;
+        return <li key={article.resource_id} title={article.title}><a href={post_url} onClick={global.routeTo }>{article.title}</a>  {published_date} </li>;
     }
 });
 

@@ -33,7 +33,8 @@ var EventsGrid = React.createClass({
 
     getInitialState: function(){
         var state = {'data': [], 'resource_url': '/api/events'};
-        state['columns'] = ['name', 'category', 'actions'];
+
+        state['columns'] = ['name', 'category', 'featured', 'actions'];
 
         state['global_actions'] = [
             {

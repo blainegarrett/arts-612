@@ -263,6 +263,8 @@ EventsForm = React.createClass({
         }
 
         var event_date_forms = '';
+
+        console.log(this.state.data.results.featured);
         
         return <div className="row">
             <div className="col-lg-8">
@@ -273,6 +275,7 @@ EventsForm = React.createClass({
 
               <TextField id="name"  ref="field.name" val={this.state.data.results.name } form={this} placeholder="Enter Event Name" onChangeCallback={this.sluggable_helper} />
               <SlugField id="slug" form={this}  ref="field.slug"  val={this.state.data.results.slug } widget={SlugWidget} url_root="http://mplsart.com/events/" />
+              <TextField id="featured" form={this} ref="field.featured" val={this.state.data.results.featured } placeholder="true or false" />
 
               <TextField id="url" form={this} ref="field.url"  val={this.state.data.results.url } />
 

@@ -219,6 +219,7 @@ def edit_event(entity, data):
 
     entity.summary = data['summary']
     entity.content = data['content']
+    entity.featured = bool(data['featured'])
 
     # Create the Event Dates
     # TODO: As we add different event types, pull this into its own method
@@ -279,8 +280,7 @@ def create_event(data):
 
     entity.summary = data['summary']
     entity.content = data['content']
-
-    #entity.featured = True
+    entity.featured = bool(data['featured'])
 
     # Create the Event Dates
     # TODO: As we add different event types, pull this into its own method

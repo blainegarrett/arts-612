@@ -83,7 +83,7 @@ var SimpleColumn = React.createClass({
     render: function() {
         var col = this.state.col;
         var obj = this.state.obj;
-        return <span>{ obj[col] }</span>;
+        return <span>{ obj[col].toString() }</span>;
     }
 });
 

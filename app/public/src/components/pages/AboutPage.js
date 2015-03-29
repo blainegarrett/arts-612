@@ -14,11 +14,11 @@ var ArticleGoober = require('./../DataTypes/Article').ArticleGoober;
 var PodArticleRenderer = require('./../DataTypes/Article').PodArticleRenderer;
 
 
-var WrittenPage = React.createClass({
+var AboutPage = React.createClass({
     mixins: [PageMixin],
     default_meta: {
-        'title': 'Written',
-        'description': 'Articles and more'
+        'title': 'About MPLSART.COM and Our Mission',
+        'description': 'This is our mission.',
     },
 
     getInitialState: function () {
@@ -47,7 +47,6 @@ var WrittenPage = React.createClass({
     },
 
     render: function () {
-        
         var articles = []
         var rc = this;
 
@@ -64,11 +63,9 @@ var WrittenPage = React.createClass({
 
                 <div className="col-md-6" id="main-content-container">
                     
-                    <h2>Written</h2>
-                    
-                    <div className="alert alert-warning">Our Written section is returing soon including the archives from the old site. Stay tuned and enjoy these articles.</div>
-                    
-                    { articles }
+                    <h2>About</h2>
+                    <p>Lorem Ipsum...</p>
+                    <br />
 
                     <div className="row">
                         <TempExtras />
@@ -84,4 +81,4 @@ var WrittenPage = React.createClass({
 
     }
 });
-module.exports = WrittenPage;
+module.exports = AboutPage;
