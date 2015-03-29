@@ -212,6 +212,17 @@ var Pod = React.createClass({
     },
 
     render: function () {
+        
+        var card_grid_span = 'col-sm-3';
+        var card_classes = 'card '
+
+        if (this.state.data.featured) {
+            card_classes += 'col-sm-4 col-xs-12';
+        }
+        else {
+            card_classes += 'col-sm-3 col-xs-6';
+        }
+
         var compnentclass = podComponentMap[this.state.data['resource_type']];
         if (!compnentclass) {
             return <div className="card col-sm-2"></div>
@@ -220,7 +231,7 @@ var Pod = React.createClass({
         var pod_props = {'resource': this.state.data, renderer: compnentclass.PodRenderer };
 
         var pod_content = React.createElement(compnentclass.Goober, pod_props);
-        return <div className="card col-sm-3">{ pod_content }</div>
+        return <div className={ card_classes }>{ pod_content }</div>
     }
 });
 
