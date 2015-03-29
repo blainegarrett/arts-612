@@ -51,7 +51,6 @@ routes.extend([
     # Homepage Waterfall
     (r'/api/feed', 'controllers.feed.HomeApiHandler'),
 
-
     # File Service Routes
     (r'/api/files', 'files.controllers.ListResourceHandler'),
     (r'/api/files/upload_url', 'files.controllers.UploadUrlHandler'),

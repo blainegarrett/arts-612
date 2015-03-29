@@ -97,6 +97,7 @@ global.toggleNav = function () {
 }
 
 
+
 /* OnChromeLoad Bindings */
 $(function() {
     /* Anything run here must act only on the chrome since nothing else is loaded... */
@@ -107,10 +108,8 @@ $(function() {
 		// Calling a function in case you want to expand upon this.
 		toggleNav();
 	});
-	
-	$('.internal-link').bind('click tap', navigateTo)
-	
-	
+
+	$('.internal-link').bind('click tap', navigateTo);
 });
 
 global.navigateTo = function navigateTo (evt) {
@@ -128,7 +127,6 @@ $(window).on("scroll touchmove", function () {
         // Page Has the featured hero section
         var threshhold = featured_hero.offset().top + featured_hero.height();
         $('#header_nav').toggleClass('show-nav', $(document).scrollTop() > threshhold);
-        console.log($(document).scrollTop());
     }
     else{
         

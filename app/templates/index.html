@@ -23,7 +23,7 @@
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 
     <!-- Custom styles for this template -->
-	<link rel="stylesheet" href="/static/themes/v0/core.css?20" />
+	<link rel="stylesheet" href="/static/themes/v0/core.css?21" />
 
 	<!-- important bits -->
 	<meta name="google-site-verification" content="5rh0RiNkYuPuVOdrIXk4mY4AQ87uS7Ad_ZigdjDNBp0" />
@@ -84,9 +84,216 @@
 	    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	    <script src="/static/js/jquery.mobile-events.min.js"></script>
 		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-		<script src="/public/build/main.js?20"></script>
+		<script src="/public/build/main.js?21"></script>
 	{% endif %}
 
+
+	<script>
+	var featured_events = {
+	    "status": 200,
+	    "messages": [null],
+	    "results": [{
+	        "event_dates": [{
+	            "category": "reception",
+	            "end": "2015-03-31T22:00:00Z",
+	            "venue": {
+	                "website": "google.com",
+	                "city": "Minneapolis",
+	                "name": "Public Functionary",
+	                "resource_id": "VmVudWUecHVibGljLWZ1bmN0aW9uYXJ5",
+	                "primary_image_resource_id": null,
+	                "country": "USA",
+	                "address2": "",
+	                "summary": "This is the coolest Gallery Every",
+	                "primary_image_resource": null,
+	                "email": "blaine@blainegarrett.com",
+	                "hours": null,
+	                "phone": "6124830829",
+	                "state": "MN",
+	                "address": "2404 24th AVE S",
+	                "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet hendrerit massa, ut elementum odio. Suspendisse potenti. Proin quam est, lacinia nec euismod ut, varius id augue. Proin ac faucibus purus, in pharetra ex. Phasellus quis rutrum purus, non tincidunt leo. Nulla facilisi. Praesent sed mattis lectus, id euismod purus.\n\nMauris sollicitudin odio suscipit mauris tincidunt, ut vulputate ante ornare. Nunc et tortor mi. Etiam porta nisl dignissim malesuada elementum. Sed id ligula id tortor ultricies mollis eget sed elit. Nulla dignissim finibus nulla vitae mollis. Quisque vel semper urna. Proin mi dolor, maximus ut porta vitae, finibus sed urna. Phasellus sem purus, volutpat non mattis nec, commodo in quam.\n\nEtiam rutrum metus non gravida interdum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Phasellus aliquam metus in odio blandit gravida. Proin ut mi nunc. Nullam odio elit, varius eu blandit vitae, imperdiet vitae magna. Donec at urna tortor. Cras placerat laoreet dolor quis commodo. Maecenas magna sem, condimentum id orci a, lobortis eleifend quam. Sed interdum sit amet magna at luctus. Vivamus congue aliquet mauris at pretium. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque interdum nibh sed eros pretium vehicula. Fusce nec lorem in mauris finibus congue sit amet at mi. Donec nulla turpis, fermentum vel leo ut, imperdiet sodales justo.\n",
+	                "resource_url": "http://192.168.1.104:8080/api/galleries/VmVudWUecHVibGljLWZ1bmN0aW9uYXJ5",
+	                "category": "gallery",
+	                "geo": {
+	                    "lat": 44.958815,
+	                    "lon": -93.238138
+	                },
+	                "slug": "public-functionary",
+	                "resource_type": "Venue"
+	            },
+	            "label": "Showing",
+	            "start": "2015-03-31T20:00:00Z",
+	            "type": "timed",
+	            "venue_slug": "public-functionary"
+	        }],
+	        "name": "Cool Event",
+	        "resource_id": "RXZlbnQeHzU2Mjk0OTk1MzQyMTMxMjA",
+	        "url": "http://lipsum.com/feed/html",
+	        "summary": "This is a super cool event!!!",
+	        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet hendrerit massa, ut elementum odio. Suspendisse potenti. Proin quam est, lacinia nec euismod ut, varius id augue. Proin ac faucibus purus, in pharetra ex. Phasellus quis rutrum purus, non tincidunt leo. Nulla facilisi. Praesent sed mattis lectus, id euismod purus.\n\nMauris sollicitudin odio suscipit mauris tincidunt, ut vulputate ante ornare. Nunc et tortor mi. Etiam porta nisl dignissim malesuada elementum. Sed id ligula id tortor ultricies mollis eget sed elit. Nulla dignissim finibus nulla vitae mollis. Quisque vel semper urna. Proin mi dolor, maximus ut porta vitae, finibus sed urna. Phasellus sem purus, volutpat non mattis nec, commodo in quam.\n\nEtiam rutrum metus non gravida interdum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Phasellus aliquam metus in odio blandit gravida. Proin ut mi nunc. Nullam odio elit, varius eu blandit vitae, imperdiet vitae magna. Donec at urna tortor. Cras placerat laoreet dolor quis commodo. Maecenas magna sem, condimentum id orci a, lobortis eleifend quam. Sed interdum sit amet magna at luctus. Vivamus congue aliquet mauris at pretium. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque interdum nibh sed eros pretium vehicula. Fusce nec lorem in mauris finibus congue sit amet at mi. Donec nulla turpis, fermentum vel leo ut, imperdiet sodales justo.\n",
+	        "primary_image_resource": {
+	            "modified_date": "2015-03-29T00:06:26Z",
+	            "versions": {
+	                "SIZED": "",
+	                "CARD_LARGE": "",
+	                "FULL": "",
+	                "CARD_SMALL": {
+	                    "url": "http://192.168.1.104:8080/_ah/gcs/cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fMTAwMQ/card_small.png",
+	                    "width": 700,
+	                    "height": 367
+	                },
+	                "THUMB": {
+	                    "url": "http://192.168.1.104:8080/_ah/gcs/cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fMTAwMQ/thumb.png",
+	                    "width": 160,
+	                    "height": 160
+	                }
+	            },
+	            "resource_id": "RmlsZUNvbnRhaW5lch4fMTAwMQ",
+	            "caption": null,
+	            "created_date": "2015-03-29T00:06:26Z",
+	            "resource_url": "http://192.168.1.104:8080/api/files/RmlsZUNvbnRhaW5lch4fMTAwMQ",
+	            "resource_type": "FileContainer"
+	        },
+	        "primary_image_resource_id": "RmlsZUNvbnRhaW5lch4fMTAwMQ",
+	        "resource_url": "http://192.168.1.104:8080/api/events/RXZlbnQeHzU2Mjk0OTk1MzQyMTMxMjA",
+	        "slug": "cool-event",
+	        "resource_type": "Event"
+	    }, {
+	        "event_dates": [{
+	            "category": "reception",
+	            "end": "2015-06-28T03:52:00Z",
+	            "venue": {
+	                "website": "google.com",
+	                "city": "Minneapolis",
+	                "name": "Public Functionary",
+	                "resource_id": "VmVudWUecHVibGljLWZ1bmN0aW9uYXJ5",
+	                "primary_image_resource_id": null,
+	                "country": "USA",
+	                "address2": "",
+	                "summary": "This is the coolest Gallery Every",
+	                "primary_image_resource": null,
+	                "email": "blaine@blainegarrett.com",
+	                "hours": null,
+	                "phone": "6124830829",
+	                "state": "MN",
+	                "address": "2404 24th AVE S",
+	                "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet hendrerit massa, ut elementum odio. Suspendisse potenti. Proin quam est, lacinia nec euismod ut, varius id augue. Proin ac faucibus purus, in pharetra ex. Phasellus quis rutrum purus, non tincidunt leo. Nulla facilisi. Praesent sed mattis lectus, id euismod purus.\n\nMauris sollicitudin odio suscipit mauris tincidunt, ut vulputate ante ornare. Nunc et tortor mi. Etiam porta nisl dignissim malesuada elementum. Sed id ligula id tortor ultricies mollis eget sed elit. Nulla dignissim finibus nulla vitae mollis. Quisque vel semper urna. Proin mi dolor, maximus ut porta vitae, finibus sed urna. Phasellus sem purus, volutpat non mattis nec, commodo in quam.\n\nEtiam rutrum metus non gravida interdum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Phasellus aliquam metus in odio blandit gravida. Proin ut mi nunc. Nullam odio elit, varius eu blandit vitae, imperdiet vitae magna. Donec at urna tortor. Cras placerat laoreet dolor quis commodo. Maecenas magna sem, condimentum id orci a, lobortis eleifend quam. Sed interdum sit amet magna at luctus. Vivamus congue aliquet mauris at pretium. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque interdum nibh sed eros pretium vehicula. Fusce nec lorem in mauris finibus congue sit amet at mi. Donec nulla turpis, fermentum vel leo ut, imperdiet sodales justo.\n",
+	                "resource_url": "http://192.168.1.104:8080/api/galleries/VmVudWUecHVibGljLWZ1bmN0aW9uYXJ5",
+	                "category": "gallery",
+	                "geo": {
+	                    "lat": 44.958815,
+	                    "lon": -93.238138
+	                },
+	                "slug": "public-functionary",
+	                "resource_type": "Venue"
+	            },
+	            "label": "Showing",
+	            "start": "2015-06-28T01:52:00Z",
+	            "type": "timed",
+	            "venue_slug": "public-functionary"
+	        }],
+	        "name": "June Event",
+	        "resource_id": "RXZlbnQeHzY0MDEzNTY2OTY5MTE4NzI",
+	        "url": "",
+	        "summary": "This Event is in June",
+	        "content": "",
+	        "primary_image_resource": null,
+	        "primary_image_resource_id": null,
+	        "resource_url": "http://192.168.1.104:8080/api/events/RXZlbnQeHzY0MDEzNTY2OTY5MTE4NzI",
+	        "slug": "june-event",
+	        "resource_type": "Event"
+	    }, {
+	        "event_dates": [{
+	            "category": "ongoing",
+	            "end": "2015-03-31T05:00:00Z",
+	            "venue": {
+	                "website": "google.com",
+	                "city": "Minneapolis",
+	                "name": "Public Functionary",
+	                "resource_id": "VmVudWUecHVibGljLWZ1bmN0aW9uYXJ5",
+	                "primary_image_resource_id": null,
+	                "country": "USA",
+	                "address2": "",
+	                "summary": "This is the coolest Gallery Every",
+	                "primary_image_resource": null,
+	                "email": "blaine@blainegarrett.com",
+	                "hours": null,
+	                "phone": "6124830829",
+	                "state": "MN",
+	                "address": "2404 24th AVE S",
+	                "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet hendrerit massa, ut elementum odio. Suspendisse potenti. Proin quam est, lacinia nec euismod ut, varius id augue. Proin ac faucibus purus, in pharetra ex. Phasellus quis rutrum purus, non tincidunt leo. Nulla facilisi. Praesent sed mattis lectus, id euismod purus.\n\nMauris sollicitudin odio suscipit mauris tincidunt, ut vulputate ante ornare. Nunc et tortor mi. Etiam porta nisl dignissim malesuada elementum. Sed id ligula id tortor ultricies mollis eget sed elit. Nulla dignissim finibus nulla vitae mollis. Quisque vel semper urna. Proin mi dolor, maximus ut porta vitae, finibus sed urna. Phasellus sem purus, volutpat non mattis nec, commodo in quam.\n\nEtiam rutrum metus non gravida interdum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Phasellus aliquam metus in odio blandit gravida. Proin ut mi nunc. Nullam odio elit, varius eu blandit vitae, imperdiet vitae magna. Donec at urna tortor. Cras placerat laoreet dolor quis commodo. Maecenas magna sem, condimentum id orci a, lobortis eleifend quam. Sed interdum sit amet magna at luctus. Vivamus congue aliquet mauris at pretium. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque interdum nibh sed eros pretium vehicula. Fusce nec lorem in mauris finibus congue sit amet at mi. Donec nulla turpis, fermentum vel leo ut, imperdiet sodales justo.\n",
+	                "resource_url": "http://192.168.1.104:8080/api/galleries/VmVudWUecHVibGljLWZ1bmN0aW9uYXJ5",
+	                "category": "gallery",
+	                "geo": {
+	                    "lat": 44.958815,
+	                    "lon": -93.238138
+	                },
+	                "slug": "public-functionary",
+	                "resource_type": "Venue"
+	            },
+	            "label": "Showing",
+	            "start": "2015-03-02T06:00:00Z",
+	            "type": "reocurring",
+	            "venue_slug": "public-functionary"
+	        }],
+	        "name": "Reoccurring",
+	        "resource_id": "RXZlbnQeHzQ5OTM5ODE4MTMzNTg1OTI",
+	        "url": "http://google.com",
+	        "summary": "",
+	        "content": "",
+	        "primary_image_resource": null,
+	        "primary_image_resource_id": null,
+	        "resource_url": "http://192.168.1.104:8080/api/events/RXZlbnQeHzQ5OTM5ODE4MTMzNTg1OTI",
+	        "slug": "reoccurring",
+	        "resource_type": "Event"
+	    }, {
+	        "event_dates": [{
+	            "category": "ongoing",
+	            "end": "2015-07-31T05:00:00Z",
+	            "venue": {
+	                "website": "google.com",
+	                "city": "Minneapolis",
+	                "name": "Public Functionary",
+	                "resource_id": "VmVudWUecHVibGljLWZ1bmN0aW9uYXJ5",
+	                "primary_image_resource_id": null,
+	                "country": "USA",
+	                "address2": "",
+	                "summary": "This is the coolest Gallery Every",
+	                "primary_image_resource": null,
+	                "email": "blaine@blainegarrett.com",
+	                "hours": null,
+	                "phone": "6124830829",
+	                "state": "MN",
+	                "address": "2404 24th AVE S",
+	                "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sit amet hendrerit massa, ut elementum odio. Suspendisse potenti. Proin quam est, lacinia nec euismod ut, varius id augue. Proin ac faucibus purus, in pharetra ex. Phasellus quis rutrum purus, non tincidunt leo. Nulla facilisi. Praesent sed mattis lectus, id euismod purus.\n\nMauris sollicitudin odio suscipit mauris tincidunt, ut vulputate ante ornare. Nunc et tortor mi. Etiam porta nisl dignissim malesuada elementum. Sed id ligula id tortor ultricies mollis eget sed elit. Nulla dignissim finibus nulla vitae mollis. Quisque vel semper urna. Proin mi dolor, maximus ut porta vitae, finibus sed urna. Phasellus sem purus, volutpat non mattis nec, commodo in quam.\n\nEtiam rutrum metus non gravida interdum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Phasellus aliquam metus in odio blandit gravida. Proin ut mi nunc. Nullam odio elit, varius eu blandit vitae, imperdiet vitae magna. Donec at urna tortor. Cras placerat laoreet dolor quis commodo. Maecenas magna sem, condimentum id orci a, lobortis eleifend quam. Sed interdum sit amet magna at luctus. Vivamus congue aliquet mauris at pretium. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque interdum nibh sed eros pretium vehicula. Fusce nec lorem in mauris finibus congue sit amet at mi. Donec nulla turpis, fermentum vel leo ut, imperdiet sodales justo.\n",
+	                "resource_url": "http://192.168.1.104:8080/api/galleries/VmVudWUecHVibGljLWZ1bmN0aW9uYXJ5",
+	                "category": "gallery",
+	                "geo": {
+	                    "lat": 44.958815,
+	                    "lon": -93.238138
+	                },
+	                "slug": "public-functionary",
+	                "resource_type": "Venue"
+	            },
+	            "label": "Showing",
+	            "start": "2015-03-01T06:00:00Z",
+	            "type": "reoccurring",
+	            "venue_slug": "public-functionary"
+	        }],
+	        "name": "July Event",
+	        "resource_id": "RXZlbnQeHzYxMTk4ODE3MjAyMDEyMTY",
+	        "url": "http://google.com",
+	        "summary": "",
+	        "content": "",
+	        "primary_image_resource": null,
+	        "primary_image_resource_id": null,
+	        "resource_url": "http://192.168.1.104:8080/api/events/RXZlbnQeHzYxMTk4ODE3MjAyMDEyMTY",
+	        "slug": "july-event",
+	        "resource_type": "Event"
+	    }]
+	};
+	
+	</script>
 
 	<!-- start google analytics -->
 	<script>

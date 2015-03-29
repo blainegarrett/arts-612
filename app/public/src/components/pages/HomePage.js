@@ -20,6 +20,7 @@ var PrimaryJive = React.createClass({
     },
 
     render: function() {
+
         return <div className="col-md-6" id="main-content-container">
             <div className="row">
         

@@ -1,6 +1,6 @@
 var React = require('react');
 var PageMixin = require('./PageMixin');
-//var MasonryMixin = require('react-packery-mixin');
+var MasonryMixin = require('react-packery-mixin');
 var MasonryMixin = require('react-masonry-mixin');
 var InfiniteScroll = require('react-infinite-scroll')(React);
 
@@ -26,24 +26,41 @@ var Separator = React.createClass({
 
 
 var MarqueeCard = React.createClass({
+    getInitialState: function () {
+        return {
+            resource: this.props.resource
+        }
+    },
     render: function() {
 
+        //console.log(this.props.resource);
+
+        var resource = this.props.resource;
+
+        var img_src = '/_ah/gcs/cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fMQ/card_small.png';
+        if (resource.primary_image_resource && resource.primary_image_resource.versions.CARD_SMALL) {
+            img_src = resource.primary_image_resource.versions.CARD_SMALL.url;
+        }
+
         var styles = {
-            'background' : 'url(/_ah/gcs/cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fMQ/card_small.png);',
+            'background' : 'url(' + img_src + ');',
             'background-size': 'cover;',
             'background-position': '50% 50%;'
         };
 
 
-        return <div className="card col-sm-6">
+        var event_url;
+        
+        event_url = '/events/' + resource.slug;
 
+        return <div className="card col-sm-6">
             <div className="jive-card">
                 <div className="jive-card-image">
-                    <a href="#" style={ styles }>
+                    <a href={ event_url } onClick={ global.routeTo } style={ styles }>
                         <div className="jive-card-title">
                             <br />
                             <div className="date">Sat, Mar 1st</div>
-                            <div className="title">Revolution Now Exhibit of Awesomeness</div>
+                            <div className="title">{ resource.name }</div>
                         </div>
                     </a>
                 </div>
@@ -54,19 +71,27 @@ var MarqueeCard = React.createClass({
 });
 
 var HomepageFeaturedPanel = React.createClass({
+    getInitialState: function () {
+        /* TODO: This is using some mocked out data... work on this more */
+
+        return {
+            results: global.featured_events.results
+        }
+    },
     render: function () {
+
+        var rendered_marquee_events;
+
+        var rendered_marquee_events = this.state.results.map(function (resource) {
+            return <MarqueeCard resource={ resource } />;
+        });
+
         return <div className="row" id="featured-hero-area">
             <div className="col-sm-6">
                <div className="row featured-events-wrapper">
-
-               <MarqueeCard />
-               <MarqueeCard />
-               <MarqueeCard />
-               <MarqueeCard />
+                    { rendered_marquee_events }
                </div>
             </div>
-
-
 
             <div className="card col-sm-6">
 
@@ -195,7 +220,7 @@ var Pod = React.createClass({
         var pod_props = {'resource': this.state.data, renderer: compnentclass.PodRenderer };
 
         var pod_content = React.createElement(compnentclass.Goober, pod_props);
-        return <div className="card col-sm-4">{ pod_content }</div>
+        return <div className="card col-sm-3">{ pod_content }</div>
     }
 });
 

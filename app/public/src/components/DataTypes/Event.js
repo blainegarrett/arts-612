@@ -25,7 +25,7 @@ var PodRenderer = React.createClass({
         console.log(this.state);
         return <div className="ghost-load">
             <div className="card-content">
-                <div className="card-title"><a href="#" target="_new">&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632; &#9632;&#9632;&#9632; &#9632;&#9632;&#9632;</a></div>
+                <div className="card-title"><a href="#">&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632; &#9632;&#9632;&#9632; &#9632;&#9632;&#9632;</a></div>
 
                 <div className="card-detail event-time">&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632;</div>
                 <div className="card-detail event-venue-name">&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632;</div>
@@ -75,14 +75,14 @@ var PodRenderer = React.createClass({
 
         //<div className="card-title"><a href={post_url} onClick={global.current_page.getRoute }>{e.name}</a></div>
 
-        var post_url = e.url;
+        var post_url = '/events/' + e.slug; //e.url;
         return <div>
             <div className="card-image">
                 <a href={post_url} title={e.name} onClick={global.current_page.getRoute }>{ image }</a>
             </div>
 
             <div className="card-content">
-                <div className="card-title"><a href={ post_url } target="_new">{e.name }</a></div>
+                <div className="card-title"><a href={ post_url } onClick={global.current_page.getRoute }>{e.name }</a></div>
 
                 <div className="card-detail event-time"><NiceDate start={ target_event_date.start } end={ target_event_date.end } eventdate_type={ target_event_date.type } /></div>
                 <div className="card-detail event-venue-name">{target_event_date.venue.name}</div>
@@ -105,7 +105,7 @@ var AlphaEventRenderer = React.createClass({
     render_empty: function () {
         return <li className="event ghost-load">
             <div className="event-info">
-            	<div><a target="_blank"><span className="event-title">&#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;</span></a></div>
+            	<div><a><span className="event-title">&#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;</span></a></div>
                 <div className="event-time">&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632;&#9632;</div>
                 <div className="event-venue-name">&#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;</div>
                 <div className="event-address">&#9632;&#9632;&#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632;&#9632;&#9632;</div>
@@ -146,7 +146,7 @@ var AlphaEventRenderer = React.createClass({
 
             var img_style = {paddingBottom: padding_percent};
             var image_node = <div className="event-image">
-                <a href={e.url} style={ img_style } target="_blank">
+                <a href={e.url} style={ img_style }>
                     <img src={im_resource.url} />
                 </a>
             </div>;
@@ -155,7 +155,7 @@ var AlphaEventRenderer = React.createClass({
         return <li className="event">
             { image_node }
             <div className="event-info">
-            	<div><a href={e.url} target="_blank"><span className="event-title">{e.name}</span></a></div>
+            	<div><a href={e.url}><span className="event-title">{e.name}</span></a></div>
                 <div className="event-time"><NiceDate start={ target_event_date.start } end={ target_event_date.end } eventdate_type={ target_event_date.type } /></div>
                 <div className="event-venue-name">{target_event_date.venue.name}</div>
                 <div className="event-address">{target_event_date.venue.address + ', ' + target_event_date.venue.city }</div>
@@ -192,7 +192,7 @@ var DefaultRenderer = React.createClass({
         }        
 
         return (<li className="event">        
-    		<div><a href={this.props.url} target="_blank"><span className="event-title">{this.props.name}</span></a></div>
+    		<div><a href={this.props.url}><span className="event-title">{this.props.name}</span></a></div>
             <div className="event-time"><NiceDate start={ ed.start } end={ ed.end } eventdate_type={ ed.type } /></div>
             <div className="event-venue-name">{ed.venue.name}</div>
             <div className="event-address">{ed.venue.address + ', ' + ed.venue.city }</div>

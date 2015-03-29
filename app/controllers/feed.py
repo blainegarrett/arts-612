@@ -19,9 +19,34 @@ from modules.blog.internal.models import BlogPost
 from utils import get_domain
 
 from datetime import datetime
+from pytz import timezone
+
+import logging
 
 from modules.events.internal.api import generic_search
 from cal.controllers import create_resource_from_entity as create_event_resource
+
+
+def unix_time(dt):
+    """
+    Create a Unix Timestamp of a date
+    TODO: This is duplicated from modules.events.internal.search
+    """
+
+    if isinstance(dt, basestring):
+        try:
+            fmt = '%Y-%m-%d %H:%M:%S'
+            dt = datetime.datetime.strptime(dt, fmt)
+        except ValueError:
+            # Attempt full day method
+            fmt = '%Y-%m-%d'
+            dt = datetime.datetime.strptime(dt, fmt)
+
+    # Make it the epoch in central time..
+    epoch = datetime.utcfromtimestamp(0) # .replace(tzinfo=timezone('UTC'))
+    
+    delta = dt - epoch
+    return delta.total_seconds()
 
 def sortfunc(event):
     target_ed = getattr(event, 'target_ed', None)
@@ -31,9 +56,10 @@ def sortfunc(event):
         sort_attr = 'start'
 
     for ed in event.event_dates:
-        if ed.type == target_ed and ed.end < datetime.now():
-            return getattr(ed, sort_attr, None)
-    return None
+        if ed.end and ed.type == target_ed and ed.end < datetime.now():
+            logging.error(unix_time(getattr(ed, sort_attr, None)))
+            return unix_time(getattr(ed, sort_attr, None))
+    return 14252616000000
 
 
 class HomeApiHandler(RestHandlerBase):
@@ -42,11 +68,24 @@ class HomeApiHandler(RestHandlerBase):
     """
 
     def _get(self):
-        upcoming = generic_search(sort='start', category=[u'performance', u'reception', u'sale'])
+
+        limit = 30
+
+        # Upcoming
+        today = datetime.now(timezone('US/Central'))
+        today = today.replace(hour=3, minute=0, second=0)
+        upcoming_end = today
+
+        upcoming = generic_search(end=upcoming_end, sort='start', category=[u'performance', u'reception', u'sale'], limit=limit)
         for e in upcoming:
             setattr(e, 'target_ed', 'timed')
         
-        ongoing = generic_search(sort='end', category=[u'ongoing'])
+        
+        # Ongoing - sorted by ending date
+        today = datetime.now().replace(hour=0, minute=0, second=0, tzinfo=timezone('US/Central'))
+        end = start = today
+
+        ongoing = generic_search(end=end, start=start, sort='end', category=[u'ongoing'], limit=limit)
         for e in ongoing:
             setattr(e, 'target_ed', 'reoccurring')
 

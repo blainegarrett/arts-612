@@ -245,12 +245,13 @@ body.beta .brand-title-art { color: inherit; text-transform: uppercase;}
 
 .modal-backdrop { opacity: 0.5; transition:1s; }
 #site-wrapper {
+    /*
     position: relative;
     overflow: hidden;
     width: 100%;
-    height: 5000px; /* Temp: Simulates a tall page. */
+    */
 }
-    #site-canvas { width: 100%; height: 100%; position: relative; margin-top:70px; }
+    #site-canvas { /*width: 100%; height: 100%; position: relative; */ margin-top:70px; }
 
 #site-menu {
     width: 300px;
