@@ -155,7 +155,16 @@ footer {
 }
 
 #map-canvas {
+    border: 1px solid green;
+}
+
+.map-large {
     height:500px;
+    width:100%;
+}
+
+.map-small {
+    height:200px;
     width:100%;
     border: 1px solid green;
 }

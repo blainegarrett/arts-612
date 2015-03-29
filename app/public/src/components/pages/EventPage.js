@@ -3,21 +3,21 @@ var ReactRouter = require('flux-react-router');
 var PageMixin = require('./PageMixin');
 var GoogleMapsLoader = require('google-maps');
 
-var Gallery404Page = React.createClass({
+var Event404Page = React.createClass({
     mixins: [PageMixin],
     default_meta: {
-        'title': 'Gallery Not Found',
-        'description': 'The Gallery You Are Looking for Could Not Be Found.'
+        'title': 'Event Not Found',
+        'description': 'The Event You Are Looking for Could Not Be Found.'
     },
     componentDidMount: function () {
         this.setMeta();
     },
     render: function() {
         return <div>
-        <h2>Gallery not found...</h2>
+        <h2>Event not found...</h2>
         
         <br /><br/>
-        <a onClick={ReactRouter.deferTo('/galleries')}>Return to Galleries Listing</a>
+        <a onClick={ReactRouter.deferTo('/calendar')}>Return to Calendar</a>
         </div>
     }
 });
@@ -40,7 +40,7 @@ var MapComponent = React.createClass({
 
             var map = new google.maps.Map(document.getElementById('map-canvas'), {
                 center: { lat: c.state.geo.lat, lng: c.state.geo.lon},
-                zoom: 17
+                zoom: 30
             });
 
             var marker = new google.maps.Marker({
@@ -67,23 +67,23 @@ var MapComponent = React.createClass({
         });        
     },
     render: function () {
-        return <div id="map-canvas" className="map-large"></div>
+        return <div id="map-canvas" className="map-small"></div>
     }
 });
 
-var GalleryViewPage = React.createClass({
+var EventPage = React.createClass({
     mixins: [PageMixin],
     default_meta: {
-        'title': 'Galleries',
-        'description': 'Galleries in Minneapolis and St. Paul'
+        'title': 'Events',
+        'description': 'EVents in Minneapolis and St. Paul'
     },
     getInitialState: function () {
         console.log(this.props);
         return {
-            gallery: null,
+            event: null,
             slug: this.props.slug,
             not_found: false,
-            resource_url: '/api/galleries?get_by_slug=' + this.props.slug
+            resource_url: '/api/events?get_by_slug=' + this.props.slug
             
         }
     },
@@ -108,7 +108,7 @@ var GalleryViewPage = React.createClass({
 
 
                 this.setMeta();
-                this.setState({gallery: data.results});
+                this.setState({event: data.results});
                 
 
             }.bind(this),
@@ -116,12 +116,12 @@ var GalleryViewPage = React.createClass({
                 console.error(this.state.resource_url, status, err.toString());
 
                 this.default_meta = {
-                    title: 'gallery not found',
-                    description: 'This gallery could not be found'
+                    title: 'event not found',
+                    description: 'This event could not be found'
                 }
 
                 this.setMeta();
-                this.setState({not_found: true, gallery:true});
+                this.setState({not_found: true, event:true});
                 
             }.bind(this)
             
@@ -134,88 +134,64 @@ var GalleryViewPage = React.createClass({
     },
 
     render: function() {
-        console.log('rendering the gallery?');
+        console.log('rendering the event?');
         console.log(this.state);
 
         // If no data loaded
-        if (!(this.state.gallery) == true) {
+        if (!(this.state.event) == true) {
             // TODO: Render a shell of what the page will look like
-            return <div>loading gallery...</div>
+            return <div>loading event...</div>
         }
         
         if (this.state.not_found) {
-            return <Gallery404Page slug={ this.state.slug } />
+            return <Event404Page slug={ this.state.slug } />
         }
         
-        // If gallery not found by slug
-        var g = this.state.gallery;
+        // If event not found by slug
+        var artEvent = this.state.event;
+
+        var eventDates = []
+
+        eventDates = artEvent.event_dates.map(function (eventDate) {
+            return <div className="event-date">
+                <span class="label">{ eventDate.label }</span>
+                <h2>{ eventDate.start } - { eventDate.end }</h2>
+            </div>
+        });
+
+        var venue = artEvent.event_dates[0].venue;
         
         var image = null;
         var image_url = null;
 
-        if (g.primary_image_resource) {
-            image_url = g.primary_image_resource.versions.CARD_SMALL.url;
+        if (artEvent.primary_image_resource) {
+            image_url = artEvent.primary_image_resource.versions.CARD_SMALL.url;
             image = <img src={image_url} className="img-responsive" />
         }
 
         return <div className="row">
             <div className="col-md-6">
-
-            { image }
-            <br />
-
                 <div className="row">
-                    <div className="col-md-4">
-                        <img src="http://placehold.it/350x350" className="img-responsive" />
-                    </div>
-                    <div className="col-md-8">
-
-                    
-                        
-
-                        <p>Type: { g.category }</p>
-
-
-                        <p>{ g.content }</p>
-
-                    </div>
+                    <h1>{ artEvent.name }</h1>
+                    <div className="summary">{ artEvent.summary }</div>
                 </div>
-                
                 <div className="row">
-                    <div className="col-md-12">
-                        <br />
-                        <MapComponent gallery={g} />
-                        <pre>{ JSON.stringify(g) }</pre>
+                    <div className="col-md-6">
+                        { eventDates }
+                    </div>
+                    <div className="col-md-6">
+                        <h2><a href="{ venue.website }" _target="new">{venue.name}</a></h2>
+                        <p>{ venue.address } { venue.address2 } -  { venue.city }</p>
+                        <MapComponent gallery={venue} />
                     </div>
                 </div>
             </div>
             <div className="col-md-6">
-
-                <h2>{g.name}</h2>
-                <p>{ g.address } { g.address2 } -  { g.city }</p>
-
-                <p>{ g.summary }</p>
-
-                <h3>Upcoming Events</h3>
-                <ul>
-                    <li>Event 1</li>
-                    <li>Event 2</li>
-                </ul>
-                ..Previous Events
-                
-                <h3>Hours</h3>
-                <p>
-                  From 10:00 to 18:00
-                </p>
-                <h3>Contact</h3>
-                <p>Phone: { g.phone }</p>
-                <p>Email: { g.email }</p>
-                <p>Website: { g.website }</p>
-                
-               
+                { image }
+                <div className="content" dangerouslySetInnerHTML={{__html: artEvent.content}} />
             </div>
         </div>;
 
     }
 });
-module.exports = GalleryViewPage;
+module.exports = EventPage;
