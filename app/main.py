@@ -51,6 +51,9 @@ name = {url, server_view, react_view }
 '''
 
 web_routes += [
+
+    RedirectRoute('/about/', 'controllers.AboutMainHandler', strict_slash=True, name="about"),
+
     (r'/galleries/([a-z0-9-]+)', 'venues.controllers.GalleryDetailHandler'),
     (r'/galleries', 'venues.controllers.GalleryMainHandler'),
 

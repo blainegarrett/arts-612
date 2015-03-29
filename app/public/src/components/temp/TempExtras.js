@@ -77,21 +77,22 @@ var TempExtras = React.createClass({
         
         return <div>
 
+
+        <div id="panel-hashtag" className="col-xs-12 card">
+            <div className="row">
+                <div className="solid-bg col-sm-4">
+                    #mplsart
+                </div>
+                <div className="solid-white col-sm-8">
+                    If you are making art or looking at art in the Twin Cities, use the hashtag to show it off.
+                </div>
+            </div>
+        </div>
+
+
             <div id="fundraising-panel" className="col-xs-12">
                 <div className="row">
                     { fundraisers_rendered }
-                </div>
-            </div>
-
-
-            <div id="panel-hashtag" className="col-xs-12 card">
-                <div className="row">
-                    <div className="solid-bg col-sm-4">
-                        #mplsart
-                    </div>
-                    <div className="solid-white col-sm-8">
-                        If you are making art or looking at art in the Twin Cities, use the hashtag to show it off.
-                    </div>
                 </div>
             </div>
 

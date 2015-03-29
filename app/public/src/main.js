@@ -10,6 +10,7 @@ var WrittenArticlePage = require('./components/pages/WrittenArticlePage');
 var GalleryPage = require('./components/pages/GalleryPage');
 var GalleryViewPage = require('./components/pages/GalleryViewPage');
 var Error404Page = require('./components/pages/Error404Page');
+var AboutPage = require('./components/pages/AboutPage');
 
 var PageMeta = require('./components/pages/PageMeta');
 var NavCardsContainer = require('./components/NavCardsContainer').NavCardsContainer;
@@ -22,6 +23,12 @@ ReactRouter.createRoute('/', function () {
     React.unmountComponentAtNode(document.getElementById('main_content'));
     React.render(<HomePage />, document.getElementById('main_content'));
 });
+
+ReactRouter.createRoute('/about', function () {
+    React.unmountComponentAtNode( document.getElementById('main_content'));
+    React.render(<AboutPage />, document.getElementById('main_content'));    
+});
+
 
 ReactRouter.createRoute('/events/{slug}', function (params) {
     React.unmountComponentAtNode( document.getElementById('main_content'));
