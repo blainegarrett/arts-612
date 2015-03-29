@@ -101,15 +101,28 @@ $(function() {
 		toggleNav();
 	});
 	
-	$('.internal-link').bind('click tap', navigateTo)
-	
-	
+	$('.internal-link').bind('click tap', routeTo)	
 });
 
-global.navigateTo = function navigateTo (evt) {
-    /* Click Handler for when outside of react components */
-    current_page.getRoute(evt);
-}
+global.routeTo = function (evt) {
+    /* Global Helper to handle in-app click routing */
+    // TODO: This only works on <a href="" ...> tags
+
+    // Close open menus
+    global.closeMenu()
+
+    var anchor, url;
+    event.preventDefault();
+
+    anchor = evt.currentTarget;
+    $("html, body").animate({ scrollTop: 0 }, "slow");
+
+    url = anchor.pathname; //https://gist.github.com/jlong/2428561
+
+    ReactRouter.goTo(url);
+    
+};
+
 
 /* On Homepage - check if we should show the featured section */
 /*
