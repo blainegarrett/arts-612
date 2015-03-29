@@ -313,6 +313,34 @@ class UploadField(RestField):
 
         return {'lat': val.lat, 'lon': val.lon}
 
+class BooleanField(RestField):
+    """
+    Boolean field
+    """
+    def to_resource(self, data):
+        val = super(BooleanField, self).to_resource(data)
+        
+        if val in ['', 'false', 'False', None]:
+            return False
+        else:
+            return True
+
+    def from_resource(self, obj, field):
+        """
+        Outout a field to dic value
+        """
+
+        val = super(BooleanField, self).from_resource(obj, field)
+
+        if not val:
+            return False
+
+        if val == True:
+            return True
+        
+        raise Exception(val)
+
+
 class GeoField(RestField):
     """
     Field to support a Geo coordinate property

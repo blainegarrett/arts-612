@@ -13,7 +13,7 @@ from auth.decorators import rest_login_required
 from rest.controllers import RestHandlerBase
 
 from rest.resource import Resource
-from rest.resource import RestField, SlugField, ResourceIdField, ResourceUrlField
+from rest.resource import RestField, SlugField, ResourceIdField, ResourceUrlField, BooleanField
 from rest.params import coerce_to_datetime
 from rest.utils import get_key_from_resource_id
 
@@ -42,6 +42,7 @@ REST_RULES = [
 
     RestField(Event.content),
     RestField(Event.summary),
+    BooleanField(Event.featured),
 
     RestField(Event.primary_image_resource_id, required=False),
     FileField('primary_image_resource', required=False, output_only=True, resource_id_prop='primary_image_resource_id')

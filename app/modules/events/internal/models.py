@@ -31,6 +31,7 @@ class Event(ndb.Model):
 
     content = ndb.TextProperty()
     summary = ndb.TextProperty()
+    featured = ndb.BooleanProperty()
 
 
     '''

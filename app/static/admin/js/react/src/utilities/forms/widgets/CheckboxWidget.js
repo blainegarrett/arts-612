@@ -31,6 +31,7 @@ CheckboxWidget = React.createClass({
         if (this.state.choices && this.state.choices.length > 0) {
             choices_rendered = this.state.choices.map(function (choice_pair) {
                 i += 1;
+                console.log([choice_pair[0], cur_state_val])
                 var checked = choice_pair[0] == cur_state_val;
 
                 return <div><label><input onChange={handleChange} type="radio" ref={'checkbox_' + i} name={name} checked={checked} value={ choice_pair[0] } onBlur={this.onBlur} onFocus={this.onFocus} /> { choice_pair[1] }</label></div>
