@@ -4,6 +4,7 @@ var ReactRouter = require('flux-react-router');
 var HomePage = require('./components/pages/HomePage');
 var NewHomePage = require('./components/pages/NewHomePage');
 var CalendarPage = require('./components/pages/CalendarPage');
+var EventPage = require('./components/pages/EventPage');
 var WrittenPage = require('./components/pages/WrittenPage');
 var WrittenArticlePage = require('./components/pages/WrittenArticlePage');
 var GalleryPage = require('./components/pages/GalleryPage');
@@ -21,6 +22,12 @@ ReactRouter.createRoute('/', function () {
     React.unmountComponentAtNode(document.getElementById('main_content'));
     React.render(<HomePage />, document.getElementById('main_content'));
 });
+
+ReactRouter.createRoute('/events/{slug}', function (params) {
+    React.unmountComponentAtNode( document.getElementById('main_content'));
+    React.render(<EventPage slug={params.slug} />, document.getElementById('main_content'));    
+});
+
 ReactRouter.createRoute('/calendar', function () {
     React.unmountComponentAtNode( document.getElementById('main_content'));
     React.render(<CalendarPage/>, document.getElementById('main_content'));    
