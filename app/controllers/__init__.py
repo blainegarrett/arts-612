@@ -39,7 +39,6 @@ class Error404Handler(BaseController):
         return
 
 
-
 class AboutMainHandler(BaseController):
     """
     About Web Handler
@@ -47,9 +46,10 @@ class AboutMainHandler(BaseController):
     
     def get(self, *args, **kwargs):
         pagemeta = {
-            'title': 'About MPLSART.COM and Our Mission',
-            'description': 'This is our mission.',
-            'image': 'http://phase-0.arts-612.appspot.com/static/themes/v0/mplsart_fbimg.jpg'}
+            'title': 'About MPLSART.COM',
+            'description': 'MPLSART.COM\'s mission is to promote visual art events in the Twin Cities.',
+            'image': 'http://phase-0.arts-612.appspot.com/static/themes/v0/mplsart_fbimg.jpg'
+        }
 
         template_values = {'pagemeta': pagemeta}
         self.render_template('./templates/index.html', template_values)
