@@ -71,12 +71,6 @@ ReactRouter.createRoute('*', function () {
 });
 ReactRouter.init();
 
-/* Components outside of the main_content area*/
-React.render(<PageMeta />, document.getElementById('page_meta'));
-//React.render(<PageMeta />, document.getElementById('meta_debug'));
-//React.render(<PrimaryMenu />, document.getElementById('navbar'));
-React.render(<NavCardsContainer />, document.getElementById('header_nav_cards'));
-
 
 /* Code For Sliding Navs and Featured Widget */
 global.closeMenu = function () {
@@ -117,13 +111,6 @@ $(function() {
 		toggleNav();
 	});
 	$('.internal-link').bind('click tap', routeTo);
-	
-	var featured_hero = $('#featured-hero-area');
-	if (featured_hero.length == 0) {
-        $('#header_nav').addClass('show-nav')
-	}
-	
-	
 });
 
 global.routeTo = function (evt) {
@@ -145,9 +132,7 @@ global.routeTo = function (evt) {
     
 };
 
-
-/* On Homepage - check if we should show the featured section */
-$(window).on("scroll touchmove", function () {
+global.show_marquee = function() {
     var featured_hero = $('#featured-hero-area');
     
     if (featured_hero.length) {
@@ -156,6 +141,20 @@ $(window).on("scroll touchmove", function () {
         $('#header_nav').toggleClass('show-nav', $(document).scrollTop() > threshhold - 100);
     }
     else {
-        
-    }
+        $('#header_nav').addClass('show-nav');
+    }    
+}
+
+
+/* On Homepage - check if we should show the featured section */
+$(window).on("scroll touchmove", function () {
+    show_marquee();
 });
+
+
+
+/* Components outside of the main_content area*/
+React.render(<PageMeta />, document.getElementById('page_meta'));
+//React.render(<PageMeta />, document.getElementById('meta_debug'));
+//React.render(<PrimaryMenu />, document.getElementById('navbar'));
+React.render(<NavCardsContainer />, document.getElementById('header_nav_cards'));

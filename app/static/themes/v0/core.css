@@ -249,7 +249,7 @@ body.beta .brand-title-art { color: inherit; text-transform: uppercase;}
 
 .modal-backdrop { opacity: 0.5; transition:1s; }
 #site-wrapper {
-    min-height:1000px;
+    min-height:2000px;
     /*
     position: relative;
     overflow: hidden;
@@ -257,6 +257,9 @@ body.beta .brand-title-art { color: inherit; text-transform: uppercase;}
     */
 }
     #site-canvas { /*width: 100%; height: 100%; position: relative; */ margin-top:150px; } /* 150 for "sticky marquee"*/
+    .homepage #site-canvas {
+        margin-top:75px;
+    }
 
 #site-menu {
     width: 300px;
@@ -523,10 +526,12 @@ body.beta .brand-title-art { color: inherit; text-transform: uppercase;}
     }
 
     @media screen and (min-width: 500px) {
-    	.show-nav #header_nav_cards .container {
-            opacity: 1;
+        .show-nav.homepage #header_nav_cards .container {
             transition: opacity .5s ease-in;
             transition: height .5s ease-in;
+        }
+    	.show-nav #header_nav_cards .container {
+            opacity: 1;
             height:60px;
             overflow:hidden;
         }

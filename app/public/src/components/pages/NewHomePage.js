@@ -303,6 +303,7 @@ var NewHomePage = React.createClass({
         this.setMeta();
         
         $('body').removeClass('beta');
+        $('body').addClass('homepage');
         
         /*
         $(window).on("scroll touchmove", function () {
@@ -319,6 +320,7 @@ var NewHomePage = React.createClass({
         /* Temporary solution */
 
         $('body').addClass('beta');
+        $('body').removeClass('homepage');
     }
 });
 

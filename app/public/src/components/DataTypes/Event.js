@@ -110,8 +110,7 @@ var PodRenderer = React.createClass({
     mixins: [EventRendererMixin],
 
     render_empty: function () {
-        
-        console.log(this.state);
+
         return <div className="ghost-load">
             <div className="card-content">
                 <div className="card-title"><a href="#">&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632; &#9632;&#9632;&#9632; &#9632;&#9632;&#9632;</a></div>
