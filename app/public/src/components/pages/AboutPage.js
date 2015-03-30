@@ -78,7 +78,7 @@ var AboutPage = React.createClass({
                     <h2><b>History</b></h2>
 
 
-                    <p>MPLSART.COM was founded in 2005 by the incomparable designer/curator, Emma Berg. She saw a need for a consolidated, curated listing of important art events in the Twin Cities. In 2006, Emma was joined by fellow arts advocate, Kristoffer Knutson. Together, they ran the site and a curated a host of exhibits and creativity-infused events. It was a work of passion, blood, sweat and so on.</p>
+                    <p>MPLSART.COM was founded in 2005 by the incomparable designer/curator, Emma Berg. She saw a need for a consolidated, curated listing of important art events in the Twin Cities. In 2006, Emma was joined by fellow arts advocate, Kristoffer Knutson. Together, they ran the site and curated a host of exhibits and creativity-infused events. It was a work of passion, blood, sweat and so on.</p>
 
 
 
