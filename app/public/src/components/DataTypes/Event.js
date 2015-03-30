@@ -74,7 +74,7 @@ var PodRenderer = React.createClass({
         var post_url = e.url;
         return <div>
             <div className="card-image">
-                <a href={post_url} title={e.name} onClick={global.routeTo }>{ image }</a>
+                <a href={post_url} title={e.name}>{ image }</a>
             </div>
 
             <div className="card-content">
