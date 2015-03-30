@@ -21,9 +21,12 @@ a { color: #0096BE; }
 .ghost-load { opacity: .5; }
 
 .fancy-separator {
-    height: 30px;
-    background-color: black;
+    height: 15px;
+    background-color: #FD0595;
     margin-bottom: 30px;
+    background-image: url(/static/themes/v0/separator.png);
+    background-repeat: no-repeat;
+    background-position: 100% 0;
 }
 
 /* Nav Var */
