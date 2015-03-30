@@ -3,19 +3,14 @@ var EventModule = require('./DataTypes/Event');
 var FeaturedEventsStore = require('./../stores/FeaturedContentStore');
 
 
-var CoolCardSet = React.createClass({
+var MarqueeCardSet = React.createClass({
 
     getInitialState: function () {
         /* TODO: This is using some mocked out data... work on this more */
-
-        return {
-            results: FeaturedEventsStore.getRaw()
-        }
+        return { results: FeaturedEventsStore.getRaw() }
     },
 
     render: function () {
-        
-
         var rendered_marquee_events;
 
         var rendered_marquee_events = this.state.results.map(function (resource, i) {
@@ -49,7 +44,7 @@ var NavCardsContainer = React.createClass({
     render: function () {
         return <div className="container">
     	    <div className="row">
-    		    <CoolCardSet />
+    		    <MarqueeCardSet />
     		    <div className="col-sm-4 sidecard">
     		        <CoolSideCard />
     		    </div>
@@ -60,5 +55,5 @@ var NavCardsContainer = React.createClass({
 
 module.exports = {
         NavCardsContainer: NavCardsContainer,
-        CoolCardSet: CoolCardSet
+        MarqueeCardSet: MarqueeCardSet
 }

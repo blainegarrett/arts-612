@@ -116,7 +116,14 @@ $(function() {
 		// Calling a function in case you want to expand upon this.
 		toggleNav();
 	});
-	$('.internal-link').bind('click tap', routeTo)	
+	$('.internal-link').bind('click tap', routeTo);
+	
+	var featured_hero = $('#featured-hero-area');
+	if (featured_hero.length == 0) {
+        $('#header_nav').addClass('show-nav')
+	}
+	
+	
 });
 
 global.routeTo = function (evt) {
@@ -143,14 +150,12 @@ global.routeTo = function (evt) {
 $(window).on("scroll touchmove", function () {
     var featured_hero = $('#featured-hero-area');
     
-    $('#header_nav').toggleClass('show-nav');
-
     if (featured_hero.length) {
         // Page Has the featured hero section
         var threshhold = featured_hero.offset().top + featured_hero.height();
         $('#header_nav').toggleClass('show-nav', $(document).scrollTop() > threshhold - 100);
     }
-    else{
+    else {
         
     }
 });
