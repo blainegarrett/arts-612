@@ -32,19 +32,19 @@ var FeaturedContentStore = assign({}, EventEmitter.prototype, {
   /**
    * @param {function} callback
    */
-  addChangeListener: function(callback) {
-    this.on(CHANGE_EVENT, callback);
-  },
+  //addChangeListener: function(callback) {
+//    this.on(CHANGE_EVENT, callback);
+//  },
 
   /**
    * @param {function} callback
    */
-  removeChangeListener: function(callback) {
-    this.removeListener(CHANGE_EVENT, callback);
-  }
+ // removeChangeListener: function(callback) {
+    //this.removeListener(CHANGE_EVENT, callback);
+  //}
 });
 
-
+/*
 // Register to handle all updates
 AppDispatcher.register(function(payload) {
   var action = payload.action;
@@ -56,5 +56,6 @@ AppDispatcher.register(function(payload) {
 
   return true; // No errors.  Needed by promise in Dispatcher.
 });
+*/
 
 module.exports = FeaturedContentStore;
