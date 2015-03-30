@@ -37,7 +37,7 @@ var MarqueeCard = React.createClass({
 
         var resource = this.props.resource;
 
-        var img_src = '/_ah/gcs/cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fMQ/card_small.png';
+        var img_src = 'http://cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fMTAxMDAwMQ/card_small.png';
         if (resource.primary_image_resource && resource.primary_image_resource.versions.CARD_SMALL) {
             img_src = resource.primary_image_resource.versions.CARD_SMALL.url;
         }
@@ -98,7 +98,7 @@ var HomepageFeaturedPanel = React.createClass({
                 <div className="jive-card">
                     <div className="jive-card-image">
                         <a href="#">
-                            <img className="img-responsive" src="http://cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fNDAyMDAwMQ/card_small.png" />
+                            <img className="img-responsive" src="http://cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fMTAxMDAwMQ/card_small.png" />
                             <div className="jive-card-title">
                                 <br />
                                 <div className="date">Sat, Mar 1st</div>
