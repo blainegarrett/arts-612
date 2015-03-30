@@ -13,17 +13,7 @@ var TempEvents = require('../calendar/TempEvents');
 var ArticleGoober = require('./../DataTypes/Article').ArticleGoober;
 var PodArticleRenderer = require('./../DataTypes/Article').PodArticleRenderer;
 
-
-var Separator = React.createClass({
-    render: function () {
-        return <div className="row">
-            <div className="col-sm-12">
-                <div className="fancy-separator"></div>
-            </div>
-        </div>
-    }
-});
-
+var Separator = require('./../../utils/Layout').Separator
 
 var AboutPage = React.createClass({
     mixins: [PageMixin],
