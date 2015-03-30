@@ -109,7 +109,7 @@ Pink "art" in MPLSart.com header
 
 
 /* Hashtag */
-#panel-hashtag .row {  margin-left: 0px; background-color: #ff0099; }
+#panel-hashtag .row {  background-color: #ff0099; }
 #panel-hashtag .solid-white { padding:20px; background-color: #fff; }
 
 #panel-hashtag .solid-bg {
@@ -118,9 +118,13 @@ Pink "art" in MPLSart.com header
     color: #ffffff;
     font-size:30px;
     padding-top:30px;
+    padding-bottom:30px;
     text-align:center;
 }
 
+@media (min-width:768px) {
+    #panel-hashtag .row { margin-left: 0px; }
+}
 
 /* Form Styles */
 /*
@@ -419,18 +423,11 @@ body.beta .brand-title-art { color: inherit; text-transform: uppercase;}
 
 
 #site-wrapper {
-position: relative;
-overflow: hidden;
-width: 100%;
 
-height: 5000px; /* Temp: Simulates a tall page. */
 }
 
 
 #site-canvas {
-    width: 100%;
-    height: 100%;
-    position: relative;
     margin-top:50px;
 
     -moz-transform: translateX(0);
