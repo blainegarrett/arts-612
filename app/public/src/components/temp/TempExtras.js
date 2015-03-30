@@ -22,14 +22,14 @@ var FundraiserCard =  React.createClass({
 
         return <div>
             <div className="card-image">
-                <a href={r.website} target="_new" onClick={global.routeTo} title={ 'Support:' +  r.title } >
+                <a href={r.website} target="_new" title={ 'Support:' +  r.title } >
                     <img src={ r.img_url } className="img-responsive" title={ 'Support:' +  r.title } />
                 </a>
             </div>
             <div className="card-content">
                 <div className="card-detail event-time">Support local art:</div>
                 <div className="card-title">
-                    <a href={r.website} onClick={global.routeTo} target="_new">{r.title}</a>
+                    <a href={r.website} target="_new">{r.title}</a>
                 </div>
                 <div className="card-detail">{r.summary}</div>
                 { ends_node }
