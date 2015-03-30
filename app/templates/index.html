@@ -80,14 +80,6 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
 
-	{% if not no_client %}
-	    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-	    <script src="/static/js/jquery.mobile-events.min.js"></script>
-		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-		<script src="/public/build/main.js?24"></script>
-	{% endif %}
-
-
 	<script>
 	var featured_events = {
 	    "status": 200,
@@ -138,12 +130,12 @@
 	                "CARD_LARGE": "",
 	                "FULL": "",
 	                "CARD_SMALL": {
-	                    "url": "http://cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fMTAxMDAwMQ/card_small.png",
+	                    "url": "http://192.168.1.104:8080/_ah/gcs/cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fMTAwMQ/card_small.png",
 	                    "width": 700,
 	                    "height": 367
 	                },
 	                "THUMB": {
-	                    "url": "http://cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fMTAxMDAwMQ/thumb.png",
+	                    "url": "http://192.168.1.104:8080/_ah/gcs/cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fMTAwMQ/thumb.png",
 	                    "width": 160,
 	                    "height": 160
 	                }
@@ -294,6 +286,14 @@
 	};
 	
 	</script>
+
+	{% if not no_client %}
+	    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	    <script src="/static/js/jquery.mobile-events.min.js"></script>
+		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+		<script src="/public/build/main.js?24"></script>
+	{% endif %}
+
 
 	<!-- start google analytics -->
 	<script>

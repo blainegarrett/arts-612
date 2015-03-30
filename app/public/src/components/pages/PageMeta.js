@@ -40,24 +40,24 @@ var PageMeta = React.createClass({
         meta_tags = [];
 
         //Title...
-        meta_tags.push(<meta name="title" content={meta.title} />);
-        meta_tags.push(<meta itemProp="name" content={meta.title } />);
-        meta_tags.push(<meta property="og:title" content={ meta.title } />)
+        meta_tags.push(<meta key="meta-title" name="title" content={meta.title} />);
+        meta_tags.push(<meta key="meta-itemtitle" itemProp="name" content={meta.title } />);
+        meta_tags.push(<meta key="meta-ogtitle" property="og:title" content={ meta.title } />)
         document.title = meta.title + ' | MPLSART.COM';
 
         // Description
-        meta_tags.push(<meta name="description" content={meta.description} />);
-        meta_tags.push(<meta itemProp="description" content={ meta.description } />);
-        meta_tags.push(<meta property="og:description" content={ meta.description } />)
+        meta_tags.push(<meta key="meta-descr" name="description" content={meta.description} />);
+        meta_tags.push(<meta key="meta-itemdescr" itemProp="description" content={ meta.description } />);
+        meta_tags.push(<meta key="meta-ogdescr" property="og:description" content={ meta.description } />)
 
         // Image
         if (meta.image) {
-            meta_tags.push(<meta property="image" content={ meta.image } />);
-            meta_tags.push(<meta property="og:image" content={ meta.image } />)
+            meta_tags.push(<meta key="meta-image" property="image" content={ meta.image } />);
+            meta_tags.push(<meta key="meta-ogimage" property="og:image" content={ meta.image } />)
         }
 
         //Keywords - TODO: Not currently dynamic
-        meta_tags.push(<meta name="keywords" content="minneapolis, st. paul, art, galleries, art openings, painting, jive" />);
+        meta_tags.push(<meta key="meta-keywords" name="keywords" content="minneapolis, st. paul, art, galleries, art openings, painting, jive" />);
 
         // Twitter Specific
         /*

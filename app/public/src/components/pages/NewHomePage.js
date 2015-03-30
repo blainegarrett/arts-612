@@ -1,6 +1,6 @@
 var React = require('react');
 var PageMixin = require('./PageMixin');
-var MasonryMixin = require('react-packery-mixin');
+//var MasonryMixin = require('react-packery-mixin');
 var MasonryMixin = require('react-masonry-mixin');
 var InfiniteScroll = require('react-infinite-scroll')(React);
 
@@ -10,20 +10,11 @@ var GoodNewsBanner = require('../temp/GoodNewsBanner');
 var TempUpcoming = require('../calendar/TempUpcoming');
 var TempEvents = require('../calendar/TempEvents');
 var TempExtras = require('../temp/TempExtras');
+var Separator = require('./../../utils/Layout').Separator
 
 /* Pod types ... */
-var EventModule = require('./../DataTypes/Event')
-
-var Separator = React.createClass({
-    render: function () {
-        return <div className="row">
-            <div className="col-sm-12">
-                <div className="fancy-separator"></div>
-            </div>
-        </div>
-    }
-});
-
+var EventModule = require('./../DataTypes/Event');
+var FeaturedEventsStore = require('./../../stores/FeaturedContentStore');
 
 var MarqueeCard = React.createClass({
     getInitialState: function () {
@@ -32,8 +23,6 @@ var MarqueeCard = React.createClass({
         }
     },
     render: function() {
-
-        //console.log(this.props.resource);
 
         var resource = this.props.resource;
 
@@ -47,7 +36,6 @@ var MarqueeCard = React.createClass({
             'background-size': 'cover;',
             'background-position': '50% 50%;'
         };
-
 
         var event_url;
         
@@ -70,20 +58,21 @@ var MarqueeCard = React.createClass({
     }
 });
 
-var HomepageFeaturedPanel = React.createClass({
+var FeaturedHeroPanel = React.createClass({
+    /* Homepage Specific Widget for showing featured Content in top Hero space */
+
     getInitialState: function () {
         /* TODO: This is using some mocked out data... work on this more */
-
         return {
-            results: global.featured_events.results
+            results: FeaturedEventsStore.getRaw()
         }
     },
     render: function () {
 
         var rendered_marquee_events;
 
-        var rendered_marquee_events = this.state.results.map(function (resource) {
-            return <MarqueeCard resource={ resource } />;
+        var rendered_marquee_events = this.state.results.map(function (resource, i) {
+            return <EventModule.Goober key={ 'hero-event-' + i}resource={ resource } renderer={ EventModule.FeaturedHeroRenderer } />
         });
 
         return <div className="row" id="featured-hero-area">
@@ -108,10 +97,6 @@ var HomepageFeaturedPanel = React.createClass({
                     </div>
                 </div>
             </div>
-
-
-
-
         </div>;
     }
 });
@@ -287,13 +272,13 @@ var NewHomePage = React.createClass({
         var pods = [];
         var container = this;
 
-        var pods = this.state.pod_data.map(function (pod_data) {
-            return <Pod data={pod_data} container={container} />;
+        var pods = this.state.pod_data.map(function (pod_data, i) {
+            return <Pod key={'pod-' + i} data={pod_data} container={container} />;
         });
 
         return <div id="HomePageWrapper">
 
-            <HomepageFeaturedPanel />
+            <FeaturedHeroPanel />
             <Separator />
 
             <div className="row">

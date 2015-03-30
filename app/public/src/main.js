@@ -148,7 +148,7 @@ $(window).on("scroll touchmove", function () {
     if (featured_hero.length) {
         // Page Has the featured hero section
         var threshhold = featured_hero.offset().top + featured_hero.height();
-        $('#header_nav').toggleClass('show-nav', $(document).scrollTop() > threshhold);
+        $('#header_nav').toggleClass('show-nav', $(document).scrollTop() > threshhold - 100);
     }
     else{
         

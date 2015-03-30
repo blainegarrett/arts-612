@@ -1,39 +1,29 @@
 var React = require('react');
+var EventModule = require('./DataTypes/Event');
+var FeaturedEventsStore = require('./../stores/FeaturedContentStore');
 
-var CoolCard = React.createClass({
-    render: function () {
-        var styles = {
-            'background' : 'url(' +  this.props.url + ');',
-            'background-size': 'cover;',
-            'background-position': '50% 50%;'
-        };
-
-        var id = "carousel-selector-" + this.props.pos;
-        var classes = '';
-        if  (this.props.pos == 0) {
-            classes = 'active';
-        }
-
-        return <div className="item jive-card col-sm-2">
-            <div className="jive-card-image">
-                <a href="#" style={ styles } id={id} className={classes}>
-                    <div className="jive-card-title">
-                        <div className="date">Sat, Mar 1st</div>
-                    </div>
-                </a>
-            </div>
-        </div>;
-    }
-});
 
 var CoolCardSet = React.createClass({
+
+    getInitialState: function () {
+        /* TODO: This is using some mocked out data... work on this more */
+
+        return {
+            results: FeaturedEventsStore.getRaw()
+        }
+    },
+
     render: function () {
+        
+
+        var rendered_marquee_events;
+
+        var rendered_marquee_events = this.state.results.map(function (resource, i) {
+            return <EventModule.Goober key={'marquee-' + i}resource={ resource } renderer={ EventModule.MarqueeRenderer } />
+        });
 
         return <div className="row-shim">
-            <CoolCard pos="0" url="http://cdn.mplsart.com/written/temp/mplsart_fbimg_foursome.jpg" />
-            <CoolCard pos="1" url="http://cdn.mplsart.com/written/temp/mplsart_fbimg_foursome.jpg" />
-            <CoolCard pos="2" url="http://commondatastorage.googleapis.com/dim-media/artwork/sized/as_we_leave.jpg" />
-            <CoolCard pos="3" url="http://commondatastorage.googleapis.com/dim-media/artwork/sized/cone.jpg" />
+            { rendered_marquee_events }
         </div>;
         
     }
@@ -42,26 +32,24 @@ var CoolCardSet = React.createClass({
 var CoolSideCard = React.createClass({
     render: function () {
         var styles = {
-            'background' : 'url(http://placehold.it/500x500);',
-            'background-size': 'cover;',
-            'background-position': '50% 50%;'
+            'backgroundImage' : 'url(http://placehold.it/500x500);'
         };
         
         return <div className="card">
-                  <a href="#" style={ styles }>
-                    <span>derp</span>
-                  </a>
+            <a href="#" style={ styles }>
+                <span>derp</span>
+            </a>
         </div>        
     }
 });
 
 
 var NavCardsContainer = React.createClass({
+    /* Marquee Cards */
     render: function () {
         return <div className="container">
     	    <div className="row">
     		    <CoolCardSet />
-
     		    <div className="col-sm-4 sidecard">
     		        <CoolSideCard />
     		    </div>

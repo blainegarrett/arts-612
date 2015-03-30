@@ -3,6 +3,7 @@
 
 var React = require('react');
 var NiceDate = require('./../../utils/NiceDate');
+var moment = require('moment');
 
 var EventRendererMixin = {
     getInitialState: function () {
@@ -14,6 +15,94 @@ var EventRendererMixin = {
         }
     },    
 }
+
+var MarqueeRenderer = React.createClass({
+    mixins: [EventRendererMixin],
+
+    render: function () {
+
+        var resource = this.props.resource;
+
+        for (var i in resource.event_dates) {
+            if (resource.event_dates[i].type == 'timed') {
+                target_event_date = resource.event_dates[i];
+                break
+            }
+        };
+
+        // TODO: Need a default card image...
+        var image_url = 'http://cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fMTAxMDAwMQ/card_small.png';
+
+        if (resource.primary_image_resource) {
+            image_url = resource.primary_image_resource.versions.CARD_SMALL.url;
+        }
+
+        var styles = { 'backgroundImage' : 'url(' + image_url + ');'};
+
+        var event_url = '/events/' + resource.slug;
+        var rendered_date;
+
+        start = moment(Date.parse(target_event_date.start));
+        rendered_date = start.format("ddd, MMM Do");
+
+        return <div className="item jive-card col-sm-2">
+            <div className="jive-card-image">
+                <a href={ event_url } onClick={ global.routeTo } style={ styles }>
+                    <div className="jive-card-title">
+                        <div className="date">{ rendered_date }</div>
+                    </div>
+                </a>
+            </div>
+        </div>;
+    }
+
+
+});
+
+var FeaturedHeroRenderer = React.createClass({
+    mixins: [EventRendererMixin],
+    render: function() {
+
+        var resource = this.props.resource;
+
+        for (var i in resource.event_dates) {
+            if (resource.event_dates[i].type == 'timed') {
+                target_event_date = resource.event_dates[i];
+                break
+            }
+        };
+
+        // TODO: Need a default card image...
+        var image_url = 'http://cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fMTAxMDAwMQ/card_small.png';
+
+        if (resource.primary_image_resource) {
+            image_url = resource.primary_image_resource.versions.CARD_SMALL.url;
+        }
+
+        var styles = { 'backgroundImage' : 'url(' + image_url + ');'};
+
+        var event_url = '/events/' + resource.slug;
+        var rendered_date;
+
+        start = moment(Date.parse(target_event_date.start));
+        rendered_date = start.format("ddd, MMM Do")
+
+        return <div className="card col-sm-6">
+            <div className="jive-card">
+                <div className="jive-card-image">
+                    <a href={ event_url } onClick={ global.routeTo } style={ styles }>
+                        <div className="jive-card-title">
+                            <br />
+                            <div className="date">{ rendered_date }</div>
+                            <div className="title">{ resource.name }</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>;
+
+    }
+});
 
 var PodRenderer = React.createClass({
     /* Pod Renderer */
@@ -227,7 +316,6 @@ var Goober = React.createClass({
             resource: this.state.resource, 
             ed_filter: this.state.ed_filter
         };
-
         return React.createElement(this.state.renderer, props);
     }    
 });
@@ -237,5 +325,7 @@ module.exports = {
     Goober: Goober,
     AlphaEventRenderer: AlphaEventRenderer,
     DefaultRenderer: DefaultRenderer,
-    PodRenderer: PodRenderer
+    PodRenderer: PodRenderer,
+    FeaturedHeroRenderer: FeaturedHeroRenderer,
+    MarqueeRenderer: MarqueeRenderer
 };

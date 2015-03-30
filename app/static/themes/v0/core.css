@@ -249,6 +249,7 @@ body.beta .brand-title-art { color: inherit; text-transform: uppercase;}
 
 .modal-backdrop { opacity: 0.5; transition:1s; }
 #site-wrapper {
+    min-height:1000px;
     /*
     position: relative;
     overflow: hidden;
@@ -466,6 +467,8 @@ body.beta .brand-title-art { color: inherit; text-transform: uppercase;}
     
     .featured-events-wrapper .jive-card .jive-card-image a {
         height:131px;
+        background-size: cover;
+        background-position': 50% 50%;
     }
 
 .jive-card div.jive-card-title {
