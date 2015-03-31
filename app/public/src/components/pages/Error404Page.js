@@ -8,7 +8,7 @@ var Error404Page = React.createClass({
     default_meta: {
         'title': 'Page Not Found',
         'description': 'Unable to find page, please check your url',
-        'image': 'http://phase-0.arts-612.appspot.com/static/themes/v0/mplsart_fbimg.jpg'
+        'image': 'http://cdn.mplsart.com/assets/social/mplsart_fbimg3.jpg'
     },
     render: function() {
         return <div>

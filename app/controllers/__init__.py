@@ -23,7 +23,8 @@ class BaseController(webapp2.RequestHandler):
         pagemeta = {
             'title': 'Page Not Found',
             'description': 'Unable to find page, please check your url',
-            'image': 'http://phase-0.arts-612.appspot.com/static/themes/v0/mplsart_fbimg.jpg'}
+            'image': 'http://cdn.mplsart.com/assets/social/mplsart_fbimg3.jpg'
+        }
 
         template_values = {'pagemeta': pagemeta}
         self.response.set_status(404)
@@ -48,7 +49,7 @@ class AboutMainHandler(BaseController):
         pagemeta = {
             'title': 'About MPLSART.COM',
             'description': 'MPLSART.COM\'s mission is to promote visual art events in the Twin Cities.',
-            'image': 'http://phase-0.arts-612.appspot.com/static/themes/v0/mplsart_fbimg.jpg'
+            'image': 'http://cdn.mplsart.com/assets/social/mplsart_fbimg3.jpg'
         }
 
         template_values = {'pagemeta': pagemeta}
