@@ -234,9 +234,9 @@ var NewHomePage = React.createClass({
     },
 
     default_meta: {
-        'title': 'mplsart.com | Returning Spring 2015',
-        'description': 'The Very Best Events and Gallery Listings for Minneapolis and St. Paul',
-        'image': 'http://mplsart.com/static/themes/v0/mplsart_fbimg.jpg'
+        'title': 'MPLSART.COM | Make a Scene',
+        'description': 'Find the best art events in Minneapolis and St. Paul',
+        'image': 'http://cdn.mplsart.com/assets/social/mplsart_fbimg3.jpg'
     },
 
     hasMore: function () {

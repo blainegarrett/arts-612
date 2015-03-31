@@ -58,9 +58,9 @@ var HomePage = React.createClass({
     mixins: [PageMixin],
     
     default_meta: {
-        'title': 'MPLSART.COM | Returning Spring 2015',
-        'description': 'The best art events and gallery listings for Minneapolis and St. Paul',
-        'image': 'http://mplsart.com/static/themes/v0/mplsart_fbimg.jpg'
+        'title': 'MPLSART.COM | Make a Scene',
+        'description': 'Find the best art events in Minneapolis and St. Paul',
+        'image': 'http://cdn.mplsart.com/assets/social/mplsart_fbimg3.jpg'
     },
     render: function() {
         return <div id="HomePageWrapper">

@@ -18,7 +18,7 @@ var WrittenPage = React.createClass({
     mixins: [PageMixin],
     default_meta: {
         'title': 'Written',
-        'description': 'Articles and more'
+        'description': 'Writing and Crtique'
     },
 
     getInitialState: function () {

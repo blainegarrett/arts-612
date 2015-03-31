@@ -31,8 +31,9 @@ class WrittenMainHandler(BaseController):
 
         pagemeta = {
             'title': 'Written',
-            'description': 'Crtique',
-            'image': 'http://phase-0.arts-612.appspot.com/static/themes/v0/mplsart_fbimg.jpg'}
+            'description': 'Writing and Crtique',
+            'image': 'http://cdn.mplsart.com/assets/social/mplsart_fbimg3.jpg'
+        }
 
         template_values = {'pagemeta': pagemeta}
         self.render_template('./templates/index.html', template_values)
