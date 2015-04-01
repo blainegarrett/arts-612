@@ -30,7 +30,7 @@ var PageMetaStore = assign({}, EventEmitter.prototype, {
   },
 
   emitChange: function() {
-    this.emit(CHANGE_EVENT);
+    //this.emit(CHANGE_EVENT);
   },
 
   /**
@@ -49,14 +49,11 @@ var PageMetaStore = assign({}, EventEmitter.prototype, {
 });
 
 
-
-
 // Register to handle all updates
 AppDispatcher.register(function(payload) {
   var action = payload.action;
   var text;
 
-  //console.log(payload);
   _page_meta = payload; // set
   PageMetaStore.emitChange();
 

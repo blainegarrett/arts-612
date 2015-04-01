@@ -16,63 +16,49 @@ var Separator = require('./../../utils/Layout').Separator
 var EventModule = require('./../DataTypes/Event');
 var FeaturedEventsStore = require('./../../stores/FeaturedContentStore');
 
-var MarqueeCard = React.createClass({
-    getInitialState: function () {
-        return {
-            resource: this.props.resource
-        }
-    },
-    render: function() {
-
-        var resource = this.props.resource;
-
-        var img_src = 'http://cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fMTAxMDAwMQ/card_small.png';
-        if (resource.primary_image_resource && resource.primary_image_resource.versions.CARD_SMALL) {
-            img_src = resource.primary_image_resource.versions.CARD_SMALL.url;
-        }
-
-        var styles = {
-            'background' : 'url(' + img_src + ');',
-            'background-size': 'cover;',
-            'background-position': '50% 50%;'
-        };
-
-        var event_url;
-        
-        event_url = '/events/' + resource.slug;
-
-        return <div className="card col-sm-6">
-            <div className="jive-card">
-                <div className="jive-card-image">
-                    <a href={ event_url } onClick={ global.routeTo } style={ styles }>
-                        <div className="jive-card-title">
-                            <br />
-                            <div className="date">Sat, Mar 1st</div>
-                            <div className="title">{ resource.name }</div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-        
-    }
-});
 
 var FeaturedHeroPanel = React.createClass({
     /* Homepage Specific Widget for showing featured Content in top Hero space */
 
-    getInitialState: function () {
-        /* TODO: This is using some mocked out data... work on this more */
-        return {
-            results: FeaturedEventsStore.getRaw()
-        }
+    _onChange: function() {
+        /* Pick up signal for when featured content changes - typically async load */
+        this.setState({results: FeaturedEventsStore.getRaw()}); 
     },
+    componentDidMount: function() {
+        // Subscribe to changes in the featured events
+        FeaturedEventsStore.addChangeListener(this._onChange);
+    },
+
+    componentWillUnmount: function() {
+        // Un-Subscribe to changes in the featured events
+      FeaturedEventsStore.removeChangeListener(this._onChange);
+    },
+
+    getInitialState: function () {
+        /* Pull data from featured store shared with homepage */
+        return { results: FeaturedEventsStore.getRaw() }
+    },
+
     render: function () {
-
+        /* Note: This logic is basically duplicated from NavCardsContainer*/
         var rendered_marquee_events;
+        var rendered_big_card;
 
-        var rendered_marquee_events = this.state.results.map(function (resource, i) {
-            return <EventModule.Goober key={ 'hero-event-' + i}resource={ resource } renderer={ EventModule.FeaturedHeroRenderer } />
+        var total_cards = this.state.results.length;
+        
+        if (total_cards == 0) {
+            // Not loaded yet and/or error...
+            return <div className="row" id="featured-hero-area"></div>
+        }
+
+        // Pop off the big card spot since we assume *something* will always be there...
+        var event_resources = $.extend(true, [], this.state.results);
+        var big_card_spot_resource = event_resources.pop();
+        var total_cards = event_resources.length;
+        var rendered_big_card = <EventModule.Goober key="hero-event-big" resource={ big_card_spot_resource } renderer={ EventModule.FeaturedHeroRenderer } />
+
+        var rendered_marquee_events = event_resources.map(function (resource, i) {
+            return <div className="card col-sm-6"><EventModule.Goober key={ 'hero-event-' + i }resource={ resource } renderer={ EventModule.FeaturedHeroRenderer } /></div>
         });
 
         return <div className="row" id="featured-hero-area">
@@ -82,21 +68,8 @@ var FeaturedHeroPanel = React.createClass({
                </div>
             </div>
 
-            <div className="card col-sm-6">
+            <div className="featured-events-wrapper col-sm-6 large-card">{ rendered_big_card }</div>
 
-                <div className="jive-card">
-                    <div className="jive-card-image">
-                        <a href="#">
-                            <img className="img-responsive" src="http://cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fMTAxMDAwMQ/card_small.png" />
-                            <div className="jive-card-title">
-                                <br />
-                                <div className="date">Sat, Mar 1st</div>
-                                <div className="title">Revolution Now Exhibit of Awesomeness</div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
         </div>;
     }
 });
@@ -105,22 +78,9 @@ var masonryOptions = {
     transitionDuration: 0,
     gutter: 0,
     columnWidth: ".col-sm-1",
-    itemSelector: '.item',
-    
+    itemSelector: '.item',    
 };
 
-/*
-var pod_data = [
-    {'colspan': 8, pos: 1, podClass: 'FeaturedEvents', 'img_url': "https://scontent-a-sea.xx.fbcdn.net/hphotos-xpa1/v/t1.0-9/p526x296/524150_10154709828460357_7089693634088703368_n.jpg?oh=20f20c793fe7c11205992101c883f787&oe=54DE2A7F"},
-    {'colspan': 4, pos: 2, podClass: 'Image', 'img_url': "https://fbcdn-sphotos-a-a.akamaihd.net/hphotos-ak-xaf1/v/t1.0-9/10152433_10154107872845357_9126802419535311414_n.jpg?oh=1ff0dd0512ff5d89f45378c3108de5e9&oe=55166AF7&__gda__=1427244355_579859ab5a0384fddb8afc40e0313d47"},
-    {'colspan': 2, pos: 3, podClass: 'Image', 'img_url': "http://www.bockleygallery.com/exhibit_temporary/images/exhibition_home.jpg"},
-    {'colspan': 2, pos: 4, podClass: 'Image', 'img_url': "https://scontent-b-sea.xx.fbcdn.net/hphotos-xpf1/v/t1.0-9/10175070_10154107871190357_2989812135025342919_n.jpg?oh=504a757d4312cb620de88750b1ffd7dd&oe=551D1B47"},
-    {'colspan': 4, pos: 5, podClass: 'Image', 'img_url': "https://fbcdn-sphotos-f-a.akamaihd.net/hphotos-ak-xpa1/v/t1.0-9/10489643_10154347000515357_9062012805293187042_n.jpg?oh=7f479814a25b1eba333d8069f7ecb200&oe=54D1EA78&__gda__=1424270446_9bad1ba970d75506abc56160f3628a49"},
-    {'colspan': 2, pos: 6, podClass: 'Image', 'img_url': "https://scontent-b-sea.xx.fbcdn.net/hphotos-xpf1/v/t1.0-9/10175070_10154107871190357_2989812135025342919_n.jpg?oh=504a757d4312cb620de88750b1ffd7dd&oe=551D1B47"},
-    {'colspan': 2, pos: 7, podClass: 'Image', 'img_url': ""},
-    {'colspan': 4, pos: 8, podClass: 'Image', 'img_url': "https://fbcdn-sphotos-f-a.akamaihd.net/hphotos-ak-xpa1/v/t1.0-9/10489643_10154347000515357_9062012805293187042_n.jpg?oh=7f479814a25b1eba333d8069f7ecb200&oe=54D1EA78&__gda__=1424270446_9bad1ba970d75506abc56160f3628a49"}
-];
-*/
 
 var PodLoader = React.createClass({
     render: function(){

@@ -4,6 +4,7 @@
 # Each Date record will have its own search document
 import voluptuous
 import logging
+import json
 
 from rest.params import coerce_to_cursor
 from google.appengine.api import memcache
@@ -22,6 +23,7 @@ from files.rest_helpers import FileField
 from modules.events.internal import api as events_api
 from modules.events.internal.models import Event
 from modules.events.constants import CATEGORY
+from utils import ubercache
 
 from framework.controllers import MerkabahBaseController
 from cal.rest_helpers import EventDateField
@@ -146,9 +148,6 @@ class EventsUpcomingHandler(RestHandlerBase):
         params['sort'] = self.cleaned_params.get('sort', 'start')
 
         # Serialize the params for cache key
-        from utils import ubercache
-        import json
-
         key = str(hash(json.dumps(self.params)))
 
         cached_events = ubercache.cache_get(key)

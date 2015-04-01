@@ -31,7 +31,7 @@ var MarqueeRenderer = React.createClass({
         };
 
         // TODO: Need a default card image...
-        var image_url = 'http://cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fMTAxMDAwMQ/card_small.png';
+        var image_url = '';
 
         if (resource.primary_image_resource) {
             image_url = resource.primary_image_resource.versions.CARD_SMALL.url;
@@ -45,14 +45,12 @@ var MarqueeRenderer = React.createClass({
         start = moment(Date.parse(target_event_date.start));
         rendered_date = start.format("ddd, MMM Do");
 
-        return <div className="item jive-card col-sm-2">
-            <div className="jive-card-image">
-                <a href={ event_url } onClick={ global.routeTo } style={ styles }>
-                    <div className="jive-card-title">
-                        <div className="date">{ rendered_date }</div>
-                    </div>
-                </a>
-            </div>
+        return <div className="jive-card-image">
+            <a href={ event_url } onClick={ global.routeTo } style={ styles }>
+                <div className="jive-card-title">
+                    <div className="date">{ rendered_date }</div>
+                </div>
+            </a>
         </div>;
     }
 
@@ -73,7 +71,7 @@ var FeaturedHeroRenderer = React.createClass({
         };
 
         // TODO: Need a default card image...
-        var image_url = 'http://cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fMTAxMDAwMQ/card_small.png';
+        var image_url = '';
 
         if (resource.primary_image_resource) {
             image_url = resource.primary_image_resource.versions.CARD_SMALL.url;
@@ -87,17 +85,15 @@ var FeaturedHeroRenderer = React.createClass({
         start = moment(Date.parse(target_event_date.start));
         rendered_date = start.format("ddd, MMM Do")
 
-        return <div className="card col-sm-6">
-            <div className="jive-card">
-                <div className="jive-card-image">
-                    <a href={ event_url } onClick={ global.routeTo } style={ styles }>
-                        <div className="jive-card-title">
-                            <br />
-                            <div className="date">{ rendered_date }</div>
-                            <div className="title">{ resource.name }</div>
-                        </div>
-                    </a>
-                </div>
+        return <div className="jive-card">
+            <div className="jive-card-image">
+                <a href={ event_url } onClick={ global.routeTo } style={ styles }>
+                    <div className="jive-card-title">
+                        <br />
+                        <div className="date">{ rendered_date }</div>
+                        <div className="title">{ resource.name }</div>
+                    </div>
+                </a>
             </div>
         </div>;
 

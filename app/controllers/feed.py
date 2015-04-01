@@ -15,6 +15,7 @@ from rest.utils import get_key_from_resource_id
 from files.rest_helpers import FileField
 from auth.controllers import REST_RULES as USER_REST_RULES
 from modules.blog.internal import api as blog_api
+from modules.events.internal import api as events_api
 from modules.blog.internal.models import BlogPost
 from utils import get_domain
 
@@ -26,6 +27,7 @@ import logging
 from modules.events.internal.api import generic_search
 from cal.controllers import create_resource_from_entity as create_event_resource
 
+from utils import ubercache
 
 def unix_time(dt):
     """
@@ -105,9 +107,30 @@ class HomeApiHandler(RestHandlerBase):
 
         self.serve_success(return_results)
 
-        #{u'sort': 'start', u'category': [u'performance', u'reception', u'sale'], u'end': datetime.datetime(2015, 3, 8, 14, 0, tzinfo=<UTC>)}
-        #{u'sort': 'end', u'category': [u'ongoing'], u'end': datetime.datetime(2015, 3, 8, 6, 0, tzinfo=<UTC>), u'start': datetime.datetime(2015, 3, 8, 6, 0, tzinfo=<UTC>)}
-        
-        
-        
-        
+
+class FeaturedApiHandler(RestHandlerBase):
+    """
+    Temporary API Handler for featured content
+    """
+
+    def get(self):
+
+        # Serialize the params for cache key
+        key = 'super_featured'
+
+        cached_events = ubercache.cache_get(key)
+        if cached_events:
+            results = cached_events
+        else:
+            slugs = ['cool-event-2', 'cool-event-1', 'cool-event-1', 'cool-event-2', 'mplsart-com-launch-party']
+            results = []
+
+            for slug in slugs:
+                event = events_api.get_event_by_slug(slug)
+                if event:
+                    results.append(create_event_resource(event))
+
+            ubercache.cache_set(key, results, category='events')
+
+        # Finally...
+        self.serve_success(results)

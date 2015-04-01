@@ -472,6 +472,11 @@ body.beta .brand-title-art { color: inherit; text-transform: uppercase;}
         height:131px;
         background-size: cover;
         background-position': 50% 50%;
+        background-color: #ff0099;
+    }
+    
+    .large-card.featured-events-wrapper .jive-card .jive-card-image a {
+        height:292px;
     }
 
 .jive-card div.jive-card-title {
@@ -485,6 +490,7 @@ body.beta .brand-title-art { color: inherit; text-transform: uppercase;}
 	background: linear-gradient(to bottom,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.95) 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#a6000000',GradientType=0 ); /* IE6-8 */
 }
+
 
 /* Mobile Overrides */
 @media screen and (max-width: 500px) {

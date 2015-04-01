@@ -49,6 +49,7 @@ routes.extend([
     (r'/api/posts/([a-zA-Z0-9-_]+)', 'controllers.written.PostDetailApiHandler'),
 
     # Homepage Waterfall
+    (r'/api/featured', 'controllers.feed.FeaturedApiHandler'),
     (r'/api/feed', 'controllers.feed.HomeApiHandler'),
 
     # File Service Routes
