@@ -2,6 +2,7 @@
 
 
 # Each Date record will have its own search document
+import webapp2
 import voluptuous
 import logging
 
@@ -308,30 +309,73 @@ class EventsWeeksApiHandler(RestHandlerBase):
         self.serve_success(results)
 
 
-class CalendarDetailHandler(MerkabahBaseController):
+
+class BaseController(webapp2.RequestHandler):
+    """
+    Base Helper Class that renders the chrome and inputs page meta for non-JS renderers (FB, etc)
+
+    TODO: THIS IS COPIED FROM app.controllers to avoid import issue. FIX THIS SOON...
+    """
+
+    def render_template(self, template_path, template_context):
+        """
+        Render a Template to output
+        """
+
+        # Debug - Show what non-js search engines see
+        template_context['no_client'] = bool(self.request.get('no_client', False))        
+
+        # TODO: This needs to abstract the jinja env out further...
+        from main import JINJA_ENVIRONMENT as default_jinja_env
+
+        template = default_jinja_env.get_template(template_path)
+        self.response.write(template.render(template_context))
+
+    def serve_404(self, message):
+        pagemeta = {
+            'title': 'Page Not Found',
+            'description': 'Unable to find page, please check your url',
+            'image': 'http://cdn.mplsart.com/assets/social/mplsart_fbimg3.jpg'
+        }
+
+        template_values = {'pagemeta': pagemeta}
+        self.response.set_status(404)
+        self.render_template('./templates/index.html', template_values)
+
+
+
+class CalendarDetailHandler(BaseController):
     """
     Handler for Serving up the chrome for the event page
     """
 
-    def get(self, event_id):
+    def get(self, slug):
         """
-        Web handler for an event
+        Web handler for an event permalink page
         """
 
         from modules.events.internal import api as events_api
 
         # TODO: Abstract this a bit more out into a rest-like service...
-        e = events_api.get_event_key(long(event_id))
+        e = events_api.get_event_by_slug(slug)
 
         if not e:
-            self.response.write('Event Not Found with id %s' % event_id)
-            #self.serve_404('Gallery Not Found')
-            #return False
+            return self.serve_404('Event Not Found with slug %s' % slug)
+
+        # Page Meta
+        image_url = None
+        image_id = e.primary_image_resource_id
+        if image_id:
+            key = get_key_from_resource_id(image_id)
+            image = key.get()
+            if image and image.versions['CARD_SMALL']:
+                image_url = image.versions['CARD_SMALL']['url']
+
 
         pagemeta = {
-            'title': 'cooooool',
-            'description': 'this is wicked cool',
-            'image': 'http://www.soapfactory.org/img/space/gallery-one-2.jpg'
+            'title': e.name,
+            'description': e.summary,
+            'image': image_url
         }
 
         template_values = {'pagemeta': pagemeta}
