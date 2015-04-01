@@ -67,7 +67,6 @@ class EventDetailApiHandler(RestHandlerBase):
     def get_rules(self):
         return REST_RULES
 
-    @rest_login_required
     def _put(self, slug):
         # Edit an event
 
@@ -240,7 +239,6 @@ class EventsApiHandler(RestHandlerBase):
         result = create_resource_from_entity(e)
         self.serve_success(result)
 
-    @rest_login_required
     def _get(self):
         """
         Main Endpoint
