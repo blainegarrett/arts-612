@@ -1,7 +1,7 @@
 var React = require('react');
 var PageMixin = require('./PageMixin');
-//var MasonryMixin = require('react-packery-mixin');
-var MasonryMixin = require('react-masonry-mixin');
+var MasonryMixin = require('react-packery-mixin');
+//var MasonryMixin = require('react-masonry-mixin');
 var InfiniteScroll = require('react-infinite-scroll')(React);
 
 var Footer = require('../temp/Footer');
@@ -58,7 +58,14 @@ var FeaturedHeroPanel = React.createClass({
         var rendered_big_card = <EventModule.Goober key="hero-event-big" resource={ big_card_spot_resource } renderer={ EventModule.FeaturedHeroRenderer } />
 
         var rendered_marquee_events = event_resources.map(function (resource, i) {
-            return <div className="card col-sm-6"><EventModule.Goober key={ 'hero-event-' + i }resource={ resource } renderer={ EventModule.FeaturedHeroRenderer } /></div>
+            var colspan = 6
+            
+            if (total_cards < 3) {
+                colspan = 12
+            }
+            return <div className={ 'card col-sm-' + colspan }>
+                <EventModule.Goober key={ 'hero-event-' + i } resource={ resource } renderer={ EventModule.FeaturedHeroRenderer } />
+            </div>
         });
 
         return <div className="row" id="featured-hero-area">
@@ -68,7 +75,7 @@ var FeaturedHeroPanel = React.createClass({
                </div>
             </div>
 
-            <div className="featured-events-wrapper col-sm-6 large-card">{ rendered_big_card }</div>
+            <div className="featured-events-wrapper col-sm-6 card large-card">{ rendered_big_card }</div>
 
         </div>;
     }
@@ -78,13 +85,15 @@ var masonryOptions = {
     transitionDuration: 0,
     gutter: 0,
     columnWidth: ".col-sm-1",
-    itemSelector: '.item',    
+    itemSelector: '.card',    
 };
 
 
 var PodLoader = React.createClass({
     render: function(){
-        return <div className="loader">Loading ...</div>;
+        return <div className="initial-loading-spinner">
+                <i className="fa fa-spinner fa-pulse"></i>
+            </div>;
     }
 });
 
@@ -162,11 +171,13 @@ var Pod = React.createClass({
         var card_classes = 'card '
 
         if (this.state.data.featured) {
-            card_classes += 'col-sm-4 col-xs-12';
+            card_classes += 'col-sm-6 col-xs-12';
         }
         else {
             card_classes += 'col-sm-3 col-xs-6';
         }
+
+        //card_classes = 'col-sm-3 col-xs-12';
 
         var compnentclass = podComponentMap[this.state.data['resource_type']];
         if (!compnentclass) {
@@ -200,14 +211,14 @@ var NewHomePage = React.createClass({
     },
 
     hasMore: function () {
-        console.log('has more?');
-
+        //console.log('has more?');
+        return true;
         return false;
     },
 
     fetchpods: function() {
         $.ajax({
-            url: '/api/feed',
+            url: '/public/feed.json', //'/api/feed',
             dataType: 'json',
             success:  function (data) {
                 /* Have the store do this... */

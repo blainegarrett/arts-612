@@ -122,7 +122,8 @@ class FeaturedApiHandler(RestHandlerBase):
         if cached_events:
             results = cached_events
         else:
-            slugs = ['cool-event-2', 'cool-event-1', 'cool-event-1', 'cool-event-2', 'mplsart-com-launch-party']
+            #slugs = ['erin-sayer-the-tom-robbins-series', 'grand-opening-3-exhibitions-by-betsy-hunt-and-zach-moser-samual-weinberg-and-lindsay-smith', 'mplsart-com-launch-party']
+            slugs = ['cool-event-2', 'cool-event-1', 'mplsart-com-launch-party']
             results = []
 
             for slug in slugs:
