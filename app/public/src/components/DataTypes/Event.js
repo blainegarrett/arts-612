@@ -3,6 +3,7 @@
 
 var React = require('react');
 var NiceDate = require('./../../utils/NiceDate');
+var MapComponent = require('../maps/Map').MapComponent
 
 var EventRendererMixin = {
     getInitialState: function () {
@@ -13,7 +14,98 @@ var EventRendererMixin = {
             ed_filter: this.props.ed_filter
         }
     },    
-}
+};
+
+var FullEventRenderer = React.createClass({
+    /* Full Event Rendering */
+
+    mixins: [EventRendererMixin],
+
+    render_empty: function() {
+        return <div><b>loading...</b></div>
+    },
+    render: function() {
+        if (!this.state.resource_loaded) {
+            // Render something that resembles real content
+            return this.render_empty();
+        }
+
+        console.log(this.state);
+
+        var r = this.state.resource
+
+        // Image
+        var image = null;
+        var image_url = null;
+
+        if (r.primary_image_resource) {
+            image_url = r.primary_image_resource.versions.CARD_SMALL.url;
+            image = <img src={image_url} className="img-responsive" />
+        }
+
+
+        var eventDates = []
+
+        eventDates = r.event_dates.map(function (ed) {
+            return <div className="event-date">
+                <dt class="label">{ ed.label } </dt>
+                <dd><NiceDate start={ ed.start } end={ ed.end } eventdate_type={ ed.type } /></dd>
+            </div>
+        });
+
+        var rendered_venue;
+        var venue_resource = r.event_dates[0].venue;
+
+        rendered_venue = <div>
+            <b>{venue_resource.name }</b><br />
+            {venue_resource.address}
+            {venue_resource.address2}<br />
+            {venue_resource.city }
+        </div>
+        
+
+        return <div>
+            <div className="col-md-6">
+                <h1>{ r.name }</h1>
+                <p className="lead">{ r.summary }</p>
+
+                <div className="row">
+
+                    <div className="col-md-6">
+                        { rendered_venue }
+
+                        <b><a href="{ r.url }" target="_new">More details...</a></b>
+
+                    </div>
+
+                    <div className="col-md-6">
+                        <dl>{ eventDates }</dl>
+
+                    </div>
+                </div>
+                
+            </div>
+
+            <div className="col-md-6">{ image }</div>
+
+            <div className="col-md-6">
+                 <br />
+                 <br />
+                <MapComponent gallery={ venue_resource } />
+            </div>            
+            
+            <div className="col-md-6">
+                <br />
+                <br />
+                <div className="content" dangerouslySetInnerHTML={{__html: r.content}} />
+            </div>
+        
+        
+        </div>
+    }
+
+
+});
 
 var PodRenderer = React.createClass({
     /* Pod Renderer */
@@ -21,8 +113,6 @@ var PodRenderer = React.createClass({
     mixins: [EventRendererMixin],
 
     render_empty: function () {
-        
-        console.log(this.state);
         return <div className="ghost-load">
             <div className="card-content">
                 <div className="card-title"><a href="#" target="_new">&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632; &#9632;&#9632;&#9632; &#9632;&#9632;&#9632;</a></div>
@@ -233,5 +323,6 @@ module.exports = {
     Goober: Goober,
     AlphaEventRenderer: AlphaEventRenderer,
     DefaultRenderer: DefaultRenderer,
-    PodRenderer: PodRenderer
+    PodRenderer: PodRenderer,
+    FullEventRenderer: FullEventRenderer
 };
