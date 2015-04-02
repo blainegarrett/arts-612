@@ -64,6 +64,10 @@ var FullEventRenderer = React.createClass({
             {venue_resource.city }
         </div>
         
+        var rendered_more_url;
+        if (r.url) {
+            rendered_more_url = <b><a href={ r.url } target="_new" title="More event details">More details...</a></b>
+        }
 
         return <div>
             <h1>{ r.name }</h1>
@@ -74,7 +78,9 @@ var FullEventRenderer = React.createClass({
                 <div className="col-md-6">
                     { rendered_venue }
 
-                    <b><a href="{ r.url }" target="_new">More details...</a></b>
+                    { rendered_more_url }
+                    
+                    <br />
 
                 </div>
 
