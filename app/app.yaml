@@ -28,97 +28,35 @@ builtins:
 #  - url: .*
 #    script: main.app
 
+
 skip_files: |
- ^(.*/)?(
- (app\.yaml)|
- (app\.yml)|
- (index\.yaml)|
- (index\.yml)|
- (\.DS_Store)|
- (node_modules/.*)|
+   ^(.*/)?(
+   (app\.yaml)|
+   (app\.yml)|
+   (index\.yaml)|
+   (index\.yml)|
+   (#.*#)|
+   (.*~)|
+   (.*\.py[co])|
+   (.git/.*)|
+   (.gitignore)|
+   (.DS_Store)|
+   (^docs/.*)|
+   (^static/admin/js/react/src/.*)|
+   (^public/src/.*)|
 
- (#.*#)|
- (.*~)|
- (.*\.py[co])|
- (.*/RCS/.*)|
- (.*\.svn/.*)||
- (.*\.swp)||
- (^submodules.txt)|
- (^\.gitignore)|
- (^\.coverage)|
- (^\.Makefile)|
- (^\nosetests\.xml)|
- (^\requirements\.txt)|
- (^\requirements_dev\.txt)|
- (\.modules-cache/.*)|
- (\.modules-cache/.*)|
- (.*manifest/.*)||
- (^datastore/.*)|
- (^flex/.*)|
- (^antennae/.*)|
- (^data/.*)|
- (^logs/.*)|
- 
- (^external/Crypto/.*)|
- (^external/coverage/.*)|
- (^external/django/.*)|
- (^external/linkenv/.*)|
- (^external/mock\.py)|
- (^external/nose/.*)|
- (^external/nose_exclude\.py)|
- (^external/nosegae\.py)|
- (^external/termstyle\.py)|
- (^external/PIL/.*)|
- (^external/yanc/.*)|
- 
- 
- (^.externalToolBuilders/.*)|
- (^web/test/wf-test-documents/.*)|
- (^static/test/wf-test-documents/.*)|
- (^test-reports/.*)|
- (^web/bootstrap/.*)|
- (^static/bootstrap/docs/.*)|
- (.git/.*)|
- (.module-cache/.*)|
- (.*/node_modules/.*)|
-
- (.*SpecRunner.html)|
- (.*\.graffle)|
- (.*\.less)|
- (.*\.scss)|
- (.*\.md)|
- (^web/js/angular/.*)|
- (^web/js/jasmine/.*)|
- (^web/js/testscular/.*)|
- (^web/js/require/.*)|
- (^web/js/sugar/.*)|
- (^web/js/hammer/.*)|
- (^web/js/handlebars/.*)|
- (^documents/tests/.*)|
- (^apps/viewer/tests/.*)|
- (^apps/rv/tools/build/\.sass-cache/.*)|
- (^docs/.*)|
- (^cover/.*)|
- (^apps/certifier/tests/.*)|
- (^apps/home/assets/.*)|
- (^apps/home/node_modules/.*)|
- (^apps/documentservices/node_modules/.*)|
- (^apps/canary/.*\.(?!py$|pyc$))|
- (^external_libs/richapps/build/.*)|
- (^static/web-skin/?.*/img/icons)|
- (^static/web-skin/?.*/img/splash/android/.*)|
- (^static/web-skin/?.*/ico/android/.*)|
- (^static/web-skin/?.*/ico/beta/.*)|
- (^static/web-skin/?.*/ico/.*precomposed.*)|
- (\.bower-cache/.*)|
- (\.bower-registry/.*)|
- (\.grunt/.*)|
- (^python-scripts/.*)|
- (^external_libs/sky/docviewer/assets/.*)|
- (^external_libs/wf/apps/books/assets/.*)|
- (^external_libs/wf/apps/dc/dashboard/assets/.*)|
- (^external_libs/wf/apps/section16/assets/.*)|
- )$
+   (^external/PIL/.*)| 
+   (^external/nose/.*)|
+   (^external/pip/.*)|
+   (^'external/easy_install\.*)|
+   (^external/mock\.*)| 
+   (^external/nose_exclude.*)|
+   (^external/nosegae.*)|
+   (^external/rednose.*)| 
+   (^external/yanc/.*)|
+   (^external/setuptools/.*)|
+   (^external/rsa/.*)|
+   )$
 
 # index files
 handlers:
