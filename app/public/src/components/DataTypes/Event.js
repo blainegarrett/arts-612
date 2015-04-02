@@ -66,40 +66,26 @@ var FullEventRenderer = React.createClass({
         
 
         return <div>
-            <div className="col-md-6">
-                <h1>{ r.name }</h1>
-                <p className="lead">{ r.summary }</p>
+            <h1>{ r.name }</h1>
+            <p className="lead">{ r.summary }</p>
 
-                <div className="row">
+            <div className="row">
 
-                    <div className="col-md-6">
-                        { rendered_venue }
+                <div className="col-md-6">
+                    { rendered_venue }
 
-                        <b><a href="{ r.url }" target="_new">More details...</a></b>
+                    <b><a href="{ r.url }" target="_new">More details...</a></b>
 
-                    </div>
-
-                    <div className="col-md-6">
-                        <dl>{ eventDates }</dl>
-
-                    </div>
                 </div>
-                
+
+                <div className="col-md-6"><dl>{ eventDates }</dl></div>
             </div>
-
-            <div className="col-md-6">{ image }</div>
-
-            <div className="col-md-6">
-                 <br />
-                 <br />
-                <MapComponent gallery={ venue_resource } />
-            </div>            
             
-            <div className="col-md-6">
-                <br />
-                <br />
-                <div className="content" dangerouslySetInnerHTML={{__html: r.content}} />
-            </div>
+            <div>{ image }</div>
+            <br />
+            <div><MapComponent gallery={ venue_resource } /></div>
+            <br />
+            <div className="content" dangerouslySetInnerHTML={{__html: r.content}} />
         
         
         </div>

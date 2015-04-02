@@ -3,10 +3,15 @@ var React = require('react');
 var moment = require('moment');
 var ReactRouter = require('flux-react-router');
 var PageMixin = require('./PageMixin');
-var EventModule = require('./../DataTypes/Event')
-var EventGoober = EventModule.Goober
-var FullEventRenderer = EventModule.FullEventRenderer
-var Separator = require('../../utils/Layout').Separator
+var EventModule = require('./../DataTypes/Event');
+var EventGoober = EventModule.Goober;
+var FullEventRenderer = EventModule.FullEventRenderer;
+var Separator = require('../../utils/Layout').Separator;
+
+var TempUpcoming = require('../calendar/TempUpcoming');
+var TempEvents = require('../calendar/TempEvents');
+var GoodNewsBanner = require('../temp/GoodNewsBanner');
+var Footer = require('../temp/Footer');
 
 var EventPage = React.createClass({
     mixins: [PageMixin],
@@ -14,6 +19,7 @@ var EventPage = React.createClass({
         'title': 'View Event',
         'description': 'Events in Minneapolis and St. Paul'
     },
+
     getInitialState: function () {
         console.log(this.props);
 
@@ -33,7 +39,7 @@ var EventPage = React.createClass({
         var resource = this.state.results;
 
         this.default_meta =  {
-            title: resource.title,
+            title: resource.name,
             description: resource.summary
         }
 
@@ -86,15 +92,20 @@ var EventPage = React.createClass({
             rendered_content = <EventGoober resource={ null } renderer={ FullEventRenderer } />
         }
 
-        return <div>
+        return <div id="HomePageWrapper">
+            <GoodNewsBanner />
             <div className="row">
-                { rendered_content }
+                <div className="col-md-6">
+                    { rendered_content }
+                    <Separator />
+                </div>
+
+                <div className="col-md-3 panel-events"><TempUpcoming col_name="'Upcoming" /></div>
+                <div className="col-md-3 panel-events"><TempEvents col_name="'Now Showing'"  /></div>
             </div>
             
-            <Separator />
-
-            </div>
-            ;
+            <Footer />
+        </div>;
 
     }
 });

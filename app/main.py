@@ -57,8 +57,10 @@ web_routes += [
     (r'/galleries/([a-z0-9-]+)', 'venues.controllers.GalleryDetailHandler'),
     (r'/galleries', 'venues.controllers.GalleryMainHandler'),
 
-    (r'/calendar/([a-z0-9-]+)', 'cal.controllers.CalendarDetailHandler'),
-    (r'/calendar', 'cal.controllers.CalendarMainHandler'),
+    #(r'/events/([a-z0-9-]+)', 'cal.controllers.CalendarDetailHandler'),
+    RedirectRoute(r'/events/<slug:[a-z0-9-_]+>/', 'cal.controllers.CalendarDetailHandler', strict_slash=True, name="event_permalink"),
+
+    #(r'/calendar', 'cal.controllers.CalendarMainHandler'),
 
     RedirectRoute('/written/', 'controllers.written.WrittenMainHandler', strict_slash=True, name="written"),
     RedirectRoute('/written/feed/', 'controllers.written.WrittenMainRssFeedHandler', strict_slash=True, name="written_rss_main"),
