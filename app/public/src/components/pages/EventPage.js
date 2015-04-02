@@ -3,11 +3,10 @@ var React = require('react');
 var moment = require('moment');
 var ReactRouter = require('flux-react-router');
 var PageMixin = require('./PageMixin');
-var EventModule = require('./../DataTypes/Event')
-var EventGoober = EventModule.Goober
-var FullEventRenderer = EventModule.FullEventRenderer
+var EventModule = require('./../DataTypes/Event');
+var EventGoober = EventModule.Goober;
+var FullEventRenderer = EventModule.FullEventRenderer;
 var Separator = require('../../utils/Layout').Separator;
-
 
 var TempUpcoming = require('../calendar/TempUpcoming');
 var TempEvents = require('../calendar/TempEvents');
@@ -20,6 +19,7 @@ var EventPage = React.createClass({
         'title': 'View Event',
         'description': 'Events in Minneapolis and St. Paul'
     },
+
     getInitialState: function () {
         console.log(this.props);
 
