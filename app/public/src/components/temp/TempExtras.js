@@ -53,14 +53,6 @@ var TempExtras = React.createClass({
                 end_date: '2015-04-11'
             },
             {
-                resource_id: 'fundraiser1',
-                website: 'https://www.indiegogo.com/projects/midway-murals',
-                title: 'Midway Murals Project',
-                summary: 'Help revitalize Snelling Ave with 4 new murals by local artists Lori Greene, Greta McLain, Eric Mattheis & Yuya Negishi. Contributions are tax deductable.',
-                img_url: 'http://cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fNDAwMDAwMQ/card_small.png',
-                end_date: '2015-04-02'
-            },
-            {
                 resource_id: 'fundraiser3',
                 website: 'https://www.givemn.org/fundraiser/creating-language-through-arts54fdadc30e20c',
                 title: 'Creating Language Through Arts',
