@@ -1,4 +1,5 @@
-//var Promise = require('es6-promise').Promise;
+// Note: This file is probably garbage??
+var Promise = require('es6-promise').Promise;
 var merge = require('react/lib/merge');
 
 var _callbacks = [];

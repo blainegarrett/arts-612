@@ -14,7 +14,7 @@
 var assign = require('object-assign');
 
 
-//var Promise = require('es6-promise').Promise;
+var Promise = require('es6-promise').Promise;
 var merge = require('react/lib/merge');
 
 var _callbacks = [];
