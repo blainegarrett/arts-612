@@ -1,172 +1,46 @@
 var React = require('react');
+var moment = require('moment');
 var PageMixin = require('./PageMixin');
 var MasonryMixin = require('react-packery-mixin');
 //var MasonryMixin = require('react-masonry-mixin');
 var InfiniteScroll = require('react-infinite-scroll')(React);
-
+var FeaturedHeroPanel = require('../FeaturedHeroPanel');
 var Footer = require('../temp/Footer');
-var GoodNewsBanner = require('../temp/GoodNewsBanner');
-
-var TempUpcoming = require('../calendar/TempUpcoming');
-var TempEvents = require('../calendar/TempEvents');
-var TempExtras = require('../temp/TempExtras');
-var Separator = require('./../../utils/Layout').Separator
+var Separator = require('./../../utils/Layout').Separator;
 
 /* Pod types ... */
 var EventModule = require('./../DataTypes/Event');
-var FeaturedEventsStore = require('./../../stores/FeaturedContentStore');
-
-
-var FeaturedHeroPanel = React.createClass({
-    /* Homepage Specific Widget for showing featured Content in top Hero space */
-
-    _onChange: function() {
-        /* Pick up signal for when featured content changes - typically async load */
-        this.setState({results: FeaturedEventsStore.getRaw()}); 
-    },
-    componentDidMount: function() {
-        // Subscribe to changes in the featured events
-        FeaturedEventsStore.addChangeListener(this._onChange);
-    },
-
-    componentWillUnmount: function() {
-        // Un-Subscribe to changes in the featured events
-      FeaturedEventsStore.removeChangeListener(this._onChange);
-    },
-
-    getInitialState: function () {
-        /* Pull data from featured store shared with homepage */
-        return { results: FeaturedEventsStore.getRaw() }
-    },
-
-    render: function () {
-        /* Note: This logic is basically duplicated from NavCardsContainer*/
-        var rendered_marquee_events;
-        var rendered_big_card;
-
-        var total_cards = this.state.results.length;
-        
-        if (total_cards == 0) {
-            // Not loaded yet and/or error...
-            return <div className="row" id="featured-hero-area"></div>
-        }
-
-        // Pop off the big card spot since we assume *something* will always be there...
-        var event_resources = $.extend(true, [], this.state.results);
-        var big_card_spot_resource = event_resources.pop();
-        var total_cards = event_resources.length;
-        var rendered_big_card = <EventModule.Goober key="hero-event-big" resource={ big_card_spot_resource } renderer={ EventModule.FeaturedHeroRenderer } />
-
-        var rendered_marquee_events = event_resources.map(function (resource, i) {
-            var colspan = 6
-            
-            if (total_cards < 3) {
-                colspan = 12
-            }
-            return <div className={ 'card col-sm-' + colspan }>
-                <EventModule.Goober key={ 'hero-event-' + i } resource={ resource } renderer={ EventModule.FeaturedHeroRenderer } />
-            </div>
-        });
-
-        return <div className="row" id="featured-hero-area">
-            <div className="col-sm-6">
-               <div className="row featured-events-wrapper">
-                    { rendered_marquee_events }
-               </div>
-            </div>
-
-            <div className="featured-events-wrapper col-sm-6 card large-card">{ rendered_big_card }</div>
-
-        </div>;
-    }
-});
+var podComponentMap = {
+    'Event': EventModule
+};
 
 var masonryOptions = {
     transitionDuration: 0,
     gutter: 0,
     columnWidth: ".col-sm-1",
-    itemSelector: '.card',    
+    itemSelector: '.card'
 };
 
 
-var PodLoader = React.createClass({
-    render: function(){
-        return <div className="initial-loading-spinner">
-                <i className="fa fa-spinner fa-pulse"></i>
-            </div>;
-    }
-});
-
-
-var PodMixin = {
-    
-};
-
-var FeaturedEventsPod = React.createClass({
-    getInitialState: function() {
-        return {data: this.props.data, container: this.props.container }
-    },
+var WaterfallLoadingWidget = React.createClass({
     render: function () {
-        return <div>
-        <div className="card-image">
-            <a href="#"><img className="img-responsive" src="http://cdn.mplsart.com/written/temp/mplsart_fbimg_foursome.jpg" /></a>
-            <div className="card-title"><a href="#">Material Cards</a></div>
-        </div>
-
-        <div className="card-content">
-            <p>Cards for display in portfolio style material design by Google.</p>
-        </div>
-        <div className="card-image">
-            <a href="#"><img className="img-responsive" src="http://cdn.mplsart.com/written/temp/mplsart_fbimg_foursome.jpg" /></a>
-            <div className="card-title"><a href="#">Material Cards</a></div>
-        </div>
-
-        <div className="card-content">
-            <p>Cards for display in portfolio style material design by Google.</p>
-        </div>
-
-        </div>
-        
+        return <div className="initial-loading-spinner">
+            <i className="fa fa-spinner fa-pulse"></i>
+        </div>;
     }
 });
 
 
-var ImagePod = React.createClass({
-    getInitialState: function() {
-        console.log(this.props)
-
+var Pod = React.createClass({
+    getInitialState: function () {
         return {
-            resource: this.props.resource,
+            data: this.props.data,
             container: this.props.container
         }
     },
-  render: function () {
-      
-      console.log('------------------------------');
-      console.log(this.state.resource);
-
-      r = this.state.resource;
-      
-      return <div>assfsdfsdfsdfsdfsdfsdfs
-      </div>
-  }
-});
-
-
-
-var podComponentMap = {
-    'Image': ImagePod,
-    'FeaturedEvents': FeaturedEventsPod,
-    'Event': EventModule
-};
-
-var Pod = React.createClass({
-    getInitialState: function() {
-        return {data: this.props.data, container: this.props.container }
-    },
 
     render: function () {
-        
+
         var card_grid_span = 'col-sm-3';
         var card_classes = 'card '
 
@@ -174,19 +48,17 @@ var Pod = React.createClass({
             card_classes += 'col-sm-6 col-xs-12';
         }
         else {
-            card_classes += 'col-sm-3 col-xs-6';
+            card_classes += 'col-sm-3 col-xs-12';
         }
 
-        //card_classes = 'col-sm-3 col-xs-12';
-
-        var compnentclass = podComponentMap[this.state.data['resource_type']];
-        if (!compnentclass) {
+        var componentClass = podComponentMap[this.state.data['resource_type']];
+        if (!componentClass) {
             return <div className="card col-sm-2"></div>
         }
 
-        var pod_props = {'resource': this.state.data, renderer: compnentclass.PodRenderer };
+        var pod_props = {'resource': this.state.data, renderer: componentClass.PodRenderer };
 
-        var pod_content = React.createElement(compnentclass.Goober, pod_props);
+        var pod_content = React.createElement(componentClass.Goober, pod_props);
         return <div className={ card_classes }>{ pod_content }</div>
     }
 });
@@ -197,7 +69,7 @@ var NewHomePage = React.createClass({
 
     mixins: [PageMixin, MasonryMixin('masonryContainer', masonryOptions)],
 
-    getInitialState: function() {
+    getInitialState: function () {
         return {
             pod_data: [],
             hasMore: true
@@ -217,12 +89,23 @@ var NewHomePage = React.createClass({
     },
 
     fetchpods: function() {
+
+        // For now we're just loading the upcoming events...
+        // 3AM CST "today"
+
+        var date = moment().hour(9).minute(0).second(0);
+        date = moment.utc(date);
+        var target_end_date = date.format('YYYY-MM-DD[T]HH:mm:ss[Z]');
+        var resource_url =  '/api/events/upcoming?sort=start&category=performance,reception,sale&end=' + target_end_date;
+
         $.ajax({
-            url: '/public/feed.json', //'/api/feed',
+            url: resource_url,
             dataType: 'json',
             success:  function (data) {
                 /* Have the store do this... */
-                
+
+                console.log(data.results);
+
                 this.setState({
                     pod_data: this.state.pod_data.concat(data.results),
                     hasMore: false
@@ -257,7 +140,7 @@ var NewHomePage = React.createClass({
                     pageStart={0}
                     loadMore={this.loadFunc}
                     hasMore={this.state.hasMore}
-                    loader={<PodLoader />}>
+                    loader={<WaterfallLoadingWidget />}>
                         <div ref="masonryContainer">
                             { pods }
                             <div className="item col-sm-1"></div>

@@ -4,7 +4,6 @@ var moment = require('moment');
 
 var PageMixin = require('./PageMixin');
 var Footer = require('../temp/Footer');
-var GoodNewsBanner = require('../temp/GoodNewsBanner');
 var TempExtras = require('../temp/TempExtras');
 
 var TempUpcoming = require('../calendar/TempUpcoming');

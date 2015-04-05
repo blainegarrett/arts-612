@@ -10,7 +10,6 @@ var Separator = require('../../utils/Layout').Separator;
 
 var TempUpcoming = require('../calendar/TempUpcoming');
 var TempEvents = require('../calendar/TempEvents');
-var GoodNewsBanner = require('../temp/GoodNewsBanner');
 var Footer = require('../temp/Footer');
 
 var EventPage = React.createClass({
@@ -93,7 +92,6 @@ var EventPage = React.createClass({
         }
 
         return <div id="HomePageWrapper">
-            <GoodNewsBanner />
             <div className="row">
                 <div className="col-md-6">
                     { rendered_content }

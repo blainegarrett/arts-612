@@ -66,25 +66,27 @@ var FullEventRenderer = React.createClass({
         
         var rendered_more_url;
         if (r.url) {
-            rendered_more_url = <b><a href={ r.url } target="_new" title="More event details">More details...</a></b>
+            rendered_more_url = <span className="small"> <a href={ r.url } target="_new" title="More event details">more details...</a> </span>
         }
 
         return <div>
             <h1>{ r.name }</h1>
-            <p className="lead">{ r.summary }</p>
+            <p className="lead">
+                { r.summary }  
+                { rendered_more_url }
+            </p>
 
             <div className="row">
 
                 <div className="col-md-6">
                     { rendered_venue }
-
-                    { rendered_more_url }
-                    
                     <br />
 
                 </div>
 
-                <div className="col-md-6"><dl>{ eventDates }</dl></div>
+                <div className="col-md-6">
+                    <dl>{ eventDates }</dl>
+                </div>
             </div>
             
             <div>{ image }</div>

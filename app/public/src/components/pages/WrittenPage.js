@@ -13,6 +13,8 @@ var TempEvents = require('../calendar/TempEvents');
 var ArticleGoober = require('./../DataTypes/Article').ArticleGoober;
 var PodArticleRenderer = require('./../DataTypes/Article').PodArticleRenderer;
 
+var moment = require('moment');
+
 
 var WrittenPage = React.createClass({
     mixins: [PageMixin],
@@ -30,6 +32,51 @@ var WrittenPage = React.createClass({
 
     componentDidMount: function () {
         this.setMeta();
+
+        var event_dates = [
+            {start: 1.0, end: 2.5, type: 'timed'},
+            {start: 3.0, end: 3.5, type: 'timed'},
+            {start: 1.0, end: 1.5, type: 'timed'},
+
+            {start:1, end: 4, type: 'reoccurring'}
+        ];
+        var event_dates_ordered = [];
+        
+        //console.log(event_dates);
+
+
+        var target_ed;
+        var reoccurring;
+        var now = 3.75;
+        var ed;
+
+        function sort_helper(ed1, ed2) {
+            console.log([ed1.start, ed2.start])
+            return ed1.start - ed2.start
+        }
+        
+        event_dates = event_dates.sort(sort_helper);
+
+        for (i in event_dates) {
+            ed = event_dates[i];
+            if (ed.type == 'timed' && ed.start > now) {
+                target_ed = ed;
+                break;
+            }
+            if (ed.type == 'reoccurring') {
+                reoccurring = ed;
+            }
+
+            console.log(ed);
+        }
+        
+        if (!target_ed) {
+            target_ed = reoccurring;
+        }
+
+        console.log('-----------------------');
+        console.log(target_ed);
+
 
         $.ajax({
             url: this.state.resource_url,

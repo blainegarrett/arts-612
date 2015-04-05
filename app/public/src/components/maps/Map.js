@@ -24,7 +24,7 @@ var MapComponent = React.createClass({
             var marker = new google.maps.Marker({
                   position: { lat: c.state.geo.lat, lng: c.state.geo.lon},
                   map: map,
-                  title: 'Uluru (Ayers Rock)'
+                  title: c.state.gallery.name
               });
 
               var infowindow = new google.maps.InfoWindow({
