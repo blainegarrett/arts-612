@@ -51,7 +51,7 @@ var WrittenPage = React.createClass({
         var ed;
 
         function sort_helper(ed1, ed2) {
-            console.log([ed1.start, ed2.start])
+            //console.log([ed1.start, ed2.start])
             return ed1.start - ed2.start
         }
         
@@ -67,15 +67,15 @@ var WrittenPage = React.createClass({
                 reoccurring = ed;
             }
 
-            console.log(ed);
+            //console.log(ed);
         }
         
         if (!target_ed) {
             target_ed = reoccurring;
         }
 
-        console.log('-----------------------');
-        console.log(target_ed);
+        //console.log('-----------------------');
+        //console.log(target_ed);
 
 
         $.ajax({

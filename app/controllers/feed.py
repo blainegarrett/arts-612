@@ -11,6 +11,7 @@ from rest.resource import RestField, SlugField, ResourceIdField, ResourceUrlFiel
 
 from rest.resource import ResourceField
 from rest.utils import get_key_from_resource_id
+from rest.params import coerce_from_datetime
 
 from files.rest_helpers import FileField
 from auth.controllers import REST_RULES as USER_REST_RULES
@@ -143,4 +144,46 @@ class FeaturedApiHandler(RestHandlerBase):
             ubercache.cache_set(key, results, category='events')
 
         # Finally...
+        self.serve_success(results)
+
+
+class InstagramPhotos(RestHandlerBase):
+    """
+    Temp feed to serve up instagram photos
+    """
+    
+    def get(self):
+        from instagram.client import InstagramAPI
+
+        results = []
+
+        # Fetch the latest images
+        api = InstagramAPI(client_id='f8bd629294624b48a939ef9401f0a037', client_secret='3805b39a7041441392f1949ec059e954')
+        popular_media, more_url = api.tag_recent_media(count=45, tag_name='mplsart')
+
+
+        for media in popular_media:
+            # TODO: Convert this to a resource with rules
+            resource_dict = {}
+            resource_dict['id'] =  media.id
+            resource_dict['type'] =  media.type
+            #resource_dict['caption'] = media.caption
+
+            resource_dict['created_time'] = coerce_from_datetime(media.created_time)
+            resource_dict['comment_count'] = media.comment_count
+            resource_dict['like_count'] = media.like_count
+            resource_dict['link'] = media.link
+            resource_dict['filter'] = media.filter
+
+            # These need to be 'unfolded'
+            #resource_dict['likes'] = media.likes
+            #resource_dict['user'] = media.user
+            #resource_dict['tags'] = media.tags
+            #resource_dict['location'] = media.location
+
+            resource_dict['resource_type'] = 'Instagram'
+            resource_dict['standard_resolution'] = media.images['standard_resolution'].url
+
+            results.append(resource_dict)
+
         self.serve_success(results)

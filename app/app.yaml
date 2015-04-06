@@ -72,6 +72,10 @@ handlers:
   static_dir: node_modules
   secure: optional
 
+- url: /launchfeed
+  static_files: public/launchfeed.html
+  upload: public/launchfeed\.html
+
 - url: /public
   static_dir: public
   secure: optional

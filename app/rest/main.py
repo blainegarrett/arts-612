@@ -51,6 +51,7 @@ routes.extend([
     # Homepage Waterfall
     (r'/api/featured', 'controllers.feed.FeaturedApiHandler'),
     (r'/api/feed', 'controllers.feed.HomeApiHandler'),
+    (r'/api/instagram', 'controllers.feed.InstagramPhotos'),
 
     # File Service Routes
     (r'/api/files', 'files.controllers.ListResourceHandler'),

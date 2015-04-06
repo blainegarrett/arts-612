@@ -14,7 +14,9 @@ var AboutPage = require('./components/pages/AboutPage');
 
 var PageMeta = require('./components/pages/PageMeta');
 var NavCardsContainer = require('./components/NavCardsContainer').NavCardsContainer;
-var PrimaryMenu = require('./components/pages/PrimaryMenu')
+var PrimaryMenu = require('./components/pages/PrimaryMenu');
+var LaunchFeedPage = require('./components/pages/LaunchFeedPage');
+
 
 global.current_page = null; // This is set by PageMixin to the current page for use in widgets
 
@@ -36,6 +38,11 @@ ReactRouter.createRoute('/about', function () {
     React.render(<AboutPage />, document.getElementById('main_content'));    
 });
 
+
+ReactRouter.createRoute('/launchfeed', function () {
+    React.unmountComponentAtNode( document.getElementById('main_content'));
+    React.render(<LaunchFeedPage />, document.getElementById('main_content'));    
+});
 
 ReactRouter.createRoute('/events/{slug}', function (params) {
     React.unmountComponentAtNode( document.getElementById('main_content'));
