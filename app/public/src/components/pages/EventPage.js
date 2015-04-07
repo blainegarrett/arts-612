@@ -20,8 +20,6 @@ var EventPage = React.createClass({
     },
 
     getInitialState: function () {
-        console.log(this.props);
-
         return {
             resource_url: '/api/events?get_by_slug=' + this.props.slug,
             content_loaded: false,

@@ -31,8 +31,6 @@ var FullEventRenderer = React.createClass({
             return this.render_empty();
         }
 
-        console.log(this.state);
-
         var r = this.state.resource
 
         // Image
@@ -56,17 +54,19 @@ var FullEventRenderer = React.createClass({
 
         var rendered_venue;
         var venue_resource = r.event_dates[0].venue;
+        var map_url = 'https://www.google.com/maps/place/' + encodeURIComponent(venue_resource.address).replace(/%20/g, "+") + ',+' + encodeURIComponent(venue_resource.city).replace(/%20/g, "+") + ',+MN'
 
         rendered_venue = <div>
             <b>{venue_resource.name }</b><br />
             {venue_resource.address}
             {venue_resource.address2}<br />
-            {venue_resource.city }
+            {venue_resource.city } <span>( <a href={ map_url } target="_new">map</a> )</span>
         </div>
         
-        var rendered_more_url;
+        var rendered_more_url, big_link_button;
         if (r.url) {
-            rendered_more_url = <span className="small"> <a href={ r.url } target="_new" title="More event details">more details...</a> </span>
+            rendered_more_url = <span className="small"> <a href={ r.url } target="_new" title="More event details">more information</a> </span>
+            big_link_button = <a href={ r.url } target="_new" className="btn btn-primary btn-lg active btn-block"> More Information <span className="glyphicon glyphicon-new-window"></span></a>
         }
 
         return <div>
@@ -79,21 +79,26 @@ var FullEventRenderer = React.createClass({
             <div className="row">
 
                 <div className="col-md-6">
-                    { rendered_venue }
+                    <dl>{ eventDates }</dl>
                     <br />
-
                 </div>
 
                 <div className="col-md-6">
-                    <dl>{ eventDates }</dl>
+                    { rendered_venue }
+                    <br />
                 </div>
+
             </div>
             
             <div>{ image }</div>
             <br />
-            <div><MapComponent gallery={ venue_resource } /></div>
+            <div className="hidden-xs"><MapComponent gallery={ venue_resource } /></div>
             <br />
             <div className="content" dangerouslySetInnerHTML={{__html: r.content}} />
+
+            <br />
+            <div className="hidden-lg">{ big_link_button }</div>
+            <br />
         
         
         </div>

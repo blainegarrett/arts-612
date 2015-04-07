@@ -158,16 +158,6 @@ var NewHomePage = React.createClass({
         
         $('body').removeClass('beta');
         $('body').addClass('homepage');
-        
-        /*
-        $(window).on("scroll touchmove", function () {
-            var featured_card = $('#home-marquee-row');
-            var scroll_flag = featured_card.offset().top + featured_card.height() - 170;
-            console.log(scroll_flag);
-
-          $('#header_nav').toggleClass('show-nav', $(document).scrollTop() > scroll_flag);
-        });
-        */
     },
     
     componentWillUnmount: function() {

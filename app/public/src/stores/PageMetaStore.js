@@ -30,7 +30,7 @@ var PageMetaStore = assign({}, EventEmitter.prototype, {
   },
 
   emitChange: function() {
-    //this.emit(CHANGE_EVENT);
+    this.emit(CHANGE_EVENT);
   },
 
   /**

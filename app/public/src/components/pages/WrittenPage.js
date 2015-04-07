@@ -4,7 +4,6 @@ var moment = require('moment');
 
 var PageMixin = require('./PageMixin');
 var Footer = require('../temp/Footer');
-var GoodNewsBanner = require('../temp/GoodNewsBanner');
 var TempExtras = require('../temp/TempExtras');
 
 var TempUpcoming = require('../calendar/TempUpcoming');
@@ -105,8 +104,6 @@ var WrittenPage = React.createClass({
         }
 
         return <div id="HomePageWrapper">
-            <GoodNewsBanner />
-            
             <div className="row">
 
                 <div className="col-md-6" id="main-content-container">

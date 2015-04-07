@@ -3,7 +3,6 @@ var GoogleMapsLoader = require('google-maps');
 
 var MapComponent = React.createClass({
     getInitialState: function () {
-        console.log(this.props);
         return {
             gallery: this.props.gallery,
             geo: this.props.gallery.geo
