@@ -17,6 +17,16 @@ body {
 
 a { color: #0096BE; }
 
+.btn-primary {
+    background-color: #0096BE;
+}
+.btn-lg {
+    border-radius: 0px;
+}
+.btn-primary:hover {
+    background-color: #2a6496;
+}
+
 
 .ghost-load { opacity: .5; }
 
@@ -523,7 +533,7 @@ body.beta .brand-title-art { color: inherit; text-transform: uppercase;}
 /*************************************
     Header Nav Featured Cards
 **************************************/
-#header_nav_cards { background-color: #222; box-shadow: 0 27px 40px #555; }
+#header_nav_cards { background-color: #222; box-shadow: 0px 2px 20px #222; }
     #header_nav_cards .container {
         opacity: 0;
         height:0;

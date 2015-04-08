@@ -5,6 +5,7 @@ var React = require('react');
 var NiceDate = require('./../../utils/NiceDate');
 var moment = require('moment');
 var MapComponent = require('../maps/Map').MapComponent;
+var LoadingSpinner = require('./../../utils/Layout').LoadingSpinner;
 
 
 function sort_helper(ed1, ed2) {
@@ -28,9 +29,36 @@ var FullEventRenderer = React.createClass({
     mixins: [EventRendererMixin],
 
     render_empty: function() {
-        return <div><b>loading...</b></div>
+        return <div className="ghost-load">
+            <h1>&#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632; &#9632; &#9632;&#9632; &#9632;</h1>
+            <p className="lead">
+                &#9632;&#9632;&#9632;&#9632; &#9632; &#9632;&#9632;&#9632; &#9632;&#9632; &#9632;&#9632;  &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; 
+            </p>
+
+            <div className="row">
+
+                <div className="col-md-6">
+                    <dl>
+                        <div className="event-date">
+                            <dt>&#9632;&#9632;&#9632;&#9632; &#9632;&#9632; &#9632; &#9632;&#9632; &#9632; &#9632;&#9632; &#9632; </dt>
+                            <dd>&#9632;&#9632;&#9632;&#9632; &#9632;&#9632; &#9632;&#9632;&#9632; &#9632; </dd>
+                        </div>
+                    </dl>
+                    <br />
+                </div>
+
+                <div className="col-md-6">
+                    &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632;<br />
+                    &#9632;&#9632;&#9632;&#9632;&#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632;<br />
+                    &#9632;&#9632;&#9632;&#9632;&#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632; <br />
+                    <br />
+                </div>
+
+            </div>
+        </div>
     },
     render: function() {
+
         if (!this.state.resource_loaded) {
             // Render something that resembles real content
             return this.render_empty();
@@ -47,7 +75,6 @@ var FullEventRenderer = React.createClass({
             image = <img src={image_url} className="img-responsive" />
         }
         
-
         var eventDates = []
 
         eventDates = r.event_dates.map(function (ed) {
@@ -63,24 +90,24 @@ var FullEventRenderer = React.createClass({
 
         rendered_venue = <div>
             <b>{venue_resource.name }</b><br />
-            {venue_resource.address}
-            {venue_resource.address2}<br />
-            {venue_resource.city } <span>( <a href={ map_url } target="_new">map</a> )</span>
+            <span>{venue_resource.address} </span>
+            <span>{venue_resource.address2}</span><br />
+            <span>{venue_resource.city }</span> <span>( <a href={ map_url } target="_new">map</a> )</span>
         </div>
         
         var rendered_more_url, big_link_button;
         if (r.url) {
-            rendered_more_url = <span className="small"> <a href={ r.url } target="_new" title="More event details">more information</a> </span>
-            big_link_button = <a href={ r.url } target="_new" className="btn btn-primary btn-lg active btn-block"> More Information <span className="glyphicon glyphicon-new-window"></span></a>
+            rendered_more_url = <span className="small"> <br /> <a href={ r.url } target="_new" title="More information on the event's website">Event Website </a> </span>
+            big_link_button = <a href={ r.url } target="_new" className="btn btn-primary btn-lg btn-block"> More Information <span className="glyphicon glyphicon-new-window"></span></a>
         }
 
         return <div>
             <h1>{ r.name }</h1>
             <p className="lead">
-                { r.summary }  
+                { r.summary }
                 { rendered_more_url }
             </p>
-
+            
             <div className="row">
 
                 <div className="col-md-6">
@@ -104,7 +131,6 @@ var FullEventRenderer = React.createClass({
             <br />
             <div className="hidden-lg">{ big_link_button }</div>
             <br />
-        
         
         </div>
     }
@@ -293,7 +319,7 @@ var PodRenderer = React.createClass({
             <div className="card-content">
                 <div className="card-title"><a href={ post_url } onClick={global.current_page.getRoute }>{e.name }</a></div>
 
-                <div className="card-detail event-time"><span>{ target_event_date.label }</span> <NiceDate start={ target_event_date.start } end={ target_event_date.end } eventdate_type={ target_event_date.type } /></div>
+                <div className="card-detail event-time"><NiceDate start={ target_event_date.start } end={ target_event_date.end } eventdate_type={ target_event_date.type } /></div>
                 <div className="card-detail event-venue-name">{target_event_date.venue.name}</div>
                 <div className="card-detail event-address">{target_event_date.venue.address + ', ' + target_event_date.venue.city }</div>
 
