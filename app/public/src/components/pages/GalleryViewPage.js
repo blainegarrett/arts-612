@@ -25,7 +25,6 @@ var Gallery404Page = React.createClass({
 
 var MapComponent = React.createClass({
     getInitialState: function () {
-        console.log(this.props);
         return {
             gallery: this.props.gallery,
             geo: this.props.gallery.geo
@@ -78,7 +77,6 @@ var GalleryViewPage = React.createClass({
         'description': 'Galleries in Minneapolis and St. Paul'
     },
     getInitialState: function () {
-        console.log(this.props);
         return {
             gallery: null,
             slug: this.props.slug,
@@ -88,7 +86,6 @@ var GalleryViewPage = React.createClass({
         }
     },
     componentDidMount: function () {
-        console.log(this.state);
 
         $.ajax({
             url: this.state.resource_url,
@@ -96,9 +93,6 @@ var GalleryViewPage = React.createClass({
             success:  function (data) {
                 
                 /* Have the store do this... */
-                console.log('setting state');
-                console.log(data.results);
-
                 
                 /* TODO: Add image and description */
                 this.default_meta = {
@@ -134,8 +128,6 @@ var GalleryViewPage = React.createClass({
     },
 
     render: function() {
-        console.log('rendering the gallery?');
-        console.log(this.state);
 
         // If no data loaded
         if (!(this.state.gallery) == true) {

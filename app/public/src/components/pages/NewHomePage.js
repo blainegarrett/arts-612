@@ -104,8 +104,6 @@ var NewHomePage = React.createClass({
             success:  function (data) {
                 /* Have the store do this... */
 
-                console.log(data.results);
-
                 this.setState({
                     pod_data: this.state.pod_data.concat(data.results),
                     hasMore: false

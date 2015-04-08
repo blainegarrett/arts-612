@@ -6,6 +6,11 @@ var NiceDate = require('./../../utils/NiceDate');
 var moment = require('moment');
 var MapComponent = require('../maps/Map').MapComponent;
 
+
+function sort_helper(ed1, ed2) {
+    return moment(ed1.start) - moment(ed2.start)
+}
+
 var EventRendererMixin = {
     getInitialState: function () {
 
@@ -41,7 +46,7 @@ var FullEventRenderer = React.createClass({
             image_url = r.primary_image_resource.versions.CARD_SMALL.url;
             image = <img src={image_url} className="img-responsive" />
         }
-
+        
 
         var eventDates = []
 
@@ -220,13 +225,15 @@ var PodRenderer = React.createClass({
         var image = null;
         var image_url = null;
 
-        // Isolate the targeted event_date
+        // Figure out the best event Date to display
+        var sorted_event_dates = e.event_dates.sort(sort_helper);
+
         var target_event_date = null;
 
         if (this.state.ed_filter) {
-            for (var i in e.event_dates) {
-                if (e.event_dates[i].type == this.state.ed_filter) {
-                    target_event_date = e.event_dates[i];
+            for (var i in sorted_event_dates) {
+                if (sorted_event_dates[i].type == this.state.ed_filter) {
+                    target_event_date = sorted_event_dates[i];
                 }
             };
 
@@ -238,8 +245,35 @@ var PodRenderer = React.createClass({
             };
         }
         else {
-            // TODO: Figure out the best one to show...
-            target_event_date = e.event_dates[0];
+            // No targeted date so lets find the soonest one that hasn't happened yet
+
+            var reoccurring;
+            var now = moment() // Maybe make this 2AM tomorrow...
+            var ed;
+
+            for (var i in sorted_event_dates) {
+                ed = sorted_event_dates[i];
+                if (ed.type == 'timed' && moment(ed.start) > now) {
+                    target_event_date = ed;
+                    break;
+                }
+                if (ed.type == 'reoccurring') {
+                    reoccurring = ed;
+                }
+            }
+
+            if (!target_event_date) {
+                if (reoccurring) {
+                    target_event_date = reoccurring;                    
+                }
+                else {
+                    // Event is in the past and there are no reoccurring dates??
+                    target_event_date = sorted_event_dates[0]
+                }
+            }
+
+
+            //target_event_date = sorted_event_dates[0];
         }
 
 
@@ -259,7 +293,7 @@ var PodRenderer = React.createClass({
             <div className="card-content">
                 <div className="card-title"><a href={ post_url } onClick={global.current_page.getRoute }>{e.name }</a></div>
 
-                <div className="card-detail event-time"><NiceDate start={ target_event_date.start } end={ target_event_date.end } eventdate_type={ target_event_date.type } /></div>
+                <div className="card-detail event-time"><span>{ target_event_date.label }</span> <NiceDate start={ target_event_date.start } end={ target_event_date.end } eventdate_type={ target_event_date.type } /></div>
                 <div className="card-detail event-venue-name">{target_event_date.venue.name}</div>
                 <div className="card-detail event-address">{target_event_date.venue.address + ', ' + target_event_date.venue.city }</div>
 
