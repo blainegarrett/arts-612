@@ -61,8 +61,7 @@ var NavCardsContainer = React.createClass({
                 classes += default_size;
             }
 
-            return <div className={ classes }><EventModule.Goober 
-                key={'marquee-' + i}
+            return <div key={'marquee-' + i} className={ classes }><EventModule.Goober 
                 resource={ resource } 
                 renderer={ EventModule.MarqueeRenderer } /></div>
         });

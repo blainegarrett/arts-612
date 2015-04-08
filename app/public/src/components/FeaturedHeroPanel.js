@@ -48,8 +48,8 @@ var FeaturedHeroPanel = React.createClass({
             if (total_cards < 3) {
                 colspan = 12
             }
-            return <div className={ 'card col-sm-' + colspan }>
-                <EventModule.Goober key={ 'hero-event-' + i } resource={ resource } renderer={ EventModule.FeaturedHeroRenderer } />
+            return <div key={ 'hero-event-' + i } className={ 'card col-sm-' + colspan }>
+                <EventModule.Goober resource={ resource } renderer={ EventModule.FeaturedHeroRenderer } />
             </div>
         });
 
