@@ -69,9 +69,9 @@
 			max-width: auto;
 		}
 
-		.card.cycler .cycler-container { position:relative; }
-		.card.cycler .cycler-container img { position:absolute;z-index:1; }
-		.card.cycler .active img { z-index:3 }
+		.cycler-container { position:relative; }
+		.cycler-container img { position:absolute;z-index:1; }
+		.active img { z-index:3 }
 		
 	</style>
 
@@ -79,12 +79,10 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
 
-	{% if not no_client %}
-	    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-	    <script src="/static/js/jquery.mobile-events.min.js"></script>
-		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-		<script src="/public/build/main.js?33"></script>
-	{% endif %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="/static/js/jquery.mobile-events.min.js"></script>
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	<script src="/public/build/main.js?33"></script>
 
 
 	<!-- start google analytics -->
