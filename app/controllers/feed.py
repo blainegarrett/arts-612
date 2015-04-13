@@ -17,7 +17,7 @@ from auth.controllers import REST_RULES as USER_REST_RULES
 from modules.blog.internal import api as blog_api
 from modules.events.internal import api as events_api
 from modules.blog.internal.models import BlogPost
-from utils import get_domain
+from utils import get_domain, is_appspot
 
 from datetime import datetime
 from pytz import timezone
@@ -26,6 +26,7 @@ import logging
 
 from modules.events.internal.api import generic_search
 from cal.controllers import create_resource_from_entity as create_event_resource
+from controllers.written import create_resource_from_entity as create_blogpost_resource
 
 from utils import ubercache
 
@@ -118,29 +119,47 @@ class FeaturedApiHandler(RestHandlerBase):
     def get(self):
 
         # Serialize the params for cache key
-        key = 'super_featured'
+        cache_key = 'super_featured-resourcesx'
 
-        cached_events = ubercache.cache_get(key)
-        if cached_events:
+        cached_events = ubercache.cache_get(cache_key)
+        if False and cached_events:
             results = cached_events
         else:
 
-            slugs = [
-                'walker-after-hours-preview-party-international-pop',
-                'grand-opening-3-exhibitions-by-betsy-hunt-and-zach-moser-samual-weinberg-and-lindsay-smith',
-                'underlined-action',
-                'boys-or-women-mary-simpson',
-                'mplsart-com-launch-party',
-            ]
+            if is_appspot():
+                resource_ids = [
+                   'RXZlbnQeHzU2NzAyNDkzNzg2MTEyMDA',
+                   'RXZlbnQeHzUxODYxNDU4OTc5Mzg5NDQ',
+                   'RXZlbnQeHzU2NjU0OTc5MzY4MjIyNzI',
+                   'RXZlbnQeHzU2NTU2Mzg0MzY3NDExMjA',
+                   'QmxvZ1Bvc3QeHzU3NDE4MzA2NDU3NDM2MTY'
+                ]
+            else:
+                resource_ids = [
+                'RXZlbnQeHzU2Mjk0OTk1MzQyMTMxMjA',
+                'RXZlbnQeHzU2Mjk0OTk1MzQyMTMxMjA',
+                'QmxvZ1Bvc3QeHzQ3ODUwNzQ2MDQwODExNTI'
+                ]
 
             results = []
 
-            for slug in slugs:
-                event = events_api.get_event_by_slug(slug)
-                if event:
-                    results.append(create_event_resource(event))
+            for resource_id in resource_ids:
+                key = get_key_from_resource_id(resource_id)
+                entity = key.get()
 
-            ubercache.cache_set(key, results, category='events')
+                if entity:
+                    resource = None
+                    kind = entity.key.kind()
+                    if kind == 'Event':
+                        resource = create_event_resource(entity)
+                    if kind == 'BlogPost':
+                        resource = create_blogpost_resource(entity)
+
+                    if resource:    
+                        results.append(resource)
+
+
+            ubercache.cache_set(cache_key, results, category='events')
 
         # Finally...
         self.serve_success(results)

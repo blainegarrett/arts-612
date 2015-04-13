@@ -157,6 +157,82 @@ var ListArticleRenderer = React.createClass({
     }
 });
 
+
+var MarqueeRenderer = React.createClass({
+    mixins: [ArticleRendererMixin],
+
+    render: function () {
+
+        var resource = this.props.resource;
+
+        // TODO: Need a default card image...
+        var image_url = '';
+
+        if (resource.primary_image_resource) {
+            image_url = resource.primary_image_resource.versions.CARD_SMALL.url;
+        }
+
+        var styles = { 'backgroundImage' : 'url(' + image_url + ');'};
+
+        // TODO: Case out if published or not...
+        var m = moment(resource.modified_date);
+        var date_slug = m.format('YYYY/MM/');
+
+        var post_url = '/written/' + date_slug + resource.slug;
+
+        start = moment(Date.parse(target_event_date.start));
+        rendered_date = start.format("ddd, MMM Do");
+
+        return <div className="jive-card-image">
+            <a href={ post_url } onClick={ global.routeTo } style={ styles }>
+                <div className="jive-card-title">
+                    <div className="date">{ resource.title }</div>
+                </div>
+            </a>
+        </div>;
+    }
+
+
+});
+
+var FeaturedHeroRenderer = React.createClass({
+    mixins: [ArticleRendererMixin],
+    render: function() {
+
+        var resource = this.props.resource;
+
+        // TODO: Need a default card image...
+        var image_url = '';
+
+        if (resource.primary_image_resource) {
+            image_url = resource.primary_image_resource.versions.CARD_SMALL.url;
+        }
+
+        var styles = { 'backgroundImage' : 'url(' + image_url + ');'};
+
+        // TODO: Case out if published or not...
+        var m = moment(resource.modified_date);
+        var date_slug = m.format('YYYY/MM/');
+
+        var post_url = '/written/' + date_slug + resource.slug;
+
+        return <div className="jive-card">
+            <div className="jive-card-image">
+                <a href={ post_url } onClick={ global.routeTo } style={ styles }>
+                    <div className="jive-card-title">
+                        <br />
+                        <div className="date">New Post</div>
+                        <div className="title">{ resource.title }</div>
+                    </div>
+                </a>
+            </div>
+        </div>;
+
+    }
+});
+
+
+
 var ArticleGoober = React.createClass({
     /* Goober for Article - Handles listeners, etc */
 
@@ -189,8 +265,11 @@ var ArticleGoober = React.createClass({
 
 
 module.exports = {
+    MarqueeRenderer: MarqueeRenderer,
+    Goober: ArticleGoober,
     ArticleGoober: ArticleGoober,
     DefaultArticleRenderer: DefaultArticleRenderer,
     ListArticleRenderer: ListArticleRenderer,
-    PodArticleRenderer: PodArticleRenderer
+    PodArticleRenderer: PodArticleRenderer,
+    FeaturedHeroRenderer: FeaturedHeroRenderer
 };

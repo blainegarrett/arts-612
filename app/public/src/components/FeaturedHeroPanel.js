@@ -1,6 +1,14 @@
 var React = require('react');
 var FeaturedEventsStore = require('./../stores/FeaturedContentStore');
 var EventModule = require('./DataTypes/Event');
+var WrittenModule = require('./DataTypes/Article');
+
+
+var podComponentMap = {
+    'Event': EventModule,
+    'BlogPost': WrittenModule
+};
+
 
 var FeaturedHeroPanel = React.createClass({
     /* Homepage Specific Widget for showing featured Content in top Hero space */
@@ -40,8 +48,20 @@ var FeaturedHeroPanel = React.createClass({
         var event_resources = $.extend(true, [], this.state.results);
         var big_card_spot_resource = event_resources.pop();
         var total_cards = event_resources.length;
-        var rendered_big_card = <EventModule.Goober key="hero-event-big" resource={ big_card_spot_resource } renderer={ EventModule.FeaturedHeroRenderer } />
 
+
+        // Big Featured Card
+        var componentClass = podComponentMap[big_card_spot_resource.resource_type];
+
+        if (!componentClass) {
+            return <div className="card col-sm-2"></div>
+        }
+
+        var pod_props = {key: 'hero-event-big',  'resource': big_card_spot_resource, renderer: componentClass.FeaturedHeroRenderer };
+        var rendered_big_card = React.createElement(componentClass.Goober, pod_props);
+
+
+        // The other cards
         var rendered_marquee_events = event_resources.map(function (resource, i) {
             var colspan = 6
             

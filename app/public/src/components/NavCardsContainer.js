@@ -1,6 +1,12 @@
 var React = require('react');
 var EventModule = require('./DataTypes/Event');
+var WrittenModule = require('./DataTypes/Article');
 var FeaturedEventsStore = require('./../stores/FeaturedContentStore');
+
+var podComponentMap = {
+    'Event': EventModule,
+    'BlogPost': WrittenModule
+};
 
 
 var NavCardsContainer = React.createClass({
@@ -46,10 +52,16 @@ var NavCardsContainer = React.createClass({
         if (total_cards == 2) { default_size = 4; }
         if (total_cards == 1) { default_size = 8; }
 
-        rendered_bigcard_card = <EventModule.Goober 
-            key={'marquee-big'}
-            resource={ big_card_spot_resource } 
-            renderer={ EventModule.MarqueeRenderer } />
+
+        // Big Featured Card
+        var componentClass = podComponentMap[big_card_spot_resource.resource_type];
+
+        if (!componentClass) {
+            return <div className="card col-sm-2"></div>
+        }
+
+        var pod_props = {key: 'marquee-big', 'resource': big_card_spot_resource, renderer: componentClass.MarqueeRenderer };
+        var rendered_bigcard_card = React.createElement(componentClass.Goober, pod_props);
 
         rendered_marquee_events = event_resources.map(function (resource, i) {
             var classes = 'item jive-card col-sm-';

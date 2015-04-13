@@ -152,6 +152,15 @@ REST_RULES = [
 ]
 
 
+def create_resource_from_entity(e, verbose=False):
+    """
+    Create a Rest Resource from a datastore entity
+    TODO: We don't care about verbosity just yet
+    """
+
+    return Resource(e, REST_RULES).to_dict()
+
+
 class PostsApiHandler(RestHandlerBase):
     """
     Blog Posts Collection REST Endpoint
