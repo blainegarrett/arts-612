@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Written Articles on mplsart.com</title>
+		<description>Articles from mplsart.com</description>
+		<link>http://mplsart.com</link>
+		<lastBuildDate>{[{ posts[0].modified_date.strftime('%a, %d %b %Y %H:%M:%S %z') }]}</lastBuildDate>
+		<pubDate>{[{ posts[0].modified_date.strftime('%a, %d %b %Y %H:%M:%S %z') }]}</pubDate>
+        <language>en</language>
+		<ttl>1800</ttl>
+        <image>
+            <url>http://mplsart.com/favicon.ico</url>
+            <title>mplsart.com</title>
+            <link>mplsart.com</link>
+          </image>
+
+		{% for post in posts %}
+			<item>
+				<title>{[{ post.title }]}</title>
+				<link>{[{ post.absolute_permalink }]}</link>
+				<guid isPermaLink="true">{[{ post.absolute_permalink }]}</guid>
+				<pubDate>{[{ post.modified_date.strftime('%a, %d %b %Y %H:%M:%S %z') }]}</pubDate>
+				<description><![CDATA[ {[{ post.summary }]} ]]></description>
+				<summary>{[{ post.summary }]}</summary>
+				<updated>{[{ post.modified_date.strftime('%a, %d %b %Y %H:%M:%S %z') }]}</updated>
+				<published>{[{ post.modified_date.strftime('%a, %d %b %Y %H:%M:%S %z') }]}</published>
+
+				<author>
+					<name>{[{ post.author.firstname }]} {[{ post.author.lastname }]}</name>
+					<email>calendar@mplsart.com</email>
+					<uri>{[{ post.author.website }]}</uri>
+				</author>
+
+				{% if post.primary_image and post.primary_image.versions.CARD_SMALL %}
+		            <enclosure url="{[{ post.primary_image.versions.CARD_SMALL.url }]}" length="1010" type="image/png"/>
+		            <link rel="enclosure" href="{[{ post.primary_image.versions.CARD_SMALL.url }]}" length="1010" type="image/png"/>
+		            <!-- <media:content url="{[{ post.primary_image.versions.CARD_SMALL.url }]}" length="1010" type="image/png" height="{[{ post.primary_image.versions.CARD_SMALL.height }]}" width="{[{ post.primary_image.versions.CARD_SMALL.width }]}"/> -->
+				{% endif %}
+			</item>
+		{% endfor %}
+
+	</channel>
+</rss>

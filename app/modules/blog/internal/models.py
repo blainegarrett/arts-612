@@ -1,5 +1,5 @@
 from google.appengine.ext import ndb
-
+from utils import get_domain
 
 class BlogPost(ndb.Model):
     """
@@ -18,3 +18,11 @@ class BlogPost(ndb.Model):
     created_date = ndb.DateTimeProperty(auto_now_add=True)
     modified_date = ndb.DateTimeProperty(auto_now=True)
     published_date = ndb.DateTimeProperty()
+    
+    @property
+    def permalink(self):
+        return '/written/%s/%s/%s/' % (self.modified_date.year, self.modified_date.month, self.slug)
+
+    @property
+    def absolute_permalink(self):
+        return 'http://%s%s' % (get_domain(), self.permalink)

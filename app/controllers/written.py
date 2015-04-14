@@ -74,6 +74,11 @@ class WrittenArticleHandler(BaseController):
         self.render_template('./templates/index.html', template_values)
 
 
+
+    
+    
+        
+
 class WrittenMainRssFeedHandler(BaseController):
     """
     Temporary Feed Handler
@@ -84,6 +89,30 @@ class WrittenMainRssFeedHandler(BaseController):
     """
 
     def get(self):
+        """
+        Generate an RSS feed with the lastest blog posts
+        """
+
+        ctx = {'posts': []}
+
+        entities = blog_api.get_posts()
+
+        blog_api.bulk_dereference_posts(entities)
+        
+        
+        
+        #TODO: Bulk dereference author and image
+        #raise Exception(entities[0].primary_image) #author_resource_id, primary_image_resource_id
+
+
+        # Create A set of results based upon this result set - iterator??
+        ctx['posts'] = entities
+
+        self.response.headers['Content-Type'] = 'application/xml'
+        self.render_template('./templates/newsfeeds/rss.html', ctx)
+        return
+
+
         output = """<?xml version="1.0" encoding="UTF-8" ?>
         <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
         	<channel>

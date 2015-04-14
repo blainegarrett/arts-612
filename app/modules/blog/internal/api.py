@@ -1,4 +1,43 @@
+from google.appengine.ext import ndb
+
+from rest.utils import get_key_from_resource_id, get_resource_id_from_key
 from modules.blog.internal.models import BlogPost
+
+
+
+def bulk_dereference_posts(posts):
+    """
+    Bulk dereference author and image
+    """
+
+    author_map = {}
+
+    for post in posts:
+        setattr(post, 'author', None)
+        setattr(post, 'primary_image', None)
+
+        if post.author_resource_id:
+           author_map[get_key_from_resource_id(post.author_resource_id)] = None
+
+        if post.primary_image_resource_id:
+            author_map[get_key_from_resource_id(post.primary_image_resource_id)] = None
+
+    entities = ndb.get_multi(author_map.keys())
+
+    for entity in entities:
+        author_map[get_resource_id_from_key(entity.key)] = entity
+
+    # Step 3: Iterate over posts
+    for post in posts:
+        if post.author_resource_id:
+           e = author_map.get(post.author_resource_id, None)
+           setattr(post, 'author', e)
+
+        if post.primary_image_resource_id:
+            e = author_map.get(post.primary_image_resource_id, None)
+            setattr(post, 'primary_image', e)
+
+    return posts
 
 
 def get_posts():
