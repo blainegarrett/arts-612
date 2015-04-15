@@ -74,11 +74,6 @@ class WrittenArticleHandler(BaseController):
         self.render_template('./templates/index.html', template_values)
 
 
-
-    
-    
-        
-
 class WrittenMainRssFeedHandler(BaseController):
     """
     Temporary Feed Handler
@@ -91,6 +86,7 @@ class WrittenMainRssFeedHandler(BaseController):
     def get(self):
         """
         Generate an RSS feed with the lastest blog posts
+        TODO: Caching
         """
 
         ctx = {'posts': []}
@@ -98,9 +94,7 @@ class WrittenMainRssFeedHandler(BaseController):
         entities = blog_api.get_posts()
 
         blog_api.bulk_dereference_posts(entities)
-        
-        
-        
+
         #TODO: Bulk dereference author and image
         #raise Exception(entities[0].primary_image) #author_resource_id, primary_image_resource_id
 
@@ -113,48 +107,7 @@ class WrittenMainRssFeedHandler(BaseController):
         return
 
 
-        output = """<?xml version="1.0" encoding="UTF-8" ?>
-        <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-        	<channel>
-        		<title>Written Articles on mplsart.com</title>
-        		<description>Articles from mplsart.com</description>
-        		<link>http://mplsart.com</link>
-        		<lastBuildDate>Sun, 11 Dec 2015 15:00:00 CST</lastBuildDate>
-        		<pubDate>Sun, 11 Dec 2015 15:00:00 CST</pubDate>
-                <language>en</language>
-        		<ttl>1800</ttl>
-                <image>
-                    <url>http://mplsart.com/favicon.ico</url>
-                    <title>mplsart.com</title>
-                    <link>mplsart.com</link>
-                  </image>
-
-        		<item>
-        			<title>A message from mplsart.com founder, Emma Berg</title>
-        			<link>http://mplsart.com/written/2015/01/new_beginnings_for_mplsart/</link>
-        			<guid isPermaLink="false">http://mplsart.com/written/2015/01/new_beginnings_for_mplsart/</guid>
-        			<pubDate>Mon, 05 Dec 2015 15:00:00 CST</pubDate>
-        			<description><![CDATA[ It is with great pleasure that we introduce you to the new owners of mplsart.com ]]></description>
-        			<summary>It is with great pleasure that we introduce you to the new owners of mplsart.com</summary>
-        			<updated>Mon, 05 Dec 2015 15:00:00 CST</updated>
-        			<published>Mon, 05 Dec 2015 15:00:00 CST</published>
-        			<author>
-        				<name>Emma Berg</name>
-        				<email>calendar@mplsart.com</email>
-        				<uri>http://www.emmaberg.com/</uri>
-        			</author>
-                    <enclosure url="http://cdn.mplsart.com/written/temp/hmpg_emmakris.png" length="1010" type="image/png"/>
-                    <link rel="enclosure" href="http://cdn.mplsart.com/written/temp/hmpg_emmakris.png" length="1010" type="image/png"/>
-                    <!-- <media:content url="http://cdn.mplsart.com/written/temp/hmpg_emmakris.png" length="1010" type="image/jpeg" height="150" width="150"/> -->
-        		</item>
-        	</channel>
-        </rss>"""
-
-        self.response.headers['Content-Type'] = 'application/xml'
-        self.response.write(output)
-
 # Rest Controllers
-
 resource_url = 'http://' + get_domain() + '/api/posts/%s'
 
 REST_RULES = [
@@ -193,6 +146,7 @@ def create_resource_from_entity(e, verbose=False):
 class PostsApiHandler(RestHandlerBase):
     """
     Blog Posts Collection REST Endpoint
+    TODO: Add Caching...
     """
 
     def get_param_schema(self):
@@ -224,7 +178,9 @@ class PostsApiHandler(RestHandlerBase):
             self.serve_success(Resource(post, REST_RULES).to_dict())
             return
 
+        # Get a list of all posts
         entities = blog_api.get_posts()
+        blog_api.bulk_dereference_posts(entities)
 
         # Create A set of results based upon this result set - iterator??
         results = []

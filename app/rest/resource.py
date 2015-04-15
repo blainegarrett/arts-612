@@ -275,6 +275,7 @@ class ResourceField(RestField):
 
     def from_resource(self, obj, field):
         """
+        Resolve a REST resource from an entity
         """
 
         resource_id = super(ResourceField, self).from_resource(obj, self.resource_id_prop)
@@ -282,8 +283,17 @@ class ResourceField(RestField):
         if not resource_id:
             return None
 
-        resource_key = get_key_from_resource_id(resource_id)
-        return Resource(resource_key.get(), self.resource_rules).to_dict()
+        # Resolve Entity
+        dereferenced_prop = self.key.replace('_resource', '')
+        resource_entity = None
+        if hasattr(obj, dereferenced_prop):
+            resource_entity = getattr(obj, dereferenced_prop, None)
+        else:
+            logging.error('Reference prop `%s` was not bulk dereferenced.' % dereferenced_prop)
+            resource_key = get_key_from_resource_id(resource_id)
+            resource_entity = resource_key.get()
+            
+        return Resource(resource_entity, self.resource_rules).to_dict()
 
 
 class UploadField(RestField):

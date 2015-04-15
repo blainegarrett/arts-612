@@ -158,7 +158,6 @@ class FeaturedApiHandler(RestHandlerBase):
                     if resource:    
                         results.append(resource)
 
-
             ubercache.cache_set(cache_key, results, category='events')
 
         # Finally...
