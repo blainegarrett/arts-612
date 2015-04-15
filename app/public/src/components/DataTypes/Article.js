@@ -137,6 +137,10 @@ var ListArticleRenderer = React.createClass({
             return this.render_empty();
         }
 
+        console.log(article);
+        
+        
+
         var article = this.state.resource;
         published_date = moment(Date.parse(article.created_date)).format('MMMM, Do YYYY');
         
@@ -179,9 +183,6 @@ var MarqueeRenderer = React.createClass({
         var date_slug = m.format('YYYY/MM/');
 
         var post_url = '/written/' + date_slug + resource.slug;
-
-        start = moment(Date.parse(target_event_date.start));
-        rendered_date = start.format("ddd, MMM Do");
 
         return <div className="jive-card-image">
             <a href={ post_url } onClick={ global.routeTo } style={ styles }>

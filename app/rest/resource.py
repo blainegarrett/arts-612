@@ -284,12 +284,11 @@ class ResourceField(RestField):
             return None
 
         # Resolve Entity
-        dereferenced_prop = self.key.replace('_resource', '')
         resource_entity = None
-        if hasattr(obj, dereferenced_prop):
-            resource_entity = getattr(obj, dereferenced_prop, None)
+        if hasattr(obj, self.key):
+            resource_entity = getattr(obj, self.key, None)
         else:
-            logging.error('Reference prop `%s` was not bulk dereferenced.' % dereferenced_prop)
+            logging.error('Reference prop `%s` was not bulk dereferenced.' % self.key)
             resource_key = get_key_from_resource_id(resource_id)
             resource_entity = resource_key.get()
             

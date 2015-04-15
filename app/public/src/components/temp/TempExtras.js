@@ -45,14 +45,6 @@ var TempExtras = React.createClass({
         
         var fundraisers = [
             {
-                resource_id: 'fundraiser2',
-                website: 'https://www.kickstarter.com/projects/1673676643/wise-blood',
-                title: 'Art Basel Kickstarter for Wiseblood',
-                summary: 'Help bring to life a thrilling mash-up of art forms in an operatic adaptation of Flannery O\'Connor\'s WISEBLOOD : co-presented by The Soap Factory and Walker Art Center.',
-                img_url: 'http://cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fMTAxMDAwMQ/card_small.png',
-                end_date: '2015-04-11'
-            },
-            {
                 resource_id: 'fundraiser3',
                 website: 'https://www.givemn.org/fundraiser/creating-language-through-arts54fdadc30e20c',
                 title: 'Creating Language Through Arts',
@@ -63,7 +55,7 @@ var TempExtras = React.createClass({
         
         
         var fundraisers_rendered = fundraisers.map(function(r) {
-            return <div key={ r.resource_id } className="card col-xs-6"><FundraiserCard resource={r} /></div>;            
+            return <div key={ r.resource_id } className="card col-xs-12"><FundraiserCard resource={r} /></div>;            
         })
         
         

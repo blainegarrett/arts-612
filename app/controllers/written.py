@@ -4,6 +4,7 @@ Controllers for the Written section
 import voluptuous
 
 from controllers import BaseController
+from utils import get_domain
 
 from rest.controllers import RestHandlerBase
 from rest.resource import Resource
@@ -12,11 +13,11 @@ from rest.resource import RestField, SlugField, ResourceIdField, ResourceUrlFiel
 from rest.resource import ResourceField
 from rest.utils import get_key_from_resource_id
 
-from files.rest_helpers import FileField
+from files.rest_helpers import REST_RESOURCE_RULES as FILE_REST_RULES
 from auth.controllers import REST_RULES as USER_REST_RULES
 from modules.blog.internal import api as blog_api
 from modules.blog.internal.models import BlogPost
-from utils import get_domain
+from modules.blog.constants import AUTHOR_PROP, PRIMARY_IMAGE_PROP
 
 
 class WrittenMainHandler(BaseController):
@@ -127,10 +128,10 @@ REST_RULES = [
     RestField(BlogPost.author_resource_id, required=False),
 
 
-    ResourceField('author_resource', required=False, output_only=True,
+    ResourceField(AUTHOR_PROP, required=False, output_only=True,
         resource_id_prop='author_resource_id', resource_rules=USER_REST_RULES),
-    FileField('primary_image_resource', required=False, output_only=True,
-        resource_id_prop='primary_image_resource_id'),
+    ResourceField(PRIMARY_IMAGE_PROP, required=False, output_only=True,
+        resource_id_prop='primary_image_resource_id', resource_rules=FILE_REST_RULES),
 ]
 
 
