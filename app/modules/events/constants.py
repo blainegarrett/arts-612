@@ -25,3 +25,6 @@ class EVENT_DATE_TYPE(object):
     """
     TIMED = 'timed'
     REOCURRING = 'reoccurring'
+
+
+PRIMARY_IMAGE_PROP = 'primary_image_resource'

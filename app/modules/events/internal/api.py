@@ -1,10 +1,10 @@
 # Internal API Methods for Events
 
+from pytz import timezone
 import datetime
 from google.appengine.ext import ndb
-from google.appengine.api import memcache 
 
-from pytz import timezone
+from rest.utils import get_key_from_resource_id, get_resource_id_from_key
 
 from utils import ubercache
 
@@ -14,7 +14,41 @@ from modules.events.internal import search as event_search
 from modules.events.constants import EVENT_KIND
 from modules.events.constants import QUERY_LIMIT
 from modules.events.constants import CATEGORY
+from modules.events.constants import PRIMARY_IMAGE_PROP
+
 from modules.venues.internal import api as venue_api
+
+
+def bulk_dereference_events(posts):
+    """
+    Bulk dereference image. This is to increase performance for rss and rest collections
+    """
+
+    # Step 1: Collect all the resources we need and prep the map
+    entity_map = {}
+    for post in posts:
+
+        # Default the dereferenced prop placeholders
+        setattr(post, PRIMARY_IMAGE_PROP, None)
+
+        # Collect properties we want to collect
+        if post.primary_image_resource_id:
+            entity_map[get_key_from_resource_id(post.primary_image_resource_id)] = None
+
+    # Fetch all of the entities we want to deref
+    entities = ndb.get_multi(entity_map.keys())
+
+    # Repopulate the map NOTE: This adds keys to map using resource_id rather than key
+    for entity in entities:
+        entity_map[get_resource_id_from_key(entity.key)] = entity
+
+    # Step 3: Iterate over posts and link up the dereferenced props
+    for post in posts:
+        if post.primary_image_resource_id:
+            e = entity_map.get(post.primary_image_resource_id, None)
+            setattr(post, PRIMARY_IMAGE_PROP, e)
+
+    return posts
 
 
 def get_event_key_by_keystr(keystr):

@@ -15,15 +15,15 @@ from auth.decorators import rest_login_required
 from rest.controllers import RestHandlerBase
 
 from rest.resource import Resource
-from rest.resource import RestField, SlugField, ResourceIdField, ResourceUrlField, BooleanField
+from rest.resource import RestField, SlugField, ResourceIdField, ResourceUrlField, BooleanField, ResourceField
 from rest.params import coerce_to_datetime
 from rest.utils import get_key_from_resource_id
 
-from files.rest_helpers import FileField
+from files.rest_helpers import REST_RESOURCE_RULES as FILE_REST_RULES
 
 from modules.events.internal import api as events_api
 from modules.events.internal.models import Event
-from modules.events.constants import CATEGORY
+from modules.events.constants import CATEGORY, PRIMARY_IMAGE_PROP
 from utils import ubercache
 
 from framework.controllers import MerkabahBaseController
@@ -48,7 +48,9 @@ REST_RULES = [
     BooleanField(Event.featured),
 
     RestField(Event.primary_image_resource_id, required=False),
-    FileField('primary_image_resource', required=False, output_only=True, resource_id_prop='primary_image_resource_id')
+    ResourceField(PRIMARY_IMAGE_PROP, required=False, output_only=True,
+        resource_id_prop='primary_image_resource_id', resource_rules=FILE_REST_RULES),
+
 ]
 
 
@@ -159,6 +161,8 @@ class EventsUpcomingHandler(RestHandlerBase):
 
             results = []
             events = events_api.generic_search(**params)
+            
+            events_api.bulk_dereference_events(events)
 
             for event in events:
                 results.append(create_resource_from_entity(event))
@@ -180,7 +184,7 @@ class EventsNowShowingHandler(RestHandlerBase):
 
         results = []
         cached_events = memcache.get(NOWSHOWING_CACHE_KEY)
-        if False and cached_events is not None:
+        if cached_events is not None:
             results = cached_events
         else:
             logging.warning('Nowshowing Events were not cached. Querying for new list.')
@@ -264,7 +268,7 @@ class EventsApiHandler(RestHandlerBase):
 
         cash_key = 'testing_events_cache'
         cached_events = memcache.get(cash_key)
-        if False and cached_events is not None:
+        if cached_events is not None:
             results = cached_events
         else:
             events, cursor, more = events_api.get_events(cursor=self.cleaned_params.get('cursor', None), limit=self.cleaned_params.get('limit', None))
