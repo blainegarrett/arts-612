@@ -45,11 +45,15 @@ def bulk_dereference_posts(posts):
     return posts
 
 
-def get_posts():
+def get_posts(limit=25, cursor=None):
     """
     Primary wrapper for fetching events
     """
-    return BlogPost.query().order(-BlogPost.created_date).fetch(1000)
+    q = BlogPost.query().order(-BlogPost.created_date)
+
+    entites, cursor, more = q.fetch_page(limit, start_cursor=cursor)
+    return entites, cursor, more
+
 
 
 def get_post_by_slug(slug):

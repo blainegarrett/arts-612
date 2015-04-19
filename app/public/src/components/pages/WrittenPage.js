@@ -25,8 +25,8 @@ var WrittenPage = React.createClass({
     getInitialState: function () {
         return {
             articles: [],
-            resource_url: '/api/posts'
-        }
+            resource_url: '/api/posts?limit=25'
+        };
     },
 
     componentDidMount: function () {
@@ -47,6 +47,25 @@ var WrittenPage = React.createClass({
         });
     },
 
+    load_more: function (e) {
+
+        $.ajax({
+            url: this.state.resource_url + '&cursor=' + this.state.articles.cursor,
+            dataType: 'json',
+            success:  function (data) {
+                /* Have the store do this... */
+                this.setState({articles:data});
+
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error(this.state.resource_url, status, err.toString());
+            }.bind(this)
+            
+        });
+
+
+        return false;  
+    },
     render: function () {
         
         var articles = []
@@ -58,6 +77,14 @@ var WrittenPage = React.createClass({
             });
         }
 
+        // if there is more, show 
+        var more_button;
+        if (this.state.articles.more) {
+            more_button = <a className="btn" onClick={ this.load_more } href="#">load more...</a>
+        }
+
+        more_button = null; //Not prod ready yet
+
         return <div id="HomePageWrapper">
             <div className="row">
 
@@ -68,6 +95,7 @@ var WrittenPage = React.createClass({
                     <div className="alert alert-warning">Our Written section is returing soon including the archives from the old site. Stay tuned and enjoy these articles.</div>
                     
                     { articles }
+
 
                     <div className="row">
                         <TempExtras />

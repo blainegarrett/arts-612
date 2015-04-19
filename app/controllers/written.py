@@ -3,6 +3,7 @@ Controllers for the Written section
 """
 import voluptuous
 
+from rest.params import coerce_to_cursor
 from controllers import BaseController
 from utils import get_domain
 
@@ -79,8 +80,6 @@ class WrittenMainRssFeedHandler(BaseController):
     """
     Temporary Feed Handler
     TODO: Atom feeds
-    TODO: Dynamically Generate this data
-    TODO: Add images for posts?
     TODO: Better feed image
     """
 
@@ -92,8 +91,7 @@ class WrittenMainRssFeedHandler(BaseController):
 
         ctx = {'posts': []}
 
-        entities = blog_api.get_posts()
-
+        entities, cursor, more = blog_api.get_posts(limit=25)
         blog_api.bulk_dereference_posts(entities)
 
         #TODO: Bulk dereference author and image
@@ -152,8 +150,8 @@ class PostsApiHandler(RestHandlerBase):
 
     def get_param_schema(self):
         return {
-            #'limit' : voluptuous.Coerce(int),
-            #'cursor': coerce_to_cursor,
+            'limit' : voluptuous.Coerce(int),
+            'cursor': coerce_to_cursor,
             #'sort': voluptuous.Coerce(str),
             'get_by_slug': voluptuous.Coerce(str),
             #'q': voluptuous.Coerce(str)
@@ -169,6 +167,8 @@ class PostsApiHandler(RestHandlerBase):
 
         # Check if there is a query filter, etc
         get_by_slug = self.cleaned_params.get('get_by_slug', None)
+        limit = self.cleaned_params.get('limit', None)
+        cursor = self.cleaned_params.get('cursor', None)
 
         if get_by_slug:
             post = blog_api.get_post_by_slug(get_by_slug)
@@ -180,7 +180,7 @@ class PostsApiHandler(RestHandlerBase):
             return
 
         # Get a list of all posts
-        entities = blog_api.get_posts()
+        entities, cursor, more = blog_api.get_posts(limit=limit, cursor=cursor)
         blog_api.bulk_dereference_posts(entities)
 
         # Create A set of results based upon this result set - iterator??
@@ -188,7 +188,10 @@ class PostsApiHandler(RestHandlerBase):
         for e in entities:
             results.append(Resource(e, REST_RULES).to_dict())
 
-        self.serve_success(results)
+        if cursor:
+            cursor = cursor.urlsafe()
+
+        self.serve_success(results, {'cursor': cursor, 'more': more})
 
     def _post(self):
         """

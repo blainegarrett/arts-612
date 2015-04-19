@@ -125,12 +125,11 @@ class FeaturedApiHandler(RestHandlerBase):
         if False and cached_events:
             results = cached_events
         else:
-
             if is_appspot():
                 resource_ids = [
-                   'RXZlbnQeHzU2NzAyNDkzNzg2MTEyMDA',
-                   'RXZlbnQeHzUxODYxNDU4OTc5Mzg5NDQ',
                    'RXZlbnQeHzU2NjU0OTc5MzY4MjIyNzI',
+                   'RXZlbnQeHzU2NDY2MjAzNDc1OTY4MDA',
+                   'RXZlbnQeHzU3MTg5OTgwNjI3MjcxNjg',
                    'RXZlbnQeHzU2NTU2Mzg0MzY3NDExMjA',
                    'QmxvZ1Bvc3QeHzU3NDE4MzA2NDU3NDM2MTY'
                 ]
