@@ -4,8 +4,8 @@ class BaseController(webapp2.RequestHandler):
     """
     Base Helper Class that renders the chrome and inputs page meta for non-JS renderers (FB, etc)
     """
-        
-    def render_template(self, template_path, template_context):
+
+    def render_template(self, template_path, template_context, to_string=False):
         """
         Render a Template to output
         """
@@ -17,7 +17,13 @@ class BaseController(webapp2.RequestHandler):
         from main import JINJA_ENVIRONMENT as default_jinja_env
 
         template = default_jinja_env.get_template(template_path)
-        self.response.write(template.render(template_context))
+
+        rendered_content = template.render(template_context)
+        
+        if to_string:
+            return rendered_content
+
+        self.response.write(rendered_content)
     
     def serve_404(self, message):
         pagemeta = {

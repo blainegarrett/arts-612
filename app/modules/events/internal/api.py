@@ -88,10 +88,10 @@ def get_events(cursor=None, limit=QUERY_LIMIT):
     Fetch a list of events doing a ndb query (vs. search api)
 
     Currently used to populate the admin page...
-    
+
     :raises BadRequestError: If cursor is invalid
     """
-    
+
     if not limit:
         limit = QUERY_LIMIT
 
@@ -211,7 +211,7 @@ def bulk_dereference_venues(events):
     # Iterate over the event dates and set venues
     for event in events:
         i = 0
-        
+
         for i in range(len(event.event_dates)):
             ed = event.event_dates[i]
 
@@ -219,7 +219,7 @@ def bulk_dereference_venues(events):
             if venue_slug:
                 venue = venue_map.get(venue_slug, None)
                 event.event_dates[i].venue = venue
-            
+
     """
 
     for doc in search_results['index_results']:
@@ -239,7 +239,8 @@ def bulk_dereference_venues(events):
             i += 1
 
     """
-    
+
+
 def edit_event(entity, data):
     """
     Edit an event
@@ -265,12 +266,11 @@ def edit_event(entity, data):
         ed.category = d_data['category']
         ed.venue_slug = d_data['venue_slug']
 
-        
         # Check to ensure that venue_slug exists...
         v = venue_api.get_venue_by_slug(d_data['venue_slug'])
         if not v:
             raise Exception("%s is not a know venue slug." % d_data['venue_slug'])
-        
+
         # TODO: Also check if start is before end, etc
 
         ed.label = d_data['label']
@@ -290,7 +290,7 @@ def edit_event(entity, data):
     ubercache.cache_invalidate('events')
 
     return entity
-    
+
 
 def create_event(data):
     """
@@ -299,7 +299,7 @@ def create_event(data):
     """
 
     # check if there are any other events with this slug
-    
+
     v = Event.query(Event.slug == data['slug']).get()
     if v:
         raise Exception('There is already an Event with the slug "%s". Please select another.' % data['slug'])
@@ -325,12 +325,12 @@ def create_event(data):
 
         ed.category = d_data['category']
         ed.venue_slug = d_data['venue_slug']
-        
+
         # Check to ensure that venue_slug exists...
         v = venue_api.get_venue_by_slug(d_data['venue_slug'])
         if not v:
             raise Exception("%s is not a know venue slug." % d_data['venue_slug'])
-        
+
         # TODO: Also check if start is before end, etc
 
         ed.label = d_data['label']

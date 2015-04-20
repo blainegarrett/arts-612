@@ -346,7 +346,6 @@ class BaseController(webapp2.RequestHandler):
         self.render_template('./templates/index.html', template_values)
 
 
-
 class CalendarDetailHandler(BaseController):
     """
     Handler for Serving up the chrome for the event page

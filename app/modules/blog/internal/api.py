@@ -1,6 +1,12 @@
+"""
+Internal API for Written Feed Blog Posts
+"""
+
 from google.appengine.ext import ndb
 
+from utils import ubercache
 from rest.utils import get_key_from_resource_id, get_resource_id_from_key
+
 from modules.blog.internal.models import BlogPost
 from modules.blog.constants import AUTHOR_PROP, PRIMARY_IMAGE_PROP
 
@@ -18,7 +24,7 @@ def bulk_dereference_posts(posts):
         setattr(post, AUTHOR_PROP, None)
         setattr(post, PRIMARY_IMAGE_PROP, None)
 
-        # Collect properties we want to collect
+        # Collect properties we want to bulk dereference
         if post.author_resource_id:
             entity_map[get_key_from_resource_id(post.author_resource_id)] = None
 
@@ -45,19 +51,38 @@ def bulk_dereference_posts(posts):
     return posts
 
 
+def get_post_by_resource_id(resource_id):
+    """
+    Given a resource id, fetch the post entity
+    #TODO: Error handling?
+    """
+
+    key = get_key_from_resource_id(resource_id)
+    return key.get()
+
+
 def get_posts(limit=25, cursor=None):
     """
     Primary wrapper for fetching events
     """
+
+    if not limit:
+        limit = 25
+
     q = BlogPost.query().order(-BlogPost.created_date)
 
     entites, cursor, more = q.fetch_page(limit, start_cursor=cursor)
     return entites, cursor, more
 
 
-
 def get_post_by_slug(slug):
-    return BlogPost.query(BlogPost.slug == slug).get()
+    """
+    Simple Helper to fetch a post via slug.
+    TODO: Cache this to prevent
+    """
+
+    entity = BlogPost.query(BlogPost.slug == slug).get()
+    return entity
 
 
 def create_post(data):
@@ -84,7 +109,7 @@ def create_post(data):
     entity.put()
 
     # Step 3: Delete any cache keys related
-    #ubercache.cache_invalidate('events')
+    ubercache.cache_invalidate('written')
 
     return entity
 
@@ -110,6 +135,6 @@ def edit_post(entity, data):
     #event_search.maybe_up_update_search_index(entity)
 
     # Step 3: Kill All caches
-    #ubercache.cache_invalidate('events')
+    ubercache.cache_invalidate('written')
 
     return entity
