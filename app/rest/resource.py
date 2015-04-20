@@ -289,9 +289,14 @@ class ResourceField(RestField):
             resource_entity = getattr(obj, self.key, None)
         else:
             logging.error('Reference prop `%s` was not bulk dereferenced.' % self.key)
-            resource_key = get_key_from_resource_id(resource_id)
-            resource_entity = resource_key.get()
-            
+            try:
+                resource_key = get_key_from_resource_id(resource_id)
+                resource_entity = resource_key.get()
+            except ValueError:
+                logging.error('Failed to convert resource id %s to a key for prop %s.' % (resource_id, self.key))
+                logging.error(obj)
+                return None
+
         return Resource(resource_entity, self.resource_rules).to_dict()
 
 
