@@ -8,6 +8,8 @@ var ChoiceField = require('./../utilities/forms/fields/ChoiceField');
 var SlugWidget = require('./../utilities/forms/widgets/SlugWidget');
 var TextareaWidget = require('./../utilities/forms/widgets/TextareaWidget');
 var FileUploader = require('./../components/FileUploader');
+var DateTimeField = require('./../utilities/forms/fields/DateTimeField');
+var DateRangeWidget = require('./../utilities/forms/widgets/DateRangeWidget');
 
 BlogPostForm = React.createClass({
     propTypes: {
@@ -179,9 +181,12 @@ BlogPostForm = React.createClass({
                 { errors }
 
               <img src={ img_src } className="img-responsive" />
-            
+
               <TextField id="title"  ref="field.title" val={this.state.data.results.title } form={this} placeholder="Enter Post Title" onChangeCallback={this.sluggable_helper} />
               <SlugField id="slug" form={this}  ref="field.slug"  val={this.state.data.results.slug } widget={SlugWidget} url_root="http://mplsart.com/written/"/>
+              <TextField id="is_published" form={this} ref="field.is_published" val={this.state.data.results.is_published } placeholder="true or false" />
+              <DateTimeField id="published_date" form={this}  ref="field.published_date"  val={this.state.data.results.published_date } widget={DateRangeWidget} />
+
               <ChoiceField id="author_resource_id" form={this} ref="field.author_resource_id"  val={this.state.data.results.author_resource_id } widget={CheckboxWidget} choices={author_resource_choices} />
 
               <TextField id="summary"  ref="field.summary" val={this.state.data.results.summary } form={this} widget={TextareaWidget} placeholder="Post Summary" />

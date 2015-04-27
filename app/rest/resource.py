@@ -333,15 +333,15 @@ class BooleanField(RestField):
     """
     def to_resource(self, data):
         val = super(BooleanField, self).to_resource(data)
-        
-        if val in ['', 'false', 'False', None]:
+
+        if val in ['', 'false', 'False', None, False]:
             return False
         else:
             return True
 
     def from_resource(self, obj, field):
         """
-        Outout a field to dic value
+        Outout a field to dict value
         """
 
         val = super(BooleanField, self).from_resource(obj, field)

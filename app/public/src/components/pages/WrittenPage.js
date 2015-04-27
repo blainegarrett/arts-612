@@ -25,7 +25,7 @@ var WrittenPage = React.createClass({
     getInitialState: function () {
         return {
             articles: [],
-            resource_url: '/api/posts?limit=25'
+            resource_url: '/api/posts?limit=25&is_published=true'
         };
     },
 

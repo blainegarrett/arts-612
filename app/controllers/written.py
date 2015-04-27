@@ -11,7 +11,8 @@ from utils import get_domain
 
 from rest.controllers import RestHandlerBase
 from rest.resource import Resource
-from rest.resource import RestField, SlugField, ResourceIdField, ResourceUrlField, DatetimeField
+from rest.resource import RestField, SlugField, ResourceIdField
+from rest.resource import ResourceUrlField, DatetimeField, BooleanField
 from rest.resource import ResourceField
 
 from files.rest_helpers import REST_RESOURCE_RULES as FILE_REST_RULES
@@ -139,7 +140,8 @@ REST_RULES = [
 
     DatetimeField(BlogPost.created_date, output_only=True),
     DatetimeField(BlogPost.modified_date, output_only=True),
-    DatetimeField(BlogPost.published_date, output_only=True),
+    DatetimeField(BlogPost.published_date, required=False),
+    BooleanField(BlogPost.is_published),
 
     RestField(BlogPost.primary_image_resource_id, required=False),
     RestField(BlogPost.author_resource_id, required=False),
@@ -167,11 +169,15 @@ class PostsApiHandler(RestHandlerBase):
     """
 
     def get_param_schema(self):
+        
+        #raise Exception(voluptuous.Coerce(voluptuous.Boolean())('true'))
+        
         return {
             'limit': voluptuous.Coerce(int),
             'cursor': coerce_to_cursor,
             #'sort': voluptuous.Coerce(str),
             'get_by_slug': voluptuous.Coerce(str),
+            'is_published': voluptuous.Coerce(voluptuous.Boolean()),
             #'q': voluptuous.Coerce(str)
         }
 
@@ -205,19 +211,27 @@ class PostsApiHandler(RestHandlerBase):
             return self._get_by_slug_or_404(get_by_slug)
 
         # Get a list of all posts
+
         limit = self.cleaned_params.get('limit', None)
         cursor = self.cleaned_params.get('cursor', None)
+        
+        optional_params = {}
+
+        if 'is_published' in self.params:
+            optional_params['is_published'] = self.cleaned_params['is_published']
+
+        # TODO: If you are not admin, default is_published to True...
 
         key_stamp = str(hash(json.dumps(self.params)))
         cache_key = 'written_resources_%s' % key_stamp
 
         cached_result = ubercache.cache_get(cache_key)
-        if cached_result:
+        if False and cached_result:
             results, cursor, more = cached_result
         else:
             # Posts were not not Cached for this set of properties
 
-            entities, cursor, more = posts_api.get_posts(limit=limit, cursor=cursor)
+            entities, cursor, more = posts_api.get_posts(limit=limit, cursor=cursor, **optional_params)
             posts_api.bulk_dereference_posts(entities)
 
             # Create A set of results based upon this result set - iterator??

@@ -2,6 +2,7 @@
 Internal API for Written Feed Blog Posts
 """
 
+import datetime
 from google.appengine.ext import ndb
 
 from utils import ubercache
@@ -61,7 +62,7 @@ def get_post_by_resource_id(resource_id):
     return key.get()
 
 
-def get_posts(limit=25, cursor=None):
+def get_posts(limit=25, cursor=None, **kwargs):
     """
     Primary wrapper for fetching events
     """
@@ -69,7 +70,13 @@ def get_posts(limit=25, cursor=None):
     if not limit:
         limit = 25
 
-    q = BlogPost.query().order(-BlogPost.created_date)
+    q = BlogPost.query()
+    
+    
+    if 'is_published' in kwargs:
+        q = q.filter(BlogPost.is_published==kwargs['is_published'])
+
+    q = q.order(-BlogPost.published_date)
 
     entites, cursor, more = q.fetch_page(limit, start_cursor=cursor)
     return entites, cursor, more
@@ -98,13 +105,27 @@ def create_post(data):
     if v:
         raise Exception('There is already an Post with the slug "%s". Please select another.' % data['slug'])
 
+
     #Step 2:  Create the base Post Model
+
     entity = BlogPost()
+
+    maybe_publish = bool(data['is_published'])
+    #should_unpublish = (not bool(data['is_published'])) and bool(entity.published_date)
+
+    if maybe_publish:
+        entity.is_published = True # Regardless of it it was already true
+
+        if data['published_date']:
+            entity.published_date = data['published_date'].replace(tzinfo=None)
+        elif entity.published_date is None:
+            entity.published_date = datetime.datetime.now() # TODO: Convert to CST
+        # else: was previously published so leave the previously published date
+
     entity.slug = data['slug']
     entity.title = data['title']
     entity.summary = data['summary']
     entity.content = data['content']
-    entity.published_date = data.get('published_date')
     entity.author_resource_id = data.get('author_resource_id')
     entity.put()
 
@@ -120,6 +141,21 @@ def edit_post(entity, data):
     """
 
     # Create the base Event Model
+    maybe_publish = bool(data['is_published'])
+    should_unpublish = (not bool(data['is_published'])) and bool(entity.published_date)
+    
+    if maybe_publish:
+        entity.is_published = True # Regardless of it it was already true
+
+        if data['published_date']:
+            entity.published_date = data['published_date'].replace(tzinfo=None)
+        elif entity.published_date is None:
+            entity.published_date = datetime.datetime.now() # TODO: Convert to CST
+        # else: was previously published so leave the previously published date
+
+    if should_unpublish:
+        # Let's mark as not published - but preserve original published date for archives
+        entity.is_published = False
 
     entity.slug = data['slug']
     entity.title = data['title']
@@ -127,7 +163,6 @@ def edit_post(entity, data):
     entity.title = data['title']
     entity.summary = data['summary']
     entity.content = data['content']
-    entity.published_date = data.get('published_date')
     entity.author_resource_id = data.get('author_resource_id')
     entity.put()
 

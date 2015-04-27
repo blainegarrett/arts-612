@@ -8,7 +8,7 @@ var BlogPostsGrid = React.createClass({
 
     getInitialState: function(){
         var state = {'data': [], 'resource_url': '/api/posts'};
-        state['columns'] = ['title', 'summary', 'actions'];
+        state['columns'] = ['title', 'summary', 'is_published', 'actions'];
         
         state['inline_actions'] = [
             {

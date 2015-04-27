@@ -1526,7 +1526,7 @@ DateRangeWidget = React.createClass({
                 <div className="col-sm-6 input-append date">
                     <input type="text" className={ 'form-control has-success has-feedback ' + classes } 
                         id={'id_' +  id } placeholder={ placeholder } value={ date_val } 
-                        onChange={function(e){alert('hi'); }} 
+                        onChange={function(e){alert('You can not manually change yet...'); }} 
                         data-date-format="YYYY-MM-DD"
                         ref="date_input" />
                     <span className="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true" onClick={this.show_date_picker}></span>

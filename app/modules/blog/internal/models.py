@@ -17,8 +17,9 @@ class BlogPost(ndb.Model):
     attachment_resources =  ndb.StringProperty(repeated=True)
     created_date = ndb.DateTimeProperty(auto_now_add=True)
     modified_date = ndb.DateTimeProperty(auto_now=True)
-    published_date = ndb.DateTimeProperty()
-    
+    published_date = ndb.DateTimeProperty(indexed=True)
+    is_published = ndb.BooleanProperty(default=False, indexed=True)
+
     @property
     def permalink(self):
         return '/written/%s/%s/%s/' % (self.modified_date.year, self.modified_date.month, self.slug)
