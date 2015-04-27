@@ -19,11 +19,11 @@
 				<title>{[{ post.title }]}</title>
 				<link>{[{ post.absolute_permalink }]}</link>
 				<guid isPermaLink="true">{[{ post.absolute_permalink }]}</guid>
-				<pubDate>{[{ post.modified_date.strftime('%a, %d %b %Y %H:%M:%S %z') }]}</pubDate>
+				<pubDate>{[{ post.published_date.strftime('%a, %d %b %Y %H:%M:%S %z') }]}</pubDate>
 				<description><![CDATA[ {[{ post.summary }]} ]]></description>
 				<summary>{[{ post.summary }]}</summary>
 				<updated>{[{ post.modified_date.strftime('%a, %d %b %Y %H:%M:%S %z') }]}</updated>
-				<published>{[{ post.modified_date.strftime('%a, %d %b %Y %H:%M:%S %z') }]}</published>
+				<published>{[{ post.published_date.strftime('%a, %d %b %Y %H:%M:%S %z') }]}</published>
 
 				<author>
 					<name>{[{ post.author_resource.firstname }]} {[{ post.author_resource.lastname }]}</name>

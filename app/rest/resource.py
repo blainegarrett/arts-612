@@ -153,6 +153,8 @@ class RestField(object):
 
     def __init__(self, prop, always=True, validator=None, output_only=False, input_only=False,
                  required=False):
+        
+        import inspect
 
         self.key = None # This is the dict key for Resource dict
 
@@ -170,6 +172,8 @@ class RestField(object):
             self.key = self.prop
         elif isinstance(self.prop, basestring):
             self.key = self.prop
+        elif isinstance(self.prop, property):
+            self.key = self.prop.fget.__name__
         else:
             raise UnsupportedFieldProp('Rest Property not supported %s', prop)
 

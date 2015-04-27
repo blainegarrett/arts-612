@@ -110,7 +110,7 @@ class WrittenMainRssFeedHandler(BaseController):
 
         ctx = {'posts': []}
 
-        entities, cursor, more = posts_api.get_posts(limit=25)
+        entities, cursor, more = posts_api.get_posts(limit=25, is_published=True)
         posts_api.bulk_dereference_posts(entities)
 
         # Create A set of results based upon this result set - iterator??
@@ -134,6 +134,7 @@ REST_RULES = [
     ResourceUrlField(resource_url, output_only=True),
     SlugField(BlogPost.slug, required=True),
     RestField(BlogPost.title, required=True),
+    RestField(BlogPost.permalink, output_only=True),
 
     RestField(BlogPost.content),
     RestField(BlogPost.summary),
@@ -145,7 +146,6 @@ REST_RULES = [
 
     RestField(BlogPost.primary_image_resource_id, required=False),
     RestField(BlogPost.author_resource_id, required=False),
-
 
     ResourceField(AUTHOR_PROP, required=False, output_only=True,
         resource_id_prop='author_resource_id', resource_rules=USER_REST_RULES),

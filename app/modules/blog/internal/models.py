@@ -22,7 +22,10 @@ class BlogPost(ndb.Model):
 
     @property
     def permalink(self):
-        return '/written/%s/%s/%s/' % (self.modified_date.year, self.modified_date.month, self.slug)
+        #TODO: what to return if not published...
+
+        pub_date = self.published_date
+        return '/written/%s/%s/%s/' % (pub_date.year, pub_date.month, self.slug)
 
     @property
     def absolute_permalink(self):

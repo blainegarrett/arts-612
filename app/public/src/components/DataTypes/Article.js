@@ -86,36 +86,19 @@ var PodArticleRenderer = React.createClass({
         }
 
         // TODO: Case out if published or not...
-        var m = moment(article.modified_date);
+        var m = moment(article.published_date);
         var date_slug = m.format('YYYY/MM/');
 
-        var post_url = '/written/' + date_slug + article.slug;
-        
         return <div>
             <div className="card-image">
-                <a href={post_url} title={article.title} onClick={global.routeTo }>{ image }</a>
+                <a href={article.permalink} title={article.title} onClick={global.routeTo }>{ image }</a>
             </div>
 
             <div className="card-content">
-                <div className="card-title"><a href={ post_url } onClick={global.routeTo } target="_new">{article.title }</a></div>
-                <div className="card-detail">{ article.summary } <b><a href={post_url} title={article.title} onClick={global.routeTo }>Read More...</a></b></div>
+                <div className="card-title"><a href={ article.permalink } onClick={global.routeTo } target="_new">{article.title }</a></div>
+                <div className="card-detail">{ article.summary } <b><a href={article.permalink} title={article.title} onClick={global.routeTo }>Read More...</a></b></div>
             </div>            
         </div>;
-        
-        
-        /*
-        <li title={article.title}><a href={post_url} onClick={global.routeTo }>{article.title}</a>  {published_date} </li>;
-        render: function () {
-            return <div>
-
-
-            <div className="card-content">
-                <p>Cards for display in portfolio style material design by Google.</p>
-            </div>
-            </div>
-        }
-        */
-
 
     }
     
@@ -153,11 +136,10 @@ var ListArticleRenderer = React.createClass({
         }
 
         // TODO: Case out if published or not...
-        var m = moment(article.modified_date);
+        var m = moment(article.published_date);
         var date_slug = m.format('YYYY/MM/');
 
-        var post_url = '/written/' + date_slug + article.slug;
-        return <li key={article.resource_id} title={article.title}><a href={post_url} onClick={global.routeTo }>{article.title}</a>  {published_date} </li>;
+        return <li key={article.resource_id} title={article.title}><a href={article.permalink} onClick={global.routeTo }>{article.title}</a>  {published_date} </li>;
     }
 });
 
@@ -179,13 +161,11 @@ var MarqueeRenderer = React.createClass({
         var styles = { 'backgroundImage' : 'url(' + image_url + ');'};
 
         // TODO: Case out if published or not...
-        var m = moment(resource.modified_date);
+        var m = moment(resource.published_date);
         var date_slug = m.format('YYYY/MM/');
 
-        var post_url = '/written/' + date_slug + resource.slug;
-
         return <div className="jive-card-image">
-            <a href={ post_url } onClick={ global.routeTo } style={ styles }>
+            <a href={ article.permalink } onClick={ global.routeTo } style={ styles }>
                 <div className="jive-card-title">
                     <div className="date">{ resource.title }</div>
                 </div>
@@ -212,14 +192,12 @@ var FeaturedHeroRenderer = React.createClass({
         var styles = { 'backgroundImage' : 'url(' + image_url + ');'};
 
         // TODO: Case out if published or not...
-        var m = moment(resource.modified_date);
+        var m = moment(resource.published_date);
         var date_slug = m.format('YYYY/MM/');
-
-        var post_url = '/written/' + date_slug + resource.slug;
 
         return <div className="jive-card">
             <div className="jive-card-image">
-                <a href={ post_url } onClick={ global.routeTo } style={ styles }>
+                <a href={ resource.permalink } onClick={ global.routeTo } style={ styles }>
                     <div className="jive-card-title">
                         <br />
                         <div className="date">New Post</div>
