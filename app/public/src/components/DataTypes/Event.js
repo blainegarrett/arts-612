@@ -223,9 +223,32 @@ var FeaturedHeroRenderer = React.createClass({
 });
 
 var PodRenderer = React.createClass({
-    /* Pod Renderer */
+    /* Pod Renderer - for use in Masonry/Packery layouts */
 
     mixins: [EventRendererMixin],
+
+    generate_image: function(img_resource, link_url, alt_text) {
+        /* Generate "fixed" size image container to prevent resizing after images load */
+        var w, h, styles;
+
+        w = img_resource.width;
+        h = img_resource.height;
+
+        // Calculate % height to 2 decimal places
+        scale_h = Math.floor(100 * h/w * 100.00) /100.00;
+
+        styles = {'padding': scale_h + '% 0 0 0' };
+
+        image_url = img_resource.url;
+        image_container = <div className="card-image fixed-size">
+            <a href={ link_url } onClick={ global.routeTo } title={ alt_text } style={ styles }>
+                <img src={image_url} className="img-responsive" title={alt_text} />
+            </a>
+        </div>
+
+        return image_container;  
+    },
+
 
     render_empty: function () {
 
@@ -302,19 +325,17 @@ var PodRenderer = React.createClass({
             //target_event_date = sorted_event_dates[0];
         }
 
+        var post_url = '/events/' + e.slug; //e.url;
 
         if (e.primary_image_resource) {
-            image_url = e.primary_image_resource.versions.CARD_SMALL.url;
-            image = <img src={image_url} className="img-responsive" title={e.name} />
+            var img_resource = e.primary_image_resource.versions.CARD_SMALL;            
+            image = this.generate_image(img_resource, post_url, e.name);
         }
 
         //<div className="card-title"><a href={post_url} onClick={global.routeTo }>{e.name}</a></div>
 
-        var post_url = '/events/' + e.slug; //e.url;
         return <div>
-            <div className="card-image">
-                <a href={post_url} title={e.name}>{ image }</a>
-            </div>
+            { image }
 
             <div className="card-content">
                 <div className="card-title"><a href={ post_url } onClick={global.current_page.getRoute }>{e.name }</a></div>

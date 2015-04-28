@@ -244,6 +244,26 @@ footer {
 }
 
 
+.card .card-image.fixed-size a {
+    /* Helper class for sizing image container in masonry layouts */
+
+    display: block;
+    position: relative;
+    height: 0;
+    overflow: hidden;
+    padding: 52.42% 0 0 0; /* Note padding-top is overridden via JS */
+    background-color: black;
+    width: 100%;
+}
+
+.card .card-image.fixed-size a img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: auto;
+}
+
+
 /* Beta Specific styles we can turn off */
 body.beta .brand-title-art { color: inherit; text-transform: uppercase;}
     body.beta .brand-title-art:before { content: ''; }

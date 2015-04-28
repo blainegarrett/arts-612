@@ -165,7 +165,7 @@ var MarqueeRenderer = React.createClass({
         var date_slug = m.format('YYYY/MM/');
 
         return <div className="jive-card-image">
-            <a href={ article.permalink } onClick={ global.routeTo } style={ styles }>
+            <a href={ resource.permalink } onClick={ global.routeTo } style={ styles }>
                 <div className="jive-card-title">
                     <div className="date">{ resource.title }</div>
                 </div>
