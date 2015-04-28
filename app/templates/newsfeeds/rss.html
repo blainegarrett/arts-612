@@ -4,8 +4,12 @@
 		<title>Written Articles on mplsart.com</title>
 		<description>Articles from mplsart.com</description>
 		<link>http://mplsart.com</link>
-		<lastBuildDate>{[{ posts[0].modified_date.strftime('%a, %d %b %Y %H:%M:%S %z') }]}</lastBuildDate>
-		<pubDate>{[{ posts[0].modified_date.strftime('%a, %d %b %Y %H:%M:%S %z') }]}</pubDate>
+
+		{% if posts %}
+			<lastBuildDate>{[{ posts[0].modified_date.strftime('%a, %d %b %Y %H:%M:%S %z') }]}</lastBuildDate>
+			<pubDate>{[{ posts[0].modified_date.strftime('%a, %d %b %Y %H:%M:%S %z') }]}</pubDate>
+		{% endif %}
+
         <language>en</language>
 		<ttl>1800</ttl>
         <image>
