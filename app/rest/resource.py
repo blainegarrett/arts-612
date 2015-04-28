@@ -29,6 +29,7 @@ class RestValueException(Exception):
         return 'Invalid value "%s" for "prop" %s. Error: %s' % (self.value, self.field.key,
                                                                 self.error)
 
+
 class RequiredFieldError(Exception):
     pass
 
@@ -36,8 +37,10 @@ class RequiredFieldError(Exception):
 class UnknownFieldError(Exception):
     pass
 
+
 class UnsupportedFieldProp(Exception):
     pass
+
 
 class OutputOnlyError(Exception):
     pass
@@ -89,7 +92,7 @@ class Resource(object):
     def from_dict(self, data):
         """
         Loads in a Rest Resource from a dictionary of a values
-        
+
         TODO: Add validation at this level too
         TODO: Throw OutputOnlyError if a field is output_only=True
         """
@@ -153,8 +156,6 @@ class RestField(object):
 
     def __init__(self, prop, always=True, validator=None, output_only=False, input_only=False,
                  required=False):
-        
-        import inspect
 
         self.key = None # This is the dict key for Resource dict
 
@@ -194,7 +195,7 @@ class RestField(object):
     def from_resource(self, obj, field):
         """
         Default handler for properties
-        
+
         TODO: Arg field should be self.key ?
         TODO: Are from_resource and to_resource conceptually named the opposite?
         TODO: Raise a uniform Error
@@ -216,10 +217,10 @@ class RestField(object):
 
         if value and self.output_only:
             raise OutputOnlyError('Field "%s" is not an allowed input field.' % self.key)
-        
+
         # Validate Type
         value = self.validate(value)
-        
+
         return value
 
 
@@ -276,7 +277,6 @@ class ResourceField(RestField):
         self.resource_rules = resource_rules
         super(ResourceField, self).__init__(prop, **kwargs)
 
-
     def from_resource(self, obj, field):
         """
         Resolve a REST resource from an entity
@@ -306,13 +306,16 @@ class ResourceField(RestField):
 
 class UploadField(RestField):
     """
+    Rest Resource Helper for Upload field.
+    TODO: This needs review and to probably be moved to file services
     """
+
     def __init__(self, prop, **kwargs):
         super(UploadField, self).__init__(prop, **kwargs)
 
     def to_resource(self, data):
         val = super(UploadField, self).to_resource(data)
-        
+
         if val:
             return ndb.GeoPt(lat=val['lat'], lon=val['lon'])
         return None
@@ -321,7 +324,7 @@ class UploadField(RestField):
         """
         Outout a field to dic value
         """
-        
+
         #FieldStorage(u'the_file', u'title_bar.jpg') evals to false for some reason...
 
         val = super(UploadField, self).from_resource(obj, field)
@@ -331,10 +334,12 @@ class UploadField(RestField):
 
         return {'lat': val.lat, 'lon': val.lon}
 
+
 class BooleanField(RestField):
     """
     Boolean field
     """
+
     def to_resource(self, data):
         val = super(BooleanField, self).to_resource(data)
 
@@ -355,7 +360,7 @@ class BooleanField(RestField):
 
         if val == True:
             return True
-        
+
         raise Exception(val)
 
 
