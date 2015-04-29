@@ -126,7 +126,7 @@ class ResourceTestCaseToDict(RestBaseCase):
         result = r.to_dict()
 
         # This ensures that other props on the "obj" do not get output to dict
-        self.assertDictEqual(result, {'name': 'Bob', 'size': 'large'})
+        self.assertDictEqual(result, {'name': 'Bob', 'size': 'large', 'resource_type': 'NonDefinedClass'})
 
 
 class ResourceFieldInitTests(RestBaseCase):
