@@ -26,7 +26,6 @@ from modules.events.internal.models import Event
 from modules.events.constants import CATEGORY, PRIMARY_IMAGE_PROP
 from utils import ubercache
 
-from framework.controllers import MerkabahBaseController
 from cal.rest_helpers import EventDateField
 from utils import get_domain
 
@@ -280,23 +279,6 @@ class EventsApiHandler(RestHandlerBase):
 
         self.serve_success(results, {'cursor': cursor, 'more': more})
 
-
-
-# Web Handlers
-class CalendarMainHandler(MerkabahBaseController):
-    """
-    Main Handler For Calendar Listings
-    """
-
-    def get(self):
-        pagemeta = {
-            'title': 'EVENT CAL!!!',
-            'description': 'A Directory of Galleries and Places that Show Art in Minneapolis',
-            'image': 'http://www.soapfactory.org/img/space/gallery-one-2.jpg'
-        }
-
-        template_values = {'pagemeta': pagemeta}
-        self.render_template('templates/index.html', template_values)
 
 
 class EventsWeeksApiHandler(RestHandlerBase):

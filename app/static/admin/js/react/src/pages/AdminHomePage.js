@@ -77,6 +77,7 @@ var AdminHomePage = React.createClass({
                 <dl className="dl-horizontal">
                     <dt>Is Appspot: </dt><dd>{ settings.is_appspot.toString() }</dd>
                     <dt>Domain: </dt><dd>{ settings.domain.toString() }</dd>
+                    <dt>Is Authenticated: </dt><dd>{ settings.is_authenticated.toString() }</dd>
                 </dl>
             </div>
         </div>

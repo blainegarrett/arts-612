@@ -1,4 +1,6 @@
 import webapp2
+from framework.controllers import BaseHandler
+
 
 class BaseController(webapp2.RequestHandler):
     """
@@ -11,7 +13,7 @@ class BaseController(webapp2.RequestHandler):
         """
 
         # Debug - Show what non-js search engines see
-        template_context['no_client'] = bool(self.request.get('no_client', False))        
+        template_context['no_client'] = bool(self.request.get('no_client', False))
 
         # TODO: This needs to abstract the jinja env out further...
         from main import JINJA_ENVIRONMENT as default_jinja_env
@@ -19,12 +21,12 @@ class BaseController(webapp2.RequestHandler):
         template = default_jinja_env.get_template(template_path)
 
         rendered_content = template.render(template_context)
-        
+
         if to_string:
             return rendered_content
 
         self.response.write(rendered_content)
-    
+
     def serve_404(self, message):
         pagemeta = {
             'title': 'Page Not Found',
@@ -40,36 +42,37 @@ class BaseController(webapp2.RequestHandler):
 class Error404Handler(BaseController):
     """
     """
-    
+
     def get(self, *args, **kwargs):
         self.serve_404('Page Not Found')
         return
 
 
-class AboutMainHandler(BaseController):
+class MainHandler(BaseHandler):
     """
-    About Web Handler
+    Main Page Handler
     """
-    
-    def get(self, *args, **kwargs):
+
+    def get(self):
         pagemeta = {
-            'title': 'About MPLSART.COM',
-            'description': 'MPLSART.COM\'s mission is to promote visual art events in the Twin Cities.',
+            'title': 'MPLSART.COM | Make a Scene',
+            'description': 'Find the best art events in Minneapolis and St. Paul',
             'image': 'http://cdn.mplsart.com/assets/social/mplsart_fbimg3.jpg'
         }
 
         template_values = {'pagemeta': pagemeta}
         self.render_template('./templates/index.html', template_values)
 
-class HomePageHandler(BaseController):
+
+class AboutMainHandler(BaseController):
     """
-    Homepage Web Handler
+    About Web Handler
     """
 
     def get(self, *args, **kwargs):
         pagemeta = {
-            'title': 'MPLSART.COM | Make a Scene',
-            'description': 'Find the best art events in Minneapolis and St. Paul',
+            'title': 'About MPLSART.COM',
+            'description': 'MPLSART.COM\'s mission is to promote visual art events in the Twin Cities.',
             'image': 'http://cdn.mplsart.com/assets/social/mplsart_fbimg3.jpg'
         }
 

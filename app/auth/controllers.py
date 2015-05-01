@@ -171,39 +171,6 @@ class ConfirmHandler(webapp2.RequestHandler):
         self.response.out.write('<html><body>%s</body></html>' % greeting)
 
 
-class MerkabahBaseController(webapp2.RequestHandler):
-    """
-    Base Helper Class that renders the chrome and inputs page meta for non-JS renderers (FB, etc)
-    """
-
-    def render_template(self, template_path, template_context):
-        """
-        Render a Template to output
-        """
-
-        # TODO: This needs to abstract the jinja env out further...
-        from main import JINJA_ENVIRONMENT as default_jinja_env
-
-        template = default_jinja_env.get_template(template_path)
-        self.response.write(template.render(template_context))
-
-
-class MainHandler(MerkabahBaseController):
-    """
-    Temporary Main Page Handler
-    """
-
-    def get(self):
-        pagemeta = {
-            'title': 'MPLSART.COM | Make a Scene',
-            'description': 'Find the best art events in Minneapolis and St. Paul',
-            'image': 'http://cdn.mplsart.com/assets/social/mplsart_fbimg3.jpg'
-        }
-
-        template_values = {'pagemeta': pagemeta}
-        self.render_template('./templates/index.html', template_values)
-
-
 # REST Controllers for private
 resource_url = 'http://' + get_domain() + '/api/users/%s'
 

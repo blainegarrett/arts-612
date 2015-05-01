@@ -20,7 +20,7 @@ from modules.venues.internal import api as venues_api
 from modules.venues.internal import search as vsearch
 from modules.venues.internal.models import Venue
 
-from framework.controllers import MerkabahBaseController
+from framework.controllers import BaseHandler
 from utils import get_domain
 
 resource_url = 'http://' + get_domain()  + '/api/galleries/%s'
@@ -257,7 +257,7 @@ class GalleryDetailApiHandler(GalleryApiHandlerBase):
         self.serve_success(result)
 
 
-class GalleryMainHandler(MerkabahBaseController):
+class GalleryMainHandler(BaseHandler):
     """
     Main Handler For Gallery Listings
     """
@@ -272,7 +272,7 @@ class GalleryMainHandler(MerkabahBaseController):
         self.render_template('templates/index.html', template_values)
 
 
-class GalleryDetailHandler(MerkabahBaseController):
+class GalleryDetailHandler(BaseHandler):
     """
     Handler for Serving up the chrome for the gallery page
     """

@@ -19,7 +19,7 @@ from rest.resource import RestField
 from rest.resource import ResourceIdField, ResourceUrlField, DatetimeField
 from rest.utils import get_key_from_resource_id, get_resource_id_from_key
 
-from framework.controllers import MerkabahBaseController
+from framework.controllers import BaseHandler
 from files.models import FileContainer
 from google.appengine.ext import ndb
 
@@ -229,7 +229,7 @@ class Filesystem(object):
             return results
 
 
-class UploadCallbackHandler(MerkabahBaseController):
+class UploadCallbackHandler(BaseHandler):
     """
     """
 
@@ -451,8 +451,10 @@ class FileDetailHandler(RestHandlerBase):
         return REST_RESOURCE_RULES
 
     def _get(self, resource_id):
+        
+        f_key = get_key_from_resource_id(resource_id)
+        
         # TODO: Abstract this a bit more out into a rest-like service...
-        f_key = ndb.Key(urlsafe=resource_id)
         f = f_key.get()
         if not f:
             raise Exception('File Not Found')
@@ -460,7 +462,7 @@ class FileDetailHandler(RestHandlerBase):
         self.serve_success(Resource(f, self.get_rules()).to_dict())
 
     def _post(self, resource_id):
-        f_key = ndb.Key(urlsafe=resource_id)
+        f_key = get_key_from_resource_id(resource_id)
         f = f_key.get()
         if not f:
             raise Exception('File Not Found')
