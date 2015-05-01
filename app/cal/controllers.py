@@ -265,6 +265,8 @@ class EventsApiHandler(RestHandlerBase):
             return
 
         results = []
+        cursor = None
+        more = None
 
         cash_key = 'testing_events_cache'
         cached_events = memcache.get(cash_key)

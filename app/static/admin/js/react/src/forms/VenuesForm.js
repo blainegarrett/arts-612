@@ -8,6 +8,8 @@ var SlugWidget = require('./../utilities/forms/widgets/SlugWidget');
 var FileUploader = require('./../components/FileUploader');
 var TextareaWidget = require('./../utilities/forms/widgets/TextareaWidget');
 
+var MapComponent2 = require('./../components/Map').MapComponent2;
+
 
 VenuesForm = React.createClass({
     propTypes: {
@@ -16,6 +18,8 @@ VenuesForm = React.createClass({
     },
 
     componentDidMount: function(){
+        var rc = this;
+
         if (this.state.is_edit) {
             $.ajax({
                 url: this.props.resource_url,
@@ -27,7 +31,8 @@ VenuesForm = React.createClass({
                     console.error(this.props.resource_url, status, err.toString());
                 }.bind(this)
             });
-        }
+        };
+        
     },
 
     getInitialState: function () {
@@ -61,7 +66,7 @@ VenuesForm = React.createClass({
         if (this.state.is_edit) {
             method = 'PUT';
         }        
-        
+
         // Send Ajax Payload
         $.ajax({
             url: this.props.resource_url,
@@ -86,11 +91,29 @@ VenuesForm = React.createClass({
         });
 
     },
+
+    set_geo_callback: function (geo) {
+        console.log(this);
+
+        var raw_geo_str = geo.toString()
+        
+        raw_geo_str = raw_geo_str.replace(')', '').replace('(', '')
+
+        this.refs['field.geo'].setValue(raw_geo_str);
+        
+    },
+    geo_listener: function(event) {
+        // Helper to generate map and geo coords
+        var search_address = this.refs['field.address'].getValue() + ' ' + this.refs['field.address2'].getValue() + ' ' + this.refs['field.city'].getValue() + ' ' + this.refs['field.state'].getValue();        
+
+        this.refs.mapObj.search_by_address(search_address, this.set_geo_callback)
+
+    },
     sluggable_helper:  function(event) {
         // If it is a new item, update the slug prop
         // TODO: Make this more general and refactor into a helper
 
-        if (this.state.is_edit ){
+        if ( this.state.is_edit ){
             return;
         }
 
@@ -167,13 +190,15 @@ VenuesForm = React.createClass({
             
               <TextField id="name"  ref="field.name" val={this.state.data.results.name } form={this} placeholder="Enter Venue Name" onChangeCallback={this.sluggable_helper} />
               <SlugField id="slug" form={this}  ref="field.slug"  val={this.state.data.results.slug } widget={SlugWidget} url_root="http://mplsart.com/galleries/"/>
-              <ChoiceField id="category" form={this} ref="field.category"  val={this.state.data.results.category } widget={CheckboxWidget} choices={category_choices} />
-              <TextField id="address" form={this}  ref="field.address"  val={this.state.data.results.address } />
+
+              <TextField id="address" form={this}  ref="field.address"  val={this.state.data.results.address } onChangeCallback={ this.geo_listener } />
               <TextField id="address2" form={this}  ref="field.address2"  val={this.state.data.results.address2 } />
-              <TextField id="city" form={this}  ref="field.city" val={this.state.data.results.city }   defaultValue="Minneapolis" />
+              <TextField id="city" form={this}  ref="field.city" val={this.state.data.results.city }   defaultValue="Minneapolis" onChangeCallback={ this.geo_listener } />
               <TextField id="state" form={this}  ref="field.state"  val={this.state.data.results.state } defaultValue="MN" />
               <TextField id="country" form={this} ref="field.country"  val={this.state.data.results.country } defaultValue="USA"/>
-              <GeoPtField id="geo" form={this} ref="field.geo"  val={this.state.data.results.geo } />
+
+              <hr />
+              <ChoiceField id="category" form={this} ref="field.category"  val={this.state.data.results.category } widget={CheckboxWidget} choices={category_choices} />
               <TextField id="phone" form={this} ref="field.phone"  val={this.state.data.results.phone } />
               <TextField id="email" form={this} ref="field.email"  val={this.state.data.results.email } />
               <TextField id="website" form={this} ref="field.website"  val={this.state.data.results.website } />
@@ -193,6 +218,10 @@ VenuesForm = React.createClass({
 
         <div className="col-lg-4">
             { uploader }
+
+             <GeoPtField id="geo" form={this} ref="field.geo"  val={this.state.data.results.geo } />
+            <MapComponent2 ref="mapObj" geo={this.state.data.results.geo } />
+            
         </div>
 
     </div>;
