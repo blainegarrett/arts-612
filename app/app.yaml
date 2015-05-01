@@ -93,6 +93,11 @@ handlers:
   secure: optional
   login: admin
 
+- url: /dashboard.*
+  script: dashboard.main.app
+  secure: optional
+  login: admin
+
 #- url: /import.*
 #  script: import.main.app
 #  secure: optional
