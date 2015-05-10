@@ -6,7 +6,7 @@ import json
 from utils import ubercache
 
 from rest.params import coerce_to_cursor
-from controllers import BaseController
+from controllers import BaseHandler
 from utils import get_domain
 
 from rest.controllers import RestHandlerBase
@@ -24,7 +24,7 @@ from modules.blog.constants import AUTHOR_PROP, PRIMARY_IMAGE_PROP
 DEFAULT_POST_IMAGE = 'http://cdn.mplsart.com/assets/social/mplsart_fbimg3.jpg'
 
 
-class WrittenMainHandler(BaseController):
+class WrittenMainHandler(BaseHandler):
     """
     Serverside Controller logic for written section main page
     """
@@ -44,7 +44,7 @@ class WrittenMainHandler(BaseController):
         self.render_template('./templates/index.html', template_values)
 
 
-class WrittenArticleHandler(BaseController):
+class WrittenArticleHandler(BaseHandler):
     """
     Written Article Web Handler
     """
@@ -85,7 +85,7 @@ class WrittenArticleHandler(BaseController):
         self.render_template('./templates/index.html', template_values)
 
 
-class WrittenMainRssFeedHandler(BaseController):
+class WrittenMainRssFeedHandler(BaseHandler):
     """
     Temporary Feed Handler
     TODO: Atom feeds

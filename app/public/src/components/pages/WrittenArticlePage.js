@@ -52,7 +52,7 @@ var WrittenArticlePage = React.createClass({
 
         this.setMeta();
     },
-    componentDidMount: function () {
+    pageDidMount: function () {
         var rc = this;
 
         this.setMeta();

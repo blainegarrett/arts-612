@@ -2,44 +2,7 @@ import webapp2
 from framework.controllers import BaseHandler
 
 
-class BaseController(webapp2.RequestHandler):
-    """
-    Base Helper Class that renders the chrome and inputs page meta for non-JS renderers (FB, etc)
-    """
-
-    def render_template(self, template_path, template_context, to_string=False):
-        """
-        Render a Template to output
-        """
-
-        # Debug - Show what non-js search engines see
-        template_context['no_client'] = bool(self.request.get('no_client', False))
-
-        # TODO: This needs to abstract the jinja env out further...
-        from main import JINJA_ENVIRONMENT as default_jinja_env
-
-        template = default_jinja_env.get_template(template_path)
-
-        rendered_content = template.render(template_context)
-
-        if to_string:
-            return rendered_content
-
-        self.response.write(rendered_content)
-
-    def serve_404(self, message):
-        pagemeta = {
-            'title': 'Page Not Found',
-            'description': 'Unable to find page, please check your url',
-            'image': 'http://cdn.mplsart.com/assets/social/mplsart_fbimg3.jpg'
-        }
-
-        template_values = {'pagemeta': pagemeta}
-        self.response.set_status(404)
-        self.render_template('./templates/index.html', template_values)
-
-
-class Error404Handler(BaseController):
+class Error404Handler(BaseHandler):
     """
     """
 
@@ -64,7 +27,7 @@ class MainHandler(BaseHandler):
         self.render_template('./templates/index.html', template_values)
 
 
-class AboutMainHandler(BaseController):
+class AboutMainHandler(BaseHandler):
     """
     About Web Handler
     """

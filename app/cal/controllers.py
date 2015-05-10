@@ -2,7 +2,6 @@
 
 
 # Each Date record will have its own search document
-import webapp2
 import voluptuous
 import logging
 import json
@@ -12,10 +11,12 @@ from google.appengine.api import memcache
 
 from auth.decorators import rest_login_required
 
+from framework.controllers import BaseHandler
 from rest.controllers import RestHandlerBase
 
 from rest.resource import Resource
-from rest.resource import RestField, SlugField, ResourceIdField, ResourceUrlField, BooleanField, ResourceField
+from rest.resource import RestField, SlugField, ResourceIdField, ResourceUrlField
+from rest.resource import BooleanField, ResourceField
 from rest.params import coerce_to_datetime
 from rest.utils import get_key_from_resource_id
 
@@ -29,7 +30,7 @@ from utils import ubercache
 from cal.rest_helpers import EventDateField
 from utils import get_domain
 
-resource_url = 'http://' + get_domain()  + '/api/events/%s' #TODO: HRM?
+resource_url = 'http://' + get_domain() + '/api/events/%s' #TODO: HRM?
 
 # verbosity vs. input vs. output
 
@@ -103,6 +104,7 @@ class EventDetailApiHandler(RestHandlerBase):
         result = create_resource_from_entity(e)
         self.serve_success(result)
 
+
 def coerce_to_category(val):
     """
     """
@@ -116,7 +118,7 @@ def coerce_to_category(val):
 
         if not hasattr(CATEGORY, cat.upper()):
             raise voluptuous.Invalid('Invalid filter value for category filter "%s" in "%s"' % (cat, val))
-        
+
         return_cats.append(cat)
 
     return return_cats
@@ -129,10 +131,10 @@ class EventsUpcomingHandler(RestHandlerBase):
 
     def get_param_schema(self):
         return {
-            'limit' : voluptuous.Coerce(int),
+            'limit': voluptuous.Coerce(int),
             'cursor': coerce_to_cursor,
             'sort': voluptuous.Coerce(str),
-            'category':  coerce_to_category,
+            'category': coerce_to_category,
             'start': coerce_to_datetime,
             'end': coerce_to_datetime,
             'venue_slug': voluptuous.Coerce(str),
@@ -155,12 +157,12 @@ class EventsUpcomingHandler(RestHandlerBase):
         if cached_events:
             results = cached_events
         else:
-            
+
             logging.warning('Upcoming Events were not cached. Querying for new list.')
 
             results = []
             events = events_api.generic_search(**params)
-            
+
             events_api.bulk_dereference_events(events)
 
             for event in events:
@@ -196,13 +198,10 @@ class EventsNowShowingHandler(RestHandlerBase):
         self.serve_success(results)
 
 
-
 class EventsApiHandler(RestHandlerBase):
     """
     Main Handler for Events Endpoint
     """
-
-
 
     def get_rules(self):
         return REST_RULES
@@ -252,7 +251,7 @@ class EventsApiHandler(RestHandlerBase):
 
         # Check if there is a query filter, etc
         get_by_slug = self.cleaned_params.get('get_by_slug', None)
-        
+
         if get_by_slug:
             event = events_api.get_event_by_slug(get_by_slug)
             if not event:
@@ -280,7 +279,6 @@ class EventsApiHandler(RestHandlerBase):
         self.serve_success(results, {'cursor': cursor, 'more': more})
 
 
-
 class EventsWeeksApiHandler(RestHandlerBase):
     """
     """
@@ -294,41 +292,7 @@ class EventsWeeksApiHandler(RestHandlerBase):
         self.serve_success(results)
 
 
-
-class BaseController(webapp2.RequestHandler):
-    """
-    Base Helper Class that renders the chrome and inputs page meta for non-JS renderers (FB, etc)
-
-    TODO: THIS IS COPIED FROM app.controllers to avoid import issue. FIX THIS SOON...
-    """
-
-    def render_template(self, template_path, template_context):
-        """
-        Render a Template to output
-        """
-
-        # Debug - Show what non-js search engines see
-        template_context['no_client'] = bool(self.request.get('no_client', False))        
-
-        # TODO: This needs to abstract the jinja env out further...
-        from main import JINJA_ENVIRONMENT as default_jinja_env
-
-        template = default_jinja_env.get_template(template_path)
-        self.response.write(template.render(template_context))
-
-    def serve_404(self, message):
-        pagemeta = {
-            'title': 'Page Not Found',
-            'description': 'Unable to find page, please check your url',
-            'image': 'http://cdn.mplsart.com/assets/social/mplsart_fbimg3.jpg'
-        }
-
-        template_values = {'pagemeta': pagemeta}
-        self.response.set_status(404)
-        self.render_template('./templates/index.html', template_values)
-
-
-class CalendarDetailHandler(BaseController):
+class CalendarDetailHandler(BaseHandler):
     """
     Handler for Serving up the chrome for the event page
     """

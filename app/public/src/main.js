@@ -16,6 +16,8 @@ var PageMeta = require('./components/pages/PageMeta');
 var NavCardsContainer = require('./components/NavCardsContainer').NavCardsContainer;
 var PrimaryMenu = require('./components/pages/PrimaryMenu')
 
+var analytics = require('./utils/analytics');
+
 global.current_page = null; // This is set by PageMixin to the current page for use in widgets
 
 /* Figure out what to do with Routes... This is fugly... */
@@ -32,6 +34,7 @@ ReactRouter.createRoute('/home', function () {
 */
 
 ReactRouter.createRoute('/about', function () {
+    alert('routing to /about...');
     React.unmountComponentAtNode( document.getElementById('main_content'));
     React.render(<AboutPage />, document.getElementById('main_content'));    
 });
@@ -67,10 +70,13 @@ ReactRouter.createRoute('/written/{year}/{month}/{slug}', function (params) {
     React.render(<WrittenArticlePage year={params.year} month={params.month} slug={params.slug} />, document.getElementById('main_content'));    
 });
 
+/*
 ReactRouter.createRoute('*', function () {
     React.unmountComponentAtNode( document.getElementById('main_content'));
     React.render(<Error404Page />, document.getElementById('main_content'));    
 });
+*/
+
 ReactRouter.init();
 
 
@@ -112,7 +118,10 @@ $(function() {
 		// Calling a function in case you want to expand upon this.
 		toggleNav();
 	});
-	$('.internal-link').bind('click tap', routeTo);
+
+    // Important: Including 'tap' here will trigger both events and cause routing to dble load
+    //  and cause invarient react errors. Also, page load analytics record twice.
+	$('.internal-link').bind('click', routeTo);
 });
 
 global.routeTo = function (evt) {
@@ -129,6 +138,8 @@ global.routeTo = function (evt) {
     $("html, body").animate({ scrollTop: 0 }, "slow");
 
     url = anchor.pathname; //https://gist.github.com/jlong/2428561
+
+    analytics.record_event('link', 'click', url, 1);
 
     ReactRouter.goTo(url);
     

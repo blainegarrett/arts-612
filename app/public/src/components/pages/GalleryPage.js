@@ -14,7 +14,7 @@ var GalleryPage = React.createClass({
             resource_url: '/api/galleries'
         }
     },
-    componentDidMount: function () {
+    pageDidMount: function () {
         this.setMeta();
 
         $.ajax({

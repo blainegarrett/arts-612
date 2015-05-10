@@ -150,15 +150,16 @@ var NewHomePage = React.createClass({
         </div>;
     },
 
-    componentDidMount: function () {
-        
+    pageDidMount: function () {
+        // Initialize Page
+
         this.setMeta();
         
         $('body').removeClass('beta');
         $('body').addClass('homepage');
     },
     
-    componentWillUnmount: function() {
+    pageWillUnmount: function() {
         /* Temporary solution */
 
         $('body').addClass('beta');

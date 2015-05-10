@@ -17,7 +17,7 @@ var Error404Page = React.createClass({
         <p>The Page you were looking for could not be found. Try returning to <a href="/" onClick={global.routeTo}>mplsart.com</a>.</p>
         </div>;
     },
-    componentDidMount: function() {
+    pageDidMount: function() {
         this.setMeta();
     }
 });

@@ -3,8 +3,6 @@ Controllers for the Written section
 """
 import voluptuous
 
-from controllers import BaseController
-
 from rest.controllers import RestHandlerBase
 from rest.resource import Resource
 from rest.resource import RestField, SlugField, ResourceIdField, ResourceUrlField, DatetimeField
