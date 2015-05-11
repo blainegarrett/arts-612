@@ -33,39 +33,38 @@ ReactRouter.createRoute('/home', function () {
 });
 */
 
-ReactRouter.createRoute('/about', function () {
-    alert('routing to /about...');
+ReactRouter.createRoute('/about/', function () {
     React.unmountComponentAtNode( document.getElementById('main_content'));
     React.render(<AboutPage />, document.getElementById('main_content'));    
 });
 
 
-ReactRouter.createRoute('/events/{slug}', function (params) {
+ReactRouter.createRoute('/events/{slug}/', function (params) {
     React.unmountComponentAtNode( document.getElementById('main_content'));
     React.render(<EventPage slug={params.slug} />, document.getElementById('main_content'));    
 });
 
-ReactRouter.createRoute('/calendar', function () {
+ReactRouter.createRoute('/calendar/', function () {
     React.unmountComponentAtNode( document.getElementById('main_content'));
     React.render(<CalendarPage/>, document.getElementById('main_content'));    
 });
 
-ReactRouter.createRoute('/galleries', function () {
+ReactRouter.createRoute('/galleries/', function () {
     React.unmountComponentAtNode( document.getElementById('main_content'));
     React.render(<GalleryPage />, document.getElementById('main_content'));    
 });
 
-ReactRouter.createRoute('/galleries/{slug}', function (params) {
+ReactRouter.createRoute('/galleries/{slug}/', function (params) {
     React.unmountComponentAtNode( document.getElementById('main_content'));
     React.render(<GalleryViewPage slug={params.slug} />, document.getElementById('main_content'));    
 });
 
-ReactRouter.createRoute('/written', function () {
+ReactRouter.createRoute('/written/', function () {
     React.unmountComponentAtNode( document.getElementById('main_content'));
     React.render(<WrittenPage />, document.getElementById('main_content'));    
 });
 
-ReactRouter.createRoute('/written/{year}/{month}/{slug}', function (params) {
+ReactRouter.createRoute('/written/{year}/{month}/{slug}/', function (params) {
     React.unmountComponentAtNode( document.getElementById('main_content'));
     React.render(<WrittenArticlePage year={params.year} month={params.month} slug={params.slug} />, document.getElementById('main_content'));    
 });
@@ -96,13 +95,22 @@ global.openMenu = function () {
 	modal.appendTo(document.body);
 }
 
-global.toggleNav = function () {
+global.toggleNav = function (e) {
+
+    var ga_category = 'menu-toggle';
+    var ga_action = e.type;
+    var ga_label;
+
     if ($('body').hasClass('show-menu')) {
         closeMenu();
+        ga_label = 'close';
     } 
     else {
         openMenu()
+        ga_label = 'open';
     }
+
+    analytics.record_event(ga_category, ga_action, ga_label, 1);
 }
 
 
@@ -112,11 +120,11 @@ global.toggleNav = function () {
 $(function() {
     /* Anything run here must act only on the chrome since nothing else is loaded... */
 
-	$('#site-menu').bind('swiperight', function(e) { toggleNav() });
+	$('#site-menu').bind('swiperight', function(e) { toggleNav(e) });
 
-	$('#side_nav_toggle').click(function() {
+	$('#side_nav_toggle').click(function(e) {
 		// Calling a function in case you want to expand upon this.
-		toggleNav();
+		toggleNav(e);
 	});
 
     // Important: Including 'tap' here will trigger both events and cause routing to dble load
@@ -127,19 +135,38 @@ $(function() {
 global.routeTo = function (evt) {
     /* Global Helper to handle in-app click routing */
     // TODO: This only works on <a href="" ...> tags
+    var anchor, $anchor, url;
 
     // Close open menus
     global.closeMenu()
 
-    var anchor, url;
-    event.preventDefault();
+    // Prevent Default for internal-links
+    evt.preventDefault();
 
+    // Resolve target action
     anchor = evt.currentTarget;
+    $anchor = $(anchor);
+    url = anchor.pathname; //https://gist.github.com/jlong/2428561
+    
+    // Record GA Event - This should be moved elsewhere?
+    var ga_category = $anchor.data('ga-category');
+    var ga_action = $anchor.data('ga-action');
+    var ga_label = $anchor.data('ga-label');
+
+    if (!ga_category) {
+        ga_category = 'link';
+    }
+    if (!ga_action) {
+        ga_action = url;
+    }
+
+    if (!ga_label) {
+        ga_label = $(anchor).text();
+    }
+
     $("html, body").animate({ scrollTop: 0 }, "slow");
 
-    url = anchor.pathname; //https://gist.github.com/jlong/2428561
-
-    analytics.record_event('link', 'click', url, 1);
+    analytics.record_event(ga_category, ga_action, ga_label, 1);
 
     ReactRouter.goTo(url);
     

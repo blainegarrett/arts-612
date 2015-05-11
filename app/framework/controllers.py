@@ -32,7 +32,7 @@ class BaseHandler(webapp2.RequestHandler):
         template_context['settings_dict']['domain'] = get_domain()
 
         # Tack on the google analytics profiles
-        if False and is_appspot(): #TODO: Remove this before being prod ready
+        if is_appspot(): #TODO: Remove this before being prod ready
             template_context['settings_dict']['ga_profile_id'] = 'UA-54271335-1'
         else:
             template_context['settings_dict']['ga_profile_id'] = 'UA-54271335-2'

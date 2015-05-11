@@ -77,9 +77,9 @@ var FullEventRenderer = React.createClass({
         
         var eventDates = []
 
-        eventDates = r.event_dates.map(function (ed) {
-            return <div className="event-date">
-                <dt class="label">{ ed.label } </dt>
+        eventDates = r.event_dates.map(function (ed, i) {
+            return <div key={ 'event_date-' + i } className="event-date">
+                <dt className="event-label">{ ed.label } </dt>
                 <dd><NiceDate start={ ed.start } end={ ed.end } eventdate_type={ ed.type } /></dd>
             </div>
         });
@@ -241,7 +241,7 @@ var PodRenderer = React.createClass({
 
         image_url = img_resource.url;
         image_container = <div className="card-image fixed-size">
-            <a href={ link_url } onClick={ global.routeTo } title={ alt_text } style={ styles }>
+            <a href={ link_url } data-ga-category="event-pod-click" data-ga-label="image" onClick={ global.routeTo } title={ alt_text } style={ styles }>
                 <img src={image_url} className="img-responsive" title={alt_text} />
             </a>
         </div>
@@ -338,7 +338,7 @@ var PodRenderer = React.createClass({
             { image }
 
             <div className="card-content">
-                <div className="card-title"><a href={ post_url } onClick={global.current_page.getRoute }>{e.name }</a></div>
+                <div className="card-title"><a href={ post_url } data-ga-category="event-pod-click" onClick={global.current_page.getRoute }>{e.name }</a></div>
 
                 <div className="card-detail event-time"><NiceDate start={ target_event_date.start } end={ target_event_date.end } eventdate_type={ target_event_date.type } /></div>
                 <div className="card-detail event-venue-name">{target_event_date.venue.name}</div>
