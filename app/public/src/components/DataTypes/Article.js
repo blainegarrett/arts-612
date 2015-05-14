@@ -89,7 +89,7 @@ var PodArticleRenderer = React.createClass({
         var m = moment(article.published_date);
         var date_slug = m.format('YYYY/MM/');
 
-        return <div>
+        return <div className="card-wrap">
             <div className="card-image">
                 <a href={article.permalink} title={article.title} onClick={global.routeTo }>{ image }</a>
             </div>

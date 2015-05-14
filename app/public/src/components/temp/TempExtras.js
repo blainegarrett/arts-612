@@ -20,7 +20,7 @@ var FundraiserCard =  React.createClass({
             ends_node = <div className="card-detail fundraiser-end-date">Campaign ends { end_date.format('MMMM Do') }</div>;
         }
 
-        return <div>
+        return <div className="card-wrap">
             <div className="card-image">
                 <a href={r.website} target="_new" title={ 'Support:' +  r.title } >
                     <img src={ r.img_url } className="img-responsive" title={ 'Support:' +  r.title } />
@@ -63,12 +63,14 @@ var TempExtras = React.createClass({
 
 
         <div id="panel-hashtag" className="col-xs-12 card">
-            <div className="row">
-                <div className="solid-bg col-sm-4">
-                    #mplsart
-                </div>
-                <div className="solid-white col-sm-8">
-                    If you are making art or looking at art in the Twin Cities, use the hashtag to show it off.
+            <div className="card-wrap">
+                <div className="row">
+                    <div className="solid-bg col-sm-4">
+                        #mplsart
+                    </div>
+                    <div className="solid-white col-sm-8">
+                        If you are making art or looking at art in the Twin Cities, use the hashtag to show it off.
+                    </div>
                 </div>
             </div>
         </div>
