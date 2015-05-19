@@ -3,8 +3,6 @@ Controllers for the Written section
 """
 import voluptuous
 
-from controllers import BaseController
-
 from rest.controllers import RestHandlerBase
 from rest.resource import Resource
 from rest.resource import RestField, SlugField, ResourceIdField, ResourceUrlField, DatetimeField
@@ -127,19 +125,19 @@ class FeaturedApiHandler(RestHandlerBase):
         else:
             if is_appspot():
                 resource_ids = [
-                
-                
-                   'RXZlbnQeHzUxMTcwMjQ4NDE3NjA3Njg',
-                   'RXZlbnQeHzU3Mzc2MTExMDg4MTA3NTI',
-                   'RXZlbnQeHzU2NDU3ODQ0Mzk1ODY4MTY',
-                   'RXZlbnQeHzU3NTMyNjQxMTcxMjEwMjQ',
-                   'QmxvZ1Bvc3QeHzU3NDE4MzA2NDU3NDM2MTY'
+                    'RXZlbnQeHzU3NDQyNzc5NzE3OTU5Njg',
+                    'RXZlbnQeHzU2NDk5NTI3MDUzNDc1ODQ',
+                    'RXZlbnQeHzU2OTMzNDEyNzAyNzgxNDQ',
+                    'RXZlbnQeHzYyNzIwMTgwNTE3NjAxMjg',
+                    'QmxvZ1Bvc3QeHzU3MTc2NDgxMDA4MTg5NDQ'                
                 ]
             else:
                 resource_ids = [
                 'RXZlbnQeHzU2Mjk0OTk1MzQyMTMxMjA',
+                'RXZlbnQeHzUwNjY1NDk1ODA3OTE4MDg',
                 'RXZlbnQeHzU2Mjk0OTk1MzQyMTMxMjA',
-                'QmxvZ1Bvc3QeHzQ3ODUwNzQ2MDQwODExNTI'
+                'RXZlbnQeHzUwNjY1NDk1ODA3OTE4MDg',
+                'RXZlbnQeHzU2Mjk0OTk1MzQyMTMxMjA',
                 ]
 
             results = []

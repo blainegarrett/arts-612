@@ -23,7 +23,7 @@
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 
     <!-- Custom styles for this template -->
-	<link rel="stylesheet" href="/static/themes/v0/core.css?52" />
+	<link rel="stylesheet" href="/static/themes/v0/core.css?64" />
 
 	<!-- important bits -->
 	<meta name="google-site-verification" content="5rh0RiNkYuPuVOdrIXk4mY4AQ87uS7Ad_ZigdjDNBp0" />
@@ -80,13 +80,16 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
 
+	<script>
+		var settings = {[{ settings|safe }]};
+	</script>
+
 	{% if not no_client %}
 	    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	    <script src="/static/js/jquery.mobile-events.min.js"></script>
 		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-		<script src="/public/build/main.js?52"></script>
+		<script src="/public/build/main.js?64"></script>
 	{% endif %}
-
 
 	<!-- start google analytics -->
 	<script>
@@ -95,8 +98,8 @@
 	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-	  ga('create', 'UA-54271335-1', 'auto');
-	  ga('send', 'pageview');
+	  ga('create', '{[{ settings_dict["ga_profile_id"] }]}', {'cookieDomain': 'none' });
+	
 
 	</script>
 	<!-- end google analytics -->

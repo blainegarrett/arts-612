@@ -65,8 +65,18 @@ var FileRecord = React.createClass({
     },
 
     render: function(){
-        var styles = {}
-        styles['background-image'] = 'url("' + this.state.file.versions.THUMB.url + '")';
+        var styles = {};
+        
+        if (this.state.file.versions) {
+            var thumb_url = '';
+            
+            if (this.state.file.versions.THUMB) {
+                thumb_url = this.state.file.versions.THUMB.url;
+            }
+            styles['background-image'] = 'url("' + thumb_url + '")';
+        }
+
+
 
         var overlay = <B.Popover title={ this.state.file.filename }>
                 <textarea className="form-control inline-editable" disabled={this.state.saving} type="text" placeholder="Click to Edit Caption" value={ this.state.file.caption } onBlur={ this.changeHandler } onChange={ this.typeHandler } />

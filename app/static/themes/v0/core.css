@@ -494,10 +494,12 @@ body.beta .brand-title-art { color: inherit; text-transform: uppercase;}
     }
     .jive-card .jive-card-image a {
         display:block;
-
         width:100%;
     }
-    
+
+    #featured-hero-area {
+        min-height:300px;
+    }
     .featured-events-wrapper .jive-card .jive-card-image a {
         height:131px;
         background-size: cover;
@@ -562,7 +564,7 @@ body.beta .brand-title-art { color: inherit; text-transform: uppercase;}
         transition: height .5s ease-in;
     }
 
-    @media screen and (min-width: 500px) {
+    @media screen and (min-height: 500px) {
         .show-nav.homepage #header_nav_cards .container {
             transition: opacity .5s ease-in;
             transition: height .5s ease-in;
@@ -606,6 +608,9 @@ body.beta .brand-title-art { color: inherit; text-transform: uppercase;}
     		#header_nav_cards .item a:hover {
     			text-decoration:none;
     		}
+
+
+            /*
     		#header_nav_cards .item a:hover span {
     			color: #ff0099;
     		}
@@ -621,10 +626,11 @@ body.beta .brand-title-art { color: inherit; text-transform: uppercase;}
     			padding-top: 7px;
     			z-index: 15;
     		}
+    		*/
     		
     		#header_nav_cards .jive-card .jive-card-image div.jive-card-title .date {
     		    text-align:center;
     		}
     		#header_nav_cards .jive-card .jive-card-image a:hover div.jive-card-title .date {
-    		    color: #2a6496;;
+    		    color: #2a6496;
     		}

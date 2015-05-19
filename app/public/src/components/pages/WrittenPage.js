@@ -29,7 +29,7 @@ var WrittenPage = React.createClass({
         };
     },
 
-    componentDidMount: function () {
+    pageDidMount: function () {
         this.setMeta();
 
         $.ajax({

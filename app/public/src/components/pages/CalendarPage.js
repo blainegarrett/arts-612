@@ -15,7 +15,7 @@ var CalendarPage = React.createClass({
         <p>Returning soon</p>
         </div>;
     },
-    componentDidMount: function() {
+    pageDidMount: function() {
         this.setMeta();
     }
 });
