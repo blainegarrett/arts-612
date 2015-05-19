@@ -134,8 +134,10 @@ class FeaturedApiHandler(RestHandlerBase):
             else:
                 resource_ids = [
                 'RXZlbnQeHzU2Mjk0OTk1MzQyMTMxMjA',
+                'RXZlbnQeHzUwNjY1NDk1ODA3OTE4MDg',
                 'RXZlbnQeHzU2Mjk0OTk1MzQyMTMxMjA',
-                'QmxvZ1Bvc3QeHzQ3ODUwNzQ2MDQwODExNTI'
+                'RXZlbnQeHzUwNjY1NDk1ODA3OTE4MDg',
+                'RXZlbnQeHzU2Mjk0OTk1MzQyMTMxMjA',
                 ]
 
             results = []

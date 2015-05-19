@@ -165,12 +165,16 @@ var MarqueeRenderer = React.createClass({
         var rendered_date;
 
         start = moment(Date.parse(target_event_date.start));
-        rendered_date = start.format("ddd, MMM Do");
+        rendered_day = start.format("ddd");
+        rendered_date = start.format("MMM Do");
 
         return <div className="jive-card-image">
             <a href={ event_url } onClick={ global.routeTo } style={ styles }>
                 <div className="jive-card-title">
-                    <div className="date">{ rendered_date }</div>
+                    <div className="date">
+                        <span className="hidden-xs hidden-sm">{ rendered_day }, </span>
+                        <span>{ rendered_date }</span>
+                    </div>
                 </div>
             </a>
         </div>;

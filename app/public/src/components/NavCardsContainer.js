@@ -79,7 +79,7 @@ var NavCardsContainer = React.createClass({
         });
 
 
-        return <div className="container">
+        return <div className="container hidden-xs">
     	    <div className="row">
     		    <div className="row-shim">{ rendered_marquee_events }</div>
     		    <div className="col-sm-4 item jive-card">
