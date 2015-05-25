@@ -20,8 +20,8 @@
 
 	<!-- Custom styles for this template -->
 	<link rel="stylesheet" href="/static/themes/v0/core.css?52" />
-	<link href="/static/dashboard/dashboard.css" rel="stylesheet">
-
+	<link href="/static/dash/dashboard.css" rel="stylesheet">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 
 	<!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
@@ -42,7 +42,151 @@
 		<div id="header_nav" class="navbar navbar-fixed-top navbar-inverse" role="navigation">
 			<div class="container-fluid">
 		        <div class="navbar-header">
-		          <a class="navbar-brand internal-link" href="/dashboard" title="MPLSART.COM Home Page"><span class="brand-title-mpls">MPLS</span><span class="brand-title-art">ART.COM</span></a>
+
+					<script>
+						$(function() {
+							$('#menu-trigger').bind('click', function () {
+								$(this).toggleClass('open');
+								
+								$('.sidebar').toggleClass('show');
+							});
+						});
+
+					
+					</script>
+
+
+					<style>
+					
+					.sidebar {
+						transform: translate3d(-250px, 0, 0);
+						width:250px;
+						transition-duration: 300ms;
+					}
+					.sidebar.show {
+						transform: translate3d(0, 0, 0);
+						transition-duration: 300ms;
+
+					}
+					
+					.header-inner {
+					  list-style: none;
+					  padding: 15px 0;
+					}
+
+					.header-inner > li {
+					  display: inline-block;
+					  vertical-align: top;
+					}
+
+					.header-inner > li:not(:last-child) {
+					  margin-right: -2px;
+					}
+
+					#menu-trigger {
+					  width: 65px;
+					  height: 35px;
+					  cursor: pointer;
+					}
+
+					#menu-trigger .line-wrap .line {
+					  background-color: #fff;
+					}
+
+					#menu-trigger:before {
+					  /* content: ""; */
+					  position: absolute;
+					  top: 9px;
+					  left: 7px;
+					  width: 45px;
+					  height: 45px;
+					  border-radius: 50%;
+					  background: rgba(255, 255, 255, 0.22);
+					  -webkit-transition: all;
+					  -o-transition: all;
+					  transition: all;
+					  -webkit-transition-duration: 300ms;
+					  transition-duration: 300ms;
+					  -webkit-backface-visibility: hidden;
+					  -moz-backface-visibility: hidden;
+					  backface-visibility: hidden;
+					  -webkit-transform: scale(0);
+					  -ms-transform: scale(0);
+					  -o-transform: scale(0);
+					  transform: scale(0);
+					  z-index: 0;
+					}
+
+					#menu-trigger.open:before {
+					  -webkit-transform: scale(1);
+					  -ms-transform: scale(1);
+					  -o-transform: scale(1);
+					  transform: scale(1);
+					}
+					/*
+					 * Collapse Menu Icons
+					 */
+
+					.line-wrap {
+					  width: 18px;
+					  height: 12px;
+					  -webkit-transition: all;
+					  -o-transition: all;
+					  transition: all;
+					  -webkit-transition-duration: 300ms;
+					  transition-duration: 300ms;
+					  margin: 10px 20px;
+					}
+
+					.line-wrap .line {
+					  width: 18px;
+					  height: 2px;
+					  -webkit-transition: all;
+					  -o-transition: all;
+					  transition: all;
+					  -webkit-transition-duration: 300ms;
+					  transition-duration: 300ms;
+					}
+
+					.line-wrap .line.center {
+					  margin: 3px 0;
+					}
+
+					.open .line-wrap {
+					  -webkit-transform: rotate(180deg);
+					  -ms-transform: rotate(180deg);
+					  -o-transform: rotate(180deg);
+					  transform: rotate(180deg);
+					}
+
+					.open .line-wrap .line.top {
+					  width: 12px;
+					  transform: translateX(8px) translateY(1px) rotate(45deg);
+					  -webkit-transform: translateX(8px) translateY(1px) rotate(45deg);
+					}
+
+					.open .line-wrap .line.bottom {
+					  width: 12px;
+					  transform: translateX(8px) translateY(-1px) rotate(-45deg);
+					  -webkit-transform: translateX(8px) translateY(-1px) rotate(-45deg);
+					}
+					</style>
+
+					<ul class="header-inner">
+						<li id="menu-trigger" class="" data-trigger="#sidebar" >
+						                    <div class="line-wrap">
+						                        <div class="line top"></div>
+						                        <div class="line center"></div>
+						                        <div class="line bottom"></div>
+						                    </div>
+						                </li>
+							<li>
+								<a class="navbar-brand internal-link" href="/dash" title="MPLSART.COM Home Page"><span class="brand-title-mpls">MPLS</span><span class="brand-title-art">ART.COM</span></a>
+							</li>
+						</ul>
+
+
+
 		        </div>
 
 		        <div id="navbar" class="navbar-collapse collapse">
@@ -56,9 +200,6 @@
 		            <input type="text" class="form-control" placeholder="Search...">
 		          </form>
 		        </div>
-
-
-
 
 
 		      </div><!-- /.container -->
@@ -83,11 +224,10 @@
 		</div><!--/ #site-canvas -->	
 	</div><!--/ #site-wrapper -->
 
-
-
     <div class="container-fluid">
       <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
+	
+        <div class="col-sm-3 col-md-2 sidebar sidebar-visible">
           <ul class="nav nav-sidebar">
             <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
             <li><a href="#">Reports</a></li>
@@ -268,7 +408,7 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
     <script src="/static/js/jquery.mobile-events.min.js"></script>
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 

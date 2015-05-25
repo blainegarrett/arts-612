@@ -5,13 +5,13 @@ Site Administrator Applicatation
 import os
 import sys
 import webapp2
-from framework.controllers import MerkabahBaseController
+from framework.controllers import BaseHandler
 
 # Add the external libs
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../external'))
 
 
-class MainAdminHandler(MerkabahBaseController):
+class MainAdminHandler(BaseHandler):
     """
     Serve up the Chrome for the Admin React Application
     """
@@ -23,11 +23,11 @@ class MainAdminHandler(MerkabahBaseController):
 
         template_values = {}
 
-        self.render_template('dashboard/app.html', template_values)
+        self.render_template('dash/app.html', template_values)
 
 
 # Setup Routes for React Application
-routes = [(r'.*', 'dashboard.main.MainAdminHandler')]
+routes = [(r'.*', 'dash.main.MainAdminHandler')]
 
 # Setup webapp2 application
 app = webapp2.WSGIApplication(routes, debug=True)

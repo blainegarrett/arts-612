@@ -93,8 +93,8 @@ handlers:
   secure: optional
   login: admin
 
-- url: /dashboard.*
-  script: dashboard.main.app
+- url: /dash.*
+  script: dash.main.app
   secure: optional
   login: admin
 
