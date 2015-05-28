@@ -286,3 +286,145 @@ class PostDetailApiHandler(RestHandlerBase):
         post = posts_api.edit_post(post, self.cleaned_data)
 
         self.serve_success(Resource(post, REST_RULES).to_dict())
+
+
+class ImportWPHandler(BaseHandler):
+    total = 0
+    author_map = {}
+    author_totals = {}
+    img_urls = []
+
+    def process_post_content(self, content):
+        import re
+        content = content.replace(u'\xc2\xa0', ' ')
+        
+        image_urls = re.findall("(http://www.mplsart.com/written/wp-content/uploads/[^\"]*)\"", content, re.MULTILINE)
+        if image_urls:
+            self.img_urls.extend(image_urls)
+            #self.img_urls.extend(image_urls.groups())
+            #raise Exception(image_urls.groups())
+            #self.response.write(image_urls)
+
+        content = content.replace('http://www.mplsart.com/written/wp-content/uploads/', 'http://cdn.mplsart.com/written/wp-content/uploads/')
+        content = content.replace('http://www.mplsart.com/blog/blog_pics/', 'http://cdn.mplsart.com/written/wp-content/uploads/blog_pics/')
+        content = content.replace('http://mplsart.com/blog/blog_pics/', 'http://cdn.mplsart.com/written/wp-content/uploads/blog_pics/')
+        content = content.replace('http://mplsart.com/images/', 'http://cdn.mplsart.com/written/wp-content/uploads/images/')
+        content = content.replace('http://www.mplsart.com/images/', 'http://cdn.mplsart.com/written/wp-content/uploads/images/')
+        
+        content = content.replace('\n', '<br />')
+        return content
+        
+    def migrate_post(self, post_data):
+        import datetime
+        
+        # Filter out stuff we don't want to migrate...
+
+        if post_data.get('post_type') not in ('post', 'page'):
+            return
+        
+        if post_data.get('post_status') == 'draft':
+            return
+        
+        # Skip posts by slug
+        if post_data.get('post_name') in ('blaine-test-post', 'critics', '66', '43'):
+            return
+
+        post_password = post_data.get('post_password')
+        comment_status = post_data.get('comment_status')
+        post_excerpt = post_data.get('post_excerpt')
+        post_content = post_data.get('post_content')
+        post_modified_gmt = post_data.get('post_modified_gmt')
+        post_date_gmt = post_data.get('post_date_gmt')
+        post_category = post_data.get('post_category')
+        post_parent = post_data.get('post_parent')
+        post_author = post_data.get('post_author')
+        post_date = post_data.get('post_date')
+        to_ping = post_data.get('to_ping')
+        post_status = post_data.get('post_status')
+        post_title = post_data.get('post_title')
+        post_modified = post_data.get('post_modified')
+        guid = post_data.get('guid')
+        post_name = post_data.get('post_name')
+        ping_status = post_data.get('ping_status')
+        post_mime_type = post_data.get('post_mime_type')
+        ID = post_data.get('ID')
+        menu_order = post_data.get('menu_order')
+        pinged = post_data.get('pinged')
+        post_type = post_data.get('post_type')
+        post_content_filtered = post_data.get('post_content_filtered')
+        comment_count = post_data.get('comment_count')
+
+        
+        self.response.write( post_type + ') - <a href="/written/2009/02/' +  post_name + '" target="_new">' + post_name + '</a> ... (cat: ' + post_category + ') ' + post_author + '<br />')
+
+        self.author_totals[str(post_author)] = int(self.author_totals.get(str(post_author), 0)) + 1
+        self.total += 1
+
+        # REST PAYLOAD
+
+
+        # 2006-08-05 02:56:12 GMT
+
+        
+
+        post_content = self.process_post_content(post_content)
+
+        payload = {
+            'slug': post_name,
+            'title': post_title,
+            'content': post_content,
+            'summary': '',
+            'published_date': datetime.datetime.strptime(post_date_gmt, '%Y-%m-%d %H:%M:%S'),
+            'is_published': True,
+            'author_resource_id': self.author_map.get(str(post_author))
+        }
+
+        post = posts_api.create_post(payload)
+
+    
+    def get(self):
+        
+        # Step 1: Create Author records (this is for local use only - these exist on prod)
+        from auth.api import create_user
+        from rest.utils import get_key_from_resource_id
+
+        author_data = [
+            {'old_id': None, 'key': 'VXNlch4fNTE4NDU4MTg1ODc1NDU2MA', 'firstname': 'Katie',  'lastname': 'Garrett', 'website': 'http://mplsart.com'},
+            {'old_id': None, 'key': 'VXNlch4fNTY3MDQwNTg3NjQ4MjA0OA', 'firstname': 'Blaine',  'lastname': 'Garrett', 'website': 'http://mplsart.com'},
+            {'old_id': 2, 'key': 'VXNlch4fNTc2NzQwOTU5MTkxMDQwMA', 'firstname': 'Emma',  'lastname': 'Berg', 'website': 'http://mplsart.com'},
+            {'old_id': 4, 'key': 'VXNlch4fNTY5NjQ1OTE0ODA5OTU4NA', 'firstname': 'Kristoffer',  'lastname': 'Knutson', 'website': 'http://mplsart.com'},
+            {'old_id': 37, 'key': 'VXNlch4fNTc1OTgyNjI5MDI3ODQwMA', 'firstname': 'John',  'lastname': 'Megas', 'website': 'http://mplsart.com'},
+            {'old_id': 38, 'key': 'VXNlch4fNTY5NjYwNTcxMzg1ODU2MA', 'firstname': 'Tristan',  'lastname': 'Pollock', 'website': 'http://mplsart.com'},
+            {'old_id': 14, 'key': 'VXNlch4fNTc1MTM5OTgzMjg3OTEwNA', 'firstname': 'tiny',  'lastname': 'shoes', 'website': 'http://mplsart.com'},
+            {'old_id': None, 'key': 'VXNlch4fNTcwMDg2NjA1Mjk4MDczNg', 'firstname': 'Melissa',  'lastname': 'Stang', 'website': 'http://mplsart.com'},
+            {'old_id': None, 'key': 'VXNlch4fNTczMDQ1MDA1NjE1MTA0MA', 'firstname': 'Maddy',  'lastname': 'Huges', 'website': 'http://mplsart.com'},
+        ]
+        
+        for user_data in author_data:
+            old_id = user_data.pop('old_id')
+            user_resource_id = user_data['key']
+            user_data['key'] = get_key_from_resource_id(user_resource_id)
+            create_user(user_data)
+            
+            if old_id:
+                self.author_map[str(old_id)] = user_resource_id
+
+        # Step 2: Dump existing migrated data
+
+        posts = BlogPost.query().fetch(1000)
+        for p in posts:
+            p.key.delete()
+        
+
+        # Step 3: Read in new data
+        import json
+        data = open('./controllers/wp_posts.json', 'r').read()
+        j_data = json.loads(data)
+        
+        for post_data in j_data:
+            self.migrate_post(post_data)
+        
+        self.response.write(self.total)
+        self.response.write(self.author_totals)
+        self.response.write(self.img_urls)
+
