@@ -12,6 +12,7 @@ class BlogPost(ndb.Model):
     summary = ndb.TextProperty()
 
     author_resource_id = ndb.StringProperty()
+    category_resource_id = ndb.StringProperty()
 
     primary_image_resource_id = ndb.StringProperty()
     attachment_resources =  ndb.StringProperty(repeated=True)
@@ -30,3 +31,14 @@ class BlogPost(ndb.Model):
     @property
     def absolute_permalink(self):
         return 'http://%s%s' % (get_domain(), self.permalink)
+
+
+class BlogCategory(ndb.Model):
+    """
+    Class Representing a Blog Category
+    """
+
+    title = ndb.StringProperty() # Post Name
+    slug = ndb.StringProperty() # Post slug for permalinks
+    
+    

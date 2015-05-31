@@ -18,8 +18,8 @@ from rest.resource import ResourceField
 from files.rest_helpers import REST_RESOURCE_RULES as FILE_REST_RULES
 from auth.controllers import REST_RULES as USER_REST_RULES
 from modules.blog.internal import api as posts_api
-from modules.blog.internal.models import BlogPost
-from modules.blog.constants import AUTHOR_PROP, PRIMARY_IMAGE_PROP
+from modules.blog.internal.models import BlogPost, BlogCategory
+from modules.blog.constants import AUTHOR_PROP, PRIMARY_IMAGE_PROP, CATEGORY_PROP
 
 DEFAULT_POST_IMAGE = 'http://cdn.mplsart.com/assets/social/mplsart_fbimg3.jpg'
 
@@ -126,8 +126,18 @@ class WrittenMainRssFeedHandler(BaseHandler):
         return
 
 
-# Rest Controllers
+# Rest Controllers 
 resource_url = 'http://' + get_domain() + '/api/posts/%s'
+category_resource_url = 'http://' + get_domain() + '/api/post_categories/%s'
+
+
+CATEGORY_REST_RULES = [
+    ResourceIdField(output_only=True),
+    ResourceUrlField(category_resource_url, output_only=True),
+    SlugField(BlogCategory.slug, required=True),
+    RestField(BlogCategory.title, required=True),
+]
+
 
 REST_RULES = [
     ResourceIdField(output_only=True),
@@ -146,11 +156,15 @@ REST_RULES = [
 
     RestField(BlogPost.primary_image_resource_id, required=False),
     RestField(BlogPost.author_resource_id, required=False),
+    RestField(BlogPost.category_resource_id, required=False),
 
     ResourceField(AUTHOR_PROP, required=False, output_only=True,
         resource_id_prop='author_resource_id', resource_rules=USER_REST_RULES),
     ResourceField(PRIMARY_IMAGE_PROP, required=False, output_only=True,
         resource_id_prop='primary_image_resource_id', resource_rules=FILE_REST_RULES),
+    ResourceField(CATEGORY_PROP, required=False, output_only=True,
+        resource_id_prop='category_resource_id', resource_rules=CATEGORY_REST_RULES),
+
 ]
 
 
@@ -161,6 +175,60 @@ def create_resource_from_entity(e, verbose=False):
     """
 
     return Resource(e, REST_RULES).to_dict()
+
+class PostCategoriesApiHandler(RestHandlerBase):
+    """
+    Post Categorie REST Handler
+    """
+
+    def get_rules(self):
+        return CATEGORY_REST_RULES
+
+    def get_param_schema(self):
+        
+        return {
+            'limit': voluptuous.Coerce(int),
+            'cursor': coerce_to_cursor,
+            #'sort': voluptuous.Coerce(str),
+            'get_by_slug': voluptuous.Coerce(str),
+            #'is_published': voluptuous.Coerce(voluptuous.Boolean()),
+            #'q': voluptuous.Coerce(str)
+        }
+    def _get(self):
+        
+        # Refactor this...
+        results = []
+        entities = BlogCategory.query().fetch(1000)
+        for e in entities:
+            results.append(Resource(e, CATEGORY_REST_RULES).to_dict())
+
+        cursor = None
+        more = None
+        self.serve_success(results, {'cursor': cursor, 'more': more})
+
+    def _post(self):
+        """
+        Create a Post
+        """
+
+        category = posts_api.create_post_category(self.cleaned_data)
+        self.serve_success(Resource(category, CATEGORY_REST_RULES).to_dict())
+
+
+class PostCategoryDetailApiHandler(RestHandlerBase):
+
+    def _get(self, resource_id):
+        post = posts_api.get_post_category_by_resource_id(resource_id)
+        self.serve_success(Resource(post, CATEGORY_REST_RULES).to_dict())
+
+    def _put(self, resource_id):
+        e = posts_api.get_post_category_by_resource_id(resource_id)
+        e = posts_api.edit_category(e, self.cleaned_data)
+
+        self.serve_success(Resource(e, CATEGORY_REST_RULES).to_dict())
+
+    def get_rules(self):
+        return CATEGORY_REST_RULES
 
 
 class PostsApiHandler(RestHandlerBase):
