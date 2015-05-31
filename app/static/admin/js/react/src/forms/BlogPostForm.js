@@ -44,7 +44,19 @@ BlogPostForm = React.createClass({
                 console.error(this.props.resource_url, status, err.toString());
             }.bind(this)
         });
-        
+
+        // Get Category data
+        $.ajax({
+            url: '/api/post_categories',
+            dataType: 'json',
+            success:  function(data) {
+                this.setState({category_resources:data.results});
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(this.props.resource_url, status, err.toString());
+            }.bind(this)
+        });
+
     },
 
     getInitialState: function () {
@@ -55,7 +67,8 @@ BlogPostForm = React.createClass({
             errors: [],
             is_edit: this.props.is_edit,
             data: {results: {}},
-            author_resources: []
+            author_resources: [],
+            category_resources: []
         };
     },
 
@@ -139,9 +152,14 @@ BlogPostForm = React.createClass({
 
 
     render: function(){
+        // Note: If the entities do not exist, the page never loads...
         if (this.state.author_resources.length == 0) {
             return <div>Loading...</div>
         }
+        if (this.state.category_resources.length == 0) {
+            return <div>Loading...</div>
+        }
+
         if (this.state.is_edit && !this.state.data.results.title) {
             return <div>Loading...</div>
         }
@@ -172,6 +190,12 @@ BlogPostForm = React.createClass({
             return [obj.resource_id, obj.firstname + ' ' + obj.lastname + ' ' + obj.resource_id]
         });
 
+        // Temporary Author UI...
+        var category_resource_choices = [];
+        var category_resource_choices = this.state.category_resources.map(function (obj) {
+            return [obj.resource_id, obj.title + ' ' + obj.slug + ' ' + obj.resource_id]
+        });
+
         console.log(this.state.data);
         return <div className="row">
         
@@ -188,6 +212,8 @@ BlogPostForm = React.createClass({
               <DateTimeField id="published_date" form={this}  ref="field.published_date"  val={this.state.data.results.published_date } widget={DateRangeWidget} />
 
               <ChoiceField id="author_resource_id" form={this} ref="field.author_resource_id"  val={this.state.data.results.author_resource_id } widget={CheckboxWidget} choices={author_resource_choices} />
+              <ChoiceField id="category_resource_id" form={this} ref="field.category_resource_id"  val={this.state.data.results.category_resource_id } widget={CheckboxWidget} choices={category_resource_choices} />
+
 
               <TextField id="summary"  ref="field.summary" val={this.state.data.results.summary } form={this} widget={TextareaWidget} placeholder="Post Summary" />
               <TextField id="content"  ref="field.content" val={this.state.data.results.content } form={this} widget={TextareaWidget} placeholder="Post content" />
