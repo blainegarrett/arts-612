@@ -78,9 +78,36 @@ var FullEventRenderer = React.createClass({
         var eventDates = []
 
         eventDates = r.event_dates.map(function (ed, i) {
+
+            // Generate Google Calendar URL
+            var venue_resource = ed.venue;
+            var v_addr = encodeURIComponent(venue_resource.name).replace(/%20/g, "+") + ',+' + encodeURIComponent(venue_resource.address).replace(/%20/g, "+") + ',+' + encodeURIComponent(venue_resource.city).replace(/%20/g, "+") + ',+MN';
+
+
+            var g_url = 'https://www.google.com/calendar/render?action=TEMPLATE&text=';
+            g_url += encodeURIComponent(r.name + ' (' + ed.label + ')').replace(/%20/g, "+");
+            g_url += '&ctz=America/Chicago&dates=';
+            g_url += moment(Date.parse(ed.start)).utc().format('YYYYMMDDTHHmm') + '00Z/';
+            g_url += moment(Date.parse(ed.end)).utc().format('YYYYMMDDTHHmm') + '00Z';
+            g_url += '&details=' + encodeURIComponent(r.summary).replace(/%20/g, "+") + ' \n\nFor more info visit: http://mplsart.com/events/' + resource.slug
+            g_url += '&location=' + v_addr;
+            g_url += '&sf=true&output=xml#eventpage_6';
+
             return <div key={ 'event_date-' + i } className="event-date">
                 <dt className="event-label">{ ed.label } </dt>
-                <dd><NiceDate start={ ed.start } end={ ed.end } eventdate_type={ ed.type } /></dd>
+                <dd>
+                    <NiceDate start={ ed.start } end={ ed.end } eventdate_type={ ed.type } /> 
+
+                    <div className="dropdown" style={{'display': 'inline'}}>
+                      <button className="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true" style={{'border-color': 'transparent'}}>
+                        <span className="caret"></span>
+                      </button>
+                      <ul className="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                        <li role="presentation"><a role="menuitem" tabindex="-1" target="_new" href={g_url}>Add to Google Calendar</a></li>
+                      </ul>
+                    </div>
+
+                </dd>
             </div>
         });
 
