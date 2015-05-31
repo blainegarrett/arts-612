@@ -359,6 +359,7 @@ class PostDetailApiHandler(RestHandlerBase):
 class ImportWPHandler(BaseHandler):
     total = 0
     author_map = {}
+    category_map = {}
     author_totals = {}
     img_urls = []
 
@@ -378,9 +379,9 @@ class ImportWPHandler(BaseHandler):
         content = content.replace('http://mplsart.com/blog/blog_pics/', 'http://cdn.mplsart.com/written/wp-content/uploads/blog_pics/')
         content = content.replace('http://mplsart.com/images/', 'http://cdn.mplsart.com/written/wp-content/uploads/images/')
         content = content.replace('http://www.mplsart.com/images/', 'http://cdn.mplsart.com/written/wp-content/uploads/images/')
-        
+
         content = content.replace('\n', '<br />')
-        return content
+        return u"<p>%s</p>" % content
         
     def migrate_post(self, post_data):
         import datetime
@@ -423,17 +424,23 @@ class ImportWPHandler(BaseHandler):
         comment_count = post_data.get('comment_count')
 
         
-        self.response.write( post_type + ') - <a href="/written/2009/02/' +  post_name + '" target="_new">' + post_name + '</a> ... (cat: ' + post_category + ') ' + post_author + '<br />')
+        self.response.write( post_type + ') - <a href="/written/2009/02/' +  post_name + '" target="_new">' + post_name + '</a> ... (cat: ' + post_category + ', parent: ' + post_parent + ') ' + post_author + '<br />')
 
         self.author_totals[str(post_author)] = int(self.author_totals.get(str(post_author), 0)) + 1
         self.total += 1
 
         # REST PAYLOAD
 
+        category_resource_id = None
 
-        # 2006-08-05 02:56:12 GMT
+        if post_parent and not post_parent == u'0':
+            if int(post_parent) == 175:
+                category_resource_id = self.author_map['exhibition-reviews']
+            else:
+                category_resource_id = self.author_map['art-on-the-wall']
+        else:
+            category_resource_id = 'QmxvZ0NhdGVnb3J5Hh81NzYxNjczOTMxNTIyMDQ4' # Blog
 
-        
 
         post_content = self.process_post_content(post_content)
 
@@ -444,7 +451,8 @@ class ImportWPHandler(BaseHandler):
             'summary': '',
             'published_date': datetime.datetime.strptime(post_date_gmt, '%Y-%m-%d %H:%M:%S'),
             'is_published': True,
-            'author_resource_id': self.author_map.get(str(post_author))
+            'author_resource_id': self.author_map.get(str(post_author)),
+            'category_resource_id': category_resource_id
         }
 
         post = posts_api.create_post(payload)
@@ -467,7 +475,19 @@ class ImportWPHandler(BaseHandler):
             {'old_id': None, 'key': 'VXNlch4fNTcwMDg2NjA1Mjk4MDczNg', 'firstname': 'Melissa',  'lastname': 'Stang', 'website': 'http://mplsart.com'},
             {'old_id': None, 'key': 'VXNlch4fNTczMDQ1MDA1NjE1MTA0MA', 'firstname': 'Maddy',  'lastname': 'Huges', 'website': 'http://mplsart.com'},
         ]
-        
+
+        category_data = [
+            {'old_ids': [12,10], 'key': 'QmxvZ0NhdGVnb3J5Hh81NjU4MDkxNjY4MzczNTA0', 'title': 'MPLSART', 'slug': 'mplsart'},
+            {'old_ids': [], 'key': 'QmxvZ0NhdGVnb3J5Hh81NjczMzA5NTQyODA5NjAw', 'title': 'Art On The Wall', 'slug': 'art-on-the-wall'},
+            {'old_ids': [3], 'key': 'QmxvZ0NhdGVnb3J5Hh81NzI4MTE2Mjc4Mjk2NTc2', 'title': 'Exhibition Reviews', 'slug': 'exhibition-reviews'},
+            {'old_ids': [9, 11], 'key': 'QmxvZ0NhdGVnb3J5Hh81NzYxNjczOTMxNTIyMDQ4', 'title': 'Blog', 'slug': 'blog'},
+            {'old_ids': [7,4, 10, 6, 8], 'key': 'QmxvZ0NhdGVnb3J5Hh81NzYzMjYzNjA2MjkyNDgw', 'title': 'The Scene', 'slug': 'scene'}
+        ]
+
+        # Populate Map and Construct Entities
+        self.author_map['art-on-the-wall'] = 'QmxvZ0NhdGVnb3J5Hh81NjczMzA5NTQyODA5NjAw'
+        self.author_map['exhibition-reviews'] = 'QmxvZ0NhdGVnb3J5Hh81NzI4MTE2Mjc4Mjk2NTc2'
+
         for user_data in author_data:
             old_id = user_data.pop('old_id')
             user_resource_id = user_data['key']
@@ -476,6 +496,22 @@ class ImportWPHandler(BaseHandler):
             
             if old_id:
                 self.author_map[str(old_id)] = user_resource_id
+
+        # Populate Map and Construct Entities
+        for category_data in category_data:
+            old_ids = category_data.pop('old_ids')
+            category_resource_id = category_data['key']
+            category_data['key'] = get_key_from_resource_id(category_resource_id)
+
+            try:
+                posts_api.create_post_category(category_data)
+            except:
+                pass
+
+            if old_ids:
+                for old_id in old_ids:
+                    self.category_map[str(old_id)] = category_resource_id
+
 
         # Step 2: Dump existing migrated data
 

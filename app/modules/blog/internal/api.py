@@ -121,10 +121,10 @@ def create_post_category(data):
     if cat:
         raise Exception('There is already a Post Category with the slug "%s". Please select another.' % data['slug'])
     
-    entity = BlogCategory()
+    entity = BlogCategory(**data)
 
-    entity.slug = data['slug']
-    entity.title = data['title']
+    #entity.slug = data['slug']
+    #entity.title = data['title']
     
     entity.put()
     return entity
