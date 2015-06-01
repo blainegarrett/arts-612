@@ -26,7 +26,7 @@ class BlogPost(ndb.Model):
         #TODO: what to return if not published...
 
         pub_date = self.published_date
-        return '/written/%s/%s/%s/' % (pub_date.year, pub_date.month, self.slug)
+        return '/written/%s/%s/%s/' % (pub_date.year, str(pub_date.month).zfill(2), self.slug)
 
     @property
     def absolute_permalink(self):

@@ -94,6 +94,9 @@ def get_posts(limit=25, cursor=None, **kwargs):
     if 'is_published' in kwargs:
         q = q.filter(BlogPost.is_published==kwargs['is_published'])
 
+    if 'start_date' in kwargs:
+        q = q.filter(BlogPost.published_date >= kwargs['start_date'])
+
     q = q.order(-BlogPost.published_date)
 
     entites, cursor, more = q.fetch_page(limit, start_cursor=cursor)

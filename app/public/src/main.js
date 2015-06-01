@@ -64,6 +64,11 @@ ReactRouter.createRoute('/written/', function () {
     React.render(<WrittenPage />, document.getElementById('main_content'));    
 });
 
+ReactRouter.createRoute('/written/{category_slug}/{slug}/', function (params) {
+    React.unmountComponentAtNode( document.getElementById('main_content'));
+    React.render(<WrittenArticlePage category_slug={params.category_slug} slug={params.slug} />, document.getElementById('main_content'));    
+});
+
 ReactRouter.createRoute('/written/{year}/{month}/{slug}/', function (params) {
     React.unmountComponentAtNode( document.getElementById('main_content'));
     React.render(<WrittenArticlePage year={params.year} month={params.month} slug={params.slug} />, document.getElementById('main_content'));    

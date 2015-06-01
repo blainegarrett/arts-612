@@ -26,7 +26,8 @@ class RestHandlerBase(webapp2.RequestHandler):
         """
         
         # If local sdk, allow
-        return os.environ['SERVER_SOFTWARE'].startswith('Development')
+        if os.environ['SERVER_SOFTWARE'].startswith('Development'):
+            return True
 
         if not self.request.referer:
             return False

@@ -40,7 +40,8 @@ var DefaultArticleRenderer = React.createClass({
         }
 
         var article = this.state.resource;
-        published_date = moment(Date.parse(article.created_date)).format('MMMM, Do YYYY');
+        var published_date_obj = moment(Date.parse(article.published_date));
+        published_date = published_date_obj.format('MMMM, Do YYYY');
         
         var image = null;
         var image_url = null;
@@ -50,15 +51,35 @@ var DefaultArticleRenderer = React.createClass({
             image = <img src={image_url} className="img-responsive" />
         }
         
+        var summary;
+        if (article.summary) {
+            summary = <p className="lead"> { article.summary } </p>;
+        }
 
+        var archive_notice;
+        if (published_date_obj.diff(moment("20150101", "YYYYMMDD")) < 0 ) {
+            archive_notice = <div className="alert alert-warning">
+                This article has been archived from the original MPLSART.COM site. It may contain dead links, broken images, and formatting issues. We are working to fix these as much as possible. Thank you for your patience.
+            </div>
+        }
+        
+        var edit_link;
+        if (settings.is_authenticated) {
+            edit_link = <a href={'/admin/blog/' + article.resource_id + '/edit'} target="_blank">edit</a>
+        }
+        
+        
         return <div>
+            { edit_link }
             <h2>{ article.title }</h2>
-            <p className="lead">{ article.summary }</p>
+            <p className="blog-post-meta">Posted { published_date }  by <a href={article.author_resource.website} target="_new">{ article.author_resource.firstname } { article.author_resource.lastname }</a></p>
+            { summary }
             { image }
             <br />
             <div className="article-content-container" dangerouslySetInnerHTML={{__html: article.content }}></div>
+            { archive_notice }
             <br />
-            <p className="blog-post-meta">--<br />Posted { published_date }  by <a href={article.author_resource.website} target="_new">{ article.author_resource.firstname } { article.author_resource.lastname }</a></p>
+
         </div>;
     }
 });

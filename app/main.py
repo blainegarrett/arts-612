@@ -64,6 +64,8 @@ web_routes += [
 
     RedirectRoute('/written/', 'controllers.written.WrittenMainHandler', strict_slash=True, name="written"),
     RedirectRoute('/written/feed/', 'controllers.written.WrittenMainRssFeedHandler', strict_slash=True, name="written_rss_main"),
+
+    RedirectRoute(r'/written/<category_slug:[a-z0-9-_]+>/<slug:[a-z0-9-_]+>/', 'controllers.written.WrittenCategoryArticleHandler', strict_slash=True, name="written_article_category"),
     RedirectRoute(r'/written/<year:[\d]+>/<month:[\d]+>/<slug:[a-z0-9-_]+>/', 'controllers.written.WrittenArticleHandler', strict_slash=True, name="written_article"),
 
     (r'/', 'controllers.MainHandler'),

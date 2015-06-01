@@ -14,6 +14,7 @@ from rest.resource import Resource
 from rest.resource import RestField, SlugField, ResourceIdField
 from rest.resource import ResourceUrlField, DatetimeField, BooleanField
 from rest.resource import ResourceField
+from rest.params import coerce_to_datetime
 
 from files.rest_helpers import REST_RESOURCE_RULES as FILE_REST_RULES
 from auth.controllers import REST_RULES as USER_REST_RULES
@@ -44,27 +45,25 @@ class WrittenMainHandler(BaseHandler):
         self.render_template('./templates/index.html', template_values)
 
 
-class WrittenArticleHandler(BaseHandler):
+class WrittenArticleBaseHandler(BaseHandler):
     """
-    Written Article Web Handler
     """
-
-    def get(self, year, month, slug):
+    
+    def get_dereferenced_post(self, slug):
         """
-        Web handler for direct requests, search, facebook, etc
+        Helper method to get a 
         """
-
-        # Step 1: See if we have the post
         post = posts_api.get_post_by_slug(slug)
         if not post:
-            return self.serve_404('Post Not Found')
+            return None
 
-        # Step 2: See if we have the correct context date bits
-        # TODO: Redirection Logic ...
-
-
-        # Step 3: Setup Meta
         posts_api.bulk_dereference_posts([post])
+        return post
+
+    
+    def serve_up_article(self, post):
+        """
+        """
 
         # TODO: Author meta tag
 
@@ -83,6 +82,47 @@ class WrittenArticleHandler(BaseHandler):
 
         template_values = {'pagemeta': pagemeta}
         self.render_template('./templates/index.html', template_values)
+
+
+
+class WrittenCategoryArticleHandler(WrittenArticleBaseHandler):
+    """
+    Written Article Web Handler
+    """
+    
+    def get(self, category_slug, slug):
+        post = self.get_dereferenced_post(slug)
+        if not post:
+            return self.serve_404('Post Not Found')
+
+        posts_api.bulk_dereference_posts([post])
+
+        # Step 2: Redirection Logic if category slug doesn't match
+
+        # Step 3: Serve Up Article
+        self.serve_up_article(post)
+
+
+class WrittenArticleHandler(WrittenArticleBaseHandler):
+    """
+    Written Article Web Handler
+    """
+
+    def get(self, year, month, slug):
+        """
+        Web handler for direct requests, search, facebook, etc
+        """
+
+        # Step 1: See if we have the post
+        post = self.get_dereferenced_post(slug)
+        if not post:
+            return self.serve_404('Post Not Found')
+
+        # Step 2: See if we have the correct context date bits
+        # TODO: Redirection Logic ...
+
+        # Step 3: Serve Up Article
+        self.serve_up_article(post)
 
 
 class WrittenMainRssFeedHandler(BaseHandler):
@@ -126,7 +166,7 @@ class WrittenMainRssFeedHandler(BaseHandler):
         return
 
 
-# Rest Controllers 
+# Rest Controllers
 resource_url = 'http://' + get_domain() + '/api/posts/%s'
 category_resource_url = 'http://' + get_domain() + '/api/post_categories/%s'
 
@@ -246,6 +286,7 @@ class PostsApiHandler(RestHandlerBase):
             #'sort': voluptuous.Coerce(str),
             'get_by_slug': voluptuous.Coerce(str),
             'is_published': voluptuous.Coerce(voluptuous.Boolean()),
+            'start_date': coerce_to_datetime 
             #'q': voluptuous.Coerce(str)
         }
 
@@ -282,11 +323,15 @@ class PostsApiHandler(RestHandlerBase):
 
         limit = self.cleaned_params.get('limit', None)
         cursor = self.cleaned_params.get('cursor', None)
+        start_date = self.cleaned_params.get('start_date', None)
         
         optional_params = {}
 
         if 'is_published' in self.params:
             optional_params['is_published'] = self.cleaned_params['is_published']
+
+        if start_date:
+            optional_params['start_date'] = start_date
 
         # TODO: If you are not admin, default is_published to True...
 
@@ -459,6 +504,7 @@ class ImportWPHandler(BaseHandler):
 
     
     def get(self):
+        raise Exception('Import is disabled for now.')
         
         # Step 1: Create Author records (this is for local use only - these exist on prod)
         from auth.api import create_user
@@ -492,7 +538,7 @@ class ImportWPHandler(BaseHandler):
             old_id = user_data.pop('old_id')
             user_resource_id = user_data['key']
             user_data['key'] = get_key_from_resource_id(user_resource_id)
-            create_user(user_data)
+            #create_user(user_data)
             
             if old_id:
                 self.author_map[str(old_id)] = user_resource_id
@@ -504,7 +550,8 @@ class ImportWPHandler(BaseHandler):
             category_data['key'] = get_key_from_resource_id(category_resource_id)
 
             try:
-                posts_api.create_post_category(category_data)
+                pass
+                #posts_api.create_post_category(category_data)
             except:
                 pass
 
@@ -515,9 +562,9 @@ class ImportWPHandler(BaseHandler):
 
         # Step 2: Dump existing migrated data
 
-        posts = BlogPost.query().fetch(1000)
-        for p in posts:
-            p.key.delete()
+        #posts = BlogPost.query().fetch(1000)
+        #for p in posts:
+        #    p.key.delete()
         
 
         # Step 3: Read in new data
