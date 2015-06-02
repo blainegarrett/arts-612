@@ -25,11 +25,11 @@ var WrittenPage = React.createClass({
     getInitialState: function () {
         return {
             articles: [],
-            resource_url: '/api/posts?limit=25&is_published=true'
+            resource_url: '/api/posts?limit=25&start_date=2015-01-01&is_published=true'
         };
     },
 
-    componentDidMount: function () {
+    pageDidMount: function () {
         this.setMeta();
 
         $.ajax({
@@ -50,7 +50,7 @@ var WrittenPage = React.createClass({
     load_more: function (e) {
 
         $.ajax({
-            url: this.state.resource_url + '&cursor=' + this.state.articles.cursor,
+            url: this.state.resource_url + 'cursor=' + this.state.articles.cursor,
             dataType: 'json',
             success:  function (data) {
                 /* Have the store do this... */

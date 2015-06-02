@@ -8,8 +8,8 @@ from google.appengine.ext import ndb
 from utils import ubercache
 from rest.utils import get_key_from_resource_id, get_resource_id_from_key
 
-from modules.blog.internal.models import BlogPost
-from modules.blog.constants import AUTHOR_PROP, PRIMARY_IMAGE_PROP
+from modules.blog.internal.models import BlogPost, BlogCategory
+from modules.blog.constants import AUTHOR_PROP, PRIMARY_IMAGE_PROP, CATEGORY_PROP
 
 
 def bulk_dereference_posts(posts):
@@ -24,6 +24,7 @@ def bulk_dereference_posts(posts):
         # Default the dereferenced prop placeholders
         setattr(post, AUTHOR_PROP, None)
         setattr(post, PRIMARY_IMAGE_PROP, None)
+        setattr(post, CATEGORY_PROP, None)
 
         # Collect properties we want to bulk dereference
         if post.author_resource_id:
@@ -31,6 +32,9 @@ def bulk_dereference_posts(posts):
 
         if post.primary_image_resource_id:
             entity_map[get_key_from_resource_id(post.primary_image_resource_id)] = None
+
+        if post.category_resource_id:
+            entity_map[get_key_from_resource_id(post.category_resource_id)] = None
 
     # Fetch all of the entities we want to deref
     entities = ndb.get_multi(entity_map.keys())
@@ -49,6 +53,10 @@ def bulk_dereference_posts(posts):
             e = entity_map.get(post.primary_image_resource_id, None)
             setattr(post, PRIMARY_IMAGE_PROP, e)
 
+        if post.category_resource_id:
+            e = entity_map.get(post.category_resource_id, None)
+            setattr(post, CATEGORY_PROP, e)
+
     return posts
 
 
@@ -56,8 +64,18 @@ def get_post_by_resource_id(resource_id):
     """
     Given a resource id, fetch the post entity
     #TODO: Error handling?
+    TODO: Ensure that it is of kind BlogCategory
     """
 
+    key = get_key_from_resource_id(resource_id)
+    return key.get()
+
+
+def get_post_category_by_resource_id(resource_id):
+    """
+    Given a resource id, fetch the category entity
+    TODO: Ensure that it is of kind BlogCategory
+    """
     key = get_key_from_resource_id(resource_id)
     return key.get()
 
@@ -76,6 +94,9 @@ def get_posts(limit=25, cursor=None, **kwargs):
     if 'is_published' in kwargs:
         q = q.filter(BlogPost.is_published==kwargs['is_published'])
 
+    if 'start_date' in kwargs:
+        q = q.filter(BlogPost.published_date >= kwargs['start_date'])
+
     q = q.order(-BlogPost.published_date)
 
     entites, cursor, more = q.fetch_page(limit, start_cursor=cursor)
@@ -92,6 +113,26 @@ def get_post_by_slug(slug):
     return entity
 
 
+def create_post_category(data):
+    """
+    Create a Category
+    # TODO: Make this transactional
+    """
+
+    # Step 1: Ensure there is not another category with this slug
+    cat = BlogCategory.query(BlogCategory.slug == data['slug']).get()
+    if cat:
+        raise Exception('There is already a Post Category with the slug "%s". Please select another.' % data['slug'])
+    
+    entity = BlogCategory(**data)
+
+    #entity.slug = data['slug']
+    #entity.title = data['title']
+    
+    entity.put()
+    return entity
+
+    
 def create_post(data):
     """
     Create an event
@@ -127,6 +168,8 @@ def create_post(data):
     entity.summary = data['summary']
     entity.content = data['content']
     entity.author_resource_id = data.get('author_resource_id')
+    entity.category_resource_id = data.get('category_resource_id')
+
     entity.put()
 
     # Step 3: Delete any cache keys related
@@ -157,6 +200,7 @@ def edit_post(entity, data):
         # Let's mark as not published - but preserve original published date for archives
         entity.is_published = False
 
+
     entity.slug = data['slug']
     entity.title = data['title']
     entity.slug = data['slug']
@@ -164,6 +208,8 @@ def edit_post(entity, data):
     entity.summary = data['summary']
     entity.content = data['content']
     entity.author_resource_id = data.get('author_resource_id')
+    entity.category_resource_id = data.get('category_resource_id')
+
     entity.put()
 
     # Step 2: Next update the search indexes incase anything affecting them has changed
@@ -171,5 +217,18 @@ def edit_post(entity, data):
 
     # Step 3: Kill All caches
     ubercache.cache_invalidate('written')
+
+    return entity
+
+
+def edit_category(entity, data):
+    """
+    Edit an category
+    # TODO: Make this transactional
+    """
+
+    entity.slug = data['slug']
+    entity.title = data['title']
+    entity.put()
 
     return entity

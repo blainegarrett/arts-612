@@ -9,7 +9,7 @@ var Gallery404Page = React.createClass({
         'title': 'Gallery Not Found',
         'description': 'The Gallery You Are Looking for Could Not Be Found.'
     },
-    componentDidMount: function () {
+    pageDidMount: function () {
         this.setMeta();
     },
     render: function() {
@@ -85,7 +85,7 @@ var GalleryViewPage = React.createClass({
             
         }
     },
-    componentDidMount: function () {
+    pageDidMount: function () {
 
         $.ajax({
             url: this.state.resource_url,

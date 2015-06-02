@@ -23,39 +23,16 @@ var AboutPage = React.createClass({
 
     getInitialState: function () {
         return {
-            articles: [],
-            resource_url: '/api/posts'
+            
         }
     },
 
-    componentDidMount: function () {
+    pageDidMount: function () {
+        /* Callback from componentDidMount */
         this.setMeta();
-
-        $.ajax({
-            url: this.state.resource_url,
-            dataType: 'json',
-            success:  function (data) {
-                /* Have the store do this... */
-                this.setState({articles:data});
-
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.error(this.state.resource_url, status, err.toString());
-            }.bind(this)
-            
-        });
     },
 
     render: function () {
-        var articles = []
-        var rc = this;
-
-        if (this.state.articles.results != undefined) {
-            articles = this.state.articles.results.map(function (post) {
-                return <div className="card" key={ post.resource_id }><ArticleGoober key={ post.resource_id } resource={ post } renderer={ PodArticleRenderer } /></div>
-            });
-        }
-
         return <div id="HomePageWrapper">
             
             <div className="row">

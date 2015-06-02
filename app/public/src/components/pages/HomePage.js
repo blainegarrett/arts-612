@@ -75,7 +75,7 @@ var HomePage = React.createClass({
             <Footer />
         </div>;
     },
-    componentDidMount: function () {
+    pageDidMount: function () {
         this.setMeta();
     }
 });

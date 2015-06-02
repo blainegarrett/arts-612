@@ -47,6 +47,10 @@ routes.extend([
     # Posts Routes
     (r'/api/posts', 'controllers.written.PostsApiHandler'),
     (r'/api/posts/([a-zA-Z0-9-_]+)', 'controllers.written.PostDetailApiHandler'),
+    
+    # Blog Categories
+    (r'/api/post_categories', 'controllers.written.PostCategoriesApiHandler'),
+    (r'/api/post_categories/([a-zA-Z0-9-_]+)', 'controllers.written.PostCategoryDetailApiHandler'),
 
     # Homepage Waterfall
     (r'/api/featured', 'controllers.feed.FeaturedApiHandler'),

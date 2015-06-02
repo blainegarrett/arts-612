@@ -12,6 +12,7 @@ class BlogPost(ndb.Model):
     summary = ndb.TextProperty()
 
     author_resource_id = ndb.StringProperty()
+    category_resource_id = ndb.StringProperty()
 
     primary_image_resource_id = ndb.StringProperty()
     attachment_resources =  ndb.StringProperty(repeated=True)
@@ -25,8 +26,19 @@ class BlogPost(ndb.Model):
         #TODO: what to return if not published...
 
         pub_date = self.published_date
-        return '/written/%s/%s/%s/' % (pub_date.year, pub_date.month, self.slug)
+        return '/written/%s/%s/%s/' % (pub_date.year, str(pub_date.month).zfill(2), self.slug)
 
     @property
     def absolute_permalink(self):
         return 'http://%s%s' % (get_domain(), self.permalink)
+
+
+class BlogCategory(ndb.Model):
+    """
+    Class Representing a Blog Category
+    """
+
+    title = ndb.StringProperty() # Post Name
+    slug = ndb.StringProperty() # Post slug for permalinks
+    
+    

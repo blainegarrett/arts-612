@@ -17,6 +17,12 @@ var UsersMainPage = require('./pages/UsersMainPage');
 var UserCreatePage = require('./pages/UserCreatePage');
 var UserEditPage = require('./pages/UserEditPage');
 
+
+var PostCategoriesEditPage = require('./pages/PostCategoriesEditPage');
+var PostCategoriesCreatePage = require('./pages/PostCategoriesCreatePage');
+var PostCategoriesMainPage = require('./pages/PostCategoriesMainPage');
+
+
 var EventsMainPage = require('./pages/EventsMainPage');
 var EventsCreatePage = require('./pages/EventsCreatePage');
 var EventsEditPage = require('./pages/EventsEditPage');
@@ -84,6 +90,24 @@ ReactRouter.createRoute('/admin/users/create', function (params) {
 ReactRouter.createRoute('/admin/users/{keystr}/edit', function (params) {
     React.unmountComponentAtNode( document.getElementById('main_content'));
     React.render(<UserEditPage keystr={params.keystr} />, document.getElementById('main_content'));    
+});
+
+
+// Post Categories
+ReactRouter.createRoute('/admin/post_categories', function (params) {
+    React.unmountComponentAtNode( document.getElementById('main_content'));
+    React.render(<PostCategoriesMainPage />, document.getElementById('main_content'));    
+});
+
+
+ReactRouter.createRoute('/admin/post_categories/create', function (params) {
+    React.unmountComponentAtNode( document.getElementById('main_content'));
+    React.render(<PostCategoriesCreatePage  />, document.getElementById('main_content'));    
+});
+
+ReactRouter.createRoute('/admin/post_categories/{keystr}/edit', function (params) {
+    React.unmountComponentAtNode( document.getElementById('main_content'));
+    React.render(<PostCategoriesEditPage keystr={params.keystr} />, document.getElementById('main_content'));    
 });
 
 

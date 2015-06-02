@@ -1,0 +1,55 @@
+Shit to manually fix:
+
+
+[ ] http://localhost:8080/written/2009/02/jennifer-davis-doesnt-like-to-talk-about-her-work/ Broken Urls for 2 images (images have been moved to cdn)
+[ ] http://localhost:8080/written/2009/02/interpenetration-at-the-nash/ (Image links to WP attachment viewer)
+[ ] http://localhost:8080/written/2009/02/jet-setter-hidaways-with-melissa-loop/ (Image links to WP attachment viewer)
+[ ] 
+
+
+
+Maddy Hughes
+[ ] http://localhost:8080/written/2009/02/strange-wilderness/
+[ ] http://localhost:8080/written/2009/02/the-spectacular-of-vernacular/
+[ ] http://localhost:8080/written/2009/02/exposed-voyeurism-surveillance-and-the-camera-since-1870/
+[ ] 
+
+
+Remote Images:
+http://localhost:8080/written/2009/02/stars-in-the-eyes/
+http://localhost:8080/written/2009/02/grey-is-not-a-color/
+http://localhost:8080/written/2009/02/know-your-friends/ (flikr)
+http://localhost:8080/written/2009/02/call-anytime/ 
+http://localhost:8080/written/2009/02/love-for-sale/
+http://localhost:8080/written/2009/02/street-art-hearts/ (Flikr)
+http://localhost:8080/written/2009/02/seasons-greetings/
+http://localhost:8080/written/2009/02/a-nooner/ broken image
+http://localhost:8080/written/2009/02/juxtapoz/ Fix Jen Davis Link and Image  	http://www.juxtapoz.com/illustration/jennifer-davis
+http://localhost:8080/written/2009/02/at-your-feet-art/
+http://localhost:8080/written/2009/02/voltage-is-back/ broken images and links...
+http://localhost:8080/written/2009/02/riverside-market/  FLICKR
+http://localhost:8080/written/2009/02/nicest-dorm-in-college/ <-- broken mnartist.org links
+http://localhost:8080/written/2009/02/161/ <-- image with unicode chars not resolving
+http://localhost:8080/written/2009/02/ohwow/ <-- Remotely Hosted URL
+
+
+http://localhost:8080/written/2009/02/almost-time/ (link to Drew Peterson is myspace...)
+
+
+Notes:
+
+40 OZ 
+http://localhost:8080/written/2009/02/who-reads-this-stuff-anyway/ <-- kris on arts coverage
+http://localhost:8080/written/2009/02/ben-olson-solo-exhibit/ <-- Interesting Ben Olson writeup
+http://localhost:8080/written/2009/02/riverside-market/
+
+
+Author overrides:
+Collier White http://localhost:8080/written/2009/02/before-the-word/
+
+
+http://localhost:8080/written/2009/02/where-have-you-been/ <-- Give this a look /media/ ???
+
+
+http://localhost:8080/written/2009/02/187-2/ ?? do the pics load? no www so not rewritten
+

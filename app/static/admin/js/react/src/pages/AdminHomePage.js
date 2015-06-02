@@ -64,6 +64,7 @@ var AdminHomePage = React.createClass({
                     <li><a href="/admin/venues/">Manage Venues</a></li>
                     <li><a href="/admin/events/">Manage Events</a></li>
                     <li><a href="/admin/blog/">Manage Blog</a></li>
+                    <li><a href="/admin/post_categories/">Manage Blog Categories</a></li>
                     <li><a href="/admin/files/">Manage Files</a></li>
                     <li><a href="/admin/users/">Manage Users</a></li>
                 </ul>
@@ -77,6 +78,7 @@ var AdminHomePage = React.createClass({
                 <dl className="dl-horizontal">
                     <dt>Is Appspot: </dt><dd>{ settings.is_appspot.toString() }</dd>
                     <dt>Domain: </dt><dd>{ settings.domain.toString() }</dd>
+                    <dt>Is Authenticated: </dt><dd>{ settings.is_authenticated.toString() }</dd>
                 </dl>
             </div>
         </div>

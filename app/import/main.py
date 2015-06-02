@@ -20,6 +20,7 @@ routes.extend([
 
     (r'/import/galleries', 'venues.import.GalleryData'),
     (r'/import/events', 'cal.import.EventData'),
+    (r'/import/blog', 'controllers.written.ImportWPHandler'),
 ])
 
 app = webapp2.WSGIApplication(routes, debug=True)

@@ -3,7 +3,7 @@
 import webapp2
 import json
 import traceback
-import sys
+import sys, os
 import logging
 
 from urlparse import urlparse
@@ -24,6 +24,11 @@ class RestHandlerBase(webapp2.RequestHandler):
         Helper Method to determine if referrer is the same as the host
         This is to support 'dumb' REST permissions to prevent attacking REST Services
         """
+        
+        # If local sdk, allow
+        if os.environ['SERVER_SOFTWARE'].startswith('Development'):
+            return True
+
         if not self.request.referer:
             return False
 
