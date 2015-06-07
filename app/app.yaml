@@ -1,5 +1,5 @@
 application: arts-612
-version: master-20150531
+version: master-20150605
 runtime: python27
 api_version: 1
 threadsafe: no
@@ -96,6 +96,11 @@ handlers:
 - url: /import.*
   script: import.main.app
   secure: optional
+
+- url: /dash.*
+  script: dash.main.app
+  secure: optional
+  login: admin
 
 - url: /robots\.txt
   static_files: static/robots.txt

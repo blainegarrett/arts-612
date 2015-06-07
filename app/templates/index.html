@@ -23,7 +23,7 @@
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 
     <!-- Custom styles for this template -->
-	<link rel="stylesheet" href="/static/themes/v0/core.css?67" />
+	<link rel="stylesheet" href="/static/themes/v0/core.css?68" />
 
 	<!-- important bits -->
 	<meta name="google-site-verification" content="5rh0RiNkYuPuVOdrIXk4mY4AQ87uS7Ad_ZigdjDNBp0" />
@@ -33,24 +33,18 @@
 
   </head>
 
-  <body class="beta">
+  <body>
 		{% include './templates/side_menu.html' %}
 
 		<!-- Start Top Nav -->
 		<div id="header_nav" class="navbar navbar-fixed-top navbar-inverse" role="navigation">
 			<div class="container">
 		        <div class="navbar-header">
-		          <a class="navbar-brand internal-link" href="/" title="MPLSART.COM Home Page"><span class="brand-title-mpls">MPLS</span><span class="brand-title-art">ART.COM</span></a>
+					<a id="side_nav_toggle" class="pull-left" title="Show Menu"><span></span></a>			
+		          	<a class="navbar-brand internal-link" href="/" title="MPLSART.COM Home Page">MPLSART.COM</a>
 		        </div>
-		
-				<p class="navbar-text navbar-right">
-					<button id="side_nav_toggle" type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-			           <span class="sr-only">Toggle navigation</span>
-			           <span class="icon-bar"></span>
-			           <span class="icon-bar"></span>
-			           <span class="icon-bar"></span>
-			         </button>
-				</p>
+
+				<p class="navbar-text navbar-right"></p>
 		      </div><!-- /.container -->
 
 			  <div id="header_nav_cards"></div>
@@ -88,7 +82,7 @@
 	    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	    <script src="/static/js/jquery.mobile-events.min.js"></script>
 		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-		<script src="/public/build/main.js?67"></script>
+		<script src="/public/build/main.js?68"></script>
 	{% endif %}
 
 	<!-- start google analytics -->

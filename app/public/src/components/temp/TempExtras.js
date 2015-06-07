@@ -44,13 +44,14 @@ var TempExtras = React.createClass({
     render: function () {
         
         var fundraisers = [
-            {
+            /*{
+                
                 resource_id: 'fundraiser3',
                 website: 'https://www.givemn.org/fundraiser/creating-language-through-arts54fdadc30e20c',
                 title: 'Creating Language Through Arts',
                 summary: 'Help support programs for Deaf/Hard of Hearing youth using art as a way of communicating that transcends speech and hearing. Contributions are tax deductable.',
                 img_url: 'http://cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fNDAxMDAwMQ/card_small.png',
-            }
+            }*/
         ];        
         
         

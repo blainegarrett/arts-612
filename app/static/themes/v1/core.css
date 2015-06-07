@@ -1,0 +1,31 @@
+
+
+
+
+
+nav .container-fluid {
+    padding-right: 0px;
+    padding-left:0px;
+    background-color: #222;
+}
+
+
+nav .container-fluid .navbar-brand {
+    margin-right: 0px !important;
+    margin-left:0px !important;
+    font-family: 'Bryant', sans-serif;
+    height: 55px;
+    line-height:25px;
+    font-size:28px;
+
+  
+}
+
+.navbar-top, .navbar-top .button-collapse.sp-cancel, .navbar-top .button-collapse.sp-cancel i, .navbar-top .nav-wrapper i, .navbar-top a.button-collapse, .navbar-top a.button-collapse i {
+  height: 55px;
+  line-height: 55px;
+}
+
+
+
+
