@@ -319,8 +319,8 @@ footer {
     /* Menu is expanded State */
     body.show-menu #side_nav_toggle span { background-color: transparent; }
         body.show-menu #side_nav_toggle span:before, body.show-menu #side_nav_toggle span:after { top: 0; background-color: #0096BE; }
-        body.show-menu #side_nav_toggle span:before { top:1px; transform: rotate(45deg); }
-        body.show-menu #side_nav_toggle span:after { top:0px; transform: rotate(-45deg); }
+        body.show-menu #side_nav_toggle span:before { top:1px; transform: rotate(45deg); -webkit-transform: rotate(45deg); }
+        body.show-menu #side_nav_toggle span:after { top:0px; transform: rotate(-45deg); -webkit-transform: rotate(-45deg); }
 
 #site-menu {
     width: 300px;
