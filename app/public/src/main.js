@@ -20,6 +20,48 @@ var analytics = require('./utils/analytics');
 
 global.current_page = null; // This is set by PageMixin to the current page for use in widgets
 
+
+UserUtilsNav = React.createClass({
+    render: function () {
+        return (
+
+			<ul id="nav_utils_menu">
+				<li className="user">
+				    <a className="dropdown-toggle" href="#!" data-toggle="dropdown" aria-expanded="false">
+				    <img src="http://cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fMjA0MDAwMg/card_small.png" height="20px" width="20px" alt="John Doe" className="img-circle" />John Doe<i className="caret"></i>
+				</a>
+
+				<ul className="dropdown-menu" role="menu">
+				
+				    {/*
+    				<li>
+    				    <a href="page-profile.html"><i className="fa fa-user"></i> Profile</a>
+    				</li>
+				
+    				<li><a href="mail-inbox.html">
+    				    <i className="fa fa-envelope"></i> Messages <span className="badge new">2</span>
+    				</a>
+    				</li>
+    				    <li><a href="#!"><i className="fa fa-cogs"></i> Settings</a>
+    				</li>
+    				<li className="divider"></li>
+				*/ }
+    				<li>
+    				    <a href="page-sign-in.html"><i className="fa fa-sign-out"></i> Logout</a>
+    				</li>
+				</ul>
+
+
+				</li>
+			</ul>
+
+        )
+    }
+});
+
+
+
+
 /* Figure out what to do with Routes... This is fugly... */
 ReactRouter.createRoute('/', function () {
     React.unmountComponentAtNode(document.getElementById('main_content'));
@@ -204,3 +246,4 @@ React.render(<PageMeta />, document.getElementById('page_meta'));
 //React.render(<PageMeta />, document.getElementById('meta_debug'));
 //React.render(<PrimaryMenu />, document.getElementById('navbar'));
 React.render(<NavCardsContainer />, document.getElementById('header_nav_cards'));
+React.render(<UserUtilsNav />, document.getElementById('nav_utils_container'));
