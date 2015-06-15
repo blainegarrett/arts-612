@@ -5,8 +5,9 @@ var ReactRouter = require('flux-react-router');
 var NewHomePage = require('./components/pages/NewHomePage');
 var CalendarPage = require('./components/pages/CalendarPage');
 var EventPage = require('./components/pages/EventPage');
-var WrittenPage = require('./components/pages/WrittenPage');
-var WrittenArticlePage = require('./components/pages/WrittenArticlePage');
+var WrittenPage = require('./components/pages/Written').WrittenPage;
+var WrittenArticlePage = require('./components/pages/Written').WrittenArticlePage;
+var WrittenCategoryPage = require('./components/pages/Written').WrittenCategoryPage;
 var GalleryPage = require('./components/pages/GalleryPage');
 var GalleryViewPage = require('./components/pages/GalleryViewPage');
 var Error404Page = require('./components/pages/Error404Page');
@@ -64,22 +65,31 @@ ReactRouter.createRoute('/written/', function () {
     React.render(<WrittenPage />, document.getElementById('main_content'));    
 });
 
+
+ReactRouter.createRoute('/written/{category_slug}/', function (params) {
+    React.unmountComponentAtNode( document.getElementById('main_content'));
+    React.render(<WrittenCategoryPage category_slug={params.category_slug} />, document.getElementById('main_content'));    
+});
+
+
 ReactRouter.createRoute('/written/{category_slug}/{slug}/', function (params) {
     React.unmountComponentAtNode( document.getElementById('main_content'));
     React.render(<WrittenArticlePage category_slug={params.category_slug} slug={params.slug} />, document.getElementById('main_content'));    
 });
+
+
+
+
 
 ReactRouter.createRoute('/written/{year}/{month}/{slug}/', function (params) {
     React.unmountComponentAtNode( document.getElementById('main_content'));
     React.render(<WrittenArticlePage year={params.year} month={params.month} slug={params.slug} />, document.getElementById('main_content'));    
 });
 
-/*
 ReactRouter.createRoute('*', function () {
     React.unmountComponentAtNode( document.getElementById('main_content'));
     React.render(<Error404Page />, document.getElementById('main_content'));    
 });
-*/
 
 ReactRouter.init();
 

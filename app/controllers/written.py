@@ -9,6 +9,7 @@ from rest.params import coerce_to_cursor
 from controllers import BaseHandler
 from utils import get_domain
 
+from rest.utils import get_key_from_resource_id, get_resource_id_from_key
 from rest.controllers import RestHandlerBase
 from rest.resource import Resource
 from rest.resource import RestField, SlugField, ResourceIdField
@@ -236,6 +237,18 @@ class PostCategoriesApiHandler(RestHandlerBase):
         }
     def _get(self):
         
+        get_by_slug = self.cleaned_params.get('get_by_slug', None)
+
+        if get_by_slug:
+            category = posts_api.get_post_category_by_slug(get_by_slug)
+
+            if not category:
+                self.serve_404('Category given by slug %s Not Found' % get_by_slug)
+                return
+            else:
+                self.serve_success(Resource(category, CATEGORY_REST_RULES).to_dict())
+                return
+        
         # Refactor this...
         results = []
         entities = BlogCategory.query().fetch(1000)
@@ -281,12 +294,13 @@ class PostsApiHandler(RestHandlerBase):
         #raise Exception(voluptuous.Coerce(voluptuous.Boolean())('true'))
         
         return {
-            'limit': voluptuous.Coerce(int),
-            'cursor': coerce_to_cursor,
+            u'limit': voluptuous.Coerce(int),
+            u'cursor': coerce_to_cursor,
             #'sort': voluptuous.Coerce(str),
-            'get_by_slug': voluptuous.Coerce(str),
-            'is_published': voluptuous.Coerce(voluptuous.Boolean()),
-            'start_date': coerce_to_datetime 
+            u'category_slug': voluptuous.Coerce(unicode),
+            u'get_by_slug': voluptuous.Coerce(unicode),
+            u'is_published': voluptuous.Coerce(voluptuous.Boolean()),
+            u'start_date': coerce_to_datetime 
             #'q': voluptuous.Coerce(str)
         }
 
@@ -307,7 +321,7 @@ class PostsApiHandler(RestHandlerBase):
         # Found Post: Serve it up
         self.serve_success(Resource(post, REST_RULES).to_dict())
         return
-
+    
     def _get(self):
         """
         Get a collection of Written Posts
@@ -324,7 +338,8 @@ class PostsApiHandler(RestHandlerBase):
         limit = self.cleaned_params.get('limit', None)
         cursor = self.cleaned_params.get('cursor', None)
         start_date = self.cleaned_params.get('start_date', None)
-        
+        category_slug = self.cleaned_params.get('category_slug', None)
+
         optional_params = {}
 
         if 'is_published' in self.params:
@@ -332,6 +347,16 @@ class PostsApiHandler(RestHandlerBase):
 
         if start_date:
             optional_params['start_date'] = start_date
+        
+        category_resource_id_filter = None
+        if category_slug:
+            category = posts_api.get_post_category_by_slug(category_slug)
+
+            if not category:
+                self.serve_404('Category with slug %s Not Found' % category_slug)
+                return
+
+            optional_params['category_resource_id'] = get_resource_id_from_key(category.key)
 
         # TODO: If you are not admin, default is_published to True...
 
@@ -342,7 +367,7 @@ class PostsApiHandler(RestHandlerBase):
         if False and cached_result:
             results, cursor, more = cached_result
         else:
-            # Posts were not not Cached for this set of properties
+            # Posts were not Cached for this set of properties
 
             entities, cursor, more = posts_api.get_posts(limit=limit, cursor=cursor, **optional_params)
             posts_api.bulk_dereference_posts(entities)

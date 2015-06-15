@@ -10,6 +10,7 @@ from rest.utils import get_key_from_resource_id, get_resource_id_from_key
 
 from modules.blog.internal.models import BlogPost, BlogCategory
 from modules.blog.constants import AUTHOR_PROP, PRIMARY_IMAGE_PROP, CATEGORY_PROP
+from modules.blog.constants import QUERY_LIMIT
 
 
 def bulk_dereference_posts(posts):
@@ -80,22 +81,26 @@ def get_post_category_by_resource_id(resource_id):
     return key.get()
 
 
-def get_posts(limit=25, cursor=None, **kwargs):
+def get_posts(limit=QUERY_LIMIT, cursor=None, **kwargs):
     """
     Primary wrapper for fetching events
     """
 
     if not limit:
-        limit = 25
+        limit = QUERY_LIMIT
 
+    # Setup Base Query
     q = BlogPost.query()
-    
-    
+
     if 'is_published' in kwargs:
-        q = q.filter(BlogPost.is_published==kwargs['is_published'])
+        q = q.filter(BlogPost.is_published == kwargs['is_published'])
 
     if 'start_date' in kwargs:
         q = q.filter(BlogPost.published_date >= kwargs['start_date'])
+
+
+    if 'category_resource_id' in kwargs:
+        q = q.filter(BlogPost.category_resource_id == kwargs['category_resource_id'])
 
     q = q.order(-BlogPost.published_date)
 
@@ -113,6 +118,15 @@ def get_post_by_slug(slug):
     return entity
 
 
+def get_post_category_by_slug(slug):
+    """
+    Simple Helper to fetch a post category via slug.
+    """
+
+    entity = BlogCategory.query(BlogCategory.slug == slug).get()
+    return entity
+
+
 def create_post_category(data):
     """
     Create a Category
@@ -123,16 +137,16 @@ def create_post_category(data):
     cat = BlogCategory.query(BlogCategory.slug == data['slug']).get()
     if cat:
         raise Exception('There is already a Post Category with the slug "%s". Please select another.' % data['slug'])
-    
+
     entity = BlogCategory(**data)
 
     #entity.slug = data['slug']
     #entity.title = data['title']
-    
+
     entity.put()
     return entity
 
-    
+
 def create_post(data):
     """
     Create an event
@@ -186,7 +200,7 @@ def edit_post(entity, data):
     # Create the base Event Model
     maybe_publish = bool(data['is_published'])
     should_unpublish = (not bool(data['is_published'])) and bool(entity.published_date)
-    
+
     if maybe_publish:
         entity.is_published = True # Regardless of it it was already true
 
