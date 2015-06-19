@@ -1,7 +1,7 @@
 // React is global
 var React = require('react');
 var ReactRouter = require('flux-react-router');
-//var HomePage = require('./components/pages/HomePage');
+var moment = require('moment');
 var NewHomePage = require('./components/pages/NewHomePage');
 var CalendarPage = require('./components/pages/CalendarPage');
 var EventPage = require('./components/pages/EventPage');
@@ -92,6 +92,10 @@ ReactRouter.createRoute('*', function () {
 });
 
 ReactRouter.init();
+
+/* Establish Global end of "tonight" */
+global.targed_tonight_end_date = moment().hour(9).minute(0).second(0);
+global.targed_tonight_end_date = moment.utc(global.targed_tonight_end_date);
 
 
 /* Code For Sliding Navs and Featured Widget */

@@ -5,6 +5,7 @@ import voluptuous
 import json
 from utils import ubercache
 
+from auth.decorators import rest_login_required
 from rest.params import coerce_to_cursor
 from controllers import BaseHandler
 from utils import get_domain
@@ -259,6 +260,7 @@ class PostCategoriesApiHandler(RestHandlerBase):
         more = None
         self.serve_success(results, {'cursor': cursor, 'more': more})
 
+    @rest_login_required
     def _post(self):
         """
         Create a Post
@@ -274,6 +276,7 @@ class PostCategoryDetailApiHandler(RestHandlerBase):
         post = posts_api.get_post_category_by_resource_id(resource_id)
         self.serve_success(Resource(post, CATEGORY_REST_RULES).to_dict())
 
+    @rest_login_required
     def _put(self, resource_id):
         e = posts_api.get_post_category_by_resource_id(resource_id)
         e = posts_api.edit_category(e, self.cleaned_data)
@@ -385,6 +388,7 @@ class PostsApiHandler(RestHandlerBase):
 
         self.serve_success(results, {'cursor': cursor, 'more': more})
 
+    @rest_login_required
     def _post(self):
         """
         Create a Post
@@ -411,6 +415,7 @@ class PostDetailApiHandler(RestHandlerBase):
         post = posts_api.get_post_by_resource_id(resource_id)
         self.serve_success(Resource(post, REST_RULES).to_dict())
 
+    @rest_login_required
     def _put(self, resource_id):
         """
         Edit a Post given by resource_id

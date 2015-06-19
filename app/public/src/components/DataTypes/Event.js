@@ -128,7 +128,16 @@ var FullEventRenderer = React.createClass({
             big_link_button = <a href={ r.url } target="_new" className="btn btn-primary btn-lg btn-block"> More Information <span className="glyphicon glyphicon-new-window"></span></a>
         }
 
+
+        var edit_link;
+        if (settings.is_authenticated) {
+            edit_link = <a href={'/admin/events/' + r.resource_id + '/edit'} target="_blank">edit</a>
+        }
+
         return <div>
+
+            { edit_link }
+
             <h1>{ r.name }</h1>
             <p className="lead">
                 { r.summary }
@@ -328,7 +337,7 @@ var PodRenderer = React.createClass({
             // No targeted date so lets find the soonest one that hasn't happened yet
 
             var reoccurring;
-            var now = moment() // Maybe make this 2AM tomorrow...
+            var now = global.targed_tonight_end_date // Maybe make this 2AM tomorrow...
             var ed;
 
             for (var i in sorted_event_dates) {
