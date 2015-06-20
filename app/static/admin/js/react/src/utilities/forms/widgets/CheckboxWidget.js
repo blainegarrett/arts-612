@@ -27,6 +27,9 @@ CheckboxWidget = React.createClass({
         var cur_state_val = this.state.val;
         var name = this.state.field_id;
 
+        console.log(this.state)
+
+
         if (this.state.choices && this.state.choices.length > 0) {
             choices_rendered = this.state.choices.map(function (choice_pair, i) {
                 var checked = choice_pair[0] == cur_state_val;

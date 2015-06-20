@@ -1,5 +1,7 @@
 var React = require('react');
-//var TextField = require('./../utilities/forms/fields/TextField');
+
+var SelectWidget = require('./../utilities/forms/widgets/SelectWidget');
+var HiddenWidget = require('./../utilities/forms/widgets/HiddenWidget');
 //var ChoiceField = require('./../utilities/forms/fields/ChoiceField');
 var DateTimeField = require('./../utilities/forms/fields/DateTimeField');
 //var CheckboxWidget = require('./../utilities/forms/widgets/CheckboxWidget');
@@ -27,9 +29,20 @@ EventDateForm =  React.createClass({
         }
     },
 
+    category_change_handler: function(e) {
+        var category_value = e.target.value;
+        var ed_type_value = 'timed';
+        if (category_value == 'ongoing') {
+            ed_type_value = 'reoccurring';
+        }
+
+        this.refs['field.type'].setValue(ed_type_value);
+    },
+
     render: function() {
 
         var category_choices = [
+            [],
             ['reception', 'Reception/Opening/Closing aka "Concise" Event'],
             ['ongoing', 'Ongoing Event'],
             ['performance', 'Performance - Specific Start time to show up...'],
@@ -38,15 +51,14 @@ EventDateForm =  React.createClass({
         ];
 
         return <div id={'event_date_container_' + this.state.prefix}>
-        <hr />
-        <TextField id="type"  ref="field.type" val={this.state.data.type } form={this} />
-        <TextField id="label"  ref="field.label" val={this.state.data.label } form={this} />
-        <DateTimeField id="start" form={this}  ref="field.start"  val={this.state.data.start } widget={DateRangeWidget} />
-        <DateTimeField id="end" form={this}  ref="field.end"  val={this.state.data.end }  widget={DateRangeWidget} />
 
-        <ChoiceField id={'category' + this.state.prefix} form={this} ref="field.category"  val={this.state.data.category } widget={CheckboxWidget} choices={category_choices} />
-          
-        <ChoiceField id="venue_slug"  ref="field.venue_slug" val={this.state.data.venue_slug } form={this} widget={AutoCompleteWidget}/>
+        <hr />
+        <ChoiceField id="venue_slug"  ref="field.venue_slug" val={this.state.data.venue_slug } form={this} widget={AutoCompleteWidget} label="Venue"/>
+        <TextField id="type"  ref="field.type" val={this.state.data.type } form={this} widget={HiddenWidget} hide_label={true} />
+        <TextField id="label"  ref="field.label" val={this.state.data.label } form={this} label="Label" />
+        <DateTimeField id="start" form={this}  ref="field.start"  val={this.state.data.start } widget={DateRangeWidget} label="Start" />
+        <DateTimeField id="end" form={this}  ref="field.end"  val={this.state.data.end }  widget={DateRangeWidget} label="End"/>
+        <ChoiceField id={'category' + this.state.prefix} form={this} ref="field.category"  val={this.state.data.category } widget={SelectWidget} choices={category_choices} onChangeCallback={this.category_change_handler} label="Category"/>
         </div>
     }
 });
@@ -100,10 +112,8 @@ EventDateFormsInterface = React.createClass({
 
     render: function() {
 
-        var i = 0;
-        var rendered_forms = this.state.event_dates.map(function (event_date) {
-            i += 1;
-            return <EventDateForm event_date={ event_date } ref={'ed_' + i} prefix={i} />;
+        var rendered_forms = this.state.event_dates.map(function (event_date, i) {
+            return <EventDateForm key={ 'ed_formxx_' + i} event_date={ event_date } ref={'ed_' + i} prefix={i} />;
         });
 
         return <div>
@@ -153,7 +163,7 @@ EventsForm = React.createClass({
         }
 
         var title_value = event.target.value;
-        
+
         title_value = title_value.toLowerCase()
             .trim()
             .replace(/[^\w ]+/g, ' ')
@@ -244,10 +254,11 @@ EventsForm = React.createClass({
         ];
 
 
-        var img_src = {};
+        var img_src = null;
 
         if (this.state.data.results.primary_image_resource) {
             img_src = this.state.data.results.primary_image_resource.versions.CARD_SMALL.url;
+            img_src = <img src={ img_src } className="img-responsive" />
         }
 
         var uploader = null;
@@ -267,13 +278,13 @@ EventsForm = React.createClass({
                 <form role="form" className="form-horizontal" action="#" onSubmit={this.submitHandler}>
                     { errors }
                     
-              <img src={ img_src } className="img-responsive" />
+                    { img_src }
 
               <TextField id="name"  ref="field.name" val={this.state.data.results.name } form={this} placeholder="Enter Event Name" onChangeCallback={this.sluggable_helper} />
               <SlugField id="slug" form={this}  ref="field.slug"  val={this.state.data.results.slug } widget={SlugWidget} url_root="http://mplsart.com/events/" />
               <TextField id="featured" form={this} ref="field.featured" val={this.state.data.results.featured } placeholder="true or false" />
 
-              <TextField id="url" form={this} ref="field.url"  val={this.state.data.results.url } />
+              <TextField id="url" form={this} ref="field.url"  val={this.state.data.results.url } placeholder="http://" />
 
               <TextField id="summary"  ref="field.summary" val={this.state.data.results.summary } form={this} widget={TextareaWidget} placeholder="Post Summary" />
               <TextField id="content"  ref="field.content" val={this.state.data.results.content } form={this} widget={TextareaWidget} placeholder="Post content" />

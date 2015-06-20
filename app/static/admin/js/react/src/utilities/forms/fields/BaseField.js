@@ -33,6 +33,7 @@ BaseField  = {
             'field_id': id,
             'classes': this.props.classes,
             'placeholder': this.props.placeholder,
+            'hide_label': this.props.hide_label,
             'val': val,
             'form': this.props.form,
             'widget': widget
@@ -110,16 +111,25 @@ BaseField  = {
         var classes = this.state.classes || "";
         var placeholder = this.state.placeholder || "";
         var val = this.state.val;
+        var hide_label = this.state.hide_label;
 
-        var props = {id: id, field: this, form: this.state.form, ref: "widget", val: this.fromResource(), onChangeCallback: this.state.onChangeCallback}
+        var props = {id: id, field: this, form: this.state.form, ref: "widget", val: this.fromResource(), onChangeCallback: this.state.onChangeCallback, placeholder:placeholder, hide_label:hide_label}
 
         if (this.props.choices) {
             props['choices'] = this.props.choices
         }
         var widget = React.createElement(this.state.widget, props);
 
+        
+        if (!hide_label) {
+            label = <label htmlFor={'id_' +  id } className="col-sm-2 control-label">{ label }</label>
+        }
+        else {
+            label = null;
+        }
+
         return <div className="form-group" id={'form-group-' + id}>
-             <label htmlFor={'id_' +  id } className="col-sm-2 control-label">{ label }</label>
+                { label }
              <div className="col-sm-10">
                  { widget }
              </div>
