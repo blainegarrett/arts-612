@@ -16,7 +16,7 @@ var EventsEditPage = React.createClass({
 
         return <div className="row">
             <div className="col-lg-12">
-                <h2><a href="/admin">Admin</a> / <a href="/admin/venues">Events</a> / Edit</h2>
+                <h2><a href="/admin">Admin</a> / <a href="/admin/events">Events</a> / Edit</h2>
             </div>
 
             <div className="col-lg-12">            

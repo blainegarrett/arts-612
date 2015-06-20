@@ -5,75 +5,38 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <link rel="icon" href="/static/themes/v0/favicon.ico" />
-	<link href='http://fonts.googleapis.com/css?family=Quicksand:400,700' rel='stylesheet' type='text/css'>
-	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Meta -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<!-- Open Graph and Social Meta -->
+	<!-- Note: Page title must be a direct child of HEAD for validation to work -->
+    <title>Admin</title>
+
+	<!-- fonts -->
+	<link href="/static/Bryant2Web/Bryant2Web_WOFF/Bryant.css" rel="stylesheet" type="text/css">
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
     <!-- Bootstrap core CSS -->
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 
     <!-- Custom styles for this template -->
-	<link rel="stylesheet" href="/static/themes/v0/core.css">
+	<link rel="stylesheet" href="/static/themes/v0/core.css?69" />
 
 	<!-- important bits -->
 	<meta name="google-site-verification" content="5rh0RiNkYuPuVOdrIXk4mY4AQ87uS7Ad_ZigdjDNBp0" />
 
-	<!-- Search/Social Meta -->
-    <title>mplsart admin</title>
-    <meta name="description" content="The Very Best Events and Gallery Listings for Minneapolis" />
-    <meta name="keywords" content="minneapolis, twin cities, art, galleries, scene, painting, visual arts, drawing, purchase, coffee shop, shows, exhibition" />
-    <!-- <meta name="author" content="Blaine and Katie Garrett" /> -->
+	<!-- News Feeds -->
+	<link rel="alternate" type="application/rss+xml" title="MPLSART.COM Articles" href="/written/feed/" />
 
-	<!-- Twitter Card data -->
-	<meta name="twitter:card" content="summary">
-	<meta name="twitter:site" content="@mplsart">
-	<meta name="twitter:title" content="MPLSART.COM | Returning Soon...">
-	<meta name="twitter:description" content="Minneapolis' favorite arts calendar is returning soon with the very best events and gallery listings the city has to offer.">
-	<meta name="twitter:creator" content="@mplsart">
-	<!-- Twitter Summary card images must be at least 200x200px -->
-	<meta name="twitter:image" content="/static/themes/v0/mplsart_fbimg.jpg">
-
-	<!-- Open Graph data -->
-	<meta property="og:site_name" content="mplsart" />
-	<meta property="og:title" content="MPLSART.COM | returning soon..." />
-	<meta property="og:type" content="website" />
-	<!-- <meta property="og:url" content="http://mplsart.com/" /> -->
-	<meta property="og:image" content="http://phase-0.arts-612.appspot.com/static/themes/v0/mplsart_fbimg.jpg" />
-	<meta property="og:description" content="Minneapolis' favorite arts calendar is returning soon with the very best events and gallery listings the city has to offer." />
-	
-  </head>
-
-  <body>
 	<script>
 		var settings = {[{ settings|safe }]};
 	</script>
-
-	<!-- Start Top Nav -->
-	<div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
-	      <div class="container">
-	        <div class="navbar-header">
-			  <!--
-	          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-	            <span class="sr-only">Toggle navigation</span>
-	            <span class="icon-bar"></span>
-	            <span class="icon-bar"></span>
-	            <span class="icon-bar"></span>
-	          </button>
-			  -->
-	          <a class="navbar-brand" href="">MPLSART.COM</a>
-	        </div>
-			
-			<p class="navbar-text navbar-right">
-				<span id="est-stamp">EST. 2005</a>
-			</p>
-	      </div><!-- /.container -->
-	    </div>
-	<!-- End Top Nav -->
-	
-
-	<!-- Start Main Content Container -->
-    <div class="container">
 		
 		<style>
+		
+		#site-canvas { margin-top: 55px; }
+		
 		html, body { height: 100%;}
 
 		/* So that the modal is displayed in the preview.. You can probably remove this and the above rule */
@@ -255,12 +218,42 @@
 		
 		</style>
 
+	</head>
+	<body>
 
+			<!-- Start Top Nav -->
+			<div id="header_nav" class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+				<div class="container">
+			        <div class="navbar-header">
+						<a id="side_nav_toggle" class="pull-left" title="Show Menu"><span></span></a>			
+			          	<a class="navbar-brand internal-link" href="/admin" title="MPLSART.COM Home Page">MPLSART.COM</a>
+			        </div>
 
-	 	<div id="main_content">
+					<p class="navbar-text navbar-right"></p>
+			      </div><!-- /.container -->
+
+				  <div id="header_nav_cards"></div>
+
+			    </div>
+			<!-- End Top Nav -->
+
+		<div id="site-wrapper">
+			<div id="site-canvas">
+
+				<!-- Start Main Content Container -->
+			    <div class="container">
+
+					<!-- Start of Primary Page Content -->
+					<div id="main_content">
 			loading ...
-		</div>
-    </div><!--/.container-->
+					</div>
+					<!-- End of Primary Page Content -->
+
+			    </div><!--/.container-->
+
+			</div><!--/ #site-canvas -->	
+		</div><!--/ #site-wrapper -->
+
 
 
     <!-- Bootstrap core JavaScript

@@ -196,7 +196,6 @@ BlogPostForm = React.createClass({
             return [obj.resource_id, obj.title + ' ' + obj.slug + ' ' + obj.resource_id]
         });
 
-        console.log(this.state.data);
         return <div className="row">
         
         

@@ -44,8 +44,8 @@ var ActionGroup = React.createClass({
     },
 
     render: function() {
-        var buttons = this.state.button_defs.map(function (button) {
-            return <ActionButton title={button.title} url={button.url} icon={button.icon} />
+        var buttons = this.state.button_defs.map(function (button, i ) {
+            return <ActionButton key={'action_grp_button_' + i}title={button.title} url={button.url} icon={button.icon} />
         });
         return <div className="btn-group btn-group" role="group" aria-label="...">{buttons}</div>
     }
@@ -66,8 +66,8 @@ var ActionColumn = React.createClass({
         var col = this.state.col;
         var obj = this.state.obj;
 
-        var buttons = this.state.button_defs.map(function (button) {
-            return <ActionButton obj={obj} title={button.title} url={button.url} icon={button.icon} />
+        var buttons = this.state.button_defs.map(function (button, i) {
+            return <ActionButton key={'action_col_button_' + i} obj={obj} title={button.title} url={button.url} icon={button.icon} />
         });
 
         return <div className="btn-group btn-group-xs" role="group" aria-label="...">{buttons}</div>
@@ -96,8 +96,8 @@ var DataList = React.createClass(
             var grid = this.props.grid;
 
             if (this.props.data.results != undefined) {
-                rowNodes = this.props.data.results.map(function (obj) {
-                    var columnNodes = columns.map(function (col) {
+                rowNodes = this.props.data.results.map(function (obj, i) {
+                    var columnNodes = columns.map(function (col, j) {
                         var _widget = SimpleColumn;
                         var props = {col: col, obj: obj}
 
@@ -107,16 +107,13 @@ var DataList = React.createClass(
 
                         var widget = React.createElement(_widget, props);
 
-                        
-
-
                         if (col == 'actions') {
                             props['button_defs'] = grid.state.inline_actions
                             widget = React.createElement(ActionColumn, props)
                         }
-                        return <td>{ widget }</td>;
+                        return <td key={'cell-' + i + '-' + j}>{ widget }</td>;
                     });
-                    return (<tr>{ columnNodes }</tr>);
+                    return (<tr key={ 'row_' + i } >{ columnNodes }</tr>);
                 });
             }
 
@@ -161,20 +158,19 @@ var DataTableMixin = {
     },
     
     render_templatexxx: function() {
-        var columnNodes = this.state.columns.map(function (col) {
-            return <th>{ col }</th>
+        var columnNodes = this.state.columns.map(function (col, i) {
+            return <th key={ 'cell_' + i }>{ col }</th>
         });
 
         return <div>
-            <div>
+            <div className="clearfix">
                 <div className="pull-right">
-                    
 
                 <form className="form-inline" role="form">
                     <div className="form-group">
                         <div className="input-group">
                               <label className="sr-only" htmlFor="exampleInputEmail2">Email address</label>
-                              <input type="email" className="form-control" id="exampleInputEmail2" placeholder="Filter by Name" onChange={this.filter_by_name} />
+                              <input type="text" className="form-control" id="exampleInputEmail2" placeholder="Filter by Name" onChange={this.filter_by_name} />
                               </div>
 
                   </div>

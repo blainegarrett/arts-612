@@ -14,8 +14,8 @@ var EventDateColumn = React.createClass({
         var rendered_event_dates = '';
 
         if (obj.event_dates) {            
-            rendered_event_dates = obj.event_dates.map(function (ed) {
-                return <div className="small">
+            rendered_event_dates = obj.event_dates.map(function (ed, i) {
+                return <div key={ 'ed_' + i } className="small">
                 { ed.category } -
                 "{ ed.label }" - 
                 { moment(ed.start).format('lll') }  - { moment(ed.end).format('lll') } 

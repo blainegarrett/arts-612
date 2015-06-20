@@ -63,9 +63,7 @@ EventDateFormsInterface = React.createClass({
        for (ref in this.refs) {
            results.push(this.refs[ref].toResource());
        }
-       
        return results
-       return this.refs.input.getValue();
     },
 
     toResource: function(field_value) {
@@ -264,8 +262,6 @@ EventsForm = React.createClass({
 
         var event_date_forms = '';
 
-        console.log(this.state.data.results.featured);
-        
         return <div className="row">
             <div className="col-lg-8">
                 <form role="form" className="form-horizontal" action="#" onSubmit={this.submitHandler}>

@@ -17,13 +17,15 @@ BaseField  = {
         }
 
         var val = this.props.val;
+        if (typeof(this.processInitialValue) == 'function'){
+            val = this.processInitialValue(val);
+        }
+
         if (!val && this.props.defaultValue) {
             val = this.props.defaultValue;
         }
 
         var onChangeCallback = this.props.onChangeCallback;
-
-        console.log(onChangeCallback);
 
         return {
             'onChangeCallback': onChangeCallback,
@@ -44,7 +46,6 @@ BaseField  = {
          }
 
          if (!field_value) {
-             console.log(this.refs.widget); 
              field_value = this.getValue(field_value);
          }
 
@@ -62,8 +63,6 @@ BaseField  = {
 
       handleChange: function(event) {
           var value = this.getValue();
-
-          alert('sfsdfsd');
 
           if (typeof(this._handleChange) == 'function') {
               value = this._handleChange(value);

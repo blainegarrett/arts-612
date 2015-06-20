@@ -24,17 +24,14 @@ CheckboxWidget = React.createClass({
     render: function(){
         var choices_rendered;
         var handleChange = this.handleChange;
-        var i = 0;
         var cur_state_val = this.state.val;
         var name = this.state.field_id;
 
         if (this.state.choices && this.state.choices.length > 0) {
-            choices_rendered = this.state.choices.map(function (choice_pair) {
-                i += 1;
-                console.log([choice_pair[0], cur_state_val])
+            choices_rendered = this.state.choices.map(function (choice_pair, i) {
                 var checked = choice_pair[0] == cur_state_val;
 
-                return <div><label><input onChange={handleChange} type="radio" ref={'checkbox_' + i} name={name} checked={checked} value={ choice_pair[0] } onBlur={this.onBlur} onFocus={this.onFocus} /> { choice_pair[1] }</label></div>
+                return <div key={'checkbox_container_' + i }><label><input onChange={handleChange} type="radio" ref={'checkbox_' + i} name={name} checked={checked} value={ choice_pair[0] } onBlur={this.onBlur} onFocus={this.onFocus} /> { choice_pair[1] }</label></div>
             });
         }
 

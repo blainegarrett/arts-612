@@ -5,6 +5,9 @@ var $ = require('jquery');
 var jQuery = $;
 var datetimepicker = require('eonasdan-bootstrap-datetimepicker');
 
+global.moment = moment;
+
+
 /*! bootstrap-timepicker v0.2.5 
 * http://jdewit.github.com/bootstrap-timepicker 
 * Copyright (c) 2013 Joris de Wit 
@@ -1414,7 +1417,7 @@ DateRangeWidget = React.createClass({
         var date_input = this.refs.date_input.getDOMNode();
         var time_input = this.refs.time_input.getDOMNode();
 
-        combined_str =  combine_datetime(date_input.value, time_input.value);
+        combined_str = combine_datetime(date_input.value, time_input.value);
         return combined_str
         
     },
@@ -1424,20 +1427,25 @@ DateRangeWidget = React.createClass({
         var time_input = this.refs.time_input.getDOMNode();
 
         /* TODO: This is where we can detect if this date is valid or not... */
-        var time_val = time_input.value;
-        var is_time_valid = moment('2010-10-10 ' + time_val).isValid();
-
+        var time_val = time_input.value; // 1:30 PM for example
+        var time_test_moment = moment('2010-10-10 ' + time_val, 'YYYY-MM-DD HH:mm A');
+        var is_time_valid = time_test_moment.isValid();
         if (is_time_valid) {
             field_value = this._getValue();
-            this.setState({val: field_value});
+            
+            console.log(this.state.val);
+            console.log(field_value);
+
+            this.setState({val: moment(field_value, 'YYYY-MM-DD HH:mm A')});
         }
         else {
-            console.log('Time is not valid...');
+            console.log('xxxTime is not valid... ' + time_test_moment);
         }
     },
 
     toResourceX: function(field_value) {
         /* Pull raw form date into a REST resource format */
+
         if (!field_value) {
             field_value = this.refs.date_input.getDOMNode().value + ' ' + this.refs.time_input.getDOMNode().value;
         }
@@ -1450,11 +1458,15 @@ DateRangeWidget = React.createClass({
 
     fromResourceX: function() {
         /* Push REST resource format into a Form value */
+        alert('asdf!?!?!?!?');
 
         var val = this.state.val;
         if (!val) {
             return '';
         }
+
+
+
         console.log('this is not implemented yet...');
         //date_input
         return 'xxxxxxxx'; // val.lat + ',' + val.lon;
@@ -1465,6 +1477,9 @@ DateRangeWidget = React.createClass({
         var time_input = $(this.refs.time_input.getDOMNode());
         var react_element = this;
 
+        //console.log(this.state.val); //Jun 20, 2015 8:30 PM
+        //console.log(react_element.getValue()); // 2015-06-20 5:00 PM
+        
         // Bind the datepicker...
 
         date_input.datetimepicker({ pickTime: false }).on('dp.change', function(picker_event) {
@@ -1505,7 +1520,7 @@ DateRangeWidget = React.createClass({
             date_type = this.state.form.refs['field.type'].state.val;
         }
 
-        date_obj = moment(val);
+        date_obj = moment(new Date(val));
 
         var time_val = null;
         var date_val = null;
@@ -1526,7 +1541,7 @@ DateRangeWidget = React.createClass({
                 <div className="col-sm-6 input-append date">
                     <input type="text" className={ 'form-control has-success has-feedback ' + classes } 
                         id={'id_' +  id } placeholder={ placeholder } value={ date_val } 
-                        onChange={function(e){alert('You can not manually change yet...'); }} 
+                        onChange={function(e){ return false }} 
                         data-date-format="YYYY-MM-DD"
                         ref="date_input" />
                     <span className="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true" onClick={this.show_date_picker}></span>

@@ -212,7 +212,7 @@ class EventsApiHandler(RestHandlerBase):
             #'cursor': coerce_to_cursor,
             #'sort': voluptuous.Coerce(str),
             'get_by_slug': voluptuous.Coerce(str),
-            #'q': voluptuous.Coerce(str)
+            'q': voluptuous.Coerce(str)
         }
 
     @rest_login_required
@@ -261,6 +261,7 @@ class EventsApiHandler(RestHandlerBase):
             resource = create_resource_from_entity(event)
             self.serve_success(resource)
             return
+
 
         results = []
         cursor = None

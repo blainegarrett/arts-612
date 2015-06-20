@@ -12,7 +12,7 @@ var EventsCreatePage = React.createClass({
 
         return <div className="row">
             <div className="col-lg-12">
-                <h2><a href="/admin">Admin</a> / <a href="/admin/venues">Events</a> / Create</h2>
+                <h2><a href="/admin">Admin</a> / <a href="/admin/events">Events</a> / Create</h2>
                 <EventsForm resource_url={resource_url} is_edit={false} save_callback={save_callback} />
                 </div>
             </div>;
