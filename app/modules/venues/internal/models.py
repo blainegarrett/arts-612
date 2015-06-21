@@ -16,7 +16,7 @@ class Venue(ndb.Model):
     city = ndb.StringProperty()
     state = ndb.StringProperty()
     country = ndb.StringProperty()
-    geo = ndb.GeoPtProperty()
+    geo = ndb.GeoPtProperty(repeated=True)
     website = ndb.StringProperty()
     phone = ndb.StringProperty()
     email = ndb.StringProperty()

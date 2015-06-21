@@ -375,7 +375,11 @@ class GeoField(RestField):
     def to_resource(self, data):
         val = super(GeoField, self).to_resource(data)
 
+        # Could be a single dict or a list of dicts
+
         if val:
+            if (isinstance(val, list)):
+                return [ndb.GeoPt(lat=pt['lat'], lon=pt['lon']) for pt in val]
             return ndb.GeoPt(lat=val['lat'], lon=val['lon'])
         return None
 
@@ -389,7 +393,7 @@ class GeoField(RestField):
         if not val:
             return None
 
-        return {'lat': val.lat, 'lon': val.lon}
+        return [{'lat': pt.lat, 'lon': pt.lon} for pt in val]
 
 
 class SlugField(RestField):

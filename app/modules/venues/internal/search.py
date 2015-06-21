@@ -44,7 +44,8 @@ def build_index(venue):
 
     geopoint = None
     if venue.geo:
-        geopoint = search.GeoPoint(venue.geo.lat, venue.geo.lon)
+        pt = venue.geo[0]
+        geopoint = search.GeoPoint(pt.lat, pt.lon)
         fields.append(search.GeoField(name='geo', value=geopoint))
 
     return search.Document(doc_id=venue.slug, fields=fields)

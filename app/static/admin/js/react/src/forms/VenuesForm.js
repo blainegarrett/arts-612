@@ -93,12 +93,17 @@ VenuesForm = React.createClass({
     },
 
     set_geo_callback: function (geo) {
-        console.log(this);
-
-        var raw_geo_str = geo.toString()
+        /* Helper to set the value of the geo field
+         - This may accept a single geo pair OR
+         and array for a polygon.
+        */
         
-        raw_geo_str = raw_geo_str.replace(')', '').replace('(', '')
+        console.log('-------------------------');
+        console.log(geo);
+        console.log('-------------------------')
 
+        var raw_geo_str = geo.toString(); // if polygone, this will create a comma separated str of values
+        //raw_geo_str = raw_geo_str.replace(')', '').replace('(', '')
         this.refs['field.geo'].setValue(raw_geo_str);
         
     },
@@ -182,7 +187,7 @@ VenuesForm = React.createClass({
 
         return <div className="row">
         
-        <div className="col-lg-8">
+        <div className="col-lg-6">
             <form role="form" className="form-horizontal" action="#" onSubmit={this.submitHandler}>
                 { errors }
 
@@ -216,11 +221,11 @@ VenuesForm = React.createClass({
             </form>
         </div>
 
-        <div className="col-lg-4">
+        <div className="col-lg-6">
             { uploader }
 
              <GeoPtField id="geo" form={this} ref="field.geo"  val={this.state.data.results.geo } />
-            <MapComponent2 ref="mapObj" geo={this.state.data.results.geo } />
+            <MapComponent2 ref="mapObj" geo={this.state.data.results.geo } click_callback={this.set_geo_callback} />
             
         </div>
 
