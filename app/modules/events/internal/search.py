@@ -53,7 +53,11 @@ def _build_event_date(i, event, ed, venue, start, end, is_hours=False):
 
     venue_geo = None
     if venue.geo:
-        venue_geo = search.GeoPoint(venue.geo.lat, venue.geo.lon)
+        geoPt = venue.geo
+        if isinstance(geoPt, list):
+            geoPt = geoPt[0]
+
+        venue_geo = search.GeoPoint(geoPt.lat, geoPt.lon)
     fields.append(search.GeoField(name='venue_geo', value=venue_geo))
 
     return search.Document(doc_id=doc_id, fields=fields)

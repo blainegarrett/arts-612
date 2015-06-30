@@ -21,7 +21,7 @@ var MapComponent2 = React.createClass({
           fillColor: '#fff000',
           fillOpacity: 0.35,
           editable: true,
-          draggable:true
+          draggable:false
         });
 
 
@@ -43,9 +43,6 @@ var MapComponent2 = React.createClass({
         var rc = this;
         global.googlemapapi.maps.event.addListener(bermudaTriangle, 'click', function (e) {
             var map = rc.state.mapObj;
-            console.log('jjj');
-            
-
             rc.state.click_callback(e.latLng)
             map.setCenter(e.latLng);
         });
@@ -74,7 +71,7 @@ var MapComponent2 = React.createClass({
         
         var address_mode = true;
 
-        if (typeof(this.props.geo.push) == 'function') { // ducktype array vs. dict
+        if (this.props.geo && typeof(this.props.geo.push) == 'function') { // ducktype array vs. dict
             if (this.props.geo.length > 1) {
                 address_mode = false;      
 
@@ -164,7 +161,7 @@ var MapComponent2 = React.createClass({
                 var clicked_latlng = e.latLng;
                 var clicked_lat = e.latLng.lat();
                 var clicked_lng = e.latLng.lng();
-                var thresh = 0.002; // This might be based on zoom?
+                var thresh = 0.001; // This might be based on zoom?
 
                 var triangleCoords = [
                   new google.maps.LatLng(clicked_lat + thresh, clicked_lng - thresh), //TL
@@ -182,6 +179,7 @@ var MapComponent2 = React.createClass({
                 rc.state.click_callback(e.latLng);
 
                 // TODO: Show only this polygon
+                
             }
               
         })

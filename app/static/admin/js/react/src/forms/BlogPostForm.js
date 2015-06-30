@@ -10,6 +10,7 @@ var TextareaWidget = require('./../utilities/forms/widgets/TextareaWidget');
 var FileUploader = require('./../components/FileUploader');
 var DateTimeField = require('./../utilities/forms/fields/DateTimeField');
 var DateRangeWidget = require('./../utilities/forms/widgets/DateRangeWidget');
+var RichTextWidget = require('./../utilities/forms/widgets/RichtextWidget');
 
 BlogPostForm = React.createClass({
     propTypes: {
@@ -215,7 +216,7 @@ BlogPostForm = React.createClass({
 
 
               <TextField id="summary"  ref="field.summary" val={this.state.data.results.summary } form={this} widget={TextareaWidget} placeholder="Post Summary" />
-              <TextField id="content"  ref="field.content" val={this.state.data.results.content } form={this} widget={TextareaWidget} placeholder="Post content" />
+              <TextField id="content"  ref="field.content" val={this.state.data.results.content } form={this} widget={RichTextWidget} placeholder="Post content" />
 
 
               <div className="pull-right">
