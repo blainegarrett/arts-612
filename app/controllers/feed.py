@@ -125,10 +125,8 @@ class FeaturedApiHandler(RestHandlerBase):
         else:
             if is_appspot():
                 resource_ids = [
-                    'RXZlbnQeHzU2NjUxMTc2OTc5OTg4NDg', # Wed
-                    'RXZlbnQeHzU2NzY1ODI1NzYzMjQ2MDg', # Sat
-                    'RXZlbnQeHzU2NDgyNjkzNDY2MDMwMDg', # Sat
-                    'RXZlbnQeHzU3NTY3NDk0ODMwODE3Mjg', # Sat
+                    'RXZlbnQeHzU3NDMxMTQzMDQwOTQyMDg',
+                    'RXZlbnQeHzU2MzAxMTA0OTMzMTA5NzY',
                     'QmxvZ1Bvc3QeHzU3MDczMjQwNzMxODExODQ'
                 ]
             else:
