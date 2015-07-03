@@ -21,7 +21,7 @@ var ckops = {
 
         scayt_autoStartup: true,
         format_tags: 'p;h1;h2;h3;pre',
-        //extraPlugins: 'autogrow,sharedspace,format',
+        extraPlugins: 'autogrow', //',sharedspace,format',
         removeDialogTabs: 'image:advanced;link:advanced',
         removePlugins: 'magicline,liststyle', // resize, elementspath, anchor
         resize_enabled: false,
@@ -43,13 +43,15 @@ var ckops = {
 
 
 
-
 RichtextWidget = React.createClass({
     /* Textarea Input Widget */
 
     mixins: [BaseWidgetMixin],
 
     componentDidMount: function () {
+        
+        CKEDITOR.plugins.addExternal( 'autogrow', '/static/ckeditor/plugins/autogrow/', 'plugin.js' );
+
         var textarea = $(this.getDOMNode());
         var textarea_id = $(this.getDOMNode()).attr('id');
         var editor = CKEDITOR.replace(textarea_id, ckops);
