@@ -17,6 +17,7 @@ class MainHandler(BaseHandler):
     """
 
     def get(self):
+        
         pagemeta = {
             'title': 'MPLSART.COM | Make a Scene',
             'description': 'Find the best art events in Minneapolis and St. Paul',
@@ -25,7 +26,6 @@ class MainHandler(BaseHandler):
 
         template_values = {'pagemeta': pagemeta}
         self.render_template('./templates/index.html', template_values)
-
 
 class AboutMainHandler(BaseHandler):
     """
