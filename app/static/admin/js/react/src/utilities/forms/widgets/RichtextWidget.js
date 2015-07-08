@@ -37,7 +37,7 @@ var ckops = {
     language: 'en',
     defaultLanguage: 'en',
 
-    allowedContent: 'a[!href, target](*); ul; ol; li; p; strong; sup; sub; s; u; strike; center; abbr; ins; h1; h2; h3; h4; h5; h6; b; em; i; small;br; img[!src, *](*)', //a[!href]; strong; em; b; i; li; ul; ol; p; sup; sub; s; u; span; del; strike; center; br; abbr; h1; h2; h3; h4; h5; h6; hr; ins; img { height, width } [ !src, alt ]; *[class]; *[style]; *[start]; *{*}',    
+    allowedContent: 'div[*]{*}(*); iframe[*]{*}; a[!href, target](*); ul; ol; li; p; strong; sup; sub; s; u; strike; center; abbr; ins; h1; h2; h3; h4; h5; h6; b; em; i; small;br; img[!src, *](*)', //a[!href]; strong; em; b; i; li; ul; ol; p; sup; sub; s; u; span; del; strike; center; br; abbr; h1; h2; h3; h4; h5; h6; hr; ins; img { height, width } [ !src, alt ]; *[class]; *[style]; *[start]; *{*}',    
     sharedSpaces: null, // don't use shared spaces
 }
 
