@@ -110,16 +110,20 @@ var PodArticleRenderer = React.createClass({
         var m = moment(article.published_date);
         var date_slug = m.format('YYYY/MM/');
 
-        return <div>
-            <div className="card-image">
-                <a href={article.permalink} title={article.title} onClick={global.routeTo }>{ image }</a>
-            </div>
+        return (
+            <div className="card-container">
+                <div className="card-header">
+                    <div className="card-image">
+                        <a href={article.permalink} title={article.title} onClick={global.routeTo }>{ image }</a>
+                    </div>
+                </div>
 
-            <div className="card-content">
-                <div className="card-title"><a href={ article.permalink } onClick={global.routeTo } target="_new">{article.title }</a></div>
-                <div className="card-detail">{ article.summary } <b><a href={article.permalink} title={article.title} onClick={global.routeTo }>Read More...</a></b></div>
-            </div>            
-        </div>;
+                <div className="card-content">
+                    <div className="card-title"><a href={ article.permalink } onClick={global.routeTo } target="_new">{article.title }</a></div>
+                    <div className="card-detail">{ article.summary } <b><a href={article.permalink} title={article.title} onClick={global.routeTo }>Read More...</a></b></div>
+                </div>            
+            </div>
+        );
 
     }
     

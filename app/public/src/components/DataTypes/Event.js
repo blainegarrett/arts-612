@@ -374,18 +374,22 @@ var PodRenderer = React.createClass({
 
         //<div className="card-title"><a href={post_url} onClick={global.routeTo }>{e.name}</a></div>
 
-        return <div>
-            { image }
+        return (
+            <div className="card-container">
+                <div className="card-header">
+                    { image }
+                </div>
 
-            <div className="card-content">
-                <div className="card-title"><a href={ post_url } data-ga-category="event-pod-click" onClick={global.current_page.getRoute }>{e.name }</a></div>
+                <div className="card-content">
+                    <div className="card-title"><a href={ post_url } data-ga-category="event-pod-click" onClick={global.current_page.getRoute }>{e.name }</a></div>
 
-                <div className="card-detail event-time"><NiceDate start={ target_event_date.start } end={ target_event_date.end } eventdate_type={ target_event_date.type } /></div>
-                <div className="card-detail event-venue-name">{target_event_date.venue.name}</div>
-                <div className="card-detail event-address">{target_event_date.venue.address + ', ' + target_event_date.venue.city }</div>
+                    <div className="card-detail event-time"><NiceDate start={ target_event_date.start } end={ target_event_date.end } eventdate_type={ target_event_date.type } /></div>
+                    <div className="card-detail event-venue-name">{target_event_date.venue.name}</div>
+                    <div className="card-detail event-address">{target_event_date.venue.address + ', ' + target_event_date.venue.city }</div>
 
-            </div>            
-        </div>;
+                </div>            
+            </div>
+        );
 
     }
     
