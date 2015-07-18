@@ -18,7 +18,7 @@ var masonryOptions = {
     transitionDuration: 0,
     gutter: 0,
     columnWidth: ".col-sm-1",
-    itemSelector: '.card'
+    itemSelector: '.mason-brick'
 };
 
 
@@ -42,7 +42,7 @@ var Pod = React.createClass({
     render: function () {
 
         var card_grid_span = 'col-sm-3';
-        var card_classes = 'card '
+        var card_classes = 'mason-brick ' //card '
 
         if (this.state.data.featured) {
             card_classes += 'col-sm-6 col-xs-12';
@@ -53,13 +53,19 @@ var Pod = React.createClass({
 
         var componentClass = podComponentMap[this.state.data['resource_type']];
         if (!componentClass) {
-            return <div className="card col-sm-2"></div>
+            return <div className="col-sm-2"><div className="card"></div></div>
         }
 
         var pod_props = {'resource': this.state.data, renderer: componentClass.PodRenderer };
 
         var pod_content = React.createElement(componentClass.Goober, pod_props);
-        return <div className={ card_classes }>{ pod_content }</div>
+        return (
+            <div className={ card_classes }>
+                <div className="card">
+                    { pod_content }
+                </div>
+            </div>
+        )
     }
 });
 

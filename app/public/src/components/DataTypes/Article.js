@@ -112,7 +112,7 @@ var PodArticleRenderer = React.createClass({
 
         return (
             <div className="card-container">
-                <div className="card-header">
+                <div className="card-headerx">
                     <div className="card-image">
                         <a href={article.permalink} title={article.title} onClick={global.routeTo }>{ image }</a>
                     </div>

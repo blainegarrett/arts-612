@@ -376,7 +376,33 @@ var PodRenderer = React.createClass({
 
         return (
             <div className="card-container">
-                <div className="card-header">
+                <div className="card-header bg-image">
+                    <h2>{ e.name }
+                        <small>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla non convallis diam, non convallis quam. Integer ac arcu id felis pulvinar tempus eget at ipsum. Aenean in volutpat ligula. Suspendisse malesuada pretium enim eu viverra. Donec non varius lacus, vel sodales purus. </small>
+                    </h2>
+                    <ul className="actions">
+                                        <li className="dropdown">
+                                            <a href="" data-toggle="dropdown" aria-expanded="false">
+                                                <i className="zmdi zmdi-more-vert"></i>
+                                            </a>
+                                            
+                                            <ul className="dropdown-menu dropdown-menu-right">
+                                                <li>
+                                                    <a href="">Change Date Range</a>
+                                                </li>
+                                                <li>
+                                                    <a href="">Change Graph Type</a>
+                                                </li>
+                                                <li>
+                                                    <a href="">Other Settings</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+
+
+                </div>
+                <div className="card-headerx">
                     { image }
                 </div>
 
