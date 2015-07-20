@@ -35,7 +35,7 @@ Install the project to **~/sites/arts-612/** or wherever you chose. This path is
 	``alias xart612='cd ~/sites/arts-612/ && export VENV_PATH=~/sites/virtual_environments/arts-612 && echo $VENV_PATH && source ${VENV_PATH}/bin/activate'``
 * Step 5: Open a new shell and run the newly created alias `xarts612`
 * Step 6: Run `make install` - This will install any python dependencies
-* Step 7: run `python run_tests.py` If everything passes, you are probably good to go.
+* Step 7: run `make unit` If everything passes, you are probably good to go.
 
 **Installing client code**
 
