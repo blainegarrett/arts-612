@@ -1,7 +1,7 @@
 import webapp2
 from webapp2_extras.routes import RedirectRoute
 
-import auth.controllers as auth_c
+#import auth.controllers as auth_c
 
 import logging
 import jinja2
@@ -21,20 +21,22 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 
 def handle_404(request, response, exception):
     logging.exception(exception)
+
     response.write('Oops! I could swear this page was here!')
     response.set_status(404)
 
 
 # Beta Routes
 routes = [
-    RedirectRoute('/logout/', handler=auth_c.LogoutHandler, strict_slash=True, name="auth_logout"),
-    RedirectRoute('/beta/', handler=auth_c.ProfileHandler, strict_slash=True, name="beta_index"),
-    RedirectRoute('/beta/email/', handler=auth_c.SignupHandler,
-        strict_slash=True, name="beta_signup"),
-    RedirectRoute('/beta/activate/', handler=auth_c.ActivateHandler, strict_slash=True,
-        name="beta_activate"),
-    RedirectRoute('/beta/confirm/', handler=auth_c.ConfirmHandler, strict_slash=True,
-        name="beta_confirm")]
+    #RedirectRoute('/logout/', handler=auth_c.LogoutHandler, strict_slash=True, name="auth_logout"),
+    #RedirectRoute('/beta/', handler=auth_c.ProfileHandler, strict_slash=True, name="beta_index"),
+    #RedirectRoute('/beta/email/', handler=auth_c.SignupHandler,
+    #    strict_slash=True, name="beta_signup"),
+    #RedirectRoute('/beta/activate/', handler=auth_c.ActivateHandler, strict_slash=True,
+    #    name="beta_activate"),
+    #RedirectRoute('/beta/confirm/', handler=auth_c.ConfirmHandler, strict_slash=True,
+    #    name="beta_confirm")
+]
 
 
 # Web Routes
@@ -52,21 +54,48 @@ name = {url, server_view, react_view }
 
 web_routes += [
 
-    RedirectRoute('/about/', 'controllers.AboutMainHandler', strict_slash=True, name="about"),
+    RedirectRoute('/about/',
+                  'controllers.AboutMainHandler',
+                  strict_slash=True,
+                  name="about"),
 
-    (r'/galleries/([a-z0-9-]+)', 'venues.controllers.GalleryDetailHandler'),
-    (r'/galleries', 'venues.controllers.GalleryMainHandler'),
 
-    #(r'/events/([a-z0-9-]+)', 'cal.controllers.CalendarDetailHandler'),
-    RedirectRoute(r'/events/<slug:[a-z0-9-_]+>/', 'cal.controllers.CalendarDetailHandler', strict_slash=True, name="event_permalink"),
+    RedirectRoute(r'/galleries/<slug:[a-z0-9-_]+>/',
+                  'venues.controllers.GalleryDetailHandler',
+                  strict_slash=True,
+                  name="view_permalink"),
 
-    #(r'/calendar', 'cal.controllers.CalendarMainHandler'),
+    RedirectRoute(r'/galleries/',
+                  'venues.controllers.GalleryMainHandler',
+                  strict_slash=True,
+                  name="venues_main"),
 
-    RedirectRoute('/written/', 'controllers.written.WrittenMainHandler', strict_slash=True, name="written"),
-    RedirectRoute('/written/feed/', 'controllers.written.WrittenMainRssFeedHandler', strict_slash=True, name="written_rss_main"),
+    # (r'/events/([a-z0-9-]+)', 'cal.controllers.CalendarDetailHandler'),
+    RedirectRoute(r'/events/<slug:[a-z0-9-_]+>/',
+                  'cal.controllers.CalendarDetailHandler',
+                  strict_slash=True,
+                  name="event_permalink"),
 
-    RedirectRoute(r'/written/<category_slug:[a-z0-9-_]+>/<slug:[a-z0-9-_]+>/', 'controllers.written.WrittenCategoryArticleHandler', strict_slash=True, name="written_article_category"),
-    RedirectRoute(r'/written/<year:[\d]+>/<month:[\d]+>/<slug:[a-z0-9-_]+>/', 'controllers.written.WrittenArticleHandler', strict_slash=True, name="written_article"),
+    # (r'/calendar', 'cal.controllers.CalendarMainHandler'),
+
+    RedirectRoute('/written/',
+                  'controllers.written.WrittenMainHandler',
+                  strict_slash=True,
+                  name="written"),
+    RedirectRoute('/written/feed/',
+                  'controllers.written.WrittenMainRssFeedHandler',
+                  strict_slash=True,
+                  name="written_rss_main"),
+
+    RedirectRoute(r'/written/<category_slug:[a-z0-9-_]+>/<slug:[a-z0-9-_]+>/',
+                  'controllers.written.WrittenCategoryArticleHandler',
+                  strict_slash=True,
+                  name="written_article_category"),
+
+    RedirectRoute(r'/written/<year:[\d]+>/<month:[\d]+>/<slug:[a-z0-9-_]+>/',
+                  'controllers.written.WrittenArticleHandler',
+                  strict_slash=True,
+                  name="written_article"),
 
     (r'/', 'controllers.MainHandler'),
     (r'.*', 'controllers.Error404Handler'),

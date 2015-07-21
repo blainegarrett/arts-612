@@ -285,10 +285,11 @@ class GalleryDetailHandler(BaseHandler):
             logging.error('Gallery Not Found with slug %s.' % slug)
             self.response.set_status(404)
 
+        # TODO: Update these values
         pagemeta = {
-                'title': 'cooooool',
-                'description': 'this is wicked cool',
-                'image': 'http://www.soapfactory.org/img/space/gallery-one-2.jpg'}
+                'title': 'Gallery Name',
+                'description': 'Gallery Summary',
+                'image': ''}
 
         template_values = {'pagemeta': pagemeta}
         self.render_template('templates/index.html', template_values)

@@ -4,8 +4,9 @@ Controllers for the Written section
 import voluptuous
 
 from rest.controllers import RestHandlerBase
-from rest.resource import Resource
-from rest.resource import RestField, SlugField, ResourceIdField, ResourceUrlField, DatetimeField
+
+from rest.resource import Resource, ResourceUrlField, DatetimeField
+from rest.resource import RestField, SlugField, ResourceIdField
 
 from rest.resource import ResourceField
 from rest.utils import get_key_from_resource_id

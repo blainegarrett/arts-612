@@ -30,7 +30,7 @@ from utils import ubercache
 from cal.rest_helpers import EventDateField
 from utils import get_domain
 
-resource_url = 'http://' + get_domain() + '/api/events/%s' #TODO: HRM?
+resource_url = 'http://' + get_domain() + '/api/events/%s'  # TODO: HRM?
 
 # verbosity vs. input vs. output
 
@@ -304,8 +304,6 @@ class CalendarDetailHandler(BaseHandler):
         """
         Web handler for an event permalink page
         """
-
-        from modules.events.internal import api as events_api
 
         # TODO: Abstract this a bit more out into a rest-like service...
         e = events_api.get_event_by_slug(slug)
