@@ -154,7 +154,7 @@ def simple_search(querystring=None, start=None, end=None, category=None, venue_s
     TODO: "term", "near", "by type", "now" and any combo
     """
 
-    logging.warning([start, end])
+    logging.debug([start, end])
 
     if not querystring:
         querystring = ''
@@ -207,7 +207,7 @@ def simple_search(querystring=None, start=None, end=None, category=None, venue_s
 
     q_options = search.QueryOptions(limit=limit, sort_options=sort_options)
 
-    logging.warning('Performing a search with querystring: %s' % querystring)
+    logging.debug('Performing a search with querystring: %s' % querystring)
 
     search_query = search.Query(query_string=querystring, options=q_options)
 

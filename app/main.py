@@ -1,8 +1,6 @@
 import webapp2
 from webapp2_extras.routes import RedirectRoute
 
-#import auth.controllers as auth_c
-
 import logging
 import jinja2
 import os
@@ -25,32 +23,18 @@ def handle_404(request, response, exception):
     response.write('Oops! I could swear this page was here!')
     response.set_status(404)
 
-
-# Beta Routes
-routes = [
-    #RedirectRoute('/logout/', handler=auth_c.LogoutHandler, strict_slash=True, name="auth_logout"),
-    #RedirectRoute('/beta/', handler=auth_c.ProfileHandler, strict_slash=True, name="beta_index"),
-    #RedirectRoute('/beta/email/', handler=auth_c.SignupHandler,
-    #    strict_slash=True, name="beta_signup"),
-    #RedirectRoute('/beta/activate/', handler=auth_c.ActivateHandler, strict_slash=True,
-    #    name="beta_activate"),
-    #RedirectRoute('/beta/confirm/', handler=auth_c.ConfirmHandler, strict_slash=True,
-    #    name="beta_confirm")
-]
-
-
 # Web Routes
-# TODO: WE need to somehow inject these into the angular app
+# TODO: WE need to somehow inject these into the react app
 
 # WebGalleries
-web_routes = routes
+web_routes = []
 rest_routes = []
 
 
-'''
+"""
 TODO: Design for web routes - put in jsonfile that is mounted in client too...
 name = {url, server_view, react_view }
-'''
+"""
 
 web_routes += [
 
