@@ -2,25 +2,12 @@
 Signup and Authentication routes
 """
 
-import webapp2
-from google.appengine.api import users
-from auth.decorators import login_required
-import logging
-import jinja2
-import os
-import sys
-
-from utils import get_domain
-
-# Add the external libs
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../external'))
-
-
-from auth.decorators import rest_login_required
 from rest.controllers import RestHandlerBase
 from rest.resource import Resource
 from rest.resource import RestField, ResourceIdField, ResourceUrlField
 from rest.utils import get_key_from_resource_id
+from auth.decorators import rest_login_required
+from utils import get_domain
 
 from auth import api as auth_api
 from auth.models import User

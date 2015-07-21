@@ -1,5 +1,5 @@
 application: arts-612
-version: master-20150719
+version: master-20150720
 runtime: python27
 api_version: 1
 threadsafe: no
@@ -45,14 +45,14 @@ skip_files: |
    (^static/admin/js/react/src/.*)|
    (^public/src/.*)|
 
-   (^external/PIL/.*)| 
+   (^external/PIL/.*)|
    (^external/nose/.*)|
    (^external/pip/.*)|
    (^'external/easy_install\.*)|
-   (^external/mock\.*)| 
+   (^external/mock\.*)|
    (^external/nose_exclude.*)|
    (^external/nosegae.*)|
-   (^external/rednose.*)| 
+   (^external/rednose.*)|
    (^external/yanc/.*)|
    (^external/setuptools/.*)|
    (^external/rsa/.*)|
@@ -61,24 +61,11 @@ skip_files: |
 # index files
 handlers:
 
-
-- url: /app.*
-  static_files: public/app.html
-  upload: public/app\.html
-  login: admin
-
-# Node modules that are for client
-- url: /node_modules
-  static_dir: node_modules
-  secure: optional
-
+# This might be garbage?
 - url: /public
   static_dir: public
   secure: optional
 
-- url: /beta.*
-  script: main.app
-  secure: optional
 
 - url: /static
   static_dir: static
@@ -93,14 +80,14 @@ handlers:
   secure: optional
   login: admin
 
-- url: /import.*
-  script: import.main.app
-  secure: optional
+#- url: /import.*
+#  script: import.main.app
+#  secure: optional
 
-- url: /dash.*
-  script: dash.main.app
-  secure: optional
-  login: admin
+#- url: /dash.*
+#  script: dash.main.app
+#  secure: optional
+#  login: admin
 
 - url: /robots\.txt
   static_files: static/robots.txt
