@@ -18,8 +18,6 @@ builtins:
 #  - url: /api.*
 #    script: main.app
 #
-#  - url: /import.*
-#    script: main.app
 #
 #  - url: /static
 #    static_dir: static
@@ -79,10 +77,6 @@ handlers:
   script: admin.main.app
   secure: optional
   login: admin
-
-#- url: /import.*
-#  script: import.main.app
-#  secure: optional
 
 #- url: /dash.*
 #  script: dash.main.app
