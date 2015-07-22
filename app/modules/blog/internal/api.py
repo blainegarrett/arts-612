@@ -2,6 +2,7 @@
 Internal API for Written Feed Blog Posts
 """
 
+
 import datetime
 from google.appengine.ext import ndb
 
@@ -136,12 +137,10 @@ def create_post_category(data):
     # Step 1: Ensure there is not another category with this slug
     cat = BlogCategory.query(BlogCategory.slug == data['slug']).get()
     if cat:
-        raise Exception('There is already a Post Category with the slug "%s". Please select another.' % data['slug'])
+        err = 'There is already a Post Category with the slug "%s". Please select another.'
+        raise Exception(err % data['slug'])
 
     entity = BlogCategory(**data)
-
-    #entity.slug = data['slug']
-    #entity.title = data['title']
 
     entity.put()
     return entity
