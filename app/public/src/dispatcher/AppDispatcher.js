@@ -15,10 +15,11 @@ var assign = require('object-assign');
 
 
 var Promise = require('es6-promise').Promise;
-var merge = require('react/lib/merge');
-
 var _callbacks = [];
 var _promises = [];
+
+
+var merge = function(a, b) { return $.extend({}, a, b) }
 
 var Dispatcher = function() {};
 Dispatcher.prototype = merge(Dispatcher.prototype, {
