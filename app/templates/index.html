@@ -19,6 +19,10 @@
 	<link href="/static/Bryant2Web/Bryant2Web_WOFF/Bryant.css" rel="stylesheet" type="text/css">
 	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
+	<!-- Google Authentication -->
+	<script src="https://apis.google.com/js/platform.js" async defer></script>
+	<meta name="google-signin-client_id" content="945216243808-b7mu8t6ejidit13uperfiv615lf3ridg.apps.googleusercontent.com">
+
     <!-- Bootstrap core CSS -->
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 
@@ -30,6 +34,17 @@
 
 	<!-- News Feeds -->
 	<link rel="alternate" type="application/rss+xml" title="MPLSART.COM Articles" href="/written/feed/" />
+
+	<script>
+		function onSignIn(googleUser) {
+		  var profile = googleUser.getBasicProfile();
+
+		  console.log('ID: ' + profile.getId());
+		  console.log('Name: ' + profile.getName());
+		  console.log('Image URL: ' + profile.getImageUrl());
+		  console.log('Email: ' + profile.getEmail());
+		}
+	</script>
 
   </head>
 
@@ -45,9 +60,12 @@
 		        </div>
 
 				<p class="navbar-text navbar-right"></p>
-		      </div><!-- /.container -->
+				
+				<div class="navbar-right" id="nav_utils_container"></div>
 
-			  <div id="header_nav_cards"></div>
+			</div><!-- /.container -->
+
+			<div id="header_nav_cards"></div>
 
 		    </div>
 		<!-- End Top Nav -->
@@ -57,6 +75,8 @@
 
 			<!-- Start Main Content Container -->
 		    <div class="container">
+
+				<div class="g-signin2" data-onsuccess="onSignIn"></div>
 
 				<!-- Start of Primary Page Content -->
 				<div id="main_content">

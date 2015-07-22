@@ -285,6 +285,50 @@ footer {
 
 
 
+/* Fixed Navbar Styles */
+ul#nav_utils_menu { list-style-type: none;  float: right; font-size: 18px; line-height: 20px; margin-bottom: 0px}
+    ul#nav_utils_menu li { -webkit-transition: background-color .3s; transition: background-color .3s; padding: 0; float: left; }
+        ul#nav_utils_menu li.user { min-width: 170px; }
+            ul#nav_utils_menu li ul li { float:none; }
+            ul#nav_utils_menu ul.dropdown-menu { 
+                right:auto; min-width:170px;
+                background-color: #222;
+                margin-top: 0px;
+                border-radius: 0;
+            }
+            ul#nav_utils_menu ul.dropdown-menu li a { color: #dfdfdf; }
+            ul#nav_utils_menu ul.dropdown-menu li:hover a, ul#nav_utils_menu a:focus { background-color: #333; text-decoration:none; color: #fff; }
+            ul#nav_utils_menu ul.dropdown-menu .divider { margin: 0px; background-color:black }
+
+    ul#nav_utils_menu li:hover { background-color: #333; text-decoration:none; color: #fff; }
+    ul#nav_utils_menu li:hover a { text-decoration:none; color: #fff; }
+    ul#nav_utils_menu li a {
+        font-size: 15px;
+        color: #dfdfdf;
+        display: block;
+        padding: 15px 15px; 
+        height: 50px;
+    }
+    ul#nav_utils_menu img {
+        width:25px;
+        height: 25px;
+        vertical-align: middle;
+        margin-right: 10px;
+        margin-top:-2px;
+    }
+    ul#nav_utils_menu .caret {
+        line-height: 50px;
+        vertical-align: middle;
+        display:block;
+        float:right;
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+
+
+
 /* Slide Out Site Menu and Controls */
 #side_nav_toggle {
     padding-top: 22px;

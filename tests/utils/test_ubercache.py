@@ -12,7 +12,6 @@ from google.appengine.ext import ndb
 from utils import ubercache
 from tests import BaseCase
 
-'''
 
 @patch('utils.ubercache.datetime')
 class TestUbercache(BaseCase):
@@ -121,5 +120,3 @@ class TestUbercache(BaseCase):
         key = ndb.Key('MemcacheEntity', 'baseball') # Implicitly tests key
         entity = key.get()
         self.assertEqual(entity, None)
-
-'''
