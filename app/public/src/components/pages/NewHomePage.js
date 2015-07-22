@@ -2,11 +2,14 @@ var React = require('react');
 var moment = require('moment');
 var PageMixin = require('./PageMixin');
 var MasonryMixin = require('react-packery-mixin');
-//var MasonryMixin = require('react-masonry-mixin');
 var InfiniteScroll = require('react-infinite-scroll')(React);
 var FeaturedHeroPanel = require('../FeaturedHeroPanel');
 var Footer = require('../temp/Footer');
 var Separator = require('./../../utils/Layout').Separator;
+
+var mui = require('material-ui');
+var FloatingActionButton = mui.FloatingActionButton;
+
 
 /* Pod types ... */
 var EventModule = require('./../DataTypes/Event');
@@ -104,7 +107,7 @@ var NewHomePage = React.createClass({
                 this.setState({
                     pod_data: this.state.pod_data.concat(data.results),
                     hasMore: false
-                });                
+                });
 
             }.bind(this),
             error: function (xhr, status, err) {
@@ -144,18 +147,32 @@ var NewHomePage = React.createClass({
             </div>
 
             <Footer />
+
+            <div className="floating-button-container container">
+                <div className="col-sm-12">
+                    <FloatingActionButton iconClassName="fa fa-pencil" mini={false} />
+                </div>
+            </div>
+
         </div>;
+
+
+
+
+
+
+
     },
 
     pageDidMount: function () {
         // Initialize Page
 
         this.setMeta();
-        
+
         $('body').removeClass('beta');
         $('body').addClass('homepage');
     },
-    
+
     pageWillUnmount: function() {
         /* Temporary solution */
 

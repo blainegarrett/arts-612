@@ -49,7 +49,7 @@ a { color: #0096BE; }
     #header_nav .navbar-brand:hover {
         color: #fff;
     }
-    
+
     #header_nav .navbar-text {
         margin-top:0px;
         margin-bottom:0px;
@@ -205,19 +205,19 @@ footer {
 
 
 /* Type specific overrides */
-.card .card-detail.event-address, .card .card-detail.event-time { 
+.card .card-detail.event-address, .card .card-detail.event-time {
     line-height:1.5em;
 }
 
 .card .card-detail.event-venue-name {
-    font-color: #000;    
+    font-color: #000;
     font-size:14px;
     line-height: 1.45em;
     padding-top:5px;
 }
 
 .card .card-detail.event-address {
-    font-color: #000;    
+    font-color: #000;
     font-size:14px;
     line-height: 1.45em;
 }
@@ -270,7 +270,7 @@ footer {
 
 .modal-backdrop { opacity: 0.5; transition:1s; top:50px; }
 #site-wrapper {
-    min-height:2000px;
+    /* min-height:2000px; */
     /*
     position: relative;
     overflow: hidden;
@@ -316,7 +316,7 @@ footer {
       margin-right: auto;
       transition: all 500ms ease-in-out;
     }
-    
+
         #side_nav_toggle span:before { top: 9px; }
         #side_nav_toggle span:after {top: -12px; }
 
@@ -412,7 +412,7 @@ footer {
         font-weight: bold;
         font-size: 14px;
         line-height: 1.5em;
-        
+
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -435,7 +435,7 @@ footer {
         background-position': 50% 50%;
         background-color: #ff0099;
     }
-    
+
     .large-card.featured-events-wrapper .jive-card .jive-card-image a {
         height:292px;
     }
@@ -471,7 +471,7 @@ footer {
     .featured-events-wrapper .jive-card .jive-card-image a {
       height: 200px;
     }
-    
+
     .jive-card .jive-card-image div.jive-card-title .title {
       font-size: 18px;
      }
@@ -556,7 +556,7 @@ footer {
     			z-index: 15;
     		}
     		*/
-    		
+
     		#header_nav_cards .jive-card .jive-card-image div.jive-card-title .date {
     		    text-align:center;
     		    white-space: nowrap;
@@ -566,3 +566,21 @@ footer {
     		#header_nav_cards .jive-card .jive-card-image a:hover div.jive-card-title .date {
     		    color: #2a6496;
     		}
+
+
+
+
+
+/* This is not currently in use */
+.floating-button-container {
+position: fixed;
+  bottom: 0px;
+  right: 0px;
+  width: 100%;
+  height: 62px;
+  text-align: right;
+}
+
+.floating-button-container .col-sm-12 {
+    transform: translateX(-25%);
+}

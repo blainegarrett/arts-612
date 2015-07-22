@@ -3,6 +3,8 @@ var AppDispatcher = require('../../dispatcher/AppDispatcher')
 var ReactRouter = require('flux-react-router');
 var React = require('react');
 var analytics = require('../../utils/analytics');
+var mui = require('material-ui');
+var ThemeManager = new mui.Styles.ThemeManager();
 
 var PageMixin = {
     componentDidMount: function () {
@@ -19,12 +21,12 @@ var PageMixin = {
             this.pageDidMount();
         }
 
-        // Decide to show the marquee or not..  
-        show_marquee();      
+        // Decide to show the marquee or not..
+        show_marquee();
 
         return
     },
-    
+
     componentWillUnmount: function() {
         if (typeof(this.pageWillUnmount) == 'function'){
             this.pageWillUnmount();
@@ -37,8 +39,20 @@ var PageMixin = {
 
     getRoute: function (event) {
         global.routeTo(event)
-    }
-    
+    },
+
+
+    childContextTypes: {
+        muiTheme: React.PropTypes.object
+      },
+
+      getChildContext() {
+        return {
+          muiTheme: ThemeManager.getCurrentTheme()
+        };
+      }
+
+
 };
 
 module.exports = PageMixin;
