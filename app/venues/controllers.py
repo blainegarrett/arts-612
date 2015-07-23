@@ -3,6 +3,7 @@ Rest API for Venues/Galleries
 """
 
 import logging
+import json
 import voluptuous
 from auth.decorators import rest_login_required
 
@@ -61,6 +62,56 @@ def create_resource_from_entity(e, verbose=False):
     return Resource(e, REST_RULES).to_dict()
 
 
+
+class AuthHandler(BaseHandler):
+    def post(self):
+        token = self.request.POST[u'google_auth_token']
+
+        from oauth2client import client, crypt
+
+        # (Receive token by HTTPS POST)
+
+        CLIENT_ID = '945216243808-b7mu8t6ejidit13uperfiv615lf3ridg.apps.googleusercontent.com'
+        idinfo = client.verify_id_token(token, CLIENT_ID)
+        # If multiple clients access the backend server:
+
+#        raise Exception(idinfo)
+        userid = 'false';
+
+        try:
+            if idinfo['aud'] not in [CLIENT_ID]: #[ANDROID_CLIENT_ID, IOS_CLIENT_ID, WEB_CLIENT_ID]:
+                raise crypt.AppIdentityError("Unrecognized client.")
+            if idinfo['iss'] not in ['accounts.google.com', 'https://accounts.google.com']:
+                raise crypt.AppIdentityError("Wrong issuer.")
+            #if idinfo['hd'] != APPS_DOMAIN_NAME:
+            #    raise crypt.AppIdentityError("Wrong hosted domain.")
+            userid = idinfo['sub']
+        except crypt.AppIdentityError:
+            # Invalid token
+            userid = idinfo['sub']
+            # pycrypto==2.6.1 to requirements.txt
+
+        #raise Exception((type(userid), userid))
+        #if (userid == '109109826248405970889'):
+        #    raise Exception('dick');
+
+        payload = {
+            'status': 200,
+            'messages': [],
+            'results': {
+                'is_member': True,
+
+            }
+        }
+
+        self.response.set_status(200)
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.write(json.dumps(payload))
+
+
+
+
+
 class GalleryApiHandlerBase(RestHandlerBase):
     """
     Base Handler for all Gallery API endpoints
@@ -89,7 +140,7 @@ class GalleriesApiHandler(GalleryApiHandlerBase):
 
         # Check if there is a query filter, etc
         get_by_slug = self.cleaned_params.get('get_by_slug', None)
-        
+
         if get_by_slug:
             venue = venues_api.get_venue_by_slug(get_by_slug)
             if not venue:

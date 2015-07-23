@@ -15,35 +15,91 @@ var Error404Page = require('./components/pages/Error404Page');
 var AboutPage = require('./components/pages/AboutPage');
 
 var StyleGuide = require('./components/pages/StyleGuide');
+var AuthPages = require('./components/pages/AuthPages');
 
-
+var authHelpers = require('./utils/auth')
 
 var PageMeta = require('./components/pages/PageMeta');
 var NavCardsContainer = require('./components/NavCardsContainer').NavCardsContainer;
 var PrimaryMenu = require('./components/pages/PrimaryMenu')
 
 var analytics = require('./utils/analytics');
+var AuthStore = require('./stores/AuthStore');
+
 
 global.current_page = null; // This is set by PageMixin to the current page for use in widgets
 
 
-UserUtilsNav = React.createClass({
-    render: function () {
-        return (
 
-			<ul id="nav_utils_menu">
+
+
+UserUtilsNav = React.createClass({
+
+    _onChange: function() {
+        /* Pick up signal for when featured content changes - typically async load */
+        this.setState(AuthStore.getRaw());
+    },
+    componentDidMount: function() {
+        // Subscribe to changes in the featured events
+        AuthStore.addChangeListener(this._onChange);
+    },
+
+    componentWillUnmount: function() {
+        // Un-Subscribe to changes in the featured events
+      AuthStore.removeChangeListener(this._onChange);
+    },
+
+    getInitialState: function () {
+        /* Pull data from featured store shared with homepage */
+        return AuthStore.getRaw();
+    },
+
+
+    maybeSignin: function() {
+        // TODO: These return promises
+        global.auth2.signIn();
+        return false;
+    },
+    maybeSignout: function() {
+        // TODO: These return promises
+        global.auth2.signOut();
+        return false;
+    },
+
+    render: function () {
+        // if this.state.auth2_initialized, return nada
+
+
+        console.log('rendering this shit');
+        console.log(this.state);
+
+        //return (<div className="g-signin2" data-onsuccess="onSignIn"></div>);
+
+        //return (<div className="g-signin2" data-onsuccess="onSignIn"></div>)
+        //if (!global.settings.is_authenticated) {
+
+        if (!this.state.is_logged_in) {
+            return (
+                <ul id="nav_utils_menu">
+                    <li className="user">
+                        <div onClick={ this.maybeSignin }>NOT LOGGED IN!!!!!</div>
+                    </li>
+                </ul>);
+        }
+
+		return (<ul id="nav_utils_menu">
 				<li className="user">
 				    <a className="dropdown-toggle" href="#!" data-toggle="dropdown" aria-expanded="false">
-				    <img src="http://cdn.mplsart.com/file_container/RmlsZUNvbnRhaW5lch4fMjA0MDAwMg/card_small.png" height="20px" width="20px" alt="John Doe" className="img-circle" />John Doe<i className="caret"></i>
+				    <img src={ this.state.img_url } height="20px" width="20px" alt={ this.state.name } className="img-circle" />{ this.state.name }<i className="caret"></i>
 				</a>
 
 				<ul className="dropdown-menu" role="menu">
-				
+
 				    {/*
     				<li>
     				    <a href="page-profile.html"><i className="fa fa-user"></i> Profile</a>
     				</li>
-				
+
     				<li><a href="mail-inbox.html">
     				    <i className="fa fa-envelope"></i> Messages <span className="badge new">2</span>
     				</a>
@@ -53,7 +109,7 @@ UserUtilsNav = React.createClass({
     				<li className="divider"></li>
 				*/ }
     				<li>
-    				    <a href="page-sign-in.html"><i className="fa fa-sign-out"></i> Logout</a>
+    				    <a href="#" onClick={this.maybeSignout}><i className="fa fa-sign-out"></i> Logout</a>
     				</li>
 				</ul>
 
@@ -83,6 +139,13 @@ ReactRouter.createRoute('/styleguide/forms', function () {
     React.unmountComponentAtNode( document.getElementById('main_content'));
     React.render(<StyleGuide.Forms />, document.getElementById('main_content'));
 });
+
+
+ReactRouter.createRoute('/auth/signin', function () {
+    React.unmountComponentAtNode( document.getElementById('main_content'));
+    React.render(<AuthPages.SignIn />, document.getElementById('main_content'));
+});
+
 
 /*
 ReactRouter.createRoute('/home', function () {

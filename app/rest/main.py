@@ -35,6 +35,7 @@ routes = []
 routes.extend([
 
     # Gallery Routes
+    (r'/derp', 'venues.controllers.AuthHandler'),
     (r'/api/galleries/([a-zA-Z0-9-_]+)', 'venues.controllers.GalleryDetailApiHandler'),
     (r'/api/galleries', 'venues.controllers.GalleriesApiHandler'),
 
@@ -47,7 +48,7 @@ routes.extend([
     # Posts Routes
     (r'/api/posts', 'controllers.written.PostsApiHandler'),
     (r'/api/posts/([a-zA-Z0-9-_]+)', 'controllers.written.PostDetailApiHandler'),
-    
+
     # Blog Categories
     (r'/api/post_categories', 'controllers.written.PostCategoriesApiHandler'),
     (r'/api/post_categories/([a-zA-Z0-9-_]+)', 'controllers.written.PostCategoryDetailApiHandler'),
@@ -62,7 +63,7 @@ routes.extend([
     (r'/api/files/upload_callback', 'files.controllers.UploadCallbackHandler'),
     (r'/api/files/([a-zA-Z0-9-_]+)', 'files.controllers.FileDetailHandler'),
 
-    # Private 
+    # Private
     (r'/api/users', 'auth.controllers.UsersApiHandler'),
     (r'/api/users/([a-zA-Z0-9-_]+)', 'auth.controllers.UserDetailApiHandler'),
 

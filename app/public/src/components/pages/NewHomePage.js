@@ -157,11 +157,6 @@ var NewHomePage = React.createClass({
         </div>;
 
 
-
-
-
-
-
     },
 
     pageDidMount: function () {

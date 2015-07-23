@@ -6,6 +6,7 @@ mock
 nose
 nose-exclude
 rednose
+pycrypto>=2.6
 coverage
 git+https://github.com/Trii/NoseGAE.git
 yanc
