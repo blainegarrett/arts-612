@@ -126,11 +126,11 @@ class FeaturedApiHandler(RestHandlerBase):
         else:
             if is_appspot():
                 resource_ids = [
-                    'RXZlbnQeHzU2NTE0NDI1MjIxMjgzODQ',
-                    'RXZlbnQeHzU3NjQ1Nzc1OTc4NDk2MDA',
-                    'RXZlbnQeHzU3MTA3NTg5NzMyNzYxNjA',
-                    'RXZlbnQeHzU2OTE0MjA2MTQ1OTA0NjQ',
-                    'QmxvZ1Bvc3QeHzU3NDAyNDA3MDI1Mzc3Mjg'
+                    'RXZlbnQeHzYyMzk5MzI3NjcwMTA4MTY',
+                    'RXZlbnQeHzU2NzM0OTc0NDc2Mjg4MDA',
+                    'RXZlbnQeHzU3NDk3ODExNjcwNzk0MjQ', # Dumpster
+                    'RXZlbnQeHzU2ODQ3OTM3NDg0ODgxOTI',
+                    'QmxvZ1Bvc3QeHzU2NzczNTA4Mzg1OTk2ODA'
                 ]
             else:
                 resource_ids = [
@@ -155,7 +155,7 @@ class FeaturedApiHandler(RestHandlerBase):
                     if kind == 'BlogPost':
                         resource = create_blogpost_resource(entity)
 
-                    if resource:    
+                    if resource:
                         results.append(resource)
 
             ubercache.cache_set(cache_key, results, category='events')
