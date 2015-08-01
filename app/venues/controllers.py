@@ -95,6 +95,8 @@ class AuthHandler(BaseHandler):
         #if (userid == '109109826248405970889'):
         #    raise Exception('dick');
 
+        # Pass back a jwt token, similar to a session key
+
         payload = {
             'status': 200,
             'messages': [],
@@ -126,17 +128,43 @@ class GalleriesApiHandler(GalleryApiHandlerBase):
     Main Handler for Galleries Endpoint
     """
 
-
     def get_param_schema(self):
         return {
-            #'limit' : voluptuous.Coerce(int),
-            #'cursor': coerce_to_cursor,
-            #'sort': voluptuous.Coerce(str),
+            # 'limit' : voluptuous.Coerce(int),
+            # 'cursor': coerce_to_cursor,
+            # 'sort': voluptuous.Coerce(str),
             'get_by_slug': voluptuous.Coerce(str),
             'q': voluptuous.Coerce(str)
         }
 
+
+    def generate_cool_token(self):
+        import jwt
+
+        secret = 'fartssmell' # This should be a RSA private key?
+        profile = {
+            'user_id': 1234,
+            'username': 'blainegarrett'
+        }
+
+        token = jwt.encode(profile, secret, algorithm='HS256')
+        raise Exception(token)
+
+
     def _get(self):
+        import jwt
+
+        # Move this authorization stuff to middleware, etc...
+
+        #self.generate_cool_token()
+        secret = 'fartssmell' # This should be a RSA private key?
+
+        auth_header = self.request.headers.get('Authorization', None)
+        if auth_header:
+            token = auth_header.replace('Bearer ', '') # TODO: Beef this up
+            profile = jwt.decode(token, secret)
+            raise Exception(profile['user_id'])
+
 
         # Check if there is a query filter, etc
         get_by_slug = self.cleaned_params.get('get_by_slug', None)

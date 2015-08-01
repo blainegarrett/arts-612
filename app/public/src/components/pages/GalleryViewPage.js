@@ -15,7 +15,7 @@ var Gallery404Page = React.createClass({
     render: function() {
         return <div>
         <h2>Gallery not found...</h2>
-        
+
         <br /><br/>
         <a onClick={ReactRouter.deferTo('/galleries')}>Return to Galleries Listing</a>
         </div>
@@ -61,9 +61,9 @@ var MapComponent = React.createClass({
                          '</div>'+
                          '</div>'
                });
-              infowindow.open(map, marker); 
-            
-        });        
+              infowindow.open(map, marker);
+
+        });
     },
     render: function () {
         return <div id="map-canvas" className="map-large"></div>
@@ -82,18 +82,24 @@ var GalleryViewPage = React.createClass({
             slug: this.props.slug,
             not_found: false,
             resource_url: '/api/galleries?get_by_slug=' + this.props.slug
-            
+
         }
     },
     pageDidMount: function () {
+        // blaine's profile, secret='fartssmell'
+        jwt = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImJsYWluZWdhcnJldHQiLCJ1c2VyX2lkIjoxMjM0fQ.9IbBQyn6M5HlUBdTRlVkLjy9rbQ-bZZmhNPVs0CSi2Q'
 
         $.ajax({
             url: this.state.resource_url,
+            beforeSend: function(xhr) {
+                /* Attach the jwt token */
+                xhr.setRequestHeader('Authorization', 'Bearer ' + jwt);
+            },
             dataType: 'json',
             success:  function (data) {
-                
+
                 /* Have the store do this... */
-                
+
                 /* TODO: Add image and description */
                 this.default_meta = {
                     title: data.results.name,
@@ -103,7 +109,7 @@ var GalleryViewPage = React.createClass({
 
                 this.setMeta();
                 this.setState({gallery: data.results});
-                
+
 
             }.bind(this),
             error: function (xhr, status, err) {
@@ -116,9 +122,9 @@ var GalleryViewPage = React.createClass({
 
                 this.setMeta();
                 this.setState({not_found: true, gallery:true});
-                
+
             }.bind(this)
-            
+
         });
     },
 
@@ -134,14 +140,14 @@ var GalleryViewPage = React.createClass({
             // TODO: Render a shell of what the page will look like
             return <div>loading gallery...</div>
         }
-        
+
         if (this.state.not_found) {
             return <Gallery404Page slug={ this.state.slug } />
         }
-        
+
         // If gallery not found by slug
         var g = this.state.gallery;
-        
+
         var image = null;
         var image_url = null;
 
@@ -162,8 +168,8 @@ var GalleryViewPage = React.createClass({
                     </div>
                     <div className="col-md-8">
 
-                    
-                        
+
+
 
                         <p>Type: { g.category }</p>
 
@@ -172,7 +178,7 @@ var GalleryViewPage = React.createClass({
 
                     </div>
                 </div>
-                
+
                 <div className="row">
                     <div className="col-md-12">
                         <br />
@@ -194,7 +200,7 @@ var GalleryViewPage = React.createClass({
                     <li>Event 2</li>
                 </ul>
                 ..Previous Events
-                
+
                 <h3>Hours</h3>
                 <p>
                   From 10:00 to 18:00
@@ -203,8 +209,8 @@ var GalleryViewPage = React.createClass({
                 <p>Phone: { g.phone }</p>
                 <p>Email: { g.email }</p>
                 <p>Website: { g.website }</p>
-                
-               
+
+
             </div>
         </div>;
 

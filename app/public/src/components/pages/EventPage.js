@@ -66,7 +66,7 @@ var EventPage = React.createClass({
                 console.error(this.state.resource_url, status, err.toString());
                 this.setState({content_not_found:true, content_loaded:true})
             }.bind(this)
-            
+
         });
     },
 
@@ -99,7 +99,7 @@ var EventPage = React.createClass({
                 <div className="col-md-3 panel-events"><TempUpcoming col_name="'Upcoming" /></div>
                 <div className="col-md-3 panel-events"><TempEvents col_name="'Now Showing'"  /></div>
             </div>
-            
+
             <Footer />
         </div>;
 

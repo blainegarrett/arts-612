@@ -7,3 +7,4 @@ git+git://github.com/Workiva/furious.git#egg=furious
 google-api-python-client
 GoogleAppEngineCloudStorageClient
 oauth2client
+PyJWT==1.1.0
