@@ -33,6 +33,10 @@ def handle_404(request, response, exception):
 
 routes = []
 routes.extend([
+    (r'/api/auth/status', 'auth.controllers.StatusHandler'),
+    (r'/api/auth/authenticate', 'auth.controllers.AuthenticateHandler'),
+    (r'/api/auth/deauthenticate', 'auth.controllers.DeauthenticateHandler'),
+    (r'/api/auth/secure', 'auth.controllers.SomeSecureHandler'),
 
     # Gallery Routes
     (r'/derp', 'venues.controllers.AuthHandler'),
