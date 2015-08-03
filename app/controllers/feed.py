@@ -126,10 +126,10 @@ class FeaturedApiHandler(RestHandlerBase):
         else:
             if is_appspot():
                 resource_ids = [
-                    'RXZlbnQeHzYyMzk5MzI3NjcwMTA4MTY',
-                    'RXZlbnQeHzU2NzM0OTc0NDc2Mjg4MDA',
-                    'RXZlbnQeHzU3NDk3ODExNjcwNzk0MjQ', # Dumpster
-                    'RXZlbnQeHzU2ODQ3OTM3NDg0ODgxOTI',
+                    'RXZlbnQeHzUxOTQ5NTcyOTE3ODIxNDQ',
+                    'RXZlbnQeHzU3NTg0MDE3MDMzMTM0MDg',
+                    'RXZlbnQeHzU3MjMxNTEyOTYxMDI0MDA', #Soovac
+                    'RXZlbnQeHzU2MzUwOTMxOTIyNDUyNDg',
                     'QmxvZ1Bvc3QeHzU2NzczNTA4Mzg1OTk2ODA'
                 ]
             else:
