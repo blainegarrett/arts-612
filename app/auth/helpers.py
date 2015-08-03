@@ -68,18 +68,3 @@ def get_user(request):
 
     # TODO: Do various checks for active status, etc
     return user
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

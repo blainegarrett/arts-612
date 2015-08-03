@@ -51,7 +51,24 @@ class StatusHandler(BaseAuthHandler):
 
 
 class AuthenticateHandler(BaseAuthHandler):
-    pass
+    def get_rules(self):
+        return []
+
+    def _post(self):
+        # Depending on what type of auth protocol it is...
+
+        # authenticate.... ???
+        user = auth_api.get_user_by_resource_id('VXNlch4fNTYyOTQ5OTUzNDIxMzEyMA')
+
+        token = auth_helpers.make_token(user_payload)
+
+        # You are authenticated, so lets
+        results = {
+            'user_id': '1234',
+            'username': 'blaine'
+        }
+
+        self.serve_success(results)
 
 
 class DeauthenticateHandler(BaseAuthHandler):

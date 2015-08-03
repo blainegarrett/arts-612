@@ -1,5 +1,12 @@
 # Auth Api methods
 from auth.models import User
+from rest.utils import get_key_from_resource_id
+
+
+def get_user_by_resource_id(resource_id):
+    user_key = get_key_from_resource_id(resource_id)
+    user = user_key.get()
+    return user
 
 
 def get_users():
