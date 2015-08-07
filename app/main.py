@@ -44,7 +44,6 @@ web_routes += [
                   strict_slash=True,
                   name="about"),
 
-
     RedirectRoute(r'/galleries/<slug:[a-z0-9-_]+>/',
                   'venues.controllers.GalleryDetailHandler',
                   strict_slash=True,

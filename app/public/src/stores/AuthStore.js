@@ -10,7 +10,8 @@ var CHANGE_EVENT = 'FEATURED_CHANGED';
 
 var _featured_data = {
   is_logged_in: false
-}; //global.featured_events.results;
+};
+
 
 /**
  * Create a TODO item.
@@ -19,7 +20,6 @@ var _featured_data = {
 
 
 global.auth2; // The Google Auth Session
-
 
 
 function set(payload) {
@@ -31,10 +31,15 @@ function set(payload) {
 
 var listener = function(is_logged_in) {
         /*
-        Called when the login listener
+        Called when the login listener...
+
+        Also, at the moment called on every hard page load...
         */
 
+        user_profile = {is_logged_in: false}
+
         if (is_logged_in) {
+
             //  Get Profile info
             var user = global.auth2.currentUser.get();
             var profile = user.getBasicProfile();
@@ -52,14 +57,28 @@ var listener = function(is_logged_in) {
             // Next see if they are a native user and get permissions, etc
             var id_token = user.getAuthResponse().id_token;
 
-            $.ajax('/derp', {
+            //
+            $.ajax('/api/auth/authenticate', {
                 dataType: 'json',
                 method:'post',
                 data: {google_auth_token: id_token},
                 success: function(data) {
-                  console.log(data.results);
-                  _featured_data['is_member'] = data.results.is_member;
-                  AuthStore.emitChange();
+                  console.log('Looks like we have a legit auth token. ');
+                  console.log(data);
+
+                  // Check to see if they're not valid for any reason
+                  // Not a member, etc
+
+                  // Catch any errors
+                  user_profile = _featured_data
+                  if (true) {
+                    user_profile['is_member'] = data.results.is_member;
+                  }
+                  else {
+                      user_profile = { is_logged_in: false };
+                  }
+
+                  get_update_with_blork(user_profile)
 
                 },
                 error: function() {
@@ -67,30 +86,32 @@ var listener = function(is_logged_in) {
                 }
               });
 
-
-
-
-
-
-
         }
         else {
-          _featured_data = {
+            user_profile = {
               is_logged_in: is_logged_in
           };
         }
 
-        AuthStore.emitChange();
-};
+        get_update_with_blork(user_profile)
+    };
 
 
+
+function get_update_with_blork(data) {
+  console.log('blork...');
+  _featured_data = data;
+  AuthStore.emitChange();
+}
 
 
 var AuthStore = assign({}, EventEmitter.prototype, {
     last_poll: null,
 
 
-
+    get_update_with_blork: function (data) {
+      return get_update_with_blork(data)
+    },
 
 
     get_from_server: function() {

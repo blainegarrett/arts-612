@@ -3,6 +3,7 @@
 var React = require('react');
 var PageMixin = require('./PageMixin');
 var ReactRouter = require('flux-react-router');
+var AuthStore = require('../../stores/AuthStore');
 
 var SignInPage = React.createClass({
     mixins: [PageMixin],
@@ -25,20 +26,24 @@ var SignInPage = React.createClass({
 
           var id_token = profile.getAuthResponse().id_token;
 
-            $.ajax('/derp', {
+            $.ajax('/api/auth/authenticate', {
                 dataType: 'json',
                 method:'post',
                 data: {google_auth_token: id_token},
                 success: function(data) {
+                  console.log('?');
                   console.log(data.results);
 
+                  if (!data.is_member) {
+                    AuthStore.get_update_with_blork({})
 
+                    alert('LOL Wut?');
+                  }
 
+                  AuthStore.get_update_with_blork(data.results.is_member);
+                  AuthStore.emitChange();
 
-
-                  //_featured_data['is_member'] = data.results.is_member;
-                  //AuthStore.emitChange();
-
+                  console.log('Everything is done. We should redirect');
                   ReactRouter.goTo('/')
 
 

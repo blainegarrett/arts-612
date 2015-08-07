@@ -71,11 +71,6 @@ handlers:
   static_dir: static
   secure: optional
 
-
-- url: /derp.*
-  script: rest.main.app
-  secure: optional
-
 - url: /api.*
   script: rest.main.app
   secure: optional

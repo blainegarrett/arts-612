@@ -39,7 +39,6 @@ routes.extend([
     (r'/api/auth/secure', 'auth.controllers.SomeSecureHandler'),
 
     # Gallery Routes
-    (r'/derp', 'venues.controllers.AuthHandler'),
     (r'/api/galleries/([a-zA-Z0-9-_]+)', 'venues.controllers.GalleryDetailApiHandler'),
     (r'/api/galleries', 'venues.controllers.GalleriesApiHandler'),
 

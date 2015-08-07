@@ -12,6 +12,7 @@ from google.appengine.api import users
 from rest import errors
 from rest.resource import Resource
 from rest.params import ResourceParams
+from auth.helpers import get_auth_token_from_request
 
 
 class RestHandlerBase(webapp2.RequestHandler):
@@ -24,7 +25,7 @@ class RestHandlerBase(webapp2.RequestHandler):
         Helper Method to determine if referrer is the same as the host
         This is to support 'dumb' REST permissions to prevent attacking REST Services
         """
-        
+
         # If local sdk, allow
         if os.environ['SERVER_SOFTWARE'].startswith('Development'):
             return True
@@ -158,10 +159,19 @@ class RestHandlerBase(webapp2.RequestHandler):
         if (not isinstance(messages, list)):
             messages = [messages]
 
-
         # TODO: Validate that extra_fields doesn't contain bad props
         payload = extra_fields
-        payload.update({'status': status, 'results': result, 'messages': messages})
+        payload.update(
+            {'status': status, 'results': result, 'messages': messages}
+        )
+
+        # Add a fresh new auth token to the response
+        # token = get_auth_token_from_request(request)
+        # raise Exception(self.request.user)
+        token = 'Not Implemented Yet'
+
+        # Generate a new take
+        payload.update({'auth_token': token})
 
         self.response.set_status(status)
         self.response.headers['Content-Type'] = 'application/json'
