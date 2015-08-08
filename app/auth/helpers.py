@@ -67,21 +67,24 @@ def get_token_payload_from_user(user):
     TODO: I don't know that we want to depend on REST's resource abstraction?
     """
 
-    if isinstance(user, AnonymousAuthUser):
-        err = 'Can not generate token payload for AnonymousAuthUser yet.'
-        raise RuntimeError(err)
+    #  if isinstance(user, AnonymousAuthUser):
+    #    err = 'Can not generate token payload for AnonymousAuthUser yet.'
+    #    raise RuntimeError(err)
 
-    if not isinstance(user, AuthUser):
+    if not isinstance(user, (AuthUser, AnonymousAuthUser)):
         err = 'Arg user must be an instance of AuthUser. Received %s'
         raise TypeError(err % user)
 
-    return {
+    payload = {
         'is_authenticated': user.is_authenticated(),
         'is_member': user.is_member(),
         'username': user.username,
-        'resource_id': get_resource_id_from_key(user.key)
+        'resource_id': None
     }
+    if isinstance(user, AuthUser):
+        payload['resource_id'] = get_resource_id_from_key(user.key)
 
+    return payload
 
 
 def read_token(token):
@@ -142,11 +145,9 @@ def get_user_for_auth_method(auth_type, auth_token):
     """
     """
 
-    q = AuthUserMethod.query()
-    q.filter(AuthUserMethod.auth_type == auth_type)
-    q.filter(AuthUserMethod.auth_token == auth_token)
-
+    q = AuthUserMethod.query().filter(AuthUserMethod.auth_type == auth_type).filter(AuthUserMethod.auth_token == auth_token)
     login = q.get()
+
     if login:
         return login.user_key.get()
     return None

@@ -8,8 +8,8 @@ var AuthStore = require('../../stores/AuthStore');
 var SignInPage = React.createClass({
     mixins: [PageMixin],
     default_meta: {
-        'title': 'Written',
-        'description': 'Writing and Crtique'
+        'title': 'Sign in',
+        'description': 'Sign in'
     },
 
     pageDidMount: function () {
@@ -18,8 +18,9 @@ var SignInPage = React.createClass({
 
     },
 
-    signInHelper: function (){
+    signInHelper: function () {
         var promise = global.auth2.signIn();
+
         promise.then(function(profile) {
           // This was a successful login on the Google System
           // But Are they a member of our site?
@@ -29,23 +30,21 @@ var SignInPage = React.createClass({
             $.ajax('/api/auth/authenticate', {
                 dataType: 'json',
                 method:'post',
-                data: {google_auth_token: id_token},
-                success: function(data) {
-                  console.log('?');
-                  console.log(data.results);
+                data: {
+                  google_auth_token: id_token
+                },
+                success: function (data) {
+                  console.log(data);
 
-                  if (!data.is_member) {
-                    AuthStore.get_update_with_blork({})
-
-                    alert('LOL Wut?');
+                  if (!data.results.is_member) {
+                    AuthStore.get_update_with_blork({is_logged_in: false, is_member:false})
+                    alert('It looks like you do not currently have permission. Check back soon.');
                   }
+                  else {
+                    AuthStore.get_update_with_blork(data.results);
+                    ReactRouter.goTo('/');
 
-                  AuthStore.get_update_with_blork(data.results.is_member);
-                  AuthStore.emitChange();
-
-                  console.log('Everything is done. We should redirect');
-                  ReactRouter.goTo('/')
-
+                  }
 
                 },
                 error: function() {

@@ -8,98 +8,101 @@ var assign = require('object-assign');
 
 var CHANGE_EVENT = 'FEATURED_CHANGED';
 
+global.auth2; // The Google Auth Session
+
+/* Default User payload data */
 var _featured_data = {
   is_logged_in: false
 };
 
-
-/**
- * Create a TODO item.
- * @param  {string} text The content of the TODO
- */
+google_api_client_id = '945216243808-b7mu8t6ejidit13uperfiv615lf3ridg';
 
 
-global.auth2; // The Google Auth Session
+var google_auth_listener = function(is_logged_in) {
+  /*
+    Callback handler listening for changes in the Google Auth Login state
+    Also, at the moment called on every hard page load...
+  */
 
+  // Default user_profile
+  user_profile = {
+    is_logged_in: false,
+    is_member: false
+  };
 
-function set(payload) {
-    /* TODO: Apply Defaults */
+  // User was/is authenticated via Google Auth now...
+  if (is_logged_in) {
 
-    alert('D NO use dis');
-    _featured_data = payload;
-}
+    //  Get user and profile of user authenticated via google sign in
+    //  Remember, this doesn't mean they're a member of our site nor authenticated against our sys
 
-var listener = function(is_logged_in) {
-        /*
-        Called when the login listener...
+    var google_user = global.auth2.currentUser.get();
+    var google_profile = google_user.getBasicProfile();
 
-        Also, at the moment called on every hard page load...
-        */
+    // Populate some temporary data...?
+    _featured_data = {
+      is_member: false,
+      is_logged_in: true,
+      name: google_profile.getName(),
+      img_url: google_profile.getImageUrl(),
+      email: google_profile.getEmail()
+    };
 
-        user_profile = {is_logged_in: false}
+    // Next see if they are a native user and get permissions, etc
+    var id_token = google_user.getAuthResponse().id_token;
 
-        if (is_logged_in) {
+    // TODO: We really need to make this a service with promises
+    $.ajax('/api/auth/authenticate', {
+      dataType: 'json',
+      method:'post',
+      data: {
+        google_auth_token: id_token
+      },
+      success: function(data) {
+        // Check to see if they're not valid for any reason
+        // Not a member, etc
 
-            //  Get Profile info
-            var user = global.auth2.currentUser.get();
-            var profile = user.getBasicProfile();
-
-            console.log(profile.getId());
-
-            _featured_data = {
-              is_member: false,
-              is_logged_in: true,
-              name: profile.getName(),
-              img_url: profile.getImageUrl(),
-              email: profile.getEmail()
-            };
-
-            // Next see if they are a native user and get permissions, etc
-            var id_token = user.getAuthResponse().id_token;
-
-            //
-            $.ajax('/api/auth/authenticate', {
-                dataType: 'json',
-                method:'post',
-                data: {google_auth_token: id_token},
-                success: function(data) {
-                  console.log('Looks like we have a legit auth token. ');
-                  console.log(data);
-
-                  // Check to see if they're not valid for any reason
-                  // Not a member, etc
-
-                  // Catch any errors
-                  user_profile = _featured_data
-                  if (true) {
-                    user_profile['is_member'] = data.results.is_member;
-                  }
-                  else {
-                      user_profile = { is_logged_in: false };
-                  }
-
-                  get_update_with_blork(user_profile)
-
-                },
-                error: function() {
-                  console.log(arguments);
-                }
-              });
-
+        // Catch any errors
+        user_profile = _featured_data
+        if (data.results.is_member) {
+          user_profile['is_member'] = data.results.is_member;
+          user_profile['is_logged_in'] = true;
+          user_profile['name'] = google_profile.getName();
+          user_profile['img_url'] = google_profile.getImageUrl();
+          user_profile['email'] = google_profile.getEmail();
         }
         else {
-            user_profile = {
-              is_logged_in: is_logged_in
+          // Not authenticated... not a user of the system?
+          user_profile = {
+              is_logged_in: false,
+              is_member: false
           };
         }
 
+        // Update the store and emit change
         get_update_with_blork(user_profile)
+      },
+
+      error: function() {
+        console.log(arguments);
+      }
+    }); // end of ajax call
+
+  }
+  else {
+    user_profile = {
+        is_logged_in: false,
+        is_member: false
     };
+  }
+
+  // Update the store and emit change
+  get_update_with_blork(user_profile)
+};
 
 
 
 function get_update_with_blork(data) {
-  console.log('blork...');
   _featured_data = data;
   AuthStore.emitChange();
 }
@@ -110,57 +113,47 @@ var AuthStore = assign({}, EventEmitter.prototype, {
 
 
     get_update_with_blork: function (data) {
+      /* Note this wrapper is only here for a public interface */
+      console.log('BEFORE???');
+
       return get_update_with_blork(data)
     },
 
 
     get_from_server: function() {
-        this.last_poll = Date.now() // TODO: This should maybe only be on success...
+      /*
+        Fetch login state from the google auth service
+      */
+      this.last_poll = Date.now() // TODO: This should maybe only be on success...
 
+        // TODO: How do we know to use google?
         global.gapi.load('auth2', function() {
           // Retrieve the singleton for the GoogleAuth library and set up the client.
 
           global.auth2 = global.gapi.auth2.init({
-              client_id: '945216243808-b7mu8t6ejidit13uperfiv615lf3ridg.apps.googleusercontent.com',
+              client_id: google_api_client_id + '.apps.googleusercontent.com',
               cookiepolicy: 'single_host_origin',
               // Request scopes in addition to 'profile' and 'email'
               //scope: 'additional_scope'
             });
-          console.log('maybe loaded?');
-          global.auth2.isSignedIn.listen(listener);
+
+          global.auth2.isSignedIn.listen(google_auth_listener);
         });
-
-
-
-
-
 
         return;
-
-        //global.auth2.isSignedIn.;
-
-
-
-        $.ajax({
-            url: '/api/featured',
-            dataType: 'json',
-            success:  function (data) {
-                _featured_data = data.results;
-                this.emitChange();
-
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.log('There was an error attempting to retrieve featured content. ');
-                console.error(this.state.resource_url, status, err.toString());
-            }.bind(this)
-        });
     },
 
 
   getRaw: function() {
+    /* Retrieve the Raw user profile */
+
+    /* Check if last poll was greater than... */
     if (!this.last_poll) {
+        // Call out to the server to load it up
+        // TODO: This should be a promise?
         this.get_from_server();
     }
+
     return _featured_data;
   },
 
