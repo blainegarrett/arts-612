@@ -15,7 +15,7 @@ var _featured_data = {
   is_logged_in: false
 };
 
-google_api_client_id = '945216243808-b7mu8t6ejidit13uperfiv615lf3ridg';
+google_api_client_id = global.settings['google_api_client_id'];
 
 
 var google_auth_listener = function(is_logged_in) {

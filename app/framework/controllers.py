@@ -34,9 +34,10 @@ class BaseHandler(webapp2.RequestHandler):
         # Tack on the google analytics profiles
         if is_appspot(): #TODO: Remove this before being prod ready
             template_context['settings_dict']['ga_profile_id'] = 'UA-54271335-1'
+            template_context['settings_dict']['google_api_client_id'] = ''
         else:
             template_context['settings_dict']['ga_profile_id'] = 'UA-54271335-2'
-
+            template_context['settings_dict']['google_api_client_id'] = '945216243808-b7mu8t6ejidit13uperfiv615lf3ridg'
 
         # TODO: This should come from some sort of middleware likely
         template_context['settings_dict']['is_authenticated'] = bool(users.get_current_user())

@@ -243,3 +243,21 @@ class StatusHandler(BaseAuthHandler):
 
         results = {'checks': checks}
         self.serve_success(results)
+
+'''
+Auth TODO
+
+
+[ ] Test in multiple browsers
+[ ] Pass client id
+[ ] Simple Invite System
+[ ] System to manage
+[ ] Simple Permission System
+[ ] Have it work with multile auth systems
+[ ] is_authenticated flag on user..
+[ ] Glork profile info  - profile picture, email, etc
+[ ]
+
+'''
+
+

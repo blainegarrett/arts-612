@@ -81,7 +81,16 @@ class GetTokenPayloadFromUserTests(BaseCase):
 
     def test_anon_user(self, m_get_id):
         u = auth_models.AnonymousAuthUser()
-        self.assertRaises(RuntimeError, auth_helpers.get_token_payload_from_user, u)
+        result = auth_helpers.get_token_payload_from_user(u)
+
+        expected_payload = {
+            'is_authenticated': False,
+            'is_member': False,
+            'username': None,
+            'resource_id': None
+        }
+        self.assertDictEqual(result, expected_payload)
+        self.assertFalse(m_get_id.called)
 
     def test_known_user(self, m_get_id):
         # Set Up Test
@@ -94,7 +103,9 @@ class GetTokenPayloadFromUserTests(BaseCase):
         # Check result and Mocks
         expected_payload = {
             'username': 'testuser',
-            'resource_id': m_get_id.return_value
+            'resource_id': m_get_id.return_value,
+            'is_authenticated': False,
+            'is_member': True,
         }
 
         self.assertDictEqual(result, expected_payload)
