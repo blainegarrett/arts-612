@@ -15,7 +15,7 @@ var assign = require('object-assign');
 
 
 var Promise = require('es6-promise').Promise;
-var merge = function(a, b) { return $.extend({}, a, b) }
+var merge = function(a, b) { return $.extend({}, a, b) };
 
 var _callbacks = [];
 var _promises = [];
