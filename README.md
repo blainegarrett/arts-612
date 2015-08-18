@@ -31,7 +31,7 @@ Install the project to **~/sites/arts-612/** or wherever you chose. This path is
 * Step 1: Make a folder to house your virtual environments eg. **~/sites/virtual\_environments**
 * Step 2: CD into this folder
 * Step 3: Run `virtualenv arts612`
-* Step 4: edit your ~/.bash\_profile and add the line: 
+* Step 4: edit your ~/.bash\_profile and add the line:
 	``alias xart612='cd ~/sites/arts-612/ && export VENV_PATH=~/sites/virtual_environments/arts-612 && echo $VENV_PATH && source ${VENV_PATH}/bin/activate'``
 * Step 5: Open a new shell and run the newly created alias `xarts612`
 * Step 6: Run `make install` - This will install any python dependencies
@@ -44,3 +44,9 @@ Install the project to **~/sites/arts-612/** or wherever you chose. This path is
 * Step 3: Run ``npm install`` If this finishes, then we're close...
 * Step 4: Run ``gulp browserify`` If this errors, ensure that the ulimit change was made above
 * Step: In a separate shell, run ``dev_appserver .`` and open the site in your browser. If the home screen loads, then you're golden.
+
+**Running Server**
+Running the dev server is wrapped in a make directive to provide some nice defaults.
+
+In the console, simply run:
+`make runserver`
