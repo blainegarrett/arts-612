@@ -126,10 +126,10 @@ class FeaturedApiHandler(RestHandlerBase):
         else:
             if is_appspot():
                 resource_ids = [
-                    'RXZlbnQeHzUxNDc4MDkwMTk4NTQ4NDg', # Cat Fest
-                    'RXZlbnQeHzU2NTc5MDMyMjY2ODMzOTI', # Instinct Disc
-                    'RXZlbnQeHzU2NTk4MjIyNzE3NTgzMzY', # Kolman
-                    'RXZlbnQeHzU2ODQ3OTM3NDg0ODgxOTI', # Made-Here
+                    'RXZlbnQeHzU2NzY3MDk5NDg5NDg0ODA',  # Energy
+                    'RXZlbnQeHzU2ODQwNDk5MTM4Mzk2MTY',  # Nerve Burner
+                    'RXZlbnQeHzU3MzI5MTA1MzU1NDA3MzY',  # Girard
+                    'RXZlbnQeHzU2ODQ3OTM3NDg0ODgxOTI',  # Made-Here
                     'QmxvZ1Bvc3QeHzU2NzczNTA4Mzg1OTk2ODA'
                 ]
             else:
