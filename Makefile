@@ -30,9 +30,12 @@ coverage:
 
 
 client-dev:
-	# Builds the Phase 2 client 
+	# Builds the Phase 2 client
 	@echo "Run gulp admin-browserify instead."
 
+runserver:
+	dev_appserver.py app --storage_path=../datastores/mplsart.search --datastore_path=../datastores/mplsart.datastore
+
 admin-dev:
-	# Builds the Phase 2 client 
+	# Builds the Phase 2 client
 
