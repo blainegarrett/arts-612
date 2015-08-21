@@ -106,6 +106,8 @@ class AuthenticateHandler(BaseAuthHandler):
             # No User was found matching the given credentials
             user = AnonymousAuthUser()
 
+        auth_helpers.activate_user(user, self.request)
+
         user_payload = auth_helpers.get_token_payload_from_user(user)
 
         self.serve_success(user_payload)

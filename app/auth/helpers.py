@@ -13,6 +13,24 @@ JWT_SECRET = 'fartssmell'
 JWT_ALGORITHM = 'HS256'
 
 
+
+def get_auth_token_for_request(request):
+    """
+    TODO: Rename this
+    """
+
+    if not hasattr(request, REQUEST_USER_KEY):
+        return 'NOT AUTHED'
+
+    user = getattr(request, REQUEST_USER_KEY, None)
+
+    if isinstance(user, (AnonymousAuthUser, AuthUser)):
+        payload = get_token_payload_from_user(user)
+        token = make_token(payload)
+        return token
+
+
+
 def get_auth_token_from_request(request):
     """
     Fetch jwt token off request's headers if they are present.
@@ -110,9 +128,7 @@ def make_token(payload):
 def get_user_from_token_payload(user_token_payload):
     #TODO: Needs Unit Tests
 
-    raise Exception('chicken balls')
-
-    user_key = get_key_from_resource_id(user_token_payload['user_id'])
+    user_key = get_key_from_resource_id(user_token_payload['resource_id'])
     user = user_key.get()
     return user
 
