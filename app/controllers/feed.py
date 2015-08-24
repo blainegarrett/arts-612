@@ -126,9 +126,9 @@ class FeaturedApiHandler(RestHandlerBase):
         else:
             if is_appspot():
                 resource_ids = [
-                    'RXZlbnQeHzU2NzY3MDk5NDg5NDg0ODA',  # Energy
-                    'RXZlbnQeHzU2ODQwNDk5MTM4Mzk2MTY',  # Nerve Burner
-                    'RXZlbnQeHzU3MzI5MTA1MzU1NDA3MzY',  # Girard
+                    'RXZlbnQeHzU2NTc5MDMyMjY2ODMzOTI',  # People Talking
+                    'RXZlbnQeHzU2NjgzODcyNDE4NTI5Mjg',  # Midway Murals
+                    'RXZlbnQeHzU2NDE0NjIzNjAzMDk3NjA',  # Showroom
                     'RXZlbnQeHzU2ODQ3OTM3NDg0ODgxOTI',  # Made-Here
                     'QmxvZ1Bvc3QeHzU2NzczNTA4Mzg1OTk2ODA'
                 ]
