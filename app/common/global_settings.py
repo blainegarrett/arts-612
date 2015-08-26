@@ -38,9 +38,13 @@ def set_global_setting(setting_key, setting_val):
     """
 
     setting_entity = get_global_settings()
-    if setting_entity is not None:
-        setattr(setting_entity, setting_key, setting_val)
-        _put_settings(setting_entity)
+    setattr(setting_entity, setting_key, setting_val)
+    _put_settings(setting_entity)
+
+
+def get_global_setting(setting_key):
+    setting_entity = get_global_settings()
+    return getattr(setting_entity, setting_key)
 
 
 def _put_settings(setting_entity):
