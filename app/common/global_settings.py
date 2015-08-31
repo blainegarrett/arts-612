@@ -5,11 +5,11 @@ Simple Library for Global Settings
 from google.appengine.ext import ndb
 
 from auth.decorators import rest_login_required
+from utils import ubercache
 
 from rest.controllers import RestHandlerBase
 from rest.resource import Resource
 from rest.resource import RestField, JSONField
-
 
 GLOBAL_SETTING_KEY_ID = 'default'
 
@@ -102,5 +102,18 @@ class GlobalSettingsHandler(RestHandlerBase):
         # Note: At the moment this is doing a .put() for key/val pair
         e = set_global_settings(self.cleaned_data)
 
+        # Step 3: Kill all related caches...
+        # TODO: this should be signal or pub/sub
+        ubercache.cache_invalidate('events')
+
         results = Resource(e, REST_RULES).to_dict()
         self.serve_success(results)
+
+"""
+[
+    "RXZlbnQeHzU3MzgyNzU0ODY1NjQzNTI",
+    "RXZlbnQeHzU2NTY1NDA3ODI1MjY0NjQ",
+    "QmxvZ1Bvc3QeHzU2NzczNTA4Mzg1OTk2ODA"
+]
+
+"""
