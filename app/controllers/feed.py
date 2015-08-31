@@ -1,22 +1,11 @@
 """
 Controllers for the Written section
 """
-import voluptuous
 
 from rest.controllers import RestHandlerBase
 
-from rest.resource import Resource, ResourceUrlField, DatetimeField
-from rest.resource import RestField, SlugField, ResourceIdField
 
-from rest.resource import ResourceField
 from rest.utils import get_key_from_resource_id
-
-from files.rest_helpers import FileField
-from auth.controllers import REST_RULES as USER_REST_RULES
-from modules.blog.internal import api as blog_api
-from modules.events.internal import api as events_api
-from modules.blog.internal.models import BlogPost
-from utils import get_domain, is_appspot
 
 from datetime import datetime
 from pytz import timezone
@@ -28,6 +17,8 @@ from cal.controllers import create_resource_from_entity as create_event_resource
 from controllers.written import create_resource_from_entity as create_blogpost_resource
 
 from utils import ubercache
+import json
+from common.global_settings import get_global_settings
 
 
 def unix_time(dt):
@@ -121,25 +112,11 @@ class FeaturedApiHandler(RestHandlerBase):
         cache_key = 'super_featured-resourcesx'
 
         cached_events = ubercache.cache_get(cache_key)
-        if False and cached_events:
+        if cached_events:
             results = cached_events
         else:
-            if is_appspot():
-                resource_ids = [
-                    'RXZlbnQeHzUxOTQ5NTcyOTE3ODIxNDQ',
-                    'RXZlbnQeHzU3NTg0MDE3MDMzMTM0MDg',
-                    'RXZlbnQeHzU3MjMxNTEyOTYxMDI0MDA', #Soovac
-                    'RXZlbnQeHzU2MzUwOTMxOTIyNDUyNDg',
-                    'QmxvZ1Bvc3QeHzU2NzczNTA4Mzg1OTk2ODA'
-                ]
-            else:
-                resource_ids = [
-                    'RXZlbnQeHzU4Mzg0MDY3NDM0OTA1NjA',
-                    'RXZlbnQeHzU4Mzg0MDY3NDM0OTA1NjA',
-                    'RXZlbnQeHzU4Mzg0MDY3NDM0OTA1NjA',
-                    'RXZlbnQeHzU4Mzg0MDY3NDM0OTA1NjA',
-                    'RXZlbnQeHzU4Mzg0MDY3NDM0OTA1NjA',
-                ]
+            gs = get_global_settings()
+            resource_ids = json.loads(gs.FEATURED_HEADER_RESOURCES)
 
             results = []
 

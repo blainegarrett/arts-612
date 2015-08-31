@@ -70,6 +70,9 @@ routes.extend([
     (r'/api/users', 'auth.controllers.UsersApiHandler'),
     (r'/api/users/([a-zA-Z0-9-_]+)', 'auth.controllers.UserDetailApiHandler'),
 
+
+    (r'/api/settings', 'common.global_settings.GlobalSettingsHandler')
+
 ])
 
 
