@@ -12,7 +12,7 @@ from google.appengine.api import users
 from rest import errors
 from rest.resource import Resource
 from rest.params import ResourceParams
-from auth.helpers import get_auth_token_from_request
+from auth.helpers import get_auth_token_for_request
 
 
 class RestHandlerBase(webapp2.RequestHandler):
@@ -50,7 +50,7 @@ class RestHandlerBase(webapp2.RequestHandler):
         param_schema = self.get_param_schema()
         self.cleaned_params = ResourceParams(param_schema).from_dict(self.params)
 
-    def validate_payload(self): # aka Form.clean
+    def validate_payload(self):  # aka Form.clean
         """
         Validate the request payload against the rest rules
         This only works for a single payload entity, not a list...
@@ -71,7 +71,7 @@ class RestHandlerBase(webapp2.RequestHandler):
             self.cleaned_params = {}
 
             # Do basic access checks
-            cur_user = users.get_current_user() # Eventually put this on the request
+            cur_user = users.get_current_user()  # Eventually put this on the request
             if not (self.is_same_origin() or cur_user):
                 raise errors.RestError('Invalid referrer: %s' % self.request.referer)
 
@@ -166,9 +166,7 @@ class RestHandlerBase(webapp2.RequestHandler):
         )
 
         # Add a fresh new auth token to the response
-        # token = get_auth_token_from_request(request)
-        # raise Exception(self.request.user)
-        token = 'Not Implemented Yet'
+        token = get_auth_token_for_request(self.request)
 
         # Generate a new take
         payload.update({'auth_token': token})

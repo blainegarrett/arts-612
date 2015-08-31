@@ -7,10 +7,11 @@ import json
 import voluptuous
 from auth.decorators import rest_login_required
 
-
 from google.appengine.ext import ndb
 
 from rest.controllers import RestHandlerBase
+from auth.helpers import get_user
+from auth.controllers import SecureHandlerBase
 from rest.resource import Resource
 from rest.resource import RestField, SlugField, ResourceIdField, ResourceUrlField, GeoField
 from rest.utils import get_key_from_resource_id
@@ -24,7 +25,7 @@ from modules.venues.internal.models import Venue
 from framework.controllers import BaseHandler
 from utils import get_domain
 
-resource_url = 'http://' + get_domain()  + '/api/galleries/%s'
+resource_url = 'http://' + get_domain() + '/api/galleries/%s'
 
 REST_RULES = [
     ResourceIdField(output_only=True),
@@ -62,7 +63,7 @@ def create_resource_from_entity(e, verbose=False):
     return Resource(e, REST_RULES).to_dict()
 
 
-class GalleryApiHandlerBase(RestHandlerBase):
+class GalleryApiHandlerBase(SecureHandlerBase):  # RestHandlerBase):
     """
     Base Handler for all Gallery API endpoints
     """
@@ -85,35 +86,7 @@ class GalleriesApiHandler(GalleryApiHandlerBase):
             'q': voluptuous.Coerce(str)
         }
 
-
-    def generate_cool_token(self):
-        # Probably not in use. please delete...
-        import jwt
-
-        secret = 'fartssmell' # This should be a RSA private key?
-        profile = {
-            'user_id': 1234,
-            'username': 'blainegarrett'
-        }
-
-        token = jwt.encode(profile, secret, algorithm='HS256')
-        raise Exception(token)
-
-
     def _get(self):
-        import jwt
-
-        # Move this authorization stuff to middleware, etc...
-
-        #self.generate_cool_token()
-        secret = 'fartssmell' # This should be a RSA private key?
-
-        auth_header = self.request.headers.get('Authorization', None)
-        if auth_header:
-            token = auth_header.replace('Bearer ', '') # TODO: Beef this up
-            profile = jwt.decode(token, secret)
-            raise Exception(profile['user_id'])
-
 
         # Check if there is a query filter, etc
         get_by_slug = self.cleaned_params.get('get_by_slug', None)
@@ -129,7 +102,6 @@ class GalleriesApiHandler(GalleryApiHandlerBase):
             return
 
         q = self.cleaned_params.get('q', None)
-
 
         # Um.. is this dublicated???
         """
@@ -147,12 +119,11 @@ class GalleriesApiHandler(GalleryApiHandlerBase):
             return
         """
 
-
         if q:
             results = vsearch.simple_search(q)
             # hydrate the search results
             keys_to_fetch = []
-            #raise Exception(results)
+            #  raise Exception(results)
 
             # TODO: This should be a bulk get
             for r in results['index_results']:
@@ -163,8 +134,7 @@ class GalleriesApiHandler(GalleryApiHandlerBase):
         else:
             entities = Venue.query().fetch(1000)
 
-
-        # Create A set of results based upon this result set - iterator??
+        #  Create A set of results based upon this result set - iterator??
         results = []
         for e in entities:
             results.append(create_resource_from_entity(e))
@@ -215,10 +185,10 @@ class GalleryDetailApiHandler(GalleryApiHandlerBase):
 
         resource_id = slug
 
-        key = get_key_from_resource_id(resource_id) #ndb.Key(urlsafe=slug)
+        key = get_key_from_resource_id(resource_id)  # ndb.Key(urlsafe=slug)
         e = key.get()
 
-        #e = venues_api.get_venue_by_slug(slug)
+        # e = venues_api.get_venue_by_slug(slug)
 
         if not e:
             self.serve_404('Gallery Not Found')
@@ -254,10 +224,10 @@ class GalleryDetailApiHandler(GalleryApiHandlerBase):
         """
 
         resource_id = slug
-        key = get_key_from_resource_id(resource_id) #ndb.Key(urlsafe=slug)
+        key = get_key_from_resource_id(resource_id)  # ndb.Key(urlsafe=slug)
         venue = key.get()
 
-        #venue = venues_api.get_venue_by_slug(slug)
+        # venue = venues_api.get_venue_by_slug(slug)
         if not venue:
             self.serve_404('Gallery Not Found')
             return False
