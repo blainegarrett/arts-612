@@ -57,7 +57,7 @@ var AdminHomePage = React.createClass({
         <div className="row">
             <div className="col-md-6">
 
-        
+
                 <h2>Hello!</h2>
                 <p> This is the super temporary admin page. It will get better. I swear.</p>
                 <ul>
@@ -67,8 +67,9 @@ var AdminHomePage = React.createClass({
                     <li><a href="/admin/post_categories/">Manage Blog Categories</a></li>
                     <li><a href="/admin/files/">Manage Files</a></li>
                     <li><a href="/admin/users/">Manage Users</a></li>
+                    <li><a href="/admin/settings/">Manage Settings</a></li>
                 </ul>
-                
+
                 <h2>Tools</h2>
                 <ul>
                     <li><a href="/admin/events/debugger/">Event Search API Debugger</a></li>
@@ -196,12 +197,12 @@ var AdminHomePage = React.createClass({
         <B.Alert bsStyle="warning">
               <strong>Holy guacamole!</strong> Best check yo self, you are not looking too good.
         </B.Alert>
-            
-            
+
+
         </div>
-        </div>    
-            
-            
+        </div>
+
+
         </div>
     }
 });

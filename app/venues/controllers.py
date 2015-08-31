@@ -89,7 +89,7 @@ class GalleriesApiHandler(GalleryApiHandlerBase):
 
         # Check if there is a query filter, etc
         get_by_slug = self.cleaned_params.get('get_by_slug', None)
-        
+
         if get_by_slug:
             venue = venues_api.get_venue_by_slug(get_by_slug)
             if not venue:

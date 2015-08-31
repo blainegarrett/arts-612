@@ -335,6 +335,34 @@ class UploadField(RestField):
         return {'lat': val.lat, 'lon': val.lon}
 
 
+def json_validator(val):
+    """
+    Validate str is json
+    """
+    import json
+
+    if not val:
+        return ''
+
+    #try:
+    result = json.loads(val)
+    #except Exception:
+    #    raise voluptuous.Invalid("Invalid JSON Structure")
+    return val
+
+
+class JSONField(RestField):
+    """
+    Field to input and validated a string of json
+    """
+
+    def __init__(self, prop, **kwargs):
+        kwargs['validator'] = json_validator
+
+        super(JSONField, self).__init__(prop, **kwargs)
+
+
+
 class BooleanField(RestField):
     """
     Boolean field
