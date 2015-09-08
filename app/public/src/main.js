@@ -16,6 +16,8 @@ var AboutPage = require('./components/pages/AboutPage');
 
 var StyleGuide = require('./components/pages/StyleGuide');
 var AuthPages = require('./components/pages/AuthPages');
+var SubmitPages = require('./components/pages/SubmitPages');
+
 
 var authHelpers = require('./utils/auth')
 
@@ -60,6 +62,11 @@ ReactRouter.createRoute('/home', function () {
     React.render(<HomePage />, document.getElementById('main_content'));
 });
 */
+
+ReactRouter.createRoute('/submit/event', function () {
+    React.unmountComponentAtNode( document.getElementById('main_content'));
+    React.render(<SubmitPages.Events />, document.getElementById('main_content'));
+});
 
 ReactRouter.createRoute('/about/', function () {
     React.unmountComponentAtNode( document.getElementById('main_content'));
