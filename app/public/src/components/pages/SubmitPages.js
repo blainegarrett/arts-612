@@ -29,8 +29,8 @@ var ED_CATEGORY_CHOICES = [
 /* Form Class For Primary Event */
 var EventForm = forms.Form.extend({
   name: forms.CharField({label:"Name", maxLength: 100, widgetAttrs: {autoFocus: true, placeholder:'What is the name of the event - max 50 chars'}}),
-  //summary: forms.CharField({label:"Summary", widget: forms.Textarea, widgetAttrs: {placeholder:'Ultra brief summary'}}),
-  //url: forms.URLField({label:"More Info Url", helpText:"URL with more information"}),
+  summary: forms.CharField({label:"Summary", widget: forms.Textarea, widgetAttrs: {placeholder:'Ultra brief summary'}}),
+  url: forms.URLField({label:"More Info Url"}),
 
   clean: function() {
 
@@ -173,6 +173,8 @@ var Signup = React.createClass({
           <Container>
 
                 <Field name="name" />
+                <Field name="url" />
+                <Field name="summary" />
 
             </Container>
         </forms.RenderForm>
@@ -273,11 +275,7 @@ var SubmitEventPage = React.createClass({
     render: function() {
         return (
           <div className="container">
-            <h2>Submit An Event</h2>
-            <p>Fill Out the Form Below</p>
-
             <Signup />
-
           </div>
           )
     }
