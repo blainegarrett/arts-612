@@ -32,7 +32,7 @@ var WrittenPage = React.createClass({
     pageDidMount: function () {
         // Set Default Page Meta
         this.setMeta();
-        
+
         $.ajax({
             url: this.state.resource_url,
             dataType: 'json',
@@ -44,7 +44,7 @@ var WrittenPage = React.createClass({
             error: function (xhr, status, err) {
                 console.error(this.state.resource_url, status, err.toString());
             }.bind(this)
-            
+
         });
     },
 
@@ -61,14 +61,14 @@ var WrittenPage = React.createClass({
             error: function (xhr, status, err) {
                 console.error(this.state.resource_url, status, err.toString());
             }.bind(this)
-            
+
         });
 
 
-        return false;  
+        return false;
     },
     render: function () {
-        
+
         var articles = []
         var rc = this;
 
@@ -78,7 +78,7 @@ var WrittenPage = React.createClass({
             });
         }
 
-        // if there is more, show 
+        // if there is more, show
         var more_button;
         if (this.state.articles.more) {
             more_button = <a className="btn" onClick={ this.load_more } href="#">load more...</a>
@@ -90,11 +90,11 @@ var WrittenPage = React.createClass({
             <div className="row">
 
                 <div className="col-md-6" id="main-content-container">
-                    
+
                     <h2>Written</h2>
-                    
+
                     <div className="alert alert-warning">Our Written section is returing soon including the archives from the old site. Stay tuned and enjoy these articles.</div>
-                    
+
                     { articles }
 
 
@@ -106,7 +106,7 @@ var WrittenPage = React.createClass({
                 <div className="col-md-3 panel-events"><TempUpcoming col_name="'Upcoming" /></div>
                 <div className="col-md-3 panel-events"><TempEvents col_name="'Now Showing'"  /></div>
             </div>
-            
+
             <Footer />
         </div>;
 
@@ -171,12 +171,13 @@ var WrittenArticlePage = React.createClass({
                 console.error(this.state.resource_url, status, err.toString());
                 this.setState({content_not_found:true, content_loaded:true})
             }.bind(this)
-            
+
         });
     },
 
     render: function() {
         var rendered_article;
+
 
         if (this.state.content_not_found) {
             rendered_article = (<div>
@@ -185,20 +186,29 @@ var WrittenArticlePage = React.createClass({
             </div>);
         }
         else if (this.state.results != undefined) {
-            var post = this.state.results
-            rendered_article = <ArticleGoober key={ post.resource_id } resource={ post } renderer={ DefaultArticleRenderer } />
+
+            if (!this.state.results.is_published){
+            rendered_article = (<div>
+                <h2>Article Is Not Published</h2>
+                <p>The article you are looking for is not yet published. Please check back later. </p>
+            </div>);
+            }
+            else {
+                var post = this.state.results
+                rendered_article = <ArticleGoober key={ post.resource_id } resource={ post } renderer={ DefaultArticleRenderer } />
+            }
         }
         else {
             rendered_article = <ArticleGoober resource={ null } renderer={ DefaultArticleRenderer } />
         }
 
         return <div id="HomePageWrapper">
-            
+
             <div className="row">
 
                 <div className="col-md-6" id="main-content-container">
                     <div className="row">
-                    
+
                         <div className="col-xs-12">
                             { rendered_article }
                         </div>
@@ -209,7 +219,7 @@ var WrittenArticlePage = React.createClass({
                 <div className="col-md-3 panel-events"><TempUpcoming col_name="'Upcoming" /></div>
                 <div className="col-md-3 panel-events"><TempEvents col_name="'Now Showing'"  /></div>
             </div>
-            
+
             <Footer />
         </div>;
 
@@ -220,14 +230,14 @@ var WrittenArticlePage = React.createClass({
 
 var BlogPostService = {
     _resources_store: [],
-    
+
     set_resource: function(resource_data) {
-        
+
         /* TODO: Move this to the base class */
         this._resources_store.push(resource_data);
         return resource_data;
     },
-    
+
     get_posts_by_category: function(category_slug) {
         var resource_url = '/api/posts?category_slug=' + category_slug;
         var service = this;
@@ -258,17 +268,17 @@ var BlogPostService = {
         return promise;
 
     }
-    
-    
-    
+
+
+
 }
 
 
 
-var ResourceApiService = {  
+var ResourceApiService = {
     fetch: function (url) {
         var service = this;
-        
+
         var promise = new Promise(function(accept, reject) {
 
 
@@ -287,19 +297,19 @@ var ResourceApiService = {
                 error: function (xhr, status, err) {
                     reject(err);
                 }
-            });            
+            });
         });
         return promise;
-        
-        
+
+
     }
-    
+
 };
 
 
 var PostCategoriesService = {
     _resources_store: [],
-    
+
     set_resource: function(resource_data) {
         /* TODO: Move this to the base class */
         this._resources_store.push(resource_data);
@@ -314,7 +324,7 @@ var PostCategoriesService = {
         /* Query Posts for this Category */
         return BlogPostService.get_posts_by_category(slug)
     },
-    
+
     get_all: function() {
         var service = this;
         var promise = new Promise(function (accept, reject) {
@@ -345,9 +355,9 @@ var ListCategories = React.createClass({
 
         var promise = PostCategoriesService.get_all().then(function(category_resources) {
             console.log(category_resources);
-            
+
         });
-        
+
     },
     render: function() {
         return <b>booom</b>
@@ -381,14 +391,14 @@ var WrittenCategoryPage = React.createClass({
         // Set the Page Meta for this specific post
 
         if (this.state.category_content_loaded) {
-            
+
             this.default_meta = {
                 title: this.state.category_results.title,
                 description: 'View all posts filed under ' + this.state.category_results.title
             }
             this.setMeta();
         }
-        
+
         /*
         post = this.state.results;
 
@@ -406,27 +416,27 @@ var WrittenCategoryPage = React.createClass({
         */
     },
     pageDidMount: function () {
-        
+
         var rc = this;
 
         // Build a promise to fetch the requested data
         var promise = PostCategoriesService.get_by_slug(this.props.category_slug).then(function(category_resource) {
             rc.setState({category_content_loaded:true, category_results:category_resource});
             rc.set_meta_for_resource();
-            
+
             // Next Attempt to get all the Posts for this Category
             var promise2 = PostCategoriesService.get_posts(this.props.category_slug).then(
-                function(posts) {                    
+                function(posts) {
                     rc.setState({content_loaded:true, results:posts});
                 },
                 function(err) {
                     console.log(err);
                 }
                 );
-            
-            
-            
-            
+
+
+
+
         }.bind(this), function(err) {
             this.setState({content_not_found:true, content_loaded:true})
         }.bind(this)
@@ -435,7 +445,7 @@ var WrittenCategoryPage = React.createClass({
     },
 
     render: function() {
-        
+
         var articles = []
         var rc = this;
 
@@ -455,12 +465,12 @@ var WrittenCategoryPage = React.createClass({
         }
 
         return <div id="HomePageWrapper">
-            
+
             <div className="row">
 
                 <div className="col-md-6" id="main-content-container">
                     <div className="row">
-                    
+
                         <div className="col-xs-12">
                             <h2>{ category_title }</h2>
                             { articles }
@@ -472,7 +482,7 @@ var WrittenCategoryPage = React.createClass({
                 <div className="col-md-3 panel-events"><TempUpcoming col_name="'Upcoming" /></div>
                 <div className="col-md-3 panel-events"><TempEvents col_name="'Now Showing'"  /></div>
             </div>
-            
+
             <Footer />
         </div>;
 
