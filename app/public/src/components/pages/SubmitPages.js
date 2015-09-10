@@ -202,12 +202,12 @@ renderPhoneNumberForms: function () {
 
       var edFormSet = this.state.eventDateForms;
       return <div key={"date_row_" + i} className="row">
-        {renderFunc(bfo.category, 'col-sm-2')}
+        {renderFunc(bfo.category, 'col-sm-4')}
         {renderFunc(bfo.label, 'col-sm-3')}
 
         {renderFunc(bfo.start_date, 'col-sm-2')}
         {renderFunc(bfo.end_date, 'col-sm-2')}
-        <a href="#" onClick={ function() { edFormSet.removeForm(i); console.log(i); return false; } }>{ i }</a>
+        <div className="col-sm-1"><a href="#" onClick={ function() { edFormSet.removeForm(i); console.log(i); return false; } }>{ i }</a></div>
       </div>
     })
   },
