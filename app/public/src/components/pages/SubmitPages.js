@@ -251,6 +251,12 @@ THE SOFTWARE.
             else {
                 eData = picker.element.find('input').data();
             }
+
+            console.log(eData);
+
+
+
+
             if (eData.dateFormat !== undefined) {
                 picker.options.format = eData.dateFormat;
             }
@@ -1500,8 +1506,9 @@ var EventForm = forms.Form.extend({
 
 /* Event Date Forms */
 var EventDateForm = forms.Form.extend({
-  category: forms.ChoiceField({label: "Type", required: true, choices: ED_CATEGORY_CHOICES}),
+  //category: forms.ChoiceField({label: "Type", required: true, choices: ED_CATEGORY_CHOICES}),
   label: forms.CharField({label:"Label"}),
+  category: forms.CharField({label:"category"}),
   start_date: forms.CharField({widget: forms.DateTimeInput}),
   end_date: forms.CharField({widget: forms.DateTimeInput}),
   clean: function () {
@@ -1529,7 +1536,52 @@ function partial(fn) {
 };
 
 
+
+
+var JankField = React.createClass({
+
+  componentDidMount: function() {
+    console.log('component did mount');
+    var $element = $('#' + this.props.bf.idForLabel());
+    console.log($element.data());
+    $element.datetimepicker();
+
+    //$element.datetimepicker();
+  },
+
+  render: function() {
+    var rendered = this.props.bf.asWidget({attrs: {'data-date-format': "YYYY-MM-DD", className: 'form-control'}});
+
+    return (
+      <div className="winky">
+      {rendered}
+      </div>
+    )
+  }
+});
+
 function field(bf, cssClass, options) {
+
+  options = extend({label: true}, options)
+  var errors = bf.errors().messages().map(message => <div className="help-block">{message}</div>)
+  var errorClass = errors.length > 0 ? ' has-error' : ''
+  return <div key={bf.htmlName} className={cssClass + errorClass}>
+    <div className="form-group">
+      {options.label && bf.labelTag()}
+
+      <JankField bf={bf} />
+
+      {errors}
+    </div>
+  </div>
+};
+
+function widget(bf, cssClass) {
+  return field(bf, cssClass, {label: false})
+};
+
+
+/*function field(bf, cssClass, options) {
 
   options = extend({label: true}, options)
   var errors = bf.errors().messages().map(message => <div className="help-block">{message}</div>)
@@ -1546,6 +1598,7 @@ function field(bf, cssClass, options) {
 function widget(bf, cssClass) {
   return field(bf, cssClass, {label: false})
 };
+*/
 
 function addAnother(formset, e) {
   /* jshint validthis: true */
@@ -1567,6 +1620,8 @@ var Signup = React.createClass({
     /* Bind All the Widgets that need it */
 
     console.log($('#id_name'));
+
+
   },
 
   getInitialState: function () {
@@ -1663,6 +1718,7 @@ renderPhoneNumberForms: function () {
       var bfo = form.boundFieldsObj()
 
       var edFormSet = this.state.eventDateForms;
+
       return <div key={"date_row_" + i} className="row">
         {renderFunc(bfo.category, 'col-sm-4')}
         {renderFunc(bfo.label, 'col-sm-3')}
@@ -1681,8 +1737,6 @@ renderPhoneNumberForms: function () {
       <p className="alert alert-danger">{message}</p>
     )
     var bfo = this.state.form.boundFieldsObj();
-
-    console.log(bfo);
 
     return (<div>
       {topErrors}
