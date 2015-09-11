@@ -16,7 +16,7 @@ PostCategoriesForm = React.createClass({
     },
 
     componentDidMount: function(){
-        
+
         // Get the resource data
         if (this.state.is_edit) {
             $.ajax({
@@ -34,7 +34,7 @@ PostCategoriesForm = React.createClass({
 
     getInitialState: function () {
         /* Sets up initial form state */
-        
+
         return {
             save_callback: this.props.save_callback,
             errors: [],
@@ -62,8 +62,8 @@ PostCategoriesForm = React.createClass({
         method = 'POST';
         if (this.state.is_edit) {
             method = 'PUT';
-        }        
-        
+        }
+
         // Send Ajax Payload
         $.ajax({
             url: this.props.resource_url,
@@ -83,8 +83,8 @@ PostCategoriesForm = React.createClass({
                 this.setState({errors: error_body.messages}); //messages is always a list
 
                 console.error(this.state.resource_url, status, err.toString());
-                
-            }.bind(this) 
+
+            }.bind(this)
         });
 
     },
@@ -98,7 +98,7 @@ PostCategoriesForm = React.createClass({
         }
 
         var title_value = event.target.value;
-        
+
         title_value = title_value.toLowerCase()
             .trim()
             .replace(/[^\w ]+/g, ' ')
@@ -123,7 +123,7 @@ PostCategoriesForm = React.createClass({
 
         console.log(this.state.data.results);
         return <div className="row">
-        
+
         <div className="col-lg-8">
             <form role="form" className="form-horizontal" action="#" onSubmit={this.submitHandler}>
                 { errors }
@@ -144,7 +144,7 @@ PostCategoriesForm = React.createClass({
         </div>
 
     </div>;
-    }    
+    }
 });
 
 module.exports = PostCategoriesForm;

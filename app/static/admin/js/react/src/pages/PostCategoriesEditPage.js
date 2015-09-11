@@ -6,7 +6,7 @@ var PostCategoriesEditPage = React.createClass({
     getInitialState: function(){
         return { data: null }
     },
-    
+
     render: function() {
 
         var resource_url = '/api/post_categories/' + this.props.keystr;
