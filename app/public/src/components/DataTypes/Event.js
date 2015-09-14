@@ -1,5 +1,5 @@
 /* Event Display Components */
-// TODO: Come up with a better name than Goober... trying 
+// TODO: Come up with a better name than Goober... trying
 
 var React = require('react');
 var NiceDate = require('./../../utils/NiceDate');
@@ -20,7 +20,7 @@ var EventRendererMixin = {
             resource: this.props.resource,
             ed_filter: this.props.ed_filter
         }
-    },    
+    },
 };
 
 var FullEventRenderer = React.createClass({
@@ -32,7 +32,7 @@ var FullEventRenderer = React.createClass({
         return <div className="ghost-load">
             <h1>&#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632; &#9632; &#9632;&#9632; &#9632;</h1>
             <p className="lead">
-                &#9632;&#9632;&#9632;&#9632; &#9632; &#9632;&#9632;&#9632; &#9632;&#9632; &#9632;&#9632;  &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; 
+                &#9632;&#9632;&#9632;&#9632; &#9632; &#9632;&#9632;&#9632; &#9632;&#9632; &#9632;&#9632;  &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632;
             </p>
 
             <div className="row">
@@ -74,7 +74,7 @@ var FullEventRenderer = React.createClass({
             image_url = r.primary_image_resource.versions.CARD_SMALL.url;
             image = <img src={image_url} className="img-responsive" />
         }
-        
+
         var eventDates = []
 
         eventDates = r.event_dates.map(function (ed, i) {
@@ -96,7 +96,7 @@ var FullEventRenderer = React.createClass({
             return <div key={ 'event_date-' + i } className="event-date">
                 <dt className="event-label">{ ed.label } </dt>
                 <dd>
-                    <NiceDate start={ ed.start } end={ ed.end } eventdate_type={ ed.type } /> 
+                    <NiceDate start={ ed.start } end={ ed.end } eventdate_type={ ed.type } />
 
                     <div className="dropdown" style={{'display': 'inline'}}>
                       <button className="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true" style={{'border-color': 'transparent'}}>
@@ -121,7 +121,7 @@ var FullEventRenderer = React.createClass({
             <span>{venue_resource.address2}</span><br />
             <span>{venue_resource.city }</span> <span>( <a href={ map_url } target="_new">map</a> )</span>
         </div>
-        
+
         var rendered_more_url, big_link_button;
         if (r.url) {
             rendered_more_url = <span className="small"> <br /> <a href={ r.url } target="_new" title="More information on the event's website">Event Website </a> </span>
@@ -143,7 +143,7 @@ var FullEventRenderer = React.createClass({
                 { r.summary }
                 { rendered_more_url }
             </p>
-            
+
             <div className="row">
 
                 <div className="col-md-6">
@@ -157,7 +157,7 @@ var FullEventRenderer = React.createClass({
                 </div>
 
             </div>
-            
+
             <div>{ image }</div>
             <br />
             <div className="hidden-xs"><MapComponent gallery={ venue_resource } /></div>
@@ -167,7 +167,7 @@ var FullEventRenderer = React.createClass({
             <br />
             <div className="hidden-lg">{ big_link_button }</div>
             <br />
-        
+
         </div>
     }
 
@@ -195,7 +195,7 @@ var MarqueeRenderer = React.createClass({
             image_url = resource.primary_image_resource.versions.CARD_SMALL.url;
         }
 
-        var styles = { 'backgroundImage' : 'url(' + image_url + ');'};
+        var styles = { 'backgroundImage' : 'url(' + image_url + ')'};
 
         var event_url = '/events/' + resource.slug;
         var rendered_date;
@@ -239,7 +239,7 @@ var FeaturedHeroRenderer = React.createClass({
             image_url = resource.primary_image_resource.versions.CARD_SMALL.url;
         }
 
-        var styles = { 'backgroundImage' : 'url(' + image_url + ');'};
+        var styles = { 'backgroundImage' : 'url(' + image_url + ')'};
 
         var event_url = '/events/' + resource.slug;
         var rendered_date;
@@ -286,7 +286,7 @@ var PodRenderer = React.createClass({
             </a>
         </div>
 
-        return image_container;  
+        return image_container;
     },
 
 
@@ -300,7 +300,7 @@ var PodRenderer = React.createClass({
                 <div className="card-detail event-venue-name">&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632;</div>
                 <div className="card-detail event-address">&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632;</div>
 
-            </div>            
+            </div>
         </div>
     },
 
@@ -353,7 +353,7 @@ var PodRenderer = React.createClass({
 
             if (!target_event_date) {
                 if (reoccurring) {
-                    target_event_date = reoccurring;                    
+                    target_event_date = reoccurring;
                 }
                 else {
                     // Event is in the past and there are no reoccurring dates??
@@ -368,7 +368,7 @@ var PodRenderer = React.createClass({
         var post_url = '/events/' + e.slug; //e.url;
 
         if (e.primary_image_resource) {
-            var img_resource = e.primary_image_resource.versions.CARD_SMALL;            
+            var img_resource = e.primary_image_resource.versions.CARD_SMALL;
             image = this.generate_image(img_resource, post_url, e.name);
         }
 
@@ -387,12 +387,12 @@ var PodRenderer = React.createClass({
                     <div className="card-detail event-venue-name">{target_event_date.venue.name}</div>
                     <div className="card-detail event-address">{target_event_date.venue.address + ', ' + target_event_date.venue.city }</div>
 
-                </div>            
+                </div>
             </div>
         );
 
     }
-    
+
 });
 
 
@@ -484,14 +484,14 @@ var DefaultRenderer = React.createClass({
                 ed = this.props.event_dates[i];
             }
         }
-        
+
         if (!ed) {
             ed = this.props.event_dates[0];
             console.error('Warning: Failed to find an ed for the below event with a ed.type matching "' + this.props.ed_filter  + '". Defaulting to first found one. ');
             console.error(this.props);
-        }        
+        }
 
-        return (<li className="event">        
+        return (<li className="event">
     		<div><a href={this.props.url}><span className="event-title">{this.props.name}</span></a></div>
             <div className="event-time"><NiceDate start={ ed.start } end={ ed.end } eventdate_type={ ed.type } /></div>
             <div className="event-venue-name">{ed.venue.name}</div>
@@ -510,7 +510,7 @@ var Goober = React.createClass({
 
     propTypes: {
         renderer: React.PropTypes.any, // A React Class to Render the Event
-        resource: React.PropTypes.node, // A Resource (object) from the store, etc or null
+        resource: React.PropTypes.object, // A Resource (object) from the store, etc or null
         ed_filter: React.PropTypes.oneOf(['reoccurring', 'timed'])
     },
 
@@ -524,11 +524,11 @@ var Goober = React.createClass({
     render: function () {
         // Determine which ED we meant to show actually
         var props = {
-            resource: this.state.resource, 
+            resource: this.state.resource,
             ed_filter: this.state.ed_filter
         };
         return React.createElement(this.state.renderer, props);
-    }    
+    }
 });
 
 
