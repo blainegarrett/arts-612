@@ -2,6 +2,10 @@
     Form Components for Simple Event Form
 */
 
+
+
+
+
 var React = require('react');
 var forms = require('newforms');
 var BootstrapForm = require('newforms-bootstrap');
@@ -1863,8 +1867,18 @@ var SimpleEventFormComponent = React.createClass({
         completion_callback: React.PropTypes.func,
     },
 
-    componentDidMount: function () {
-        // Janky interium solution
+
+    prefix: function (formsetType) {
+        return 'duber';
+        //return this.props.prefix + '-' + formsetType
+    },
+
+onSubmit(e) {
+    e.preventDefault()
+    this.state.form.validate(this.refs.form)
+    this.forceUpdate()
+  },
+    componentDidMount: function() {
         $('#id_fung_0').val('2015-09-03');
         this.forceUpdate();
         react_element = this;
@@ -1878,18 +1892,6 @@ var SimpleEventFormComponent = React.createClass({
         this.forceUpdate();
 
     },
-    /* Start form helper methods */
-    prefix: function (formsetType) {
-        // TODO: This is used, but is it needed?
-        return 'duber';
-        //return this.props.prefix + '-' + formsetType
-    },
-    onSubmit (e) {
-        e.preventDefault();
-        this.state.form.validate(this.refs.primary_form); // Do we need to call this with this arg?
-        this.forceUpdate();
-    },
-
     _onSubmitHandler: function(e) {
         e.preventDefault();
 
@@ -1920,29 +1922,26 @@ var SimpleEventFormComponent = React.createClass({
             cleaned_data: false
         };
 
+        console.log(this.props.form_data);
+
         // Construct the primary event Form
-        var event_form = new EventForm({
-            initial: this.props.form_data,
-            onChange: this.forceUpdate.bind(this)
-        });
+        var event_form = new EventForm({initial: this.props.form_data, onChange: this.forceUpdate.bind(this) });
         state.form = event_form;
 
         // Construct the event date form lists
 
         /* Setup The Form Sets */
-        var total_extra_forms = 1; // Ensure there is always at least one form
+        var total_extra_forms = 1;
         if (this.props.eventdate_form_data.length > 0) {
             total_extra_forms = 0;
         }
-        var InlineEventDateFormSet = forms.FormSet.extend({
-            form: EventDateForm, extra:total_extra_forms
-        });
+        var InlineEventDateFormSet = forms.FormSet.extend({form: EventDateForm, extra:total_extra_forms});
 
 
         var event_date_forms = new InlineEventDateFormSet({
             initial: this.props.eventdate_form_data,
             prefix: this.prefix('event_dates'),
-            //controlled: true,
+            controlled: true,
             onChange: this.forceUpdate.bind(this),
             //canOrder:true,
             //canDelete:true
@@ -1975,13 +1974,12 @@ var SimpleEventFormComponent = React.createClass({
 
 
         var nonFieldErrors = this.state.form.nonFieldErrors();
+            return <form encType='multipart/form-data' ref="form" onSubmit={this.onSubmit}>
 
-        return <form encType='multipart/form-data' ref="primary_form" onSubmit={this.onSubmit}>
-
-              { nonFieldErrors.isPopulated() && <div>
+              {nonFieldErrors.isPopulated() && <div>
                 <strong>Non field errors:</strong>
                 {nonFieldErrors.render()}
-              </div> }
+              </div>}
 
 <table>
         <thead>
@@ -2052,7 +2050,6 @@ var SimpleEventFormComponent = React.createClass({
 
 
 var SimpleEventForm = React.createClass({
-    /* Streamlined Event Form Interface */
 
     propTypes: {
         completion_callback: React.PropTypes.func,
@@ -2067,10 +2064,11 @@ var SimpleEventForm = React.createClass({
         state.form_data = {
             name:'Super Cool Event'
         };
-        state.eventdate_form_data = [ ];
+        state.eventdate_form_data = [
+
+        ];
         */
 
-        // Construct data from form from the resource or don't
         state.form_data = {
           name: 'blorp',
           url: 'http://google.com',
@@ -2078,11 +2076,12 @@ var SimpleEventForm = React.createClass({
           fung: new Date()
         };
 
-        //state.eventdate_form_data = []
         state.eventdate_form_data = [
           {label:'cheese', category: 'reception', start_date: '2016-10-08T08:00:00Z', end_date: 'cheese'},
           //{label:'dickfor', category: 'ongoing', start_date: 'asdf', end_date: 'cheese'},
         ];
+
+        //state.eventdate_form_data = []
 
         // Set up the completion callback or default it
         state.completion_callback = this.props.completion_callback || function () { };
