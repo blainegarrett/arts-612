@@ -252,11 +252,6 @@ THE SOFTWARE.
                 eData = picker.element.find('input').data();
             }
 
-            console.log(eData);
-
-
-
-
             if (eData.dateFormat !== undefined) {
                 picker.options.format = eData.dateFormat;
             }
@@ -1484,7 +1479,6 @@ var DateSelectorWidget = forms.MultiWidget.extend({
     parts.reverse(); // [d, m, y] => [y, m, d]
     return parts.join('-');
   }
-
 });
 
 
