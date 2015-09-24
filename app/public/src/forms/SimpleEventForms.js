@@ -1431,8 +1431,6 @@ THE SOFTWARE.
 var SplitDateTimeWidgetNew = MultiWidget.extend({
   constructor: function SplitDateTimeWidgetNew(kwargs) {
 
-    console.log('the constructor');
-
     if (!(this instanceof SplitDateTimeWidgetNew)) { return new SplitDateTimeWidgetNew(kwargs) }
 
     kwargs = extend({attrs: {'data-date-format': "YYYY-MM-DD"}, dateFormat: null, timeFormat: null}, kwargs);
@@ -1688,15 +1686,15 @@ var DateRangeField = React.createClass({
 
 /* Form Class For Primary Event */
 var EventForm = forms.Form.extend({
-    //name: forms.CharField({label:"Name", maxLength: 100, widgetAttrs: {autoFocus: false, placeholder:'What is the name of the event - max 50 chars'}}),
+    name: forms.CharField({label:"Name", maxLength: 100, widgetAttrs: {autoFocus: false, placeholder:'What is the name of the event - max 50 chars'}}),
     summary: forms.CharField({label:"Summary", widget: forms.Textarea, widgetAttrs: {placeholder:'Ultra brief summary'}}),
     url: forms.URLField({label:"More Info Url"}),
     fung: SplitDateTimeFieldNew({label: "Split", inputDateFormats: dateFormats, inputTimeFormats: [timeFormat]}),
 
     clean: function() {
-        //if (this.cleanedData.name == 'Cheese') {
-        //    throw forms.ValidationError('There was an error.');
-        //}
+        if (this.cleanedData.name == 'Cheese') {
+            throw forms.ValidationError('Cheese is nobody i know.');
+        }
     }
 
 , render() {
@@ -1724,16 +1722,17 @@ var EventForm = forms.Form.extend({
                 : <p>{bf.helpText}</p>)
       }
 
-      var errors = bf.errors().messages().map(message => <div>{message}</div>)
+    var errors = bf.errors().messages().map(message => <div>{message}</div>)
 
-      return <tr key={bf.htmlname}>
-        <th>{bf.labelTag()}</th>
-        <td>{bf.render()}{help}</td>
-        <td>{''+bf._isControlled()}</td>
-        <td>{JSON.stringify(bf._validation())}</td>
-        <td>{errors}</td>
-        <td className="cleaned-data">{cleanedData}</td>
-      </tr>
+
+      return (<div key={bf.htmlname}>
+        <span>{bf.labelTag()}</span>
+        <span>{bf.render()}{help}</span>
+        <span>{''+bf._isControlled()}</span>
+        <span>{JSON.stringify(bf._validation())}</span>
+        <span>{errors}</span>
+        <span className="cleaned-data">{cleanedData}</span>
+      </div>);
     })
   }
 });
@@ -1755,6 +1754,7 @@ var EventDateForm = forms.Form.extend({
   category: forms.ChoiceField({label: "Type", required: true, choices: ED_CATEGORY_CHOICES}),
   label: forms.CharField({label:"Label"}),
   //start_date: forms.CharField({widget: SplitDateTimeWidget, widgetAttrs: {className: 'fuck-form-control'}}),
+  start_date: SplitDateTimeFieldNew({label: "Splitxx", inputDateFormats: dateFormats, inputTimeFormats: [timeFormat]}),
   end_date: forms.CharField({widget: forms.DateTimeInput}),
   clean: function () {
     //alert('CLEAN!!!');
@@ -1770,12 +1770,57 @@ var SimpleEventDateFormsetComponent = React.createClass({
         eventdate_forms: React.PropTypes.object,
     },
 
+
+    componentDidMount: function () {
+        var react_element = this;
+        $date_input = $('#id_duber-0-start_date_0');
+        $date_input.val('2011-09-02');
+
+
+
+
+        var $date_input = $('#id_duber-0-start_date_0');
+        //console.log($date_input.data());
+        $date_input.datetimepicker({ pickTime: false }).on('dp.change', function(picker_event) {
+            react_element.forceUpdate();
+        });
+
+       // Bind the Time Picker - defaultTime: False allows for null Times...
+      $time_input = $('#id_duber-0-start_date_1');
+      $time_input.timepicker({
+        defaultTime: false,
+        disableFocus: false,
+        minuteStep: 15,
+        showSeconds: true,
+        showMeridian: false
+      }).on('changeTime.timepicker', function(e) {
+            react_element.forceUpdate();
+      });
+
+
+
+
+
+        this.props.form.forceUpdate();
+        this.forceUpdate();
+
+        console.log($date_input);
+
+        this.forceUpdate();
+        this.props.form.forceUpdate();
+    },
     clean: function () {
+        this.forceUpdate();
+        this.props.form.forceUpdate();
+
         alert('hola');
         throw forms.ValidationError('A first name or last name is required.');
     },
-    getCleanedData: function () {
-        var formset_forms_valid = this.state.eventdate_forms.validate();
+    getCleanedData: function (html_form_node) {
+        this.forceUpdate();
+        this.props.form.forceUpdate();
+
+        var formset_forms_valid = this.state.eventdate_forms.validate(html_form_node);
         return this.state.eventdate_forms.cleanedData();
 
     },
@@ -1786,7 +1831,8 @@ var SimpleEventDateFormsetComponent = React.createClass({
     },
 
     field: function(bf, cssClass, i, options) {
-
+        this.forceUpdate();
+                this.props.form.forceUpdate();
       options = extend({label: true}, options)
       var errors = bf.errors().messages().map(message => <div className="help-block">{message}</div>)
       var errorClass = errors.length > 0 ? ' has-error' : ''
@@ -1797,6 +1843,7 @@ var SimpleEventDateFormsetComponent = React.createClass({
           {errors}
         </div>
       </div>
+     this.forceUpdate();
     },
 
     widget: function(bf, cssClass, i) {
@@ -1820,8 +1867,8 @@ var SimpleEventDateFormsetComponent = React.createClass({
                 <div key={"date_row_" + i} className="row">
                     <Field bound_field={bound_field.category} cssClass='col-sm-3' i={i} />
                     <Field bound_field={bound_field.label} cssClass='col-sm-4' i={i} />
-                    { /*<DateRangeField bound_field={bound_field.start_date} cssClass='col-sm-2' i={i} /> */ }
-                    <Field bound_field={bound_field.end_date} cssClass='col-sm-2' i={i} />
+                    <Field bound_field={bound_field.start_date} cssClass='col-sm-2' i={i} />
+                    { /*<Field bound_field={bound_field.end_date} cssClass='col-sm-2' i={i} /> */ }
 
                     <div className="col-sm-1">
                         <label>
@@ -1846,7 +1893,7 @@ var SimpleEventDateFormsetComponent = React.createClass({
         return (
         <fieldset>
             <legend>Event Dates</legend>
-            {this.renderformset()}
+            { this.renderformset() }
         </fieldset>
         );
     }
@@ -1864,16 +1911,27 @@ var SimpleEventFormComponent = React.createClass({
     },
 
     componentDidMount: function () {
-        // Janky interium solution
-        $('#id_fung_0').val('2015-09-03');
-        this.forceUpdate();
-        react_element = this;
-        console.log('component did mount');
-        var $element = $('#id_fung_0');
-        console.log($element.data());
-        $element.datetimepicker({ pickTime: false }).on('dp.change', function(picker_event) {
+        // Janky interium solution to fields mounting properly...
+
+        var react_element = this;
+
+        var $date_input = $('#id_fung_0');
+        //console.log($date_input.data());
+        $date_input.datetimepicker({ pickTime: false }).on('dp.change', function(picker_event) {
             react_element.forceUpdate();
         });
+
+       // Bind the Time Picker - defaultTime: False allows for null Times...
+      $time_input = $('#id_fung_1');
+      $time_input.timepicker({
+        defaultTime: false,
+        disableFocus: false,
+        minuteStep: 15,
+        showSeconds: true,
+        showMeridian: false
+      }).on('changeTime.timepicker', function(e) {
+            react_element.forceUpdate();
+      });
 
         this.forceUpdate();
 
@@ -1886,8 +1944,30 @@ var SimpleEventFormComponent = React.createClass({
     },
     onSubmit (e) {
         e.preventDefault();
-        this.state.form.validate(this.refs.primary_form); // Do we need to call this with this arg?
-        this.forceUpdate();
+
+        console.log(this.refs.formset_forms);
+        console.log(this);
+        this.refs.formset_forms.forceUpdate(); // Force update to the child
+        this.forceUpdate(); // Force update to the SimpleEventFormComponent
+
+
+        var primary_form = this.state.form;
+        var primary_form_is_valid = primary_form.validate(this.refs.primary_form);
+        var cleaned_data = primary_form.cleanedData;
+
+
+        // Validate event date formset
+        var formset_forms = this.refs.formset_forms
+        var formset_data = formset_forms.getCleanedData(this.refs.primary_form);
+
+        cleaned_data = extend(cleaned_data, {event_dates: formset_data});
+
+
+        // Update the cleaned data on the state
+        this.setState({cleaned_data: cleaned_data});
+
+        console.log(cleaned_data);
+
     },
 
     _onSubmitHandler: function(e) {
@@ -1917,7 +1997,7 @@ var SimpleEventFormComponent = React.createClass({
         var state = {
             form: null,
             eventdate_forms: [],
-            cleaned_data: false
+            cleaned_data: {}
         };
 
         // Construct the primary event Form
@@ -1935,10 +2015,10 @@ var SimpleEventFormComponent = React.createClass({
             total_extra_forms = 0;
         }
         var InlineEventDateFormSet = forms.FormSet.extend({
-            form: EventDateForm, extra:total_extra_forms
+            form: EventDateForm, extra:total_extra_forms,
         });
 
-
+        rc = this;
         var event_date_forms = new InlineEventDateFormSet({
             initial: this.props.eventdate_form_data,
             prefix: this.prefix('event_dates'),
@@ -1953,57 +2033,75 @@ var SimpleEventFormComponent = React.createClass({
     },
 
     render:  function () {
-
-        var Col = BootstrapForm.Col;
-        var Container = BootstrapForm.Container;
-        var Row = BootstrapForm.Row;
-        var Field = BootstrapForm.Field;
+        // Renderer for the ReactComponent Wrapping the form
 
         // This is for debugging... remove later
         var cleaned_data;
-        if (this.state.cleaned_data !== false) {
-          cleaned_data = (<pre>{JSON.stringify(this.state.cleaned_data, null, ' ')}</pre>)
-        };
 
+        // TODO: This is only looking at the primary form's cleanedData
+        if (this.state.form.cleanedData) {
+            cleaned_data = (<pre>
+                {JSON.stringify(this.state.form.cleanedData, null, ' ')}
+                {JSON.stringify(this.state.cleaned_data, null, ' ')}
+                </pre>)
+        }
+
+
+        //if (this.state.cleaned_data !== false) {
+        //  cleaned_data = (<pre>{JSON.stringify(this.state.cleaned_data, null, ' ')}</pre>)
+        //};
 
         var global_errors = this.state.form.nonFieldErrors().messages().map(function(err, i) {
             return <p className="alert alert-danger">{err}</p>
         });
 
+        return (
+            <div className="row">
+                <div className="col-xs-4">
+                    { cleaned_data }
+                </div>
+                <div className="col-xs-8">
+
+                    { global_errors }
+
+                    <form ref="primary_form" onSubmit={this.onSubmit} roll="form" className="form-horizontal">
+                        <forms.RenderForm form={this.state.form}>
+                            { /* this.state.form.render() */ }
+                            <BootstrapForm>
+                            </BootstrapForm>
+                        </forms.RenderForm>
+
+                        <SimpleEventDateFormsetComponent form={this} ref="formset_forms" eventdate_forms = {this.state.eventdate_forms} />
+
+                        <div className="form-group">
+                            <div className="col-sm-12">
+                                <button type="submit" className="btn btn-default">Submit</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+        );
 
 
 
 
-        var nonFieldErrors = this.state.form.nonFieldErrors();
 
-        return <form encType='multipart/form-data' ref="primary_form" onSubmit={this.onSubmit}>
+        <form encType='multipart/form-data' ref="primary_form" onSubmit={this.onSubmit}>
 
               { nonFieldErrors.isPopulated() && <div>
                 <strong>Non field errors:</strong>
                 {nonFieldErrors.render()}
               </div> }
 
-<table>
-        <thead>
-          <tr>
-            <th>Label</th>
-            <th>Input</th>
-            <th>Controlled</th>
-            <th>Validation</th>
-            <th>Errors</th>
-            <th>Cleaned Data</th>
-          </tr>
-        </thead>
-        <tbody>
+
               { this.state.form.render() }
-<tr>
-            <td></td>
-            <td colSpan="3">
+
+              <br />
+
               <input type="submit" value="Submit"/>
-            </td>
-          </tr>
-        </tbody>
-      </table>
 
               {this.state.form.cleanedData && <h2>form.cleanedData</h2>}
               <pre>{this.state.form.cleanedData && JSON.stringify(this.state.form.cleanedData, null, ' ')}</pre>
@@ -2080,8 +2178,8 @@ var SimpleEventForm = React.createClass({
 
         //state.eventdate_form_data = []
         state.eventdate_form_data = [
-          {label:'cheese', category: 'reception', start_date: '2016-10-08T08:00:00Z', end_date: 'cheese'},
-          //{label:'dickfor', category: 'ongoing', start_date: 'asdf', end_date: 'cheese'},
+          {label:'cheese', category: 'reception', start_date: new Date(), end_date: 'cheese'},
+          //{label:'dickfor', category: 'ongoing', start_date: '2016-10-08T08:00:00Z', end_date: 'cheese'},
         ];
 
         // Set up the completion callback or default it
@@ -2098,7 +2196,7 @@ var SimpleEventForm = React.createClass({
                     form_data={this.state.form_data}
                     eventdate_form_data={this.state.eventdate_form_data }
                     completion_callback={this.state.completion_callback}
-                    />
+                />
             </div>
 
         );
