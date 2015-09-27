@@ -13,12 +13,12 @@ var EventDateColumn = React.createClass({
 
         var rendered_event_dates = '';
 
-        if (obj.event_dates) {            
+        if (obj.event_dates) {
             rendered_event_dates = obj.event_dates.map(function (ed, i) {
                 return <div key={ 'ed_' + i } className="small">
                 { ed.category } -
-                "{ ed.label }" - 
-                { moment(ed.start).format('lll') }  - { moment(ed.end).format('lll') } 
+                "{ ed.label }" -
+                { moment(ed.start).format('lll') }  - { moment(ed.end).format('lll') }
                 @ <a href={'/admin/venues/' + ed.venue.resource_id  + '/edit'}>{ ed.venue.name }</a></div>
             });
         }
@@ -30,6 +30,7 @@ var EventDateColumn = React.createClass({
 var EventsGrid = React.createClass({
     /* Grid of Events */
     mixins: [DataTableMixin],
+    paginate:true, // flag to tell the mixin to follow pagination rules...
 
     getInitialState: function(){
         var state = {'data': [], 'resource_url': '/api/events'};
@@ -41,20 +42,20 @@ var EventsGrid = React.createClass({
                 title: 'Add Event',
                 url: '/admin/events/create',
                 icon: 'calendar'
-            },  
+            },
         ];
         state['inline_actions'] = [
             {
                 title: 'Edit',
                 url: function(obj){ return '/admin/events/' + obj.resource_id + '/edit'; },
                 icon: 'pencil'
-            },  
+            },
         ];
 
         state['column_widgets'] = {
             'category': EventDateColumn
         }
-        
+
 
         return state;
     },
@@ -68,7 +69,7 @@ var EventsMainPage = React.createClass({
     render: function() {
         return <div className="row">
                     <div className="col-lg-12">
-                        <h2><a href="/admin">Admin</a> / Events</h2>  
+                        <h2><a href="/admin">Admin</a> / Events</h2>
                         <EventsGrid />
                 </div>
             </div>;

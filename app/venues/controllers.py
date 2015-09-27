@@ -9,6 +9,7 @@ from auth.decorators import rest_login_required
 
 from google.appengine.ext import ndb
 
+from rest.params import coerce_to_cursor
 from rest.controllers import RestHandlerBase
 from rest.resource import Resource
 from rest.resource import RestField, SlugField, ResourceIdField, ResourceUrlField, GeoField
@@ -78,8 +79,8 @@ class GalleriesApiHandler(GalleryApiHandlerBase):
 
     def get_param_schema(self):
         return {
-            #'limit' : voluptuous.Coerce(int),
-            #'cursor': coerce_to_cursor,
+            'limit' : voluptuous.Coerce(int),
+            'cursor': coerce_to_cursor,
             #'sort': voluptuous.Coerce(str),
             'get_by_slug': voluptuous.Coerce(str),
             'q': voluptuous.Coerce(str)
@@ -101,23 +102,6 @@ class GalleriesApiHandler(GalleryApiHandlerBase):
             return
 
         q = self.cleaned_params.get('q', None)
-
-
-        # Um.. is this dublicated???
-        """
-        get_by_slug = self.request.get('get_by_slug', None)
-
-        if get_by_slug:
-            e = venues_api.get_venue_by_slug(get_by_slug)
-
-            if not e:
-                self.serve_404('Gallery Not Found')
-                return False
-
-            resource = create_resource_from_entity(e)
-            self.serve_success(resource)
-            return
-        """
 
 
         if q:

@@ -2,7 +2,7 @@ var React = require('react');
 
 var TextColumn = function(args) {
     this.args = args
-    
+
     this.get_col_name = function() {
         return this.args.name;
     }
@@ -87,8 +87,10 @@ var SimpleColumn = React.createClass({
     }
 });
 
-var DataList = React.createClass(
-    {
+var DataList = React.createClass({
+    shouldComponentUpdate : function () {
+        return true
+    },
         render : function() {
             var rowNodes;
 
@@ -123,6 +125,45 @@ var DataList = React.createClass(
 
 
 var DataTableMixin = {
+    shouldComponentUpdate : function () {
+        return true
+    },
+    load_next_page : function(e) {
+        e.preventDefault();
+
+        //this.setState({data:[]}); // This forces the table to render empty...
+
+
+        var url = this.prep_resource_url();
+
+        this.setState({data:[]}); // This forces the table to render empty...
+        $.ajax({
+            url: url,
+            dataType: 'json',
+            success:  function(data) {
+                this.setState({data:data});
+                this.refs.data_list.forceUpdate();
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error(this.state.resource_url, status, err.toString());
+            }.bind(this)
+
+        });
+
+    },
+    prep_resource_url: function() {
+        // Super basic pagination that isn't leveraged via every api...
+        var url = this.state.resource_url;
+        if (this.paginate) {
+            url = url + '?limit=25';
+            if (this.state.data.cursor) {
+                url += '&cursor=' + this.state.data.cursor;
+            }
+        }
+
+        return url;
+    },
+
     filter_by_name : function(e) {
 
         var term = e.target.value;
@@ -134,18 +175,18 @@ var DataTableMixin = {
             dataType: 'json',
             success:  function(data) {
                 this.setState({data:data});
-                
+
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error(this.state.resource_url, status, err.toString());
             }.bind(this)
-            
+
         });
 
     },
-    componentDidMount: function(){
+    componentDidMount: function () {
         $.ajax({
-            url: this.state.resource_url,
+            url: this.prep_resource_url(),
             dataType: 'json',
             success:  function(data) {
                 this.setState({data:data});
@@ -153,11 +194,12 @@ var DataTableMixin = {
             error: function(xhr, status, err) {
                 console.error(this.state.resource_url, status, err.toString());
             }.bind(this)
-            
+
         });
     },
-    
+
     render_templatexxx: function() {
+
         var columnNodes = this.state.columns.map(function (col, i) {
             return <th key={ 'cell_' + i }>{ col }</th>
         });
@@ -177,12 +219,12 @@ var DataTableMixin = {
 
                  </form>
                 </div>
-                
+
                 <div className="pull-left">
                     <ActionGroup button_defs={this.state.global_actions  }/>
                 </div>
 
-                
+
             </div>
 
             <table className="table table-hover table-striped table-compressed">
@@ -191,8 +233,10 @@ var DataTableMixin = {
                     { columnNodes }
                     </tr>
                 </thead>
-                <DataList data={this.state.data} columns={ this.state.columns } grid={ this } />
+                <DataList data={this.state.data} columns={ this.state.columns } grid={ this } ref="data_list" />
             </table>
+
+            { (this.state.data && this.state.data.more && <div> <a href="#" onClick={this.load_next_page}>more...</a></div>) }
         </div>;
     }
 };
