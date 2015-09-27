@@ -7,7 +7,6 @@ import logging
 import json
 
 from rest.params import coerce_to_cursor
-from google.appengine.api import memcache
 
 from auth.decorators import rest_login_required
 
@@ -183,6 +182,7 @@ class EventsNowShowingHandler(RestHandlerBase):
         """
         raise Exception('Don\'t use this...')
 
+        """
         results = []
         cached_events = memcache.get(NOWSHOWING_CACHE_KEY)
         if cached_events is not None:
@@ -196,6 +196,7 @@ class EventsNowShowingHandler(RestHandlerBase):
             memcache.add(NOWSHOWING_CACHE_KEY, results)
 
         self.serve_success(results)
+        """
 
 
 class EventsApiHandler(RestHandlerBase):
@@ -208,9 +209,9 @@ class EventsApiHandler(RestHandlerBase):
 
     def get_param_schema(self):
         return {
-            #'limit' : voluptuous.Coerce(int),
-            #'cursor': coerce_to_cursor,
-            #'sort': voluptuous.Coerce(str),
+            'limit': voluptuous.Coerce(int),
+            'cursor': coerce_to_cursor,
+            # 'sort': voluptuous.Coerce(str),
             'get_by_slug': voluptuous.Coerce(str),
             'q': voluptuous.Coerce(str)
         }
@@ -262,22 +263,24 @@ class EventsApiHandler(RestHandlerBase):
             self.serve_success(resource)
             return
 
-
         results = []
         cursor = None
         more = None
 
-        cash_key = 'testing_events_cache'
-        cached_events = memcache.get(cash_key)
-        if cached_events is not None:
-            results = cached_events
+        # Serialize the params for cache key
+        cache_key = 'events-api-' + str(hash(json.dumps(self.params)))
+
+        cached_result = ubercache.cache_get(cache_key)
+
+        if cached_result is not None:  # TODO: Caching for this param
+            results, cursor, more = cached_result
         else:
             events, cursor, more = events_api.get_events(cursor=self.cleaned_params.get('cursor', None), limit=self.cleaned_params.get('limit', None))
             for event in events:
                 results.append(create_resource_from_entity(event))
             if cursor:
                 cursor = cursor.urlsafe()
-            memcache.add(cash_key, results, 60)
+            ubercache.cache_set(cache_key, [results, cursor, more], category='events')
 
         self.serve_success(results, {'cursor': cursor, 'more': more})
 

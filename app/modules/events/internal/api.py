@@ -90,12 +90,15 @@ def get_events(cursor=None, limit=QUERY_LIMIT):
     Currently used to populate the admin page...
 
     :raises BadRequestError: If cursor is invalid
+
     """
+
+    sort = -Event.modified_date
 
     if not limit:
         limit = QUERY_LIMIT
 
-    q = Event.query()
+    q = Event.query().order(sort)
 
     events, cursor, more = q.fetch_page(limit, start_cursor=cursor)
     bulk_dereference_venues(events)
