@@ -20,8 +20,9 @@ var EventPage = React.createClass({
     },
 
     getInitialState: function () {
+        var slug = this.context.router.getCurrentParams().slug;
         return {
-            resource_url: '/api/events?get_by_slug=' + this.props.slug,
+            resource_url: '/api/events?get_by_slug=' + slug,
             content_loaded: false,
             content_not_found: false,
             results: null,
@@ -66,7 +67,7 @@ var EventPage = React.createClass({
                 console.error(this.state.resource_url, status, err.toString());
                 this.setState({content_not_found:true, content_loaded:true})
             }.bind(this)
-            
+
         });
     },
 
@@ -99,7 +100,7 @@ var EventPage = React.createClass({
                 <div className="col-md-3 panel-events"><TempUpcoming col_name="'Upcoming" /></div>
                 <div className="col-md-3 panel-events"><TempEvents col_name="'Now Showing'"  /></div>
             </div>
-            
+
             <Footer />
         </div>;
 

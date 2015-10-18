@@ -5,10 +5,12 @@ var React = require('react');
 var analytics = require('../../utils/analytics');
 
 var PageMixin = {
+    contextTypes: {
+        router: React.PropTypes.func
+    },
+
     componentDidMount: function () {
         /* Initialize the Page */
-
-        global.current_page = this;
 
         this.setMeta(); // Set default meta - might be overridden later
 
@@ -19,12 +21,12 @@ var PageMixin = {
             this.pageDidMount();
         }
 
-        // Decide to show the marquee or not..  
-        show_marquee();      
+        // Decide to show the marquee or not..
+        //global.show_marquee();
 
         return
     },
-    
+
     componentWillUnmount: function() {
         if (typeof(this.pageWillUnmount) == 'function'){
             this.pageWillUnmount();
@@ -38,7 +40,7 @@ var PageMixin = {
     getRoute: function (event) {
         global.routeTo(event)
     }
-    
+
 };
 
 module.exports = PageMixin;

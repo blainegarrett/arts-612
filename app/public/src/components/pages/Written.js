@@ -116,6 +116,9 @@ var WrittenPage = React.createClass({
 
 var WrittenArticlePage = React.createClass({
     mixins: [PageMixin],
+    contextTypes: {
+        router: React.PropTypes.func
+    },
 
     // TODO: More logical defaults and match to server...
     default_meta: {
@@ -127,8 +130,10 @@ var WrittenArticlePage = React.createClass({
     getInitialState: function () {
         /* TODO: This should be defaulted to empty object */
 
+        var slug = this.context.router.getCurrentParams().slug;
+
         return {
-            resource_url: '/api/posts?get_by_slug=' + this.props.slug,
+            resource_url: '/api/posts?get_by_slug=' + slug,
             content_loaded: false,
             content_not_found: false,
             results: null,
@@ -239,7 +244,7 @@ var BlogPostService = {
     },
 
     get_posts_by_category: function(category_slug) {
-        var resource_url = '/api/posts?category_slug=' + category_slug;
+        var resource_url = '/api/posts?category_slug=' + category_slug + '&is_published=true';
         var service = this;
 
         var promise = new Promise(function(accept, reject) {
@@ -268,8 +273,6 @@ var BlogPostService = {
         return promise;
 
     }
-
-
 
 }
 
@@ -378,8 +381,9 @@ var WrittenCategoryPage = React.createClass({
     getInitialState: function () {
         /* TODO: This should be defaulted to empty object */
 
+        var slug = this.context.router.getCurrentParams().category_slug;
         return {
-            resource_url: '/api/posts?category_slug=' + this.props.category_slug,
+            resource_url: '/api/posts?category_slug=' + slug,
             content_loaded: false,
             content_not_found: false,
             results: null,
@@ -420,12 +424,14 @@ var WrittenCategoryPage = React.createClass({
         var rc = this;
 
         // Build a promise to fetch the requested data
-        var promise = PostCategoriesService.get_by_slug(this.props.category_slug).then(function(category_resource) {
+        var slug = this.context.router.getCurrentParams().category_slug;
+
+        var promise = PostCategoriesService.get_by_slug(slug).then(function(category_resource) {
             rc.setState({category_content_loaded:true, category_results:category_resource});
             rc.set_meta_for_resource();
 
             // Next Attempt to get all the Posts for this Category
-            var promise2 = PostCategoriesService.get_posts(this.props.category_slug).then(
+            var promise2 = PostCategoriesService.get_posts(slug).then(
                 function(posts) {
                     rc.setState({content_loaded:true, results:posts});
                 },
