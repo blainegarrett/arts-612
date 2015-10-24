@@ -99,11 +99,11 @@ var FullEventRenderer = React.createClass({
                     <NiceDate start={ ed.start } end={ ed.end } eventdate_type={ ed.type } />
 
                     <div className="dropdown" style={{'display': 'inline'}}>
-                      <button className="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true" style={{'border-color': 'transparent'}}>
+                      <button className="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true" style={{'borderColor': 'transparent'}}>
                         <span className="caret"></span>
                       </button>
                       <ul className="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                        <li role="presentation"><a role="menuitem" tabindex="-1" target="_new" href={g_url}>Add to Google Calendar</a></li>
+                        <li role="presentation"><a role="menuitem" tabIndex="-1" target="_new" href={g_url}>Add to Google Calendar</a></li>
                       </ul>
                     </div>
 
@@ -195,7 +195,7 @@ var MarqueeRenderer = React.createClass({
             image_url = resource.primary_image_resource.versions.CARD_SMALL.url;
         }
 
-        var styles = { 'backgroundImage' : 'url(' + image_url + ');'};
+        var styles = { 'backgroundImage' : 'url(' + image_url + ')'};
 
         var event_url = '/events/' + resource.slug;
         var rendered_date;
@@ -239,7 +239,7 @@ var FeaturedHeroRenderer = React.createClass({
             image_url = resource.primary_image_resource.versions.CARD_SMALL.url;
         }
 
-        var styles = { 'backgroundImage' : 'url(' + image_url + ');'};
+        var styles = { 'backgroundImage' : 'url(' + image_url + ')'};
 
         var event_url = '/events/' + resource.slug;
         var rendered_date;
@@ -510,7 +510,7 @@ var Goober = React.createClass({
 
     propTypes: {
         renderer: React.PropTypes.any, // A React Class to Render the Event
-        resource: React.PropTypes.node, // A Resource (object) from the store, etc or null
+        resource: React.PropTypes.object, // A Resource (object) from the store, etc or null
         ed_filter: React.PropTypes.oneOf(['reoccurring', 'timed'])
     },
 

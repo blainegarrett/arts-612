@@ -116,9 +116,6 @@ var WrittenPage = React.createClass({
 
 var WrittenArticlePage = React.createClass({
     mixins: [PageMixin],
-    contextTypes: {
-        router: React.PropTypes.func
-    },
 
     // TODO: More logical defaults and match to server...
     default_meta: {

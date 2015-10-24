@@ -3,10 +3,26 @@ var set_page = function(url, title) {
     ga('set', { page: url, title: title });
 };
 
-var record = function (hitType, opt_fieldObject) {
+var record = function (hitType, opt_fieldObject, retry_count) {
     /* General Purpose Recording helper */
 
-    //global.ga('send', hitType, opt_fieldObject);
+    if (!retry_count) {
+      retry_count = 0
+    }
+
+
+    if (global.ga) {
+      global.ga('send', hitType, opt_fieldObject);
+    }
+    else {
+      if (retry_count < 5) {
+        setTimeout(record, 1000, opt_fieldObject, retry_count+1)
+      }
+      else {
+        console.log('Failed to record analytic. global.ga not available after ' + retry_count + ' attempts.');
+      }
+    }
+
     //console.log('sending ' + hitType + '.');
     //console.log(opt_fieldObject)
 };

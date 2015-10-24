@@ -3,6 +3,7 @@ var AppDispatcher = require('../../dispatcher/AppDispatcher')
 var ReactRouter = require('flux-react-router');
 var React = require('react');
 var analytics = require('../../utils/analytics');
+var NavCardsContainer = require('../NavCardsContainer');
 
 var PageMixin = {
     contextTypes: {
@@ -22,7 +23,7 @@ var PageMixin = {
         }
 
         // Decide to show the marquee or not..
-        //global.show_marquee();
+        NavCardsContainer.show_marquee();
 
         return
     },
@@ -38,7 +39,7 @@ var PageMixin = {
     },
 
     getRoute: function (event) {
-        global.routeTo(event)
+        global.routeTo(event);
     }
 
 };

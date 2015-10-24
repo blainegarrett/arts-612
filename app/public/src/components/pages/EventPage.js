@@ -14,6 +14,7 @@ var Footer = require('../temp/Footer');
 
 var EventPage = React.createClass({
     mixins: [PageMixin],
+
     default_meta: {
         'title': 'View Event',
         'description': 'Events in Minneapolis and St. Paul'
@@ -21,6 +22,8 @@ var EventPage = React.createClass({
 
     getInitialState: function () {
         var slug = this.context.router.getCurrentParams().slug;
+
+        console.log(slug);
         return {
             resource_url: '/api/events?get_by_slug=' + slug,
             content_loaded: false,

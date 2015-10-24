@@ -19,7 +19,7 @@ var TempEventsListMixin = {
             error: function (xhr, status, err) {
                 console.error(this.state.resource_url, status, err.toString());
             }.bind(this)
-            
+
         });
     },
 
@@ -46,9 +46,10 @@ var TempEventList = React.createClass({
         var ed_filter = this.state.ed_filter;
         if (this.props.event_data.results != undefined) {
             eventNodes = this.props.event_data.results.map(function (event) {
-                return <div className="card col-sm-12" key={ event.resource_id }>
-                    <EventGoober resource={ event } ed_filter={ ed_filter } renderer={ PodRenderer } />
-                    </div>
+                return (<div className="card col-sm-12" key={ event.resource_id }>
+                            <EventGoober resource={ event } ed_filter={ ed_filter } renderer={ PodRenderer } />
+                        </div>
+                       );
             });
         }
         else {

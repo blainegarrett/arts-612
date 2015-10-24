@@ -27,9 +27,6 @@ var PageMeta = React.createClass({
     },
 
     render: function(){
-        //if (Object.keys(this.props.allTodos).length < 1) {
-        //  return null;
-        //}
 
         var meta, meta_tags;
         $('.dynamic_meta').each(function(){
@@ -90,18 +87,18 @@ var PageMeta = React.createClass({
         return <div>{ meta_tags}</div> ;
     },
     _onChange: function() {
-      this.setState(getPageMetaState()); 
+      this.setState(getPageMetaState());
     },
     addPageMeta: function() {
         ReactRouter.goTo('/app');
-        
+
         //console.log('adding page meta...');
         //AppDispatcher.handleSetMeta({
         //    title: 'zippy',
         //    description: 'This is a page description...'
         //});
     }
-    
+
 });
 
 module.exports = PageMeta;

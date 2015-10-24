@@ -4,8 +4,7 @@ var Router = require('./router');
 var moment = require('moment');
 
 var PageMeta = require('./components/pages/PageMeta');
-var NavCardsContainer = require('./components/NavCardsContainer').NavCardsContainer;
-var PrimaryMenu = require('./components/pages/PrimaryMenu')
+var NavCardsContainer = require('./components/NavCardsContainer');
 
 var analytics = require('./utils/analytics');
 
@@ -70,6 +69,8 @@ $(function() {
 	$('.internal-link').bind('click', routeTo);
 });
 
+
+
 global.routeTo = function (evt) {
     /* Global Helper to handle in-app click routing */
     // TODO: This only works on <a href="" ...> tags
@@ -106,34 +107,19 @@ global.routeTo = function (evt) {
 
     analytics.record_event(ga_category, ga_action, ga_label, 1);
 
+    console.log('here...');
+    console.log(url)
     global.router.transitionTo(url);
 
 };
 
-var show_marquee = function() {
-    var featured_hero = $('#featured-hero-area');
-
-    if (featured_hero.length) {
-        // Page Has the featured hero section
-        var threshhold = featured_hero.offset().top + featured_hero.height();
-
-        $('#header_nav').toggleClass('show-nav', $(document).scrollTop() > threshhold - 100);
-    }
-    else {
-        $('#header_nav').addClass('show-nav');
-    }
-}
-
 
 /* On Homepage - check if we should show the featured section */
 $(window).on("scroll touchmove", function () {
-    show_marquee();
+    NavCardsContainer.show_marquee();
 });
-
-
 
 /* Components outside of the main_content area*/
 React.render(<PageMeta />, document.getElementById('page_meta'));
 //React.render(<PageMeta />, document.getElementById('meta_debug'));
-//React.render(<PrimaryMenu />, document.getElementById('navbar'));
-React.render(<NavCardsContainer />, document.getElementById('header_nav_cards'));
+React.render(<NavCardsContainer.NavCardsContainer />, document.getElementById('header_nav_cards'));

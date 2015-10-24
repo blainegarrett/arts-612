@@ -15,7 +15,7 @@ var FeaturedHeroPanel = React.createClass({
 
     _onChange: function() {
         /* Pick up signal for when featured content changes - typically async load */
-        this.setState({results: FeaturedEventsStore.getRaw()}); 
+        this.setState({results: FeaturedEventsStore.getRaw()});
     },
     componentDidMount: function() {
         // Subscribe to changes in the featured events
@@ -38,7 +38,7 @@ var FeaturedHeroPanel = React.createClass({
         var rendered_big_card;
 
         var total_cards = this.state.results.length;
-        
+
         if (total_cards == 0) {
             // Not loaded yet and/or error...
             return <div className="row" id="featured-hero-area"></div>
@@ -64,7 +64,7 @@ var FeaturedHeroPanel = React.createClass({
         // The other cards
         var rendered_marquee_events = event_resources.map(function (resource, i) {
             var colspan = 6
-            
+
             if (total_cards < 3) {
                 colspan = 12
             }

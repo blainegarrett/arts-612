@@ -8,13 +8,30 @@ var podComponentMap = {
     'BlogPost': WrittenModule
 };
 
+/* TODO: This was moved here to address globals.
+    It could really be moved to some sort of flux actions
+*/
+var show_marquee = function() {
+    var featured_hero = $('#featured-hero-area');
+
+    if (featured_hero.length) {
+        // Page Has the featured hero section
+        var threshhold = featured_hero.offset().top + featured_hero.height();
+
+        $('#header_nav').toggleClass('show-nav', $(document).scrollTop() > threshhold - 100);
+    }
+    else {
+        $('#header_nav').addClass('show-nav');
+    }
+}
+
 
 var NavCardsContainer = React.createClass({
     /* Marquee Cards */
 
     _onChange: function() {
         /* Pick up signal for when featured content changes - typically async load */
-        this.setState({results: FeaturedEventsStore.getRaw()}); 
+        this.setState({results: FeaturedEventsStore.getRaw()});
     },
     componentDidMount: function() {
         // Subscribe to changes in the featured events
@@ -37,7 +54,7 @@ var NavCardsContainer = React.createClass({
 
         /* Tricky math for if we have fewer than 4 expected cards */
         var total_cards = this.state.results.length;
-        
+
         if (total_cards == 0) {
             // Not loaded yet and/or error...
             return <div className="container"></div>
@@ -65,7 +82,7 @@ var NavCardsContainer = React.createClass({
 
         rendered_marquee_events = event_resources.map(function (resource, i) {
             var classes = 'item jive-card col-sm-';
-            
+
             if (total_cards == 3 && i == 0) {
                 classes += '4';
             }
@@ -73,8 +90,8 @@ var NavCardsContainer = React.createClass({
                 classes += default_size;
             }
 
-            return <div key={'marquee-' + i} className={ classes }><EventModule.Goober 
-                resource={ resource } 
+            return <div key={'marquee-' + i} className={ classes }><EventModule.Goober
+                resource={ resource }
                 renderer={ EventModule.MarqueeRenderer } /></div>
         });
 
@@ -91,5 +108,6 @@ var NavCardsContainer = React.createClass({
 });
 
 module.exports = {
-        NavCardsContainer: NavCardsContainer
+        NavCardsContainer: NavCardsContainer,
+        show_marquee: show_marquee
 }
