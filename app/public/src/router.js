@@ -6,7 +6,7 @@ var NotFoundRoute = Router.NotFoundRoute;
 var App = require('./components/layout');
 
 //var CalendarPage = require('./components/pages/CalendarPage');
-var EventPage = require('./components/pages/EventPage');
+var EventPage = require('./components/pages/EventPage').EventPage;
 //var GalleryPage = require('./components/pages/GalleryPage');
 //var GalleryViewPage = require('./components/pages/GalleryViewPage');
 

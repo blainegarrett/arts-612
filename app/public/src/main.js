@@ -110,9 +110,6 @@ global.routeTo = function (evt) {
     $("html, body").animate({ scrollTop: 0 }, "slow");
 
     analytics.record_event(ga_category, ga_action, ga_label, 1);
-
-    console.log('here...');
-    console.log(url)
     global.router.transitionTo(url);
 
 };
