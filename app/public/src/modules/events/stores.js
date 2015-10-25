@@ -10,7 +10,7 @@ var EventStore = Reflux.createStore({
     //
 
     listenables: [EventActions],
-    _list: [], // Private Hash. Only available via getters
+    _list: {}, // Private Hash. Only available via getters
 
     init: function () {
         // Register listeners
@@ -20,7 +20,31 @@ var EventStore = Reflux.createStore({
 
     //get_event_by_slug : function() {
     onLoad: function(slug) {
-        this.fetchData(slug)
+        /*
+            Retrieve an event from the store by slug. If not found, attempt to async fetch.
+
+            TODO: Rename this to onRequestBySlug() or something.
+            TODO: Attempt to cache failed lookups to avoid needless server hits.
+            TODO: Check for stale states.
+        */
+
+        var event_found = false;
+        var event = null;
+        for (var resource_id in this._list) {
+            if (this._list[resource_id].slug == slug) {
+                event_found = true;
+                event = this._list[resource_id];
+                break;
+            }
+        }
+
+        if (event_found) {
+            this.trigger(event);
+        }
+        else {
+            // Item was not already in the store.. attempt to fetch
+            this.fetchData(slug);
+        }
     },
     onAppendCtr: function() {
         this.trigger(this._list);
@@ -28,11 +52,15 @@ var EventStore = Reflux.createStore({
 
     logStore: function() {
     },
+
+    _maybeStoreNewItem: function(event) {
+        // TODO: Compare to current store, if this is
+            this._list[event.resource_id] = event;
+            this.trigger(event); // emit a change event
+    },
     fetchData: function (slug) {
         var promise = EventService.get_by_slug(slug).then(function(event) {
-            this._list.push(event);
-            this.trigger(event); // emit a change event
-
+            this._maybeStoreNewItem(event);
             }.bind(this), function(err) {
                 this.trigger('NOPE');
             }.bind(this)
