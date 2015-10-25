@@ -301,9 +301,7 @@ var ResourceApiService = {
         });
         return promise;
 
-
     }
-
 };
 
 

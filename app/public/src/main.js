@@ -9,7 +9,11 @@ var NavCardsContainer = require('./components/NavCardsContainer');
 var analytics = require('./utils/analytics');
 
 /* Fire up Routing */
+
+//document.addEventListener('DOMContentLoaded', function () {
 Router.start();
+//}
+
 
 /* Establish Global end of "tonight" */
 global.targed_tonight_end_date = moment().hour(9).minute(0).second(0);

@@ -2,17 +2,18 @@ var React = require('react');
 var Router = require('react-router');
 var RouteHandler = Router.RouteHandler;
 
-var Layout = React.createClass({
+var App = React.createClass({
 
   render: function() {
     console.log('Layout Render Called...');
 
     return (
       <div className="App">
-        <RouteHandler />
+            <span>{ this.props }</span>
+            <RouteHandler />
       </div>
     );
   }
 });
 
-module.exports = Layout;
+module.exports = App;

@@ -3,7 +3,7 @@ var Router = require('react-router');
 var Route = Router.Route;
 var DefaultRoute = Router.DefaultRoute;
 var NotFoundRoute = Router.NotFoundRoute;
-var Layout = require('./components/layout');
+var App = require('./components/layout');
 
 //var CalendarPage = require('./components/pages/CalendarPage');
 var EventPage = require('./components/pages/EventPage');
@@ -17,8 +17,9 @@ var AboutPage = require('./components/pages/AboutPage');
 var WrittenPages = require('./components/pages/Written');
 var Error404Page = require('./components/pages/Error404Page');
 
+/*
 var routes = (
-    <Route name="layout" path="/" handler={Layout}>
+    <Route name="app" path="/" handler={App}>
         <Route name="aboutxxx" path="about/?" handler={AboutPage} />
 
         <Route name="writtenxxx" path="written/?">
@@ -36,9 +37,22 @@ var routes = (
         <NotFoundRoute handler={Error404Page}/>
     </Route>
 );
+*/
+
+
+var routes = (
+    <Route name="app" path="/" handler={App}>
+        <Route name="aboutxxx" path="about/?" handler={AboutPage} />
+        <Route name="eventsxxx" path="events/:slug/?" handler={EventPage} />
+
+        <DefaultRoute handler={NewHomePage} />
+        <NotFoundRoute handler={Error404Page}/>
+    </Route>
+);
+
 
 exports.start = function() {
-  global.router = Router.run(routes, Router.HistoryLocation, function (Handler) {
+  global.router = Router.run(routes, Router.HistoryLocation, function (Handler, state) {
         React.render(<Handler />, document.getElementById('main_content'));
     });
 }
