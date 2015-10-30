@@ -35,9 +35,6 @@ var EventPage = React. createClass({
     },
 
     pageDidMount: function () {
-        // Set default meta prior to content loading. TODO: Move to PageMixin ?
-        this.setMeta();
-
         // Subscribe to desired actions
         this.listenTo(EventStore, this.onLoad);
 
@@ -85,6 +82,9 @@ var EventPage = React. createClass({
                 resource: payload}
             );
         }
+
+        // Set default meta prior to content loading. TODO: Move to PageMixin ?
+        this.set_meta_for_resource();
     },
 
 

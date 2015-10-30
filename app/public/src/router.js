@@ -7,13 +7,10 @@ var App = require('./components/layout');
 
 //var CalendarPage = require('./components/pages/CalendarPage');
 var EventPage = require('./components/pages/EventPage').EventPage;
-//var GalleryPage = require('./components/pages/GalleryPage');
-//var GalleryViewPage = require('./components/pages/GalleryViewPage');
-
+var GalleryPage = require('./components/pages/GalleryPages').GalleryPage;
+var GalleryViewPage = require('./components/pages/GalleryPages').GalleryViewPage;
 var NewHomePage = require('./components/pages/NewHomePage');
 var AboutPage = require('./components/pages/AboutPage');
-
-
 var WrittenPages = require('./components/pages/Written');
 var Error404Page = require('./components/pages/Error404Page');
 
@@ -44,6 +41,9 @@ var routes = (
     <Route name="app" path="/" handler={App}>
         <Route name="aboutxxx" path="about/?" handler={AboutPage} />
         <Route name="eventsxxx" path="events/:slug/?" handler={EventPage} />
+
+        <Route name="galleriesxxxy" path="galleries/?" handler={GalleryPage} />
+        <Route name="galleriesxxx" path="galleries/:slug/?" handler={GalleryViewPage} />
 
         <DefaultRoute handler={NewHomePage} />
         <NotFoundRoute handler={Error404Page}/>

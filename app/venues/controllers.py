@@ -125,7 +125,11 @@ class GalleriesApiHandler(GalleryApiHandlerBase):
         for e in entities:
             results.append(create_resource_from_entity(e))
 
-        self.serve_success(results)
+
+        # TODO: cursor and more are stubbed out since we're getting ALL venues for now
+        cursor = None
+        more = False
+        self.serve_success(results, {'cursor': cursor, 'more': more})
 
     @rest_login_required
     def _post(self):
