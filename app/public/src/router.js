@@ -45,6 +45,11 @@ var routes = (
         <Route name="galleriesxxxy" path="galleries/?" handler={GalleryPage} />
         <Route name="galleriesxxx" path="galleries/:slug/?" handler={GalleryViewPage} />
 
+        <Route name="written_index_page" path="written/?" handler={WrittenPages.WrittenPage} />
+        <Route name="written_category_page" path="written/:category_slug/?" handler={WrittenPages.WrittenCategoryPage} />
+        <Route name="written_view_page" path="written/:year/:month/:slug/?" handler={WrittenPages.WrittenArticlePage} />
+
+
         <DefaultRoute handler={NewHomePage} />
         <NotFoundRoute handler={Error404Page}/>
     </Route>
