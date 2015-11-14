@@ -39,7 +39,7 @@ var GalleryViewPage = React.createClass({
             resource_loaded: false,
             resource_not_found: false,
             resource: null
-        }
+        };
     },
 
     /* React Life Cycle Methods */

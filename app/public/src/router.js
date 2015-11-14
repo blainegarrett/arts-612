@@ -7,34 +7,11 @@ var App = require('./components/layout');
 
 //var CalendarPage = require('./components/pages/CalendarPage');
 var EventPage = require('./components/pages/EventPage').EventPage;
-var GalleryPage = require('./components/pages/GalleryPages').GalleryPage;
-var GalleryViewPage = require('./components/pages/GalleryPages').GalleryViewPage;
+var GalleryPages = require('./components/pages/GalleryPages');
 var NewHomePage = require('./components/pages/NewHomePage');
 var AboutPage = require('./components/pages/AboutPage');
 var WrittenPages = require('./components/pages/Written');
 var Error404Page = require('./components/pages/Error404Page');
-
-/*
-var routes = (
-    <Route name="app" path="/" handler={App}>
-        <Route name="aboutxxx" path="about/?" handler={AboutPage} />
-
-        <Route name="writtenxxx" path="written/?">
-            <Route name="derp" path=":year/:month/:slug/?" handler={WrittenPages.WrittenArticlePage} />
-            <Route name="derp2" path=":category_slug/?" handler={WrittenPages.WrittenCategoryPage} />
-            <DefaultRoute handler={WrittenPages.WrittenPage} />
-        </Route>
-
-        <Route name="eventsxxx" path="events/?">
-            <Route name="derp4" path=":slug/?" handler={EventPage} />
-        </Route>
-
-
-        <DefaultRoute handler={NewHomePage} />
-        <NotFoundRoute handler={Error404Page}/>
-    </Route>
-);
-*/
 
 
 var routes = (
@@ -42,8 +19,8 @@ var routes = (
         <Route name="aboutxxx" path="about/?" handler={AboutPage} />
         <Route name="eventsxxx" path="events/:slug/?" handler={EventPage} />
 
-        <Route name="galleriesxxxy" path="galleries/?" handler={GalleryPage} />
-        <Route name="galleriesxxx" path="galleries/:slug/?" handler={GalleryViewPage} />
+        <Route name="galleriesxxxy" path="galleries/?" handler={GalleryPages.GalleryPage} />
+        <Route name="galleriesxxx" path="galleries/:slug/?" handler={GalleryPages.GalleryViewPage} />
 
         <Route name="written_index_page" path="written/?" handler={WrittenPages.WrittenPage} />
         <Route name="written_category_page" path="written/:category_slug/?" handler={WrittenPages.WrittenCategoryPage} />

@@ -1,10 +1,12 @@
 var React = require('react');
-var moment = require('moment');
+var Reflux = require('reflux');
+
+var BlogStores = require('../../modules/blog/stores');
+var BlogActions = require('../../modules/blog/actions');
 
 var PageMixin = require('./PageMixin');
 var Footer = require('../temp/Footer');
 var TempExtras = require('../temp/TempExtras');
-
 var TempUpcoming = require('../calendar/TempUpcoming');
 var TempEvents = require('../calendar/TempEvents');
 
@@ -12,11 +14,11 @@ var ArticleGoober = require('./../DataTypes/Article').ArticleGoober;
 var PodArticleRenderer = require('./../DataTypes/Article').PodArticleRenderer;
 var DefaultArticleRenderer = require('./../DataTypes/Article').DefaultArticleRenderer;
 
-var moment = require('moment');
 
 /* Written Landing Page Component */
 var WrittenPage = React.createClass({
-    mixins: [PageMixin],
+    mixins: [PageMixin, Reflux.ListenerMixin],
+
     default_meta: {
         'title': 'Written',
         'description': 'Writing and Crtique'
@@ -25,66 +27,63 @@ var WrittenPage = React.createClass({
     getInitialState: function () {
         return {
             articles: [],
-            resource_url: '/api/posts?limit=25&start_date=2015-01-01&is_published=true'
         };
     },
 
     pageDidMount: function () {
-        // Set Default Page Meta
-        this.setMeta();
+        // Subscribe to desired actions
+        this.listenTo(BlogStores.BlogPostStore, this.onRequestAll);
 
-        $.ajax({
-            url: this.state.resource_url,
-            dataType: 'json',
-            success:  function (data) {
-                /* Have the store do this... */
-                this.setState({articles:data});
-
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.error(this.state.resource_url, status, err.toString());
-            }.bind(this)
-
-        });
+        // Trigger the load action to set the intial data for the page
+        this.requestPageContent();
     },
 
-    load_more: function (e) {
+    /* Flux Store Listener Callbacks */
+    requestPageContent: function() {
+        /* Render a fresh page based on url params.
+            For now, this just means getting a new event.
+            Tell the Actions you need the Event from the store */
+        /* This is called pageDidMount and componentWillReceiveProps */
 
-        $.ajax({
-            url: this.state.resource_url + 'cursor=' + this.state.articles.cursor,
-            dataType: 'json',
-            success:  function (data) {
-                /* Have the store do this... */
-                this.setState({articles:data});
-
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.error(this.state.resource_url, status, err.toString());
-            }.bind(this)
-
-        });
-
-
-        return false;
+        // Trigger the load action
+        BlogActions.BlogPostActions.requestAll();
     },
+
+    onRequestAll: function(payload) {
+        // EventStore triggered a new event coming in
+
+        var state_venues = [];
+
+        // payload is a map of updated venues, so we ignore if we want or not
+        for (var resource_id in payload) {
+            state_venues.push(payload[resource_id]);
+        }
+
+        this.setState({articles: state_venues});
+
+    },
+
+    loadMoreHandler: function(e) {
+        e.preventDefault();
+        BlogActions.BlogPostActions.requestMore();
+    },
+
     render: function () {
 
         var articles = []
         var rc = this;
 
-        if (this.state.articles.results != undefined) {
-            articles = this.state.articles.results.map(function (post) {
+        if (this.state.articles != undefined) {
+            articles = this.state.articles.map(function (post) {
                 return <div className="card" key={ post.resource_id }><ArticleGoober key={ post.resource_id } resource={ post } renderer={ PodArticleRenderer } /></div>
             });
         }
 
         // if there is more, show
         var more_button;
-        if (this.state.articles.more) {
-            more_button = <a className="btn" onClick={ this.load_more } href="#">load more...</a>
+        if (BlogStores.BlogPostStore.hasMore()) {
+            more_button = <a className="btn btn-primary btn-lg btn-block" key="loadmore_button" onClick={ this.loadMoreHandler } href="#">load more...</a>
         }
-
-        more_button = null; //Not prod ready yet
 
         return <div id="HomePageWrapper">
             <div className="row">
@@ -96,6 +95,9 @@ var WrittenPage = React.createClass({
                     <div className="alert alert-warning">Our Written section is returing soon including the archives from the old site. Stay tuned and enjoy these articles.</div>
 
                     { articles }
+
+                    { more_button }
+                    <br />
 
 
                     <div className="row">
@@ -115,33 +117,86 @@ var WrittenPage = React.createClass({
 
 
 var WrittenArticlePage = React.createClass({
-    mixins: [PageMixin],
+    mixins: [PageMixin, Reflux.ListenerMixin],
 
     // TODO: More logical defaults and match to server...
     default_meta: {
         title: 'Article',
-        description: 'Article Descripton',
-        image: 'http://Default Article URL'
+        description: 'Article Descripton'
     },
 
     getInitialState: function () {
-        /* TODO: This should be defaulted to empty object */
-
-        var slug = this.context.router.getCurrentParams().slug;
-
         return {
-            resource_url: '/api/posts?get_by_slug=' + slug,
-            content_loaded: false,
-            content_not_found: false,
-            results: null,
-            data: null
+            resource_loaded: false,
+            resource_not_found: false,
+            resource: null
         };
+    },
+
+    /* React Life Cycle Methods */
+    pageDidMount: function () {
+        // Subscribe to desired actions
+        this.listenTo(BlogStores.BlogPostSlugStore, this.onRequestResource);
+
+        // Trigger the load action to set the intial data for the page
+        this.requestPageContent();
+    },
+
+    componentWillReceiveProps: function() {
+        /* Page was navigated to with different url params, so we need to manually request event */
+        // Called on react-router transition
+
+        this.requestPageContent();
+        return true;
+    },
+
+
+    /* Flux Store Listener Callbacks */
+    requestPageContent: function() {
+        /* Render a fresh page based on url params.
+            For now, this just means getting a new event.
+            Tell the Actions you need the Event from the store */
+        /* This is called pageDidMount and componentWillReceiveProps */
+
+        // Trigger the load action
+        var slug = this.context.router.getCurrentParams().slug;
+        //VenueActions.requestResourceBySlug(slug); // Action based pattern
+
+        BlogStores.BlogPostSlugStore.get(slug).then(function (payload) {
+            // success
+            this.setState({
+                resource_not_found:false,
+                resource_loaded: true,
+                resource: payload}
+            );
+        }.bind(this),
+        function (payload) {
+            // success
+            this.setState({
+                resource_not_found:true,
+                resource_loaded: true,
+                resource: payload}
+            );
+
+        }.bind(this)
+
+        );
+
+    },
+    onRequestResource: function(payload) {
+        // Handle
+
+        this.setState({
+            resource_not_found:false,
+            resource_loaded: true,
+            resource: payload}
+        );
     },
 
     set_meta_for_resource: function() {
         // Set the Page Meta for this specific post
 
-        post = this.state.results;
+        post = this.state.resource;
 
         this.default_meta =  {
             title: post.title,
@@ -155,48 +210,32 @@ var WrittenArticlePage = React.createClass({
 
         this.setMeta();
     },
-    pageDidMount: function () {
-        var rc = this;
-
-        this.setMeta();
-
-
-        $.ajax({
-            url: this.state.resource_url,
-            dataType: 'json',
-            success:  function (data) {
-                this.setState({data:data, content_loaded:true, results:data.results});
-                rc.set_meta_for_resource();
-
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.error(this.state.resource_url, status, err.toString());
-                this.setState({content_not_found:true, content_loaded:true})
-            }.bind(this)
-
-        });
-    },
 
     render: function() {
         var rendered_article;
 
+        if (!this.state.resource_loaded) {
+            // TODO: Render a shell of what the page will look like
+            return (<div>loading article...</div>);
+        }
 
-        if (this.state.content_not_found) {
+
+        if (this.state.resource_not_found) {
             rendered_article = (<div>
                 <h2>Article Not Found</h2>
                 <p>We were unable to find this article. If you are looking for an old article, they will be returning in the next few months. </p>
             </div>);
         }
-        else if (this.state.results != undefined) {
+        else if (this.state != undefined) {
 
-            if (!this.state.results.is_published){
+            if (!this.state.resource.is_published){
             rendered_article = (<div>
                 <h2>Article Is Not Published</h2>
                 <p>The article you are looking for is not yet published. Please check back later. </p>
             </div>);
             }
             else {
-                var post = this.state.results
+                var post = this.state.resource
                 rendered_article = <ArticleGoober key={ post.resource_id } resource={ post } renderer={ DefaultArticleRenderer } />
             }
         }
