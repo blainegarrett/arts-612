@@ -246,7 +246,7 @@ var ArticleGoober = React.createClass({
 
     propTypes: {
         renderer: React.PropTypes.any, // A React Class to Render the Event
-        resource: React.PropTypes.node // A Resource (object) from the store, etc or null
+        resource: React.PropTypes.object // A Resource (object) from the store, etc or null
     },
 
     getInitialState: function () {
