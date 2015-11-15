@@ -99,11 +99,11 @@ var FullEventRenderer = React.createClass({
                     <NiceDate start={ ed.start } end={ ed.end } eventdate_type={ ed.type } />
 
                     <div className="dropdown" style={{'display': 'inline'}}>
-                      <button className="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true" style={{'border-color': 'transparent'}}>
+                      <button className="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true" style={{'borderColor': 'transparent'}}>
                         <span className="caret"></span>
                       </button>
                       <ul className="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                        <li role="presentation"><a role="menuitem" tabindex="-1" target="_new" href={g_url}>Add to Google Calendar</a></li>
+                        <li role="presentation"><a role="menuitem" tabIndex="-1" target="_new" href={g_url}>Add to Google Calendar</a></li>
                       </ul>
                     </div>
 
