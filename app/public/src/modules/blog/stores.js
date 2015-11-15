@@ -14,7 +14,7 @@ var BlogPostStore = Reflux.createStore({
     //_list: {}, // Private Hash. Only available via getters
     _store: [],
     _store_populated: false,
-
+    _store_has_data: false,
 
     init: function () {
         // Register listeners
@@ -42,27 +42,30 @@ var BlogPostStore = Reflux.createStore({
         // Do we already have them all; if so return them
         // Are they older than TIMEOUT ?
 
-        if (this._store_populated) { // also check for stale state/timeout?
+        if (this._store_has_data) { // also check for stale state/timeout?
             var resources = BlogServices.BlogPostService.get_multi(this._store);
             this.trigger(resources);
             return;
         }
 
         var promise = BlogServices.BlogPostService.get_all(BlogServices.BlogPostService._query_result).then(function(resources) {
-            // TODO: Internally store the references to these resources
+                // TODO: Internally store the references to these resources
 
-            // Rebuild Index
-            //this._store = []; // This flushes the store
-            var venue;
-            for (var i in resources) {
-                venue = resources[i];
-                this._store.push(venue.resource_id);
-            }
+                // Rebuild Index
+                //this._store = []; // This flushes the store
+                var venue;
+                for (var i in resources) {
+                    venue = resources[i];
+                    this._store.push(venue.resource_id);
+                }
 
-            // Actually pull the data from the service - at this point shouldn't be an RPC
-            //this._store_populated = true; // TODO: This isn't everything yet... just a page..
-            this.trigger(BlogServices.BlogPostService.get_multi(this._store));
-            return
+                // Actually pull the data from the service - at this point shouldn't be an RPC
+                //this._store_populated = true; // TODO: This isn't everything yet... just a page..
+                _store_has_data = true;
+                _store_populated = this.hasMore()
+
+                this.trigger(BlogServices.BlogPostService.get_multi(this._store));
+                return
             }.bind(this), function(err) {
                 console.log('Error calling service layer');
                 this.trigger('NOPE');

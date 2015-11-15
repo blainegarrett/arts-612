@@ -26,7 +26,7 @@ var BlogPostService = {
     get_all: function(prev_query) {
         var service = this;
         //var resource_url = '/api/posts';
-        var resource_url = '/api/posts?limit=5&start_date=2015-01-01&is_published=true';
+        var resource_url = '/api/posts?limit=1&start_date=2015-01-01&is_published=true';
 
         if (prev_query && prev_query.cursor) {
             resource_url += '&cursor=' + prev_query.cursor
