@@ -49,20 +49,10 @@ a { color: #0096BE; }
     #header_nav .navbar-brand:hover {
         color: #fff;
     }
-    
+
     #header_nav .navbar-text {
         margin-top:0px;
         margin-bottom:0px;
-    }
-
-/* TEMPORARY: Top Rail Welcome Header */
-#welcome-header-container { margin-bottom:20px; }
-    h1#welcome-header {
-    	background-color:#ff0099;
-    	color:#fff;
-    	text-align:center;
-    	font-size:65px;
-    	margin-top:0px;
     }
 
 
@@ -205,19 +195,19 @@ footer {
 
 
 /* Type specific overrides */
-.card .card-detail.event-address, .card .card-detail.event-time { 
+.card .card-detail.event-address, .card .card-detail.event-time {
     line-height:1.5em;
 }
 
 .card .card-detail.event-venue-name {
-    font-color: #000;    
+    font-color: #000;
     font-size:14px;
     line-height: 1.45em;
     padding-top:5px;
 }
 
 .card .card-detail.event-address {
-    font-color: #000;    
+    font-color: #000;
     font-size:14px;
     line-height: 1.45em;
 }
@@ -316,7 +306,7 @@ footer {
       margin-right: auto;
       transition: all 500ms ease-in-out;
     }
-    
+
         #side_nav_toggle span:before { top: 9px; }
         #side_nav_toggle span:after {top: -12px; }
 
@@ -412,7 +402,7 @@ footer {
         font-weight: bold;
         font-size: 14px;
         line-height: 1.5em;
-        
+
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -435,7 +425,7 @@ footer {
         background-position': 50% 50%;
         background-color: #ff0099;
     }
-    
+
     .large-card.featured-events-wrapper .jive-card .jive-card-image a {
         height:292px;
     }
@@ -455,7 +445,6 @@ footer {
 
 /* Mobile Overrides */
 @media screen and (max-width: 500px) {
-    h1#welcome-header { font-size: 40px; }
 }
 @media screen and (max-width: 650px) {
     #site-canvas, .homepage #site-canvas {
@@ -471,7 +460,7 @@ footer {
     .featured-events-wrapper .jive-card .jive-card-image a {
       height: 200px;
     }
-    
+
     .jive-card .jive-card-image div.jive-card-title .title {
       font-size: 18px;
      }
@@ -556,7 +545,7 @@ footer {
     			z-index: 15;
     		}
     		*/
-    		
+
     		#header_nav_cards .jive-card .jive-card-image div.jive-card-title .date {
     		    text-align:center;
     		    white-space: nowrap;

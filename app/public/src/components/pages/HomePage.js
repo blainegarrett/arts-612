@@ -3,7 +3,6 @@ var PageMixin = require('./PageMixin');
 var ReactRouter = require('flux-react-router');
 
 var Footer = require('../temp/Footer');
-var GoodNewsBanner = require('../temp/GoodNewsBanner');
 
 var TempUpcoming = require('../calendar/TempUpcoming');
 var TempEvents = require('../calendar/TempEvents');
@@ -23,7 +22,7 @@ var PrimaryJive = React.createClass({
 
         return <div className="col-md-6" id="main-content-container">
             <div className="row">
-        
+
                 <div id="panel-blurb" className="col-xs-12">
             	    <h2>We are re-building.</h2>
             	    <p>Look for a new calendar this Spring and keep submitting  your events to <a href="mailto:calendar@mplsart.com">calendar@mplsart.com</a></p>
@@ -46,8 +45,8 @@ var PrimaryJive = React.createClass({
                 </div>
 
                 <TempExtras />
-                
-                
+
+
             </div>
         </div>
     }
@@ -56,7 +55,7 @@ var PrimaryJive = React.createClass({
 
 var HomePage = React.createClass({
     mixins: [PageMixin],
-    
+
     default_meta: {
         'title': 'MPLSART.COM | Make a Scene',
         'description': 'Find the best art events in Minneapolis and St. Paul',
@@ -64,14 +63,13 @@ var HomePage = React.createClass({
     },
     render: function() {
         return <div id="HomePageWrapper">
-            <GoodNewsBanner />
-            
+
             <div className="row">
                 <PrimaryJive page={this} />
                 <div className="col-md-3 panel-events"><TempUpcoming col_name="'Upcoming" /></div>
                 <div className="col-md-3 panel-events"><TempEvents col_name="'Now Showing'"  /></div>
             </div>
-            
+
             <Footer />
         </div>;
     },
