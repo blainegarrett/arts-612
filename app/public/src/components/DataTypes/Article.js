@@ -1,5 +1,5 @@
 /* Article Display Components */
-// TODO: Come up with a better name than Goober... trying 
+// TODO: Come up with a better name than Goober... trying
 
 var React = require('react');
 var moment = require('moment');
@@ -12,7 +12,7 @@ var ArticleRendererMixin = {
             resource: this.props.resource,
             ed_filter: this.props.ed_filter
         }
-    },    
+    },
 }
 
 var DefaultArticleRenderer = React.createClass({
@@ -42,7 +42,7 @@ var DefaultArticleRenderer = React.createClass({
         var article = this.state.resource;
         var published_date_obj = moment(Date.parse(article.published_date));
         published_date = published_date_obj.format('MMMM, Do YYYY');
-        
+
         var image = null;
         var image_url = null;
 
@@ -50,7 +50,7 @@ var DefaultArticleRenderer = React.createClass({
             image_url = article.primary_image_resource.versions.CARD_SMALL.url;
             image = <img src={image_url} className="img-responsive" />
         }
-        
+
         var summary;
         if (article.summary) {
             summary = <p className="lead"> { article.summary } </p>;
@@ -62,13 +62,13 @@ var DefaultArticleRenderer = React.createClass({
                 This article has been archived from the original MPLSART.COM site. It may contain dead links, broken images, and formatting issues. We are working to fix these as much as possible. Thank you for your patience.
             </div>
         }
-        
+
         var edit_link;
         if (settings.is_authenticated) {
             edit_link = <a href={'/admin/blog/' + article.resource_id + '/edit'} target="_blank">edit</a>
         }
-        
-        
+
+
         return <div>
             { edit_link }
             <h2>{ article.title }</h2>
@@ -97,7 +97,7 @@ var PodArticleRenderer = React.createClass({
 
         var article = this.state.resource;
         published_date = moment(Date.parse(article.created_date)).format('MMMM, Do YYYY');
-        
+
         var image = null;
         var image_url = null;
 
@@ -121,12 +121,12 @@ var PodArticleRenderer = React.createClass({
                 <div className="card-content">
                     <div className="card-title"><a href={ article.permalink } onClick={global.routeTo } target="_new">{article.title }</a></div>
                     <div className="card-detail">{ article.summary } <b><a href={article.permalink} title={article.title} onClick={global.routeTo }>Read More...</a></b></div>
-                </div>            
+                </div>
             </div>
         );
 
     }
-    
+
 });
 
 var ListArticleRenderer = React.createClass({
@@ -146,12 +146,12 @@ var ListArticleRenderer = React.createClass({
         }
 
         console.log(article);
-        
-        
+
+
 
         var article = this.state.resource;
         published_date = moment(Date.parse(article.created_date)).format('MMMM, Do YYYY');
-        
+
         var image = null;
         var image_url = null;
 
@@ -214,7 +214,7 @@ var FeaturedHeroRenderer = React.createClass({
             image_url = resource.primary_image_resource.versions.CARD_SMALL.url;
         }
 
-        var styles = { 'backgroundImage' : 'url(' + image_url + ');'};
+        var styles = { 'backgroundImage' : 'url(' + image_url + ')'};
 
         // TODO: Case out if published or not...
         var m = moment(resource.published_date);
@@ -259,12 +259,12 @@ var ArticleGoober = React.createClass({
     render: function () {
         // Determine which ED we meant to show actually
         var props = {
-            resource: this.state.resource, 
+            resource: this.state.resource,
             ed_filter: this.state.ed_filter
         };
 
         return React.createElement(this.state.renderer, props);
-    }    
+    }
 });
 
 
