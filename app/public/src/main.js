@@ -8,10 +8,11 @@ var EventPage = require('./components/pages/EventPage');
 var WrittenPage = require('./components/pages/Written').WrittenPage;
 var WrittenArticlePage = require('./components/pages/Written').WrittenArticlePage;
 var WrittenCategoryPage = require('./components/pages/Written').WrittenCategoryPage;
-var GalleryPage = require('./components/pages/GalleryPage');
-var GalleryViewPage = require('./components/pages/GalleryViewPage');
-var Error404Page = require('./components/pages/Error404Page');
+
+
+var GalleryPages = require('./components/pages/GalleryPages');
 var AboutPage = require('./components/pages/AboutPage');
+var Error404Page = require('./components/pages/Error404Page');
 
 var PageMeta = require('./components/pages/PageMeta');
 var NavCardsContainer = require('./components/NavCardsContainer').NavCardsContainer;
@@ -27,54 +28,48 @@ ReactRouter.createRoute('/', function () {
     React.render(<NewHomePage />, document.getElementById('main_content'));
 });
 
-/*
-ReactRouter.createRoute('/home', function () {
-    React.unmountComponentAtNode( document.getElementById('main_content'));
-    React.render(<HomePage />, document.getElementById('main_content'));    
-});
-*/
 
 ReactRouter.createRoute('/about/', function () {
     React.unmountComponentAtNode( document.getElementById('main_content'));
-    React.render(<AboutPage />, document.getElementById('main_content'));    
+    React.render(<AboutPage />, document.getElementById('main_content'));
 });
 
 
 ReactRouter.createRoute('/events/{slug}/', function (params) {
     React.unmountComponentAtNode( document.getElementById('main_content'));
-    React.render(<EventPage slug={params.slug} />, document.getElementById('main_content'));    
+    React.render(<EventPage slug={params.slug} />, document.getElementById('main_content'));
 });
 
 ReactRouter.createRoute('/calendar/', function () {
     React.unmountComponentAtNode( document.getElementById('main_content'));
-    React.render(<CalendarPage/>, document.getElementById('main_content'));    
+    React.render(<CalendarPage/>, document.getElementById('main_content'));
 });
 
 ReactRouter.createRoute('/galleries/', function () {
     React.unmountComponentAtNode( document.getElementById('main_content'));
-    React.render(<GalleryPage />, document.getElementById('main_content'));    
+    React.render(<GalleryPages.GalleryIndexPage />, document.getElementById('main_content'));
 });
 
 ReactRouter.createRoute('/galleries/{slug}/', function (params) {
     React.unmountComponentAtNode( document.getElementById('main_content'));
-    React.render(<GalleryViewPage slug={params.slug} />, document.getElementById('main_content'));    
+    React.render(<GalleryPages.GalleryViewPage slug={params.slug} />, document.getElementById('main_content'));
 });
 
 ReactRouter.createRoute('/written/', function () {
     React.unmountComponentAtNode( document.getElementById('main_content'));
-    React.render(<WrittenPage />, document.getElementById('main_content'));    
+    React.render(<WrittenPage />, document.getElementById('main_content'));
 });
 
 
 ReactRouter.createRoute('/written/{category_slug}/', function (params) {
     React.unmountComponentAtNode( document.getElementById('main_content'));
-    React.render(<WrittenCategoryPage category_slug={params.category_slug} />, document.getElementById('main_content'));    
+    React.render(<WrittenCategoryPage category_slug={params.category_slug} />, document.getElementById('main_content'));
 });
 
 
 ReactRouter.createRoute('/written/{category_slug}/{slug}/', function (params) {
     React.unmountComponentAtNode( document.getElementById('main_content'));
-    React.render(<WrittenArticlePage category_slug={params.category_slug} slug={params.slug} />, document.getElementById('main_content'));    
+    React.render(<WrittenArticlePage category_slug={params.category_slug} slug={params.slug} />, document.getElementById('main_content'));
 });
 
 
@@ -83,12 +78,12 @@ ReactRouter.createRoute('/written/{category_slug}/{slug}/', function (params) {
 
 ReactRouter.createRoute('/written/{year}/{month}/{slug}/', function (params) {
     React.unmountComponentAtNode( document.getElementById('main_content'));
-    React.render(<WrittenArticlePage year={params.year} month={params.month} slug={params.slug} />, document.getElementById('main_content'));    
+    React.render(<WrittenArticlePage year={params.year} month={params.month} slug={params.slug} />, document.getElementById('main_content'));
 });
 
 ReactRouter.createRoute('*', function () {
     React.unmountComponentAtNode( document.getElementById('main_content'));
-    React.render(<Error404Page />, document.getElementById('main_content'));    
+    React.render(<Error404Page />, document.getElementById('main_content'));
 });
 
 ReactRouter.init();
@@ -109,7 +104,7 @@ global.openMenu = function () {
     // Do things on Nav Open
     $('body').addClass('show-menu');
 	var modal = $('<div class="modal-backdrop"></div>');
-	
+
 	modal.bind('click tap', closeMenu)
 	modal.appendTo(document.body);
 }
@@ -123,7 +118,7 @@ global.toggleNav = function (e) {
     if ($('body').hasClass('show-menu')) {
         closeMenu();
         ga_label = 'close';
-    } 
+    }
     else {
         openMenu()
         ga_label = 'open';
@@ -166,7 +161,7 @@ global.routeTo = function (evt) {
     anchor = evt.currentTarget;
     $anchor = $(anchor);
     url = anchor.pathname; //https://gist.github.com/jlong/2428561
-    
+
     // Record GA Event - This should be moved elsewhere?
     var ga_category = $anchor.data('ga-category');
     var ga_action = $anchor.data('ga-action');
@@ -188,21 +183,21 @@ global.routeTo = function (evt) {
     analytics.record_event(ga_category, ga_action, ga_label, 1);
 
     ReactRouter.goTo(url);
-    
+
 };
 
 global.show_marquee = function() {
     var featured_hero = $('#featured-hero-area');
-    
+
     if (featured_hero.length) {
         // Page Has the featured hero section
         var threshhold = featured_hero.offset().top + featured_hero.height();
-    
+
         $('#header_nav').toggleClass('show-nav', $(document).scrollTop() > threshhold - 100);
     }
     else {
         $('#header_nav').addClass('show-nav');
-    }    
+    }
 }
 
 
