@@ -183,7 +183,7 @@ var MarqueeRenderer = React.createClass({
             image_url = resource.primary_image_resource.versions.CARD_SMALL.url;
         }
 
-        var styles = { 'backgroundImage' : 'url(' + image_url + ');'};
+        var styles = { 'backgroundImage' : 'url(' + image_url + ')'};
 
         // TODO: Case out if published or not...
         var m = moment(resource.published_date);

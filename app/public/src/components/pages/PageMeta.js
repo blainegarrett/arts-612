@@ -90,18 +90,18 @@ var PageMeta = React.createClass({
         return <div>{ meta_tags}</div> ;
     },
     _onChange: function() {
-      this.setState(getPageMetaState()); 
+      this.setState(getPageMetaState());
     },
     addPageMeta: function() {
         ReactRouter.goTo('/app');
-        
+
         //console.log('adding page meta...');
         //AppDispatcher.handleSetMeta({
         //    title: 'zippy',
         //    description: 'This is a page description...'
         //});
     }
-    
+
 });
 
 module.exports = PageMeta;
