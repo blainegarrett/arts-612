@@ -9,7 +9,6 @@ var WrittenPage = require('./components/pages/Written').WrittenPage;
 var WrittenArticlePage = require('./components/pages/Written').WrittenArticlePage;
 var WrittenCategoryPage = require('./components/pages/Written').WrittenCategoryPage;
 
-
 var GalleryPages = require('./components/pages/GalleryPages');
 var AboutPage = require('./components/pages/AboutPage');
 var Error404Page = require('./components/pages/Error404Page');
@@ -21,15 +20,81 @@ var PrimaryMenu = require('./components/pages/PrimaryMenu')
 var analytics = require('./utils/analytics');
 
 
+var routeTo = function (evt) {
+    /* Global Helper to handle in-app click routing */
+    // TODO: This only works on <a href="" ...> tags
+    // TODO: Move to some sort of utility
+
+    evt.preventDefault();
+
+    var anchor, $anchor, url;
+
+    // Close open menus
+
+    // TODO: This will be duplicated until we get event listners...
+    // TODO: trigger action "closeMenu"
+    $('body').removeClass('show-menu');
+    $(".modal-backdrop").remove();
+
+
+    // Resolve target action
+    anchor = evt.currentTarget;
+    $anchor = $(anchor);
+    url = anchor.pathname; //https://gist.github.com/jlong/2428561
+
+    // Record GA Event - This should be moved elsewhere?
+    var ga_category = $anchor.data('ga-category');
+    var ga_action = $anchor.data('ga-action');
+    var ga_label = $anchor.data('ga-label');
+
+    if (!ga_category) {
+        ga_category = 'link';
+    }
+    if (!ga_action) {
+        ga_action = url;
+    }
+
+    if (!ga_label) {
+        ga_label = $(anchor).text();
+    }
+
+    // TODO: React Router transitions should do this
+    $("html, body").animate({ scrollTop: 0 }, "slow");
+
+    analytics.record_event(ga_category, ga_action, ga_label, 1);
+
+    ReactRouter.goTo(url);
+
+};
+
+
+
+var Link = React.createClass({
+    /* Tempoary Class to emulate a ReactRouter.Link we'll implement soon */
+
+    handler: routeTo,
+
+    render: function () {
+
+        var to = this.props.to;
+
+
+        return (<a href={ to } data-ga-category="menu-link" className="internal-link" onClick={ this.handler }>
+                { this.props.children }
+               </a>);
+    }
+
+});
+
 var SlideMenu = React.createClass({
 
     render: function() {
         return (
             <div id="site-menu">
                 <ul className="list-unstyled main-menu">
-                    <li><a href="/" data-ga-category="menu-link" className="internal-link">EVENTS<span className="icon"></span></a></li>
-                    <li><a href="/about/" data-ga-category="menu-link" className="internal-link">ABOUT<span className="icon"></span></a></li>
-                    <li><a href="/written/" data-ga-category="menu-link" className="internal-link">WRITTEN<span className="icon"></span></a></li>
+                    <li><Link to="/" data-ga-category="menu-link" className="internal-link">EVENTS<span className="icon"></span></Link></li>
+                    <li><Link to="/about/" data-ga-category="menu-link" className="internal-link">ABOUT<span className="icon"></span></Link></li>
+                    <li><Link to="/written/" data-ga-category="menu-link" className="internal-link">WRITTEN<span className="icon"></span></Link></li>
                     <li><a href="mailto:calendar@mplsart.com" data-ga-category="menu-link">calendar@mplsart.com<span className="icon"></span></a></li>
                 </ul>
 
@@ -114,7 +179,6 @@ var HeaderNav = React.createClass({
         );
     }
 });
-
 
 
 var App = React.createClass({
@@ -237,45 +301,7 @@ $(function() {
 	$('.internal-link').bind('click', routeTo);
 });
 
-global.routeTo = function (evt) {
-    /* Global Helper to handle in-app click routing */
-    // TODO: This only works on <a href="" ...> tags
-    var anchor, $anchor, url;
 
-    // Close open menus
-    global.closeMenu()
-
-    // Prevent Default for internal-links
-    evt.preventDefault();
-
-    // Resolve target action
-    anchor = evt.currentTarget;
-    $anchor = $(anchor);
-    url = anchor.pathname; //https://gist.github.com/jlong/2428561
-
-    // Record GA Event - This should be moved elsewhere?
-    var ga_category = $anchor.data('ga-category');
-    var ga_action = $anchor.data('ga-action');
-    var ga_label = $anchor.data('ga-label');
-
-    if (!ga_category) {
-        ga_category = 'link';
-    }
-    if (!ga_action) {
-        ga_action = url;
-    }
-
-    if (!ga_label) {
-        ga_label = $(anchor).text();
-    }
-
-    $("html, body").animate({ scrollTop: 0 }, "slow");
-
-    analytics.record_event(ga_category, ga_action, ga_label, 1);
-
-    ReactRouter.goTo(url);
-
-};
 
 global.show_marquee = function() {
     var featured_hero = $('#featured-hero-area');
