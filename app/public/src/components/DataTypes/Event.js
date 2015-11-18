@@ -6,6 +6,7 @@ var NiceDate = require('./../../utils/NiceDate');
 var moment = require('moment');
 var MapComponent = require('../maps/Map').MapComponent;
 var LoadingSpinner = require('./../../utils/Layout').LoadingSpinner;
+var TONIGHT_END_DATE_UTC = require('./../../constants').TONIGHT_END_DATE_UTC;
 
 
 function sort_helper(ed1, ed2) {
@@ -337,7 +338,7 @@ var PodRenderer = React.createClass({
             // No targeted date so lets find the soonest one that hasn't happened yet
 
             var reoccurring;
-            var now = global.targed_tonight_end_date // Maybe make this 2AM tomorrow...
+            var now = TONIGHT_END_DATE_UTC;
             var ed;
 
             for (var i in sorted_event_dates) {

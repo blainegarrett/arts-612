@@ -90,6 +90,25 @@ var NavCardsContainer = React.createClass({
     }
 });
 
+
+
+show_marquee = function() {
+    var featured_hero = $('#featured-hero-area');
+
+    if (featured_hero.length) {
+        // Page Has the featured hero section
+        var threshhold = featured_hero.offset().top + featured_hero.height();
+
+        $('#header_nav').toggleClass('show-nav', $(document).scrollTop() > threshhold - 100);
+    }
+    else {
+        $('#header_nav').addClass('show-nav');
+    }
+}
+
+
+
 module.exports = {
-        NavCardsContainer: NavCardsContainer
+        NavCardsContainer: NavCardsContainer,
+        show_marquee: show_marquee
 }

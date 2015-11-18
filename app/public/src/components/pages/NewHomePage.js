@@ -7,6 +7,7 @@ var InfiniteScroll = require('react-infinite-scroll')(React);
 var FeaturedHeroPanel = require('../FeaturedHeroPanel');
 var Footer = require('../temp/Footer');
 var Separator = require('./../../utils/Layout').Separator;
+var TONIGHT_END_DATE_UTC = require('./../../constants').TONIGHT_END_DATE_UTC;
 
 /* Pod types ... */
 var EventModule = require('./../DataTypes/Event');
@@ -92,7 +93,9 @@ var NewHomePage = React.createClass({
 
         // For now we're just loading the upcoming events...
         // 3AM CST "today"
-        var target_end_date = global.targed_tonight_end_date.format('YYYY-MM-DD[T]HH:mm:ss[Z]');
+
+        alert(TONIGHT_END_DATE_UTC);
+        var target_end_date = TONIGHT_END_DATE_UTC.format('YYYY-MM-DD[T]HH:mm:ss[Z]');
         var resource_url =  '/api/events/upcoming?sort=start&category=performance,reception,sale&end=' + target_end_date;
 
         $.ajax({
@@ -104,7 +107,7 @@ var NewHomePage = React.createClass({
                 this.setState({
                     pod_data: this.state.pod_data.concat(data.results),
                     hasMore: false
-                });                
+                });
 
             }.bind(this),
             error: function (xhr, status, err) {
@@ -151,11 +154,11 @@ var NewHomePage = React.createClass({
         // Initialize Page
 
         this.setMeta();
-        
+
         $('body').removeClass('beta');
         $('body').addClass('homepage');
     },
-    
+
     pageWillUnmount: function() {
         /* Temporary solution */
 
