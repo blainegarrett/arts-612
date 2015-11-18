@@ -23,7 +23,7 @@ var AboutPage = React.createClass({
 
     getInitialState: function () {
         return {
-            
+
         }
     },
 
@@ -34,11 +34,11 @@ var AboutPage = React.createClass({
 
     render: function () {
         return <div id="HomePageWrapper">
-            
+
             <div className="row">
 
                 <div className="col-md-6" id="main-content-container">
-                    
+
                     <h2><b>About</b></h2>
 
                     <p className="lead">MPLSART.COM’s mission is to promote visual art events in the Twin Cities.</p>
@@ -50,7 +50,7 @@ var AboutPage = React.createClass({
                 </div>
 
                 <div className="col-md-6" id="main-content-container">
-                    
+
                     <h2><b>History</b></h2>
 
 
@@ -61,7 +61,7 @@ var AboutPage = React.createClass({
                     <h2><b>Evolution</b></h2>
 
 
-                    <p>Ten years after the original launch, MPLSART.COM lives on under <a href="http://mplsart.com/written/2015/01/new_beginnings_for_mplsart/" onClick={global.routeTo}>Blaine and Katie Garrett</a>. The new owners are driven by sincere devotion to promoting the local scene. The re-build has just begun and the site will continue to evolve as a platform for event listings, discussions, artist promotion, and celebrating local success.</p>
+                    <p>Ten years after the original launch, MPLSART.COM lives on under <a href="http://www.mplsart.com/written/2015/01/new_beginnings_for_mplsart/" onClick={global.routeTo}>Blaine and Katie Garrett</a>. The new owners are driven by sincere devotion to promoting the local scene. The re-build has just begun and the site will continue to evolve as a platform for event listings, discussions, artist promotion, and celebrating local success.</p>
 
                     <br />
 
@@ -82,7 +82,7 @@ var AboutPage = React.createClass({
                 <div className="col-md-3 panel-events"><TempUpcoming col_name="'Upcoming" /></div>
                 <div className="col-md-3 panel-events"><TempEvents col_name="'Now Showing'"  /></div>
             </div>
-            
+
             <Footer />
         </div>;
 

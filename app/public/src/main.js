@@ -20,7 +20,7 @@ var PrimaryMenu = require('./components/pages/PrimaryMenu')
 var analytics = require('./utils/analytics');
 
 
-var routeTo = function (evt) {
+global.routeTo = function (evt) {
     /* Global Helper to handle in-app click routing */
     // TODO: This only works on <a href="" ...> tags
     // TODO: Move to some sort of utility
@@ -68,7 +68,6 @@ var routeTo = function (evt) {
 };
 
 
-
 var Link = React.createClass({
     /* Tempoary Class to emulate a ReactRouter.Link we'll implement soon */
 
@@ -77,7 +76,6 @@ var Link = React.createClass({
     render: function () {
 
         var to = this.props.to;
-
 
         return (<a href={ to } data-ga-category="menu-link" className="internal-link" onClick={ this.handler }>
                 { this.props.children }
@@ -205,6 +203,7 @@ var App = React.createClass({
 
 
 
+
 global.current_page = null; // This is set by PageMixin to the current page for use in widgets
 
 
@@ -218,45 +217,45 @@ ReactRouter.createRoute('/', function () {
 
 ReactRouter.createRoute('/about/', function () {
     React.unmountComponentAtNode( target_e);
-    React.render(<AboutPage />, target_e);
+    React.render(<App><AboutPage /></App>, target_e);
 });
 
 
 ReactRouter.createRoute('/events/{slug}/', function (params) {
     React.unmountComponentAtNode( target_e);
-    React.render(<EventPage slug={params.slug} />, target_e);
+    React.render(<App><EventPage slug={params.slug} /></App>, target_e);
 });
 
 ReactRouter.createRoute('/calendar/', function () {
     React.unmountComponentAtNode( target_e);
-    React.render(<CalendarPage/>, target_e);
+    React.render(<App><CalendarPage/></App>, target_e);
 });
 
 ReactRouter.createRoute('/galleries/', function () {
     React.unmountComponentAtNode( target_e);
-    React.render(<GalleryPages.GalleryIndexPage />, target_e);
+    React.render(<App><GalleryPages.GalleryIndexPage /></App>, target_e);
 });
 
 ReactRouter.createRoute('/galleries/{slug}/', function (params) {
     React.unmountComponentAtNode( target_e);
-    React.render(<GalleryPages.GalleryViewPage slug={params.slug} />, target_e);
+    React.render(<App><GalleryPages.GalleryViewPage slug={params.slug} /></App>, target_e);
 });
 
 ReactRouter.createRoute('/written/', function () {
     React.unmountComponentAtNode( target_e);
-    React.render(<WrittenPage />, target_e);
+    React.render(<App><WrittenPage /></App>, target_e);
 });
 
 
 ReactRouter.createRoute('/written/{category_slug}/', function (params) {
     React.unmountComponentAtNode( target_e);
-    React.render(<WrittenCategoryPage category_slug={params.category_slug} />, target_e);
+    React.render(<App><WrittenCategoryPage category_slug={params.category_slug} /></App>, target_e);
 });
 
 
 ReactRouter.createRoute('/written/{category_slug}/{slug}/', function (params) {
     React.unmountComponentAtNode( target_e);
-    React.render(<WrittenArticlePage category_slug={params.category_slug} slug={params.slug} />, target_e);
+    React.render(<App><WrittenArticlePage category_slug={params.category_slug} slug={params.slug} /></App>, target_e);
 });
 
 
@@ -265,12 +264,12 @@ ReactRouter.createRoute('/written/{category_slug}/{slug}/', function (params) {
 
 ReactRouter.createRoute('/written/{year}/{month}/{slug}/', function (params) {
     React.unmountComponentAtNode( target_e);
-    React.render(<WrittenArticlePage year={params.year} month={params.month} slug={params.slug} />, target_e);
+    React.render(<App><WrittenArticlePage year={params.year} month={params.month} slug={params.slug} /></App>, target_e);
 });
 
 ReactRouter.createRoute('*', function () {
     React.unmountComponentAtNode( target_e);
-    React.render(<Error404Page />, target_e);
+    React.render(<App><Error404Page /></App>, target_e);
 });
 
 ReactRouter.init();
@@ -281,24 +280,17 @@ global.targed_tonight_end_date = moment.utc(global.targed_tonight_end_date);
 
 
 
-
-
 // navigateTo
 
 /* OnChromeLoad Bindings */
 $(function() {
     /* Anything run here must act only on the chrome since nothing else is loaded... */
 
-	$('#site-menu').bind('swiperight', function(e) { toggleNav(e) });
-
-	//$('#side_nav_toggle').click(function(e) {
-	//	// Calling a function in case you want to expand upon this.
-	//	toggleNav(e);
-	//});
+	//$('#site-menu').bind('swiperight', function(e) { toggleNav(e) });
 
     // Important: Including 'tap' here will trigger both events and cause routing to dble load
     //  and cause invarient react errors. Also, page load analytics record twice.
-	$('.internal-link').bind('click', routeTo);
+    $(document).on('click', '.internal-link', routeTo);
 });
 
 
