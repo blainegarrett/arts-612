@@ -1,6 +1,5 @@
 /* Page Mixin */
-var AppDispatcher = require('../../dispatcher/AppDispatcher')
-var ReactRouter = require('flux-react-router');
+var AppDispatcher = require('../../dispatcher/AppDispatcher');
 var React = require('react');
 var analytics = require('../../utils/analytics');
 
@@ -19,12 +18,12 @@ var PageMixin = {
             this.pageDidMount();
         }
 
-        // Decide to show the marquee or not..  
-        show_marquee();      
+        // Decide to show the marquee or not..
+        show_marquee();
 
         return
     },
-    
+
     componentWillUnmount: function() {
         if (typeof(this.pageWillUnmount) == 'function'){
             this.pageWillUnmount();
@@ -35,10 +34,6 @@ var PageMixin = {
         AppDispatcher.handleSetMeta(this.default_meta);
     },
 
-    getRoute: function (event) {
-        global.routeTo(event)
-    }
-    
 };
 
 module.exports = PageMixin;

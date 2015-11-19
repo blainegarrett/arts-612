@@ -1,7 +1,5 @@
 /* Main Renderer for Event Page */
 var React = require('react');
-var moment = require('moment');
-var ReactRouter = require('flux-react-router');
 var PageMixin = require('./PageMixin');
 var EventModule = require('./../DataTypes/Event');
 var EventGoober = EventModule.Goober;
@@ -21,7 +19,6 @@ var EventPage = React.createClass({
 
     getInitialState: function () {
         return {
-            resource_url: '/api/events?get_by_slug=' + this.props.params.slug,
             content_loaded: false,
             content_not_found: false,
             results: null,
@@ -48,14 +45,16 @@ var EventPage = React.createClass({
         this.setMeta();
     },
 
-    pageDidMount: function () {
+    requestPageContent: function (slug) {
+
         var rc = this;
 
         this.setMeta();
 
+        var url = '/api/events?get_by_slug=' + slug
 
         $.ajax({
-            url: this.state.resource_url,
+            url: url,
             dataType: 'json',
             success:  function (data) {
                 this.setState({data:data, content_loaded:true, results:data.results});
@@ -63,11 +62,20 @@ var EventPage = React.createClass({
 
             }.bind(this),
             error: function (xhr, status, err) {
-                console.error(this.state.resource_url, status, err.toString());
+                console.error(url, status, err.toString());
                 this.setState({content_not_found:true, content_loaded:true})
             }.bind(this)
 
         });
+    },
+    componentWillReceiveProps: function (nextProps) {
+        /* TODO: This is a lame hack to avoid a huge re-write before Redux */
+
+        this.requestPageContent(nextProps.params.slug);
+        return true;
+    },
+    pageDidMount: function () {
+        this.requestPageContent(this.props.params.slug);
     },
 
     render: function() {

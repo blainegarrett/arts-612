@@ -464,7 +464,8 @@ var WrittenCategoryPage = React.createClass({
         var rc = this;
 
         if (this.state.content_not_found) {
-            return <div><h2>Category Not Found</h2><p>Please visit to the <a href="/written" className="internal-link">main page</a></p></div>
+            // Note: This doesn't actually ever occur apparently
+            return <div><h2>Category Not Found</h2><p>Please visit to the <PageLink to="/written">main page</PageLink></p></div>
         }
 
         if (this.state.results != undefined) {

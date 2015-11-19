@@ -165,7 +165,7 @@ var ListArticleRenderer = React.createClass({
         var m = moment(article.published_date);
         var date_slug = m.format('YYYY/MM/');
 
-        return <li key={article.resource_id} title={article.title}><a href={article.permalink} onClick={global.routeTo }>{article.title}</a>  {published_date} </li>;
+        return <li key={article.resource_id} title={article.title}><PageLink to={article.permalink}>{article.title}</PageLink>  {published_date} </li>;
     }
 });
 
@@ -191,11 +191,11 @@ var MarqueeRenderer = React.createClass({
         var date_slug = m.format('YYYY/MM/');
 
         return <div className="jive-card-image">
-            <a href={ resource.permalink } onClick={ global.routeTo } style={ styles }>
+            <PageLink to={ resource.permalink } style={ styles }>
                 <div className="jive-card-title">
                     <div className="date">{ resource.title }</div>
                 </div>
-            </a>
+            </PageLink>
         </div>;
     }
 
@@ -223,13 +223,13 @@ var FeaturedHeroRenderer = React.createClass({
 
         return <div className="jive-card">
             <div className="jive-card-image">
-                <a href={ resource.permalink } onClick={ global.routeTo } style={ styles }>
+                <PageLink to={ resource.permalink } style={ styles }>
                     <div className="jive-card-title">
                         <br />
                         <div className="date">New Post</div>
                         <div className="title">{ resource.title }</div>
                     </div>
-                </a>
+                </PageLink>
             </div>
         </div>;
 

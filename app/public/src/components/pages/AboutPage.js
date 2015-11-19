@@ -1,6 +1,4 @@
 var React = require('react');
-var ReactRouter = require('flux-react-router');
-var moment = require('moment');
 
 var PageMixin = require('./PageMixin');
 var Footer = require('../temp/Footer');
@@ -12,7 +10,8 @@ var TempEvents = require('../calendar/TempEvents');
 var ArticleGoober = require('./../DataTypes/Article').ArticleGoober;
 var PodArticleRenderer = require('./../DataTypes/Article').PodArticleRenderer;
 
-var Separator = require('./../../utils/Layout').Separator
+var Separator = require('./../../utils/Layout').Separator;
+var PageLink = require('../../linking').PageLink;
 
 var AboutPage = React.createClass({
     mixins: [PageMixin],
@@ -61,7 +60,7 @@ var AboutPage = React.createClass({
                     <h2><b>Evolution</b></h2>
 
 
-                    <p>Ten years after the original launch, MPLSART.COM lives on under <a href="http://www.mplsart.com/written/2015/01/new_beginnings_for_mplsart/" onClick={global.routeTo}>Blaine and Katie Garrett</a>. The new owners are driven by sincere devotion to promoting the local scene. The re-build has just begun and the site will continue to evolve as a platform for event listings, discussions, artist promotion, and celebrating local success.</p>
+                    <p>Ten years after the original launch, MPLSART.COM lives on under <PageLink to="/written/2015/01/new_beginnings_for_mplsart/">Blaine and Katie Garrett</PageLink>. The new owners are driven by sincere devotion to promoting the local scene. The re-build has just begun and the site will continue to evolve as a platform for event listings, discussions, artist promotion, and celebrating local success.</p>
 
                     <br />
 

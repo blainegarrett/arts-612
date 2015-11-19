@@ -9,9 +9,9 @@ var SlideMenu = React.createClass({
         return (
             <div id="site-menu">
                 <ul className="list-unstyled main-menu">
-                    <li><PageLink activeClassName="active" to="/" data-ga-category="menu-link" className="xinternal-link">EVENTS<span className="icon"></span></PageLink></li>
-                    <li><PageLink activeClassName="active" to="/about/" data-ga-category="menu-link" className="xinternal-link">ABOUT<span className="icon"></span></PageLink></li>
-                    <li><PageLink activeClassName="active" to="/written/" data-ga-category="menu-link" className="xinternal-link">WRITTEN<span className="icon"></span></PageLink></li>
+                    <li><PageLink activeClassName="active" to="/" data-ga-category="menu-link">EVENTS<span className="icon"></span></PageLink></li>
+                    <li><PageLink activeClassName="active" to="/about/" data-ga-category="menu-link">ABOUT<span className="icon"></span></PageLink></li>
+                    <li><PageLink activeClassName="active" to="/written/" data-ga-category="menu-link">WRITTEN<span className="icon"></span></PageLink></li>
                     <li><a href="mailto:calendar@mplsart.com" data-ga-category="menu-link">calendar@mplsart.com<span className="icon"></span></a></li>
                 </ul>
 

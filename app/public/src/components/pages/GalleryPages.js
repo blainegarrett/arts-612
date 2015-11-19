@@ -256,7 +256,7 @@ var GalleryIndexPage = React.createClass({
 
         if (this.state.galleries.results != undefined) {
             galleries = this.state.galleries.results.map(function (g) {
-                return <li key={g.resource_id} name={g.name}><a href={'/galleries/' + g.slug} onClick={rc.getRoute}>{g.name}</a></li>;
+                return <li key={g.resource_id} name={g.name}><PageLink to={'/galleries/' + g.slug}>{g.name}</PageLink></li>;
             });
         }
 

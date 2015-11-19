@@ -1,5 +1,4 @@
 var React = require('react');
-var ReactRouter = require('flux-react-router');
 var PageMixin = require('./PageMixin');
 
 var CalendarPage = React.createClass({

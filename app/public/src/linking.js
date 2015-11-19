@@ -43,8 +43,6 @@ pageChangeRouteTasks = function(e) {
     }
 
     analytics.record_event(ga_category, ga_action, ga_label, 1);
-
-    console.log('AWESOME!!!');
 }
 
 routeTo = function (e) {
