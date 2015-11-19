@@ -10,10 +10,8 @@ var NavCardsContainer = require('./components/NavCardsContainer').NavCardsContai
 
 // Actual Pages
 var NewHomePage = require('./components/pages/NewHomePage');
-var CalendarPage = require('./components/pages/CalendarPage');
 var EventPage = require('./components/pages/EventPage');
 var WrittenPages = require('./components/pages/Written');
-
 var GalleryPages = require('./components/pages/GalleryPages');
 var AboutPage = require('./components/pages/AboutPage');
 var Error404Page = require('./components/pages/Error404Page');
@@ -30,6 +28,10 @@ function init_router (node) {
           <Route path="about" component={AboutPage}/>
           <Route path="events/:slug" component={EventPage}/>
 
+          <Route path="galleries/:slug" component={GalleryPages.GalleryViewPage}/>
+          <Route path="galleries" component={GalleryPages.GalleryIndexPage}/>
+
+
           <Route path="written" component={WrittenPages.PageShell}>
             <IndexRoute component={WrittenPages.WrittenPage}/>
             <Route path=":category_slug/:slug" component={WrittenPages.WrittenArticlePage} />
@@ -45,63 +47,4 @@ function init_router (node) {
 module.exports = {
     init: init_router,
     history: history
-}
-
-
-
-/*
-
-
-ReactRouter.createRoute('/events/{slug}/', function (params) {
-    React.unmountComponentAtNode( target_e);
-    React.render(<App><EventPage slug={params.slug} /></App>, target_e);
-});
-
-ReactRouter.createRoute('/calendar/', function () {
-    React.unmountComponentAtNode( target_e);
-    React.render(<App><CalendarPage/></App>, target_e);
-});
-
-ReactRouter.createRoute('/galleries/', function () {
-    React.unmountComponentAtNode( target_e);
-    React.render(<App><GalleryPages.GalleryIndexPage /></App>, target_e);
-});
-
-ReactRouter.createRoute('/galleries/{slug}/', function (params) {
-    React.unmountComponentAtNode( target_e);
-    React.render(<App><GalleryPages.GalleryViewPage slug={params.slug} /></App>, target_e);
-});
-
-ReactRouter.createRoute('/written/', function () {
-    React.unmountComponentAtNode( target_e);
-    React.render(<App><WrittenPage /></App>, target_e);
-});
-
-
-ReactRouter.createRoute('/written/{category_slug}/', function (params) {
-    React.unmountComponentAtNode( target_e);
-    React.render(<App><WrittenCategoryPage category_slug={params.category_slug} /></App>, target_e);
-});
-
-
-ReactRouter.createRoute('/written/{category_slug}/{slug}/', function (params) {
-    React.unmountComponentAtNode( target_e);
-    React.render(<App><WrittenArticlePage category_slug={params.category_slug} slug={params.slug} /></App>, target_e);
-});
-
-
-
-
-
-ReactRouter.createRoute('/written/{year}/{month}/{slug}/', function (params) {
-    React.unmountComponentAtNode( target_e);
-    React.render(<App><WrittenArticlePage year={params.year} month={params.month} slug={params.slug} /></App>, target_e);
-});
-
-ReactRouter.createRoute('*', function () {
-    React.unmountComponentAtNode( target_e);
-    React.render(<App><Error404Page /></App>, target_e);
-});
-
-ReactRouter.init();
-*/
+};

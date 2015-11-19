@@ -1,6 +1,7 @@
 var React = require('react');
 var PageMixin = require('./PageMixin');
 var GoogleMapsLoader = require('google-maps');
+var PageLink = require('../../linking').PageLink;
 
 var Gallery404Page = React.createClass({
     mixins: [PageMixin],
@@ -16,7 +17,7 @@ var Gallery404Page = React.createClass({
         <h2>Gallery not found...</h2>
 
         <br /><br/>
-        <a onClick={ReactRouter.deferTo('/galleries')}>Return to Galleries Listing</a>
+        <PageLink to="/galleries">Return to Galleries Listing</PageLink>
         </div>
     }
 });
@@ -81,10 +82,15 @@ var GalleryViewPage = React.createClass({
             gallery: null,
             slug: this.props.slug,
             not_found: false,
-            resource_url: '/api/galleries?get_by_slug=' + this.props.slug
+            resource_url: '/api/galleries?get_by_slug=' + this.props.params.slug
 
         }
     },
+
+    //componentWillReceiveProps: function (nextProps) {
+    // We will want to implement this - perhaps at the PageMixin level...å
+    //},
+
     pageDidMount: function () {
 
         $.ajax({
