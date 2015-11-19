@@ -7,6 +7,7 @@ var moment = require('moment');
 var MapComponent = require('../maps/Map').MapComponent;
 var LoadingSpinner = require('./../../utils/Layout').LoadingSpinner;
 var TONIGHT_END_DATE_UTC = require('./../../constants').TONIGHT_END_DATE_UTC;
+var PageLink = require('./../../linking').PageLink;
 
 
 function sort_helper(ed1, ed2) {
@@ -206,14 +207,14 @@ var MarqueeRenderer = React.createClass({
         rendered_date = start.format("MMM Do");
 
         return <div className="jive-card-image">
-            <a href={ event_url } onClick={ global.routeTo } style={ styles }>
+            <PageLink to={ event_url } style={ styles }>
                 <div className="jive-card-title">
                     <div className="date">
                         <span className="hidden-xs hidden-sm">{ rendered_day }, </span>
                         <span>{ rendered_date }</span>
                     </div>
                 </div>
-            </a>
+            </PageLink>
         </div>;
     }
 
@@ -250,13 +251,13 @@ var FeaturedHeroRenderer = React.createClass({
 
         return <div className="jive-card">
             <div className="jive-card-image">
-                <a href={ event_url } onClick={ global.routeTo } style={ styles }>
+                <PageLink to={ event_url } style={ styles }>
                     <div className="jive-card-title">
                         <br />
                         <div className="date">{ rendered_date }</div>
                         <div className="title">{ resource.name }</div>
                     </div>
-                </a>
+                </PageLink>
             </div>
         </div>;
 
@@ -282,9 +283,9 @@ var PodRenderer = React.createClass({
 
         image_url = img_resource.url;
         image_container = <div className="card-image fixed-size">
-            <a href={ link_url } data-ga-category="event-pod-click" data-ga-label="image" onClick={ global.routeTo } title={ alt_text } style={ styles }>
+            <PageLink to={ link_url } data-ga-category="event-pod-click" data-ga-label="image" title={ alt_text } style={ styles }>
                 <img src={image_url} className="img-responsive" title={alt_text} />
-            </a>
+            </PageLink>
         </div>
 
         return image_container;
@@ -373,8 +374,6 @@ var PodRenderer = React.createClass({
             image = this.generate_image(img_resource, post_url, e.name);
         }
 
-        //<div className="card-title"><a href={post_url} onClick={global.routeTo }>{e.name}</a></div>
-
         return (
             <div className="card-container">
                 <div className="card-header">
@@ -382,7 +381,7 @@ var PodRenderer = React.createClass({
                 </div>
 
                 <div className="card-content">
-                    <div className="card-title"><a href={ post_url } data-ga-category="event-pod-click" onClick={global.current_page.getRoute }>{e.name }</a></div>
+                    <div className="card-title"><PageLink to={ post_url } data-ga-category="event-pod-click">{e.name }</PageLink></div>
 
                     <div className="card-detail event-time"><NiceDate start={ target_event_date.start } end={ target_event_date.end } eventdate_type={ target_event_date.type } /></div>
                     <div className="card-detail event-venue-name">{target_event_date.venue.name}</div>

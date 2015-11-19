@@ -1,6 +1,3 @@
-
-console.log(global.ga);
-
 var set_page = function(url, title) {
     ga('set', { page: url, title: title });
 };
@@ -9,8 +6,8 @@ var record = function (hitType, opt_fieldObject) {
     /* General Purpose Recording helper */
 
     global.ga('send', hitType, opt_fieldObject);
-    console.log('sending ' + hitType + '.');
-    //console.log(opt_fieldObject)
+    // console.log('sending ' + hitType + '.');
+    // console.log(opt_fieldObject)
 };
 
 

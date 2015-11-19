@@ -94,7 +94,6 @@ var NewHomePage = React.createClass({
         // For now we're just loading the upcoming events...
         // 3AM CST "today"
 
-        alert(TONIGHT_END_DATE_UTC);
         var target_end_date = TONIGHT_END_DATE_UTC.format('YYYY-MM-DD[T]HH:mm:ss[Z]');
         var resource_url =  '/api/events/upcoming?sort=start&category=performance,reception,sale&end=' + target_end_date;
 

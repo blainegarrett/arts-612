@@ -3,6 +3,7 @@
 
 var React = require('react');
 var moment = require('moment');
+var PageLink = require('./../../linking').PageLink;
 
 
 var ArticleRendererMixin = {
@@ -114,13 +115,13 @@ var PodArticleRenderer = React.createClass({
             <div className="card-container">
                 <div className="card-header">
                     <div className="card-image">
-                        <a href={article.permalink} title={article.title} onClick={global.routeTo }>{ image }</a>
+                        <PageLink to={article.permalink} title={article.title} >{ image }</PageLink>
                     </div>
                 </div>
 
                 <div className="card-content">
-                    <div className="card-title"><a href={ article.permalink } onClick={global.routeTo } target="_new">{article.title }</a></div>
-                    <div className="card-detail">{ article.summary } <b><a href={article.permalink} title={article.title} onClick={global.routeTo }>Read More...</a></b></div>
+                    <div className="card-title"><PageLink to={ article.permalink }>{article.title }</PageLink></div>
+                    <div className="card-detail">{ article.summary } <b><PageLink to={article.permalink} title={article.title}>Read More...</PageLink></b></div>
                 </div>
             </div>
         );

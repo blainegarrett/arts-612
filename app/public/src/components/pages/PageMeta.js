@@ -1,6 +1,5 @@
 var PageMetaStore = require('../../stores/PageMetaStore');
 var AppDispatcher = require('../../dispatcher/AppDispatcher')
-var ReactRouter = require('flux-react-router');
 var React = require('react');
 
 /**
@@ -92,15 +91,6 @@ var PageMeta = React.createClass({
     _onChange: function() {
       this.setState(getPageMetaState());
     },
-    addPageMeta: function() {
-        ReactRouter.goTo('/app');
-
-        //console.log('adding page meta...');
-        //AppDispatcher.handleSetMeta({
-        //    title: 'zippy',
-        //    description: 'This is a page description...'
-        //});
-    }
 
 });
 

@@ -4,6 +4,7 @@ var NavCardsContainer = require('./components/NavCardsContainer');
 var PageMeta = require('./components/pages/PageMeta');
 
 var Routing = require('./routing');
+var linking = require('./linking');
 
 
 // Initialize the ReactRouter
@@ -17,18 +18,18 @@ $(function() {
 
     // Important: Including 'tap' here will trigger both events and cause routing to dble load
     //  and cause invarient react errors. Also, page load analytics record twice.
-    $(document).on('click', '.internal-link', routeTo);
+
+    // Note: This does wierd stuff to the history
+    $(document).on('click', '.internal-link', linking.routeTo);
 });
-
-
-
-
 
 
 /* On Homepage - check if we should show the featured section */
 $(window).on("scroll touchmove", function () {
     NavCardsContainer.show_marquee();
 });
+
+
 
 
 
