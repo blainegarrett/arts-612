@@ -4,6 +4,7 @@ var Router = require('react-router').Router;
 var Route = require('react-router').Route;
 var IndexRoute = require('react-router').IndexRoute;
 var createBrowserHistory = require('history/lib/createBrowserHistory');
+var useScroll = require('scroll-behavior/lib/useStandardScroll');
 
 // Layout
 var NavCardsContainer = require('./components/NavCardsContainer').NavCardsContainer;
@@ -17,7 +18,7 @@ var AboutPage = require('./components/pages/AboutPage');
 var Error404Page = require('./components/pages/Error404Page');
 
 // Setup Default History
-var history = createBrowserHistory();
+var history = useScroll(createBrowserHistory)(); // This forces pages to scroll to top, but not smoothly as desired.
 var App = require('./components/appshell').App;
 
 

@@ -18,8 +18,8 @@ pageChangeRouteTasks = function(e) {
     $('body').removeClass('show-menu');
     $(".modal-backdrop").remove();
 
-    // TODO: React Router transitions should do this
-    $("html, body").animate({ scrollTop: 0 }, "slow");
+    // TODO: the scroll-behavior plugin does this but not smoothly yet. animation?
+    //$("html, body").animate({ scrollTop: 0 }, "slow");
 
     // Resolve target action
     anchor = e.currentTarget;
