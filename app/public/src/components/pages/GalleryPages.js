@@ -2,6 +2,81 @@ var React = require('react');
 var PageMixin = require('./PageMixin');
 var GoogleMapsLoader = require('google-maps');
 var PageLink = require('../../linking').PageLink;
+var ShortcodeParser = require("meta-shortcodes");
+var ReactDOMServer = require("react-dom/server");
+
+
+function decodeHtml(html) {
+    var txt = document.createElement("textarea");
+    txt.innerHTML = html;
+    return txt.value;
+}
+
+
+var RedBold = React.createClass({
+    render: function (){
+        return (<b style={{color: 'red'}}>{ this.props.children }</b>)
+    }
+});
+
+var input = "[bold strong=true]Sample [test]shortcode content [nested multiply=2 2 4/] is upper[/test] case![/bold]";
+var input = "<p>In the near future or not so distant past, the world is in ruins from a long overdue&nbsp;apocalypse. Curiously, most of the remaining survivors consist of a gang of children who have a penchant for wearing Victorian era clothing. These kids scrounge to survive in the ghost that the Earth left behind, where mutant animals roam, buildings appear to be organic and alive, and all other material culture is shattered and strewn like the donations left overnight at a Salvation Army.&nbsp;&nbsp;&nbsp;<br /><br />&nbsp;<br /><br />[caption id=&quot;attachment_1086&quot; align=&quot;aligncenter&quot; width=&quot;521&quot; caption=&quot;The Briny Deep&quot;]<a href=\"http://www.mplsart.com/written/exhibition-reviews/the-unknown-of-unknowns-of-alex-kuno/the-briny-deep-detail/\"><img alt=\"\" class=\"size-medium wp-image-1086\" height=\"694\" src=\"http://cdn.mplsart.com/written/wp-content/uploads/2012/03/The-Briny-Deep-Detail-521x694.jpg\" title=\"The Briny Deep (Detail)\" width=\"521\" /></a>[/caption]<br /><br />This grotesque&nbsp;but charming scenario is not unlike the world that <strong>Alex Kuno</strong>&nbsp;explores in <strong><em>Miscreants of Tiny Town</em></strong>, an expansive series of paintings that he has been exploring in recent years. The latest batch of this work is currently on view at <strong><em>Cult Status Gallery </em></strong>in South Minneapolis.<br />"
+var parser = ShortcodeParser({openPattern: '\\[!', closePattern: '\\!]' });
+var parser = ShortcodeParser();
+
+parser.add("bold", function(opts, content) {
+    console.log(opts);
+
+    if (opts["strong"]) {
+        return "<strong>" + content + "</strong>"
+    }
+
+    return "<b>" + content + "</b>"
+});
+
+
+handler = function () {
+    alert('sdfsd');
+}
+
+parser.add("caption", function(opts, content){
+
+    console.log(opts);
+
+    var styles = {};
+    var classes = 'wp-caption';
+
+    styles["width"] = opts["width"] + 'px';
+    classes += " " + opts["align"];
+
+    content = content + ReactDOMServer.renderToStaticMarkup(<figcaption className="wp-caption-text">{ opts["caption"] }<a onClick={ handler }>ssdf</a></figcaption>)
+
+    return React.createElement('div', {}, content);
+    //return ReactDOMServer.renderToStaticMarkup({React.createElement('div', {}, content));
+    //return (<div style={styles} className={ classes } dangerouslySetInnerHTML={{__html: content }} />);
+    //return ReactDOMServer.renderToString((<div style={styles} className={ classes } dangerouslySetInnerHTML={{__html: content }} />))
+    //return ReactDOMServer.renderToStaticMarkup (<div style={styles} className={ classes } dangerouslySetInnerHTML={{__html: content }} />);
+});
+
+parser.add("test", function(opts, content){
+    return ReactDOMServer.renderToStaticMarkup (<RedBold>{ content.toUpperCase() }</RedBold>);
+});
+
+parser.add("nested", function(opts, content){
+
+    if(!opts.multiply) return "Missing multiply attribute!";
+
+    var out = [];
+
+    for(var i = 0; i < opts.length; i++)
+        out.push(opts[i] * parseFloat(opts.multiply));
+
+    return out.join(" ");
+
+});
+
+
+
 
 var Gallery404Page = React.createClass({
     mixins: [PageMixin],
@@ -256,6 +331,18 @@ var GalleryIndexPage = React.createClass({
     },
 
     render: function() {
+
+        var p = new DOMParser();
+        var doc = p.parseFromString(decodeHtml(input), "text/html");
+
+        var child = doc.body.childNodes;
+
+
+        return (
+            <div>
+                <pre>{ parser.parse(decodeHtml(input)) }</pre>
+                <div>{ React.createElement('div', {}, parser.parse(decodeHtml(input))) }</div>
+        </div>);
 
         var galleries = []
         var rc = this;
