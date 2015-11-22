@@ -97,9 +97,13 @@ var HeaderNav = React.createClass({
 });
 
 
-var App = React.createClass({
 
-    render: function(){
+
+var AppShell = React.createClass({
+
+    render: function () {
+
+
         return (
             <div>
                 <SlideMenu />
@@ -107,11 +111,8 @@ var App = React.createClass({
 
                 <div id="site-wrapper">
                     <div id="site-canvas">
-                        <div className="container">
-                            <div id="main_content">
-                                { this.props.children }
-                            </div>
-                        </div>
+                        { this.props.children }
+
                     </div>
                 </div>
 
@@ -119,6 +120,39 @@ var App = React.createClass({
     }
 });
 
+var App = React.createClass({
+
+    render: function(){
+        return (
+            <AppShell>
+                <div className="container">
+                    <div id="main_content">
+                        { this.props.children }
+                    </div>
+                </div>
+            </AppShell>);
+    }
+});
+
+
+
+var MegaApp = React.createClass({
+
+    render: function(){
+        return (
+            <AppShell>
+                <div className="container-fluid">
+                    <div id="main_content">
+                        { this.props.children }
+                    </div>
+                </div>
+            </AppShell>);
+    }
+});
+
+
+
 module.exports = {
-    App: App
+    App: App,
+    MegaApp: MegaApp
 };
