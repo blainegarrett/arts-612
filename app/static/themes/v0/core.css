@@ -7,6 +7,22 @@
  */
 
 
+.module-advert {
+    padding-bottom: 30px;
+}
+
+.sponsor-text {
+    position: absolute;
+    top:0;
+    color: #ffffff;
+    font-size: 14px;
+    line-height: 1.5em;
+    padding-left:10px;
+    opacity: 0.8;
+
+}
+
+
 body {
     font-family: 'Bryant', sans-serif;
     color: #313131;

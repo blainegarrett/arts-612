@@ -1,4 +1,5 @@
 var React = require('react');
+var ReactDom = require('react-dom');
 
 var NavCardsContainer = require('./components/NavCardsContainer');
 var PageMeta = require('./components/pages/PageMeta');
@@ -34,4 +35,4 @@ $(window).on("scroll touchmove", function () {
 
 
 /* Components outside of the main_content area*/
-React.render(<PageMeta />, document.getElementById('page_meta'));
+ReactDom.render(<PageMeta />, document.getElementById('page_meta'));

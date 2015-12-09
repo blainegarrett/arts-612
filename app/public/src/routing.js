@@ -5,6 +5,7 @@ var Route = require('react-router').Route;
 var IndexRoute = require('react-router').IndexRoute;
 var createBrowserHistory = require('history/lib/createBrowserHistory');
 var useScroll = require('scroll-behavior/lib/useStandardScroll');
+var ReactDom = require('react-dom');
 
 // Layout
 var NavCardsContainer = require('./components/NavCardsContainer').NavCardsContainer;
@@ -23,7 +24,7 @@ var App = require('./components/appshell').App;
 
 
 function init_router (node) {
-    React.render(<Router history={history}>
+    ReactDom.render(<Router history={history}>
         <Route path="/" component={App}>
           <IndexRoute component={NewHomePage}/>
           <Route path="about" component={AboutPage}/>

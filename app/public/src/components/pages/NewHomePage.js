@@ -11,8 +11,11 @@ var TONIGHT_END_DATE_UTC = require('./../../constants').TONIGHT_END_DATE_UTC;
 
 /* Pod types ... */
 var EventModule = require('./../DataTypes/Event');
+var AdvertModule = require('./../DataTypes/Advert');
+
 var podComponentMap = {
-    'Event': EventModule
+    'Event': EventModule,
+    'Advert': AdvertModule
 };
 
 var masonryOptions = {
@@ -102,6 +105,11 @@ var NewHomePage = React.createClass({
             dataType: 'json',
             success:  function (data) {
                 /* Have the store do this... */
+
+                var advert_resource = AdvertModule.get_random();
+                if (advert_resource) {
+                    data.results.splice(2, 0, advert_resource);
+                }
 
                 this.setState({
                     pod_data: this.state.pod_data.concat(data.results),
