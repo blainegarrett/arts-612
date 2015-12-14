@@ -82,17 +82,29 @@ var HeaderNav = React.createClass({
 
     render: function () {
         return (
-            <div id="header_nav" className="navbar navbar-fixed-top navbar-inverse" role="navigation">
-                <div className="container">
-                    <div className="navbar-header">
-                        <a id="side_nav_toggle" className="pull-left" title="Show Menu" onClick={ this.toggleNav }><span></span></a>
-                        <PageLink className="navbar-brand" to="/" title="MPLSART.COM Home Page">MPLSART.COM</PageLink>
+            <div id="header_nav" className="navbar-fixed" role="navigation">
+                <div className="containerxx">
+
+                    <div className="navbar-fixed">
+                        <nav>
+                            <div className="container">
+                                <div className="nav-wrapper">
+                                        <a id="side_nav_toggle" className="pull-left" title="Show Menu" onClick={ this.toggleNav }><span></span></a>
+                                        <PageLink className="brand-logo" to="/" title="MPLSART.COM Home Page">MPLSART.COM</PageLink>
+
+                                    <ul className="right hide-on-med-and-down">
+                                        <li><a href="sass.html">Sass</a></li>
+                                        <li><a href="badges.html">Components</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div id="header_nav_cards"><NavCardsContainer /></div>
+
+                        </nav>
                     </div>
-                    <p className="navbar-text navbar-right"></p>
-                </div>
-                <div id="header_nav_cards"><NavCardsContainer /></div>
             </div>
-        );
+        </div>);
     }
 });
 

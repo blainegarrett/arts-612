@@ -6,18 +6,19 @@
  link color blue: #0096BE
  */
 
+/* Materialize.css overrides */
+.container {
+    width:100%;
+    max-width: 1170px;
+}
+
+
 
 /* Inline Map Styles */
-
 .map-component { width:100%; }
     .map-component.map-inline { position:relative; top:0px; left:0px; }
-
-
-
 .map-component.map-inline.map-small, .map-component.map-inline.map-small .map-canvas, .map-component.map-inline.map-small .map-overlay-controls-container.single-overlap-action a { height:125px; }
 .map-component.map-inline.map-large, .map-component.map-inline.map-large .map-canvas { height:400px; }
-
-
 
 /* Map Overlays */
 .map-component.map-overlay:hover .map-overlay-background {
@@ -129,21 +130,36 @@ a { color: #0096BE; }
 .fancy-separator {
     height: 15px;
     background-color: #FD0595;
-    margin-bottom: 30px;
+    /* margin-bottom: 30px; */
     background-image: url(/static/themes/v0/separator.png);
     background-repeat: no-repeat;
     background-position: 100% 0;
 }
 
 /* Nav Var */
-#header_nav { background-color : #222; }
-    #header_nav .navbar-brand {
+#header_nav { background-color : none; }
+    #header_nav nav {
+        background-color:#222;
+        box-shadow: none;
+        line-height: 52px;
+        height:50px;
+    }
+    #header_nav .brand-logo {
         font-size:25px;
         color: #dfdfdf;
         margin-left: 0px;
+        position:relative;
+        display: block;
+        float:left;
+        padding-left: 10px;
+        padding-right: 10px
     }
-    #header_nav .navbar-brand:hover {
+    #header_nav .brand-logo:hover {
         color: #fff;
+    }
+
+    #header_nav nav ul li:hover, #header_nav nav ul li.active {
+        background-color: #333;
     }
 
     #header_nav .navbar-text {
