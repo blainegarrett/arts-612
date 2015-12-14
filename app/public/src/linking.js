@@ -76,5 +76,6 @@ var PageLink = React.createClass({
 
 module.exports = {
    PageLink: PageLink,
-   routeTo: routeTo
+   routeTo: routeTo,
+   linkTo: pageChangeRouteTasks
 }

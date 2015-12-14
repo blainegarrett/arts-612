@@ -7,6 +7,102 @@
  */
 
 
+/* Inline Map Styles */
+
+.map-component { width:100%; }
+    .map-component.map-inline { position:relative; top:0px; left:0px; }
+
+
+
+.map-component.map-inline.map-small, .map-component.map-inline.map-small .map-canvas, .map-component.map-inline.map-small .map-overlay-controls-container.single-overlap-action a { height:125px; }
+.map-component.map-inline.map-large, .map-component.map-inline.map-large .map-canvas { height:400px; }
+
+
+
+/* Map Overlays */
+.map-component.map-overlay:hover .map-overlay-background {
+    display:block;
+    background-color:#2a6496;
+}
+
+.map-component.map-overlay.map-small:hover .map-overlay-background {
+    height: 125px;
+}
+
+.map-component.map-overlay.map-large:hover .map-overlay-background {
+    height: 400px;
+}
+
+
+.map-overlay-background {
+    background-color:#2a6496;
+    width:100%;
+    position:absolute;
+    display:none;
+    opacity: 0.8;
+    filter: alpha(opacity=80);
+}
+
+
+
+.map-canvas-container { position:absolute; width:100%; display:block; }
+    .map-canvas {  width: 100%; }
+
+
+.map-component.map-overlay:hover .map-overlay-controls-container {
+    display:table;
+}
+
+
+.map-overlay-controls-container {
+    display:none;
+    margin:auto;
+    width:100%;
+    text-align:center;
+}
+    /* For use with multiple buttons */
+    .map-overlay-controls-container .btn-group {
+        float:none;
+        margin: auto;
+        position: absolute;
+        top: 0; left: 0; bottom: 0; right: 0;
+        height:1.5em;
+        width:75%;
+     }
+
+     /* Single Giant Overlay */
+    .map-overlay-controls-container.single-overlap-action{
+
+    }
+    .map-overlay-controls-container.single-overlap-action a {
+        width:100%;
+        float:none;
+        margin: auto;
+        position: absolute;
+        top: 0; left: 0; bottom: 0; right: 0;
+        color:#fff;
+        font-weight:bold;
+    }
+
+
+
+
+.module-advert {
+    padding-bottom: 30px;
+}
+
+.sponsor-text {
+    position: absolute;
+    top:0;
+    color: #ffffff;
+    font-size: 14px;
+    line-height: 1.5em;
+    padding-left:10px;
+    opacity: 0.8;
+
+}
+
+
 body {
     font-family: 'Bryant', sans-serif;
     color: #313131;
@@ -149,21 +245,6 @@ footer {
 @media (max-width:768px) {
     .navbar-header { float:left; }
     .navbar-right { float:right; }
-}
-
-#map-canvas {
-    border: 1px solid green;
-}
-
-.map-large {
-    height:500px;
-    width:100%;
-}
-
-.map-small {
-    height:200px;
-    width:100%;
-    border: 1px solid green;
 }
 
 .card {
@@ -424,6 +505,10 @@ footer {
         background-size: cover;
         background-position': 50% 50%;
         background-color: #ff0099;
+    }
+
+    .solo-card-poorly-named .jive-card .jive-card-image a {
+        height:292px;
     }
 
     .large-card.featured-events-wrapper .jive-card .jive-card-image a {

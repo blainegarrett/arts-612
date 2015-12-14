@@ -6,6 +6,7 @@ Along with: TempEventHelpers, TempEvents, TempUpcoming
 var React = require('react');
 var EventGoober = require('./../DataTypes/Event').Goober;
 var PodRenderer = require('./../DataTypes/Event').PodRenderer;
+var AdvertModule = require('./../DataTypes/Advert');
 
 var TempEventsListMixin = {
     componentDidMount: function (){
@@ -19,17 +20,30 @@ var TempEventsListMixin = {
             error: function (xhr, status, err) {
                 console.error(this.state.resource_url, status, err.toString());
             }.bind(this)
-            
+
         });
     },
 
-    render_templatexxx: function (){
-        return <div className="panel-container">
-            <div className="panel-header">{ this.state.col_name }</div>
-            <div className="panel-content">
+    render_templatexxx: function () {
+        // Show in 1st col if on mobile, else 2nd col
+        if (this.state.ed_filter == 'timed') {
+            var ad_display_class = ['hidden-md hidden-lg'];
+        }
+        else{
+            var ad_display_class = ['hidden-sm'];
+        }
+
+        return (
+            <div className="panel-container">
+                <div className={ ad_display_class}>
+                    <AdvertModule.Goober resource={AdvertModule.get_random()} renderer={ AdvertModule.PodRenderer} />
+                </div>
+
+                <div className="panel-header">{ this.state.col_name }</div>
+                <div className="panel-content">
                  <TempEventList ed_filter={ this.state.ed_filter } event_data={this.state.event_data} />
-            </div>
-        </div>;
+                </div>
+            </div>);
     }
 };
 

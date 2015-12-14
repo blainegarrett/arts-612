@@ -2,6 +2,7 @@
 
 var React = require('react');
 var GoogleMapsLoader = require('google-maps');
+var linkTo = require('../../linking').linkTo;
 
 var MapComponent = React.createClass({
     getInitialState: function () {
@@ -53,14 +54,15 @@ var MapComponent = React.createClass({
 
             map = new google.maps.Map(document.getElementById('map-canvas'), {
                 center: { lat: 0, lng: 0},
-                zoom: 15
+                zoom: 15,
+                scrollwheel: false
             });
 
             // Determine if this.state.geo is a point or polygon (list of points)
             is_polygon = false;
 
             if (c.state.geo && typeof(c.state.geo.push) == 'function') { // ducktype array vs. dict
-            
+
                 if (c.state.geo.length > 1) {
                     is_polygon = true;
 
@@ -94,14 +96,53 @@ var MapComponent = React.createClass({
                 // Set center of map to the marker
                 map_center = new google.maps.LatLng(c.state.geo.lat, c.state.geo.lon);
             }
-            
+
             // Center Map
             map.setCenter(map_center);
-        });        
+        });
     },
     render: function () {
-        return <div id="map-canvas" className="map-small"></div>
+
+        return (
+            <div className="map-component map-inline map-small map-overlay">
+                <div className="map-canvas-container">
+                    <div id="map-canvas" className="map-canvas"></div>
+                </div>
+
+                <div className="map-overlay-background">&nbsp;</div>
+
+                <div className="map-overlay-controls-container single-overlap-action">
+                    <a href={'http://maps.google.com/maps?q=' + this.state.geo[0].lat + ',' + this.state.geo[0].lon + '&zoom=14'}
+                       target="_new"
+                       onClick={linkTo} data-ga-category="map-interaction" data-ga-action="click" data-ga-label="open-external"
+                    >
+                        <div className="btn-group">Open Map <span className="glyphicon glyphicon-new-window"></span> </div>
+                    </a>
+                </div>
+            </div>);
     }
+    /*
+    render: function () {
+
+        return (
+            <div className="map-component map-inline map-small map-overlay">
+                <div className="map-canvas-container">
+                    <div id="map-canvas" className="map-canvas"></div>
+                </div>
+
+                <div className="map-overlay-background">&nbsp;</div>
+
+                <div className="map-overlay-controls-container">
+                    <div className="btn-group">
+                        <a href={'http://maps.google.com/maps?q=' + this.state.geo[0].lat + ',' + this.state.geo[0].lon + '&zoom=14'}
+                           target="_new" className="btn btn-primary btn-lg btn-block"
+                           onClick={linkTo} data-ga-category="map-interaction" data-ga-action="click" data-ga-label="open-external"
+                        >Open Map</a>
+                    </div>
+                </div>
+            </div>);
+    }
+    */
 });
 
 module.exports = {

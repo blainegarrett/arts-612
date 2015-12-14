@@ -18,7 +18,6 @@ var moment = require('moment');
 var PageShell = React.createClass({
 
     render: function () {
-        alert('MERP?');
         return (
             <div className="WrittenPageShell">
                 dfgdgdgdfgdfg
@@ -107,10 +106,7 @@ var WrittenPage = React.createClass({
 
                     <h2>Written</h2>
 
-                    <div className="alert alert-warning">Our Written section is returing soon including the archives from the old site. Stay tuned and enjoy these articles.</div>
-
                     { articles }
-
 
                     <div className="row">
                         <TempExtras />
