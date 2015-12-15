@@ -25,6 +25,35 @@ var EventRendererMixin = {
     },
 };
 
+
+
+var Dropdown = React.createClass({
+
+
+    componentDidMount: function() {
+        $(".dropdown-button").dropdown({
+            beloworigin:true,
+            constrain_width: false}
+        );
+    },
+
+
+    render: function() {
+        return (
+            <div style={{display:'inline-block'}}>
+            <ul id="dropdown2" className="dropdown-content" style={{'display': 'inline'}}>
+                { this.props.children }
+            </ul>
+            <a className="btn btn-flat dropdown-button icon-only dropdown" href="#!" data-activates="dropdown2"><i className="mdi-navigation-arrow-drop-down"></i></a>
+            </div>
+        )
+    }
+});
+
+
+
+
+
 var FullEventRenderer = React.createClass({
     /* Full Event Rendering */
 
@@ -39,7 +68,7 @@ var FullEventRenderer = React.createClass({
 
             <div className="row">
 
-                <div className="col-md-6">
+                <div className="col m6">
                     <dl>
                         <div className="event-date">
                             <dt>&#9632;&#9632;&#9632;&#9632; &#9632;&#9632; &#9632; &#9632;&#9632; &#9632; &#9632;&#9632; &#9632; </dt>
@@ -49,7 +78,7 @@ var FullEventRenderer = React.createClass({
                     <br />
                 </div>
 
-                <div className="col-md-6">
+                <div className="col m6">
                     &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632;<br />
                     &#9632;&#9632;&#9632;&#9632;&#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632;<br />
                     &#9632;&#9632;&#9632;&#9632;&#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632; <br />
@@ -95,19 +124,15 @@ var FullEventRenderer = React.createClass({
             g_url += '&location=' + v_addr;
             g_url += '&sf=true&output=xml#eventpage_6';
 
+            nice_date = <NiceDate start={ ed.start } end={ ed.end } eventdate_type={ ed.type } />
+
             return <div key={ 'event_date-' + i } className="event-date">
                 <dt className="event-label">{ ed.label } </dt>
                 <dd>
-                    <NiceDate start={ ed.start } end={ ed.end } eventdate_type={ ed.type } />
-
-                    <div className="dropdown" style={{'display': 'inline'}}>
-                      <button className="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true" style={{'borderColor': 'transparent'}}>
-                        <span className="caret"></span>
-                      </button>
-                      <ul className="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                        <li role="presentation"><a role="menuitem" tabIndex="-1" target="_new" href={g_url}>Add to Google Calendar</a></li>
-                      </ul>
-                    </div>
+                    { nice_date }
+                    <Dropdown>
+                        <li><a role="menuitem" tabindex="-1" target="_new" href={g_url}>Add to Google Calendar</a></li>
+                    </Dropdown>
 
                 </dd>
             </div>
@@ -148,12 +173,12 @@ var FullEventRenderer = React.createClass({
 
             <div className="row">
 
-                <div className="col-md-6">
+                <div className="col m6">
                     <dl>{ eventDates }</dl>
                     <br />
                 </div>
 
-                <div className="col-md-6">
+                <div className="col m6">
                     { rendered_venue }
                     <br />
                 </div>

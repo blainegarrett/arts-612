@@ -36,7 +36,7 @@ var AboutPage = React.createClass({
 
             <div className="row">
 
-                <div className="col-md-6" id="main-content-container">
+                <div className="col m6" id="main-content-container">
 
                     <h2><b>About</b></h2>
 
@@ -48,7 +48,7 @@ var AboutPage = React.createClass({
 
                 </div>
 
-                <div className="col-md-6" id="main-content-container">
+                <div className="col m6" id="main-content-container">
 
                     <h2><b>History</b></h2>
 
@@ -71,15 +71,15 @@ var AboutPage = React.createClass({
 
             <div className="row">
 
-                <div className="col-md-6" id="main-content-container">
+                <div className="col m6" id="main-content-container">
 
                     <div className="row">
                         <TempExtras />
                     </div>
 
                 </div>
-                <div className="col-md-3 panel-events"><TempUpcoming col_name="'Upcoming" /></div>
-                <div className="col-md-3 panel-events"><TempEvents col_name="'Now Showing'"  /></div>
+                <div className="col m3 panel-events"><TempUpcoming col_name="'Upcoming" /></div>
+                <div className="col m3 panel-events"><TempEvents col_name="'Now Showing'"  /></div>
             </div>
 
             <Footer />

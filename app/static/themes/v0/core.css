@@ -12,6 +12,18 @@
     max-width: 1170px;
 }
 
+.icon-only.dropdown {
+    padding-left:5px;
+    padding-right:5px;
+    margin-left:5px;
+}
+
+.icon-only.dropdown:hover {
+    background-color:#eee;
+}
+
+.img-responsive { width:100%; }
+
 
 
 /* Inline Map Styles */
@@ -263,11 +275,22 @@ footer {
     .navbar-right { float:right; }
 }
 
+
+/* Card Styles */
+
+.row .col.card {
+    padding-left:0px;
+    padding-right:0px;
+    margin-left:15px;
+    margin-right:15px;
+}
+
+
 .card {
-    margin-bottom: 30px;
+    /* margin-bottom: 30px; */
 }
     .card .card-container {
-        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+        /* box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15); */
     }
 
     .card .card-content {
@@ -275,7 +298,8 @@ footer {
       background-color: #eee;
     }
 
-        .card .card-title {
+        .card .card-content .card-title {
+            font-size: 18px;
             font-weight:bold;
             line-height: 1.25em;
             padding-bottom: .5em;
@@ -347,14 +371,6 @@ footer {
 }
 
 
-/*
-.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
-    padding-right: 10px;
-    padding-left: 10px;
-}
-*/
-
-
 .modal-backdrop { opacity: 0.5; transition:1s; top:50px; }
 #site-wrapper {
     min-height:2000px;
@@ -364,9 +380,9 @@ footer {
     width: 100%;
     */
 }
-    #site-canvas { /*width: 100%; height: 100%; position: relative; */ margin-top:150px; } /* 150 for "sticky marquee"*/
+    #site-canvas { /*width: 100%; height: 100%; position: relative; */ margin-top:80px; } /* 150 for "sticky marquee"*/
     .homepage #site-canvas {
-        margin-top:75px;
+        margin-top:10px;
     }
 
 
@@ -516,6 +532,11 @@ footer {
     #featured-hero-area {
         min-height:300px;
     }
+
+    .row.featured-events-wrapper {
+        margin-bottom: 0px;
+    }
+
     .featured-events-wrapper .jive-card .jive-card-image a {
         height:131px;
         background-size: cover;
@@ -523,12 +544,12 @@ footer {
         background-color: #ff0099;
     }
 
-    .solo-card-poorly-named .jive-card .jive-card-image a {
-        height:292px;
+    .featured-events-wrapper .solo-card-poorly-named .jive-card .jive-card-image a {
+        height:284px;
     }
 
-    .large-card.featured-events-wrapper .jive-card .jive-card-image a {
-        height:292px;
+    .featured-events-wrapper .large-card .jive-card .jive-card-image a {
+        height:284px;
     }
 
 .jive-card div.jive-card-title {
@@ -549,7 +570,7 @@ footer {
 }
 @media screen and (max-width: 650px) {
     #site-canvas, .homepage #site-canvas {
-      margin-top: 55px;
+      margin-top: 10px;
     }
 
     #featured-hero-area .card, .featured-events-wrapper.large-card {

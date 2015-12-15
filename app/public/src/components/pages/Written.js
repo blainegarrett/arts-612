@@ -102,7 +102,7 @@ var WrittenPage = React.createClass({
         return <div id="HomePageWrapper">
             <div className="row">
 
-                <div className="col-md-6" id="main-content-container">
+                <div className="col m6" id="main-content-container">
 
                     <h2>Written</h2>
 
@@ -113,8 +113,8 @@ var WrittenPage = React.createClass({
                     </div>
 
                 </div>
-                <div className="col-md-3 panel-events"><TempUpcoming col_name="'Upcoming" /></div>
-                <div className="col-md-3 panel-events"><TempEvents col_name="'Now Showing'"  /></div>
+                <div className="col m3 panel-events"><TempUpcoming col_name="'Upcoming" /></div>
+                <div className="col m3 panel-events"><TempEvents col_name="'Now Showing'"  /></div>
             </div>
 
             <Footer />
@@ -216,18 +216,18 @@ var WrittenArticlePage = React.createClass({
 
             <div className="row">
 
-                <div className="col-md-6" id="main-content-container">
+                <div className="col m6" id="main-content-container">
                     <div className="row">
 
-                        <div className="col-xs-12">
+                        <div className="col s12">
                             { rendered_article }
                         </div>
                         <TempExtras />
                     </div>
 
                 </div>
-                <div className="col-md-3 panel-events"><TempUpcoming col_name="'Upcoming" /></div>
-                <div className="col-md-3 panel-events"><TempEvents col_name="'Now Showing'"  /></div>
+                <div className="col m3 panel-events"><TempUpcoming col_name="'Upcoming" /></div>
+                <div className="col m3 panel-events"><TempEvents col_name="'Now Showing'"  /></div>
             </div>
 
             <Footer />
@@ -479,10 +479,10 @@ var WrittenCategoryPage = React.createClass({
 
             <div className="row">
 
-                <div className="col-md-6" id="main-content-container">
+                <div className="col m6" id="main-content-container">
                     <div className="row">
 
-                        <div className="col-xs-12">
+                        <div className="col s12">
                             <h2>{ category_title }</h2>
                             { articles }
                         </div>
@@ -490,8 +490,8 @@ var WrittenCategoryPage = React.createClass({
                     </div>
 
                 </div>
-                <div className="col-md-3 panel-events"><TempUpcoming col_name="'Upcoming" /></div>
-                <div className="col-md-3 panel-events"><TempEvents col_name="'Now Showing'"  /></div>
+                <div className="col m3 panel-events"><TempUpcoming col_name="'Upcoming" /></div>
+                <div className="col m3 panel-events"><TempEvents col_name="'Now Showing'"  /></div>
             </div>
 
             <Footer />

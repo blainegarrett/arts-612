@@ -99,13 +99,13 @@ var EventPage = React.createClass({
 
         return <div id="HomePageWrapper">
             <div className="row">
-                <div className="col-md-6">
+                <div className="col m6">
                     { rendered_content }
                     <Separator />
                 </div>
 
-                <div className="col-md-3 panel-events"><TempUpcoming col_name="'Upcoming" /></div>
-                <div className="col-md-3 panel-events"><TempEvents col_name="'Now Showing'"  /></div>
+                <div className="col m3 panel-events"><TempUpcoming col_name="'Upcoming" /></div>
+                <div className="col m3 panel-events"><TempEvents col_name="'Now Showing'"  /></div>
             </div>
 
             <Footer />

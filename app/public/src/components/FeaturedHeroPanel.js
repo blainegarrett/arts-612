@@ -54,7 +54,7 @@ var FeaturedHeroPanel = React.createClass({
         var componentClass = podComponentMap[big_card_spot_resource.resource_type];
 
         if (!componentClass) {
-            return <div className="card col-sm-2"></div>
+            return <div className="col s2"><div className="card"></div></div>
         }
 
         var pod_props = {key: 'hero-event-big',  'resource': big_card_spot_resource, renderer: componentClass.FeaturedHeroRenderer };
@@ -63,31 +63,38 @@ var FeaturedHeroPanel = React.createClass({
 
         // The other cards
         var rendered_marquee_events = event_resources.map(function (resource, i) {
-            var classNames = ['card'];
+            var classNames = [];
             var colspan = 6
 
             if (total_cards < 3) {
                 colspan = 12
             }
-            classNames.push('col-sm-' + colspan);
+            classNames.push('col s12 m' + colspan);
 
             if (total_cards == 1) {
                 classNames.push('solo-card-poorly-named');
             }
 
-            return <div key={ 'hero-event-' + i } className={ classNames.join(' ') }>
-                <EventModule.Goober resource={ resource } renderer={ EventModule.FeaturedHeroRenderer } />
-            </div>
+            return (
+                <div key={ 'hero-event-' + i } className={ classNames.join(' ') }>
+                    <div className="card hoverable">
+                        <EventModule.Goober resource={ resource } renderer={ EventModule.FeaturedHeroRenderer } />
+                    </div>
+                </div>);
         });
 
         return <div className="row" id="featured-hero-area">
-            <div className="col-sm-6">
+            <div className="col s12 m6">
                <div className="row featured-events-wrapper">
                     { rendered_marquee_events }
                </div>
             </div>
 
-            <div className="featured-events-wrapper col-sm-6 card large-card">{ rendered_big_card }</div>
+            <div className="featured-events-wrapper col s12 m6">
+                <div className="card large-card hoverable">
+                    { rendered_big_card }
+                </div>
+            </div>
         </div>;
     }
 });

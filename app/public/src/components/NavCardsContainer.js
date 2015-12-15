@@ -57,14 +57,14 @@ var NavCardsContainer = React.createClass({
         var componentClass = podComponentMap[big_card_spot_resource.resource_type];
 
         if (!componentClass) {
-            return <div className="card col-sm-2"></div>
+            return <div className="card col s2"></div>
         }
 
         var pod_props = {key: 'marquee-big', 'resource': big_card_spot_resource, renderer: componentClass.MarqueeRenderer };
         var rendered_bigcard_card = React.createElement(componentClass.Goober, pod_props);
 
         rendered_marquee_events = event_resources.map(function (resource, i) {
-            var classes = 'item jive-card col-sm-';
+            var classes = 'item jive-card col s';
 
             if (total_cards == 3 && i == 0) {
                 classes += '4';
@@ -73,17 +73,25 @@ var NavCardsContainer = React.createClass({
                 classes += default_size;
             }
 
-            return <div key={'marquee-' + i} className={ classes }><EventModule.Goober
-                resource={ resource }
-                renderer={ EventModule.MarqueeRenderer } /></div>
+            return (
+                <div key={'marquee-' + i} className={ classes }>
+                    <div className="item jive-card">
+                        <EventModule.Goober
+                            resource={ resource }
+                        renderer={ EventModule.MarqueeRenderer } />
+                    </div>
+                </div>
+            );
         });
 
 
-        return <div className="container hidden-xs">
+        return <div className="container hide-on-small-only">
     	    <div className="row">
     		    <div className="row-shim">{ rendered_marquee_events }</div>
-    		    <div className="col-sm-4 item jive-card">
-                    { rendered_bigcard_card }
+    		    <div className="col s4">
+                    <div className="item jive-card">
+                        { rendered_bigcard_card }
+                    </div>
     		    </div>
     		</div>
       	</div>

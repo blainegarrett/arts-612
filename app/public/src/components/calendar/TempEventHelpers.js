@@ -60,18 +60,21 @@ var TempEventList = React.createClass({
         var ed_filter = this.state.ed_filter;
         if (this.props.event_data.results != undefined) {
             eventNodes = this.props.event_data.results.map(function (event) {
-                return <div className="card col-sm-12" key={ event.resource_id }>
-                    <EventGoober resource={ event } ed_filter={ ed_filter } renderer={ PodRenderer } />
-                    </div>
+                return (
+                    <div className="col sm12" key={ event.resource_id }>
+                        <div className="card hoverable">
+                            <EventGoober resource={ event } ed_filter={ ed_filter } renderer={ PodRenderer } />
+                        </div>
+                    </div>);
             });
         }
         else {
-            eventNodes.push(<div className="card col-sm-12" key={ 'xxx1' }><EventGoober resource={ null } ed_filter={ ed_filter } renderer={ PodRenderer } /></div>)
-            eventNodes.push(<div className="card col-sm-12" key={ 'xxx2' }><EventGoober resource={ null } ed_filter={ ed_filter } renderer={ PodRenderer } /></div>)
-            eventNodes.push(<div className="card col-sm-12" key={ 'xxx3' }><EventGoober resource={ null } ed_filter={ ed_filter } renderer={ PodRenderer } /></div>)
-            eventNodes.push(<div className="card col-sm-12" key={ 'xxx4' }><EventGoober resource={ null } ed_filter={ ed_filter } renderer={ PodRenderer } /></div>)
-            eventNodes.push(<div className="card col-sm-12" key={ 'xxx5' }><EventGoober resource={ null } ed_filter={ ed_filter } renderer={ PodRenderer } /></div>)
-            eventNodes.push(<div className="card col-sm-12" key={ 'xxx6' }><EventGoober resource={ null } ed_filter={ ed_filter } renderer={ PodRenderer } /></div>)
+            eventNodes.push(<div className="col s12" key={ 'xxx1' }><div className="card"><EventGoober resource={ null } ed_filter={ ed_filter } renderer={ PodRenderer } /></div></div>)
+            eventNodes.push(<div className="col s12" key={ 'xxx2' }><div className="card"><EventGoober resource={ null } ed_filter={ ed_filter } renderer={ PodRenderer } /></div></div>)
+            eventNodes.push(<div className="col s12" key={ 'xxx3' }><div className="card"><EventGoober resource={ null } ed_filter={ ed_filter } renderer={ PodRenderer } /></div></div>)
+            eventNodes.push(<div className="col s12" key={ 'xxx4' }><div className="card"><EventGoober resource={ null } ed_filter={ ed_filter } renderer={ PodRenderer } /></div></div>)
+            eventNodes.push(<div className="col s12" key={ 'xxx5' }><div className="card"><EventGoober resource={ null } ed_filter={ ed_filter } renderer={ PodRenderer } /></div></div>)
+            eventNodes.push(<div className="col s12" key={ 'xxx6' }><div className="card"><EventGoober resource={ null } ed_filter={ ed_filter } renderer={ PodRenderer } /></div></div>)
         };
 
         return  <div className="row">{ eventNodes }</div>

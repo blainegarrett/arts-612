@@ -21,8 +21,8 @@ var podComponentMap = {
 var masonryOptions = {
     transitionDuration: 0,
     gutter: 0,
-    columnWidth: ".col-sm-1",
-    itemSelector: '.card'
+    columnWidth: ".spacer",
+    itemSelector: '.col'
 };
 
 
@@ -44,26 +44,30 @@ var Pod = React.createClass({
     },
 
     render: function () {
-
-        var card_grid_span = 'col-sm-3';
-        var card_classes = 'card '
+        var card_classes = 'col ';
 
         if (this.state.data.featured) {
-            card_classes += 'col-sm-6 col-xs-12';
+            card_classes += 's12 m6';
         }
         else {
-            card_classes += 'col-sm-3 col-xs-12';
+            card_classes += 's12 m3';
         }
 
         var componentClass = podComponentMap[this.state.data['resource_type']];
         if (!componentClass) {
-            return <div className="card col-sm-2"></div>
+            return <div className="col s2"></div>
         }
 
         var pod_props = {'resource': this.state.data, renderer: componentClass.PodRenderer };
 
         var pod_content = React.createElement(componentClass.Goober, pod_props);
-        return <div className={ card_classes }>{ pod_content }</div>
+        return (
+            <div className={ card_classes }>
+                <div className="card hoverable">
+                    { pod_content }
+                </div>
+            </div>
+        );
     }
 });
 
@@ -136,10 +140,13 @@ var NewHomePage = React.createClass({
             return <Pod key={'pod-' + i} data={pod_data} container={container} />;
         });
 
+        var rc = this;
         return <div id="HomePageWrapper">
 
             <FeaturedHeroPanel />
             <Separator />
+
+            {  /* <a href="#" onClick={function() { rc.masonry.layout(); return false; }}>recalc</a>  */ }
 
             <div className="row">
                 <InfiniteScroll
@@ -149,7 +156,9 @@ var NewHomePage = React.createClass({
                     loader={<WaterfallLoadingWidget />}>
                         <div ref="masonryContainer">
                             { pods }
-                            <div className="item col-sm-1"></div>
+                            <div className="spacer col s1">
+                                <div className="card"></div>
+                            </div>
                         </div>
                     </InfiniteScroll>
             </div>
