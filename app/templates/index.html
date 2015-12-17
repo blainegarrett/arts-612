@@ -17,7 +17,7 @@
 
 	<!-- fonts -->
 	<link href="/static/Bryant2Web/Bryant2Web_WOFF/Bryant.css" rel="stylesheet" type="text/css">
-	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
@@ -35,6 +35,7 @@
   </head>
 
   <body>
+
 	  <div id="root">
 	  	<div className="initial-loading-spinner"><i className="fa fa-spinner fa-pulse"></i></div>
 	  </div>
@@ -59,6 +60,39 @@
 	    <script src="/static/js/jquery.mobile-events.min.js"></script>
 		<script src="/public/build/main.js?85"></script>
 	{% endif %}
+
+
+      <noscript>
+          <div id="root">
+                <div id="site-wrapper">
+                    <div id="site-canvas">
+                        <div className="container">
+                            <div id="main_content">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col s3">&nbsp;</div>
+                                        <div class="col m6">
+                                            <h1>MPLSART.COM</h1>
+                                            <p><i class="material-icons">warning</i> MPLSART.COM requires Javascript to be enabled.</p>
+                                            <p>See the following help information for enabling Javascript for your browser.
+                                                <ul class="collection">
+                                                    <li class="collection-item"><a href="http://www.enable-javascript.com/#chrome">Chrome</a></li>
+                                                    <li class="collection-item"><a href="http://www.enable-javascript.com/#safari">Safari</a></li>
+                                                    <li class="collection-item"><a href="http://www.enable-javascript.com/#firefox">Firefox</a></li>
+                                                    <li class="collection-item"><a href="http://www.enable-javascript.com/#ie">Internet Explorer</a></li>
+                                                    <li class="collection-item"><a href="http://www.enable-javascript.com/#opera">Opera</a></li>
+                                                </ul>
+
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+          </div>
+      </noscript>
 
   </body>
 </html>

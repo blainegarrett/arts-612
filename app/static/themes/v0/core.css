@@ -11,6 +11,47 @@
     width:100%;
     max-width: 1170px;
 }
+h1 { font-size:36px; }
+h2 { font-size:30px; }
+
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1040;
+    background-color: #000;
+}
+
+dl {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+dt,
+dd {
+  line-height: 1.42857143;
+}
+dt {
+  font-weight: bold;
+}
+dd {
+  margin-left: 0;
+}
+@media (min-width: 768px) {
+  .dl-horizontal dt {
+    float: left;
+    width: 160px;
+    overflow: hidden;
+    clear: left;
+    text-align: right;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .dl-horizontal dd {
+    margin-left: 180px;
+  }
+}
 
 .icon-only.dropdown {
     padding-left:5px;
@@ -160,11 +201,13 @@ a { color: #0096BE; }
         font-size:25px;
         color: #dfdfdf;
         margin-left: 0px;
-        position:relative;
         display: block;
         float:left;
         padding-left: 10px;
         padding-right: 10px
+    }
+    #header_nav .brand-logo.left {
+        position:relative;
     }
     #header_nav .brand-logo:hover {
         color: #fff;
@@ -382,7 +425,7 @@ footer {
 }
     #site-canvas { /*width: 100%; height: 100%; position: relative; */ margin-top:80px; } /* 150 for "sticky marquee"*/
     .homepage #site-canvas {
-        margin-top:10px;
+        margin-top:0px;
     }
 
 
@@ -570,13 +613,16 @@ footer {
 }
 @media screen and (max-width: 650px) {
     #site-canvas, .homepage #site-canvas {
-      margin-top: 10px;
+      margin-top: 0px;
     }
 
     #featured-hero-area .card, .featured-events-wrapper.large-card {
-        padding-right:5px;
-        padding-left:5px;
+        /*
+            padding-right:0px;
+            padding-left:0px;
+        */
         margin-bottom: 5px;
+        margin-top:0px;
     }
 
     .featured-events-wrapper .jive-card .jive-card-image a {

@@ -61,7 +61,7 @@ var TempEventList = React.createClass({
         if (this.props.event_data.results != undefined) {
             eventNodes = this.props.event_data.results.map(function (event) {
                 return (
-                    <div className="col sm12" key={ event.resource_id }>
+                    <div className="col s12" key={ event.resource_id }>
                         <div className="card hoverable">
                             <EventGoober resource={ event } ed_filter={ ed_filter } renderer={ PodRenderer } />
                         </div>

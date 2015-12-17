@@ -89,13 +89,15 @@ var HeaderNav = React.createClass({
                         <nav>
                             <div className="container">
                                 <div className="nav-wrapper">
-                                        <a id="side_nav_toggle" className="pull-left" title="Show Menu" onClick={ this.toggleNav }><span></span></a>
-                                        <PageLink className="brand-logo" to="/" title="MPLSART.COM Home Page">MPLSART.COM</PageLink>
+                                        <a id="side_nav_toggle" className="left" title="Show Menu" onClick={ this.toggleNav }><span></span></a>
 
-                                    <ul className="right hide-on-med-and-down">
-                                        <li><a href="sass.html">Sass</a></li>
-                                        <li><a href="badges.html">Components</a></li>
-                                    </ul>
+                                        <PageLink className="brand-logo hide-on-med-and-down left" to="/" title="MPLSART.COM Home Page">MPLSART.COM</PageLink>
+
+                                        <PageLink className="brand-logo center hide-on-large-only" to="/" title="MPLSART.COM Home Page">MPLSART.COM</PageLink>
+
+                                        <ul className="right hide-on-med-and-down">
+                                            <li>&nbsp;</li>
+                                        </ul>
                                 </div>
                             </div>
 
