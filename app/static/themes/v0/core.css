@@ -524,6 +524,9 @@ footer {
     margin-right:auto;
     color: #ff0099;
 }
+.preloader-wrapper .spinner-layer {
+    border-color: #ff0099;
+}
 
 /* Featured Hero Cards */
 

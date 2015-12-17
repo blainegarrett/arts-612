@@ -116,7 +116,7 @@ var MapComponent = React.createClass({
                        target="_new"
                        onClick={linkTo} data-ga-category="map-interaction" data-ga-action="click" data-ga-label="open-external"
                     >
-                        <div className="btn-group">Open Map <span className="glyphicon glyphicon-new-window"></span> </div>
+                        <div className="btn-group">Open Map <span className="fa fa-external-link"></span> </div>
                     </a>
                 </div>
             </div>);

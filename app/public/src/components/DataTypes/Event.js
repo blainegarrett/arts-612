@@ -152,7 +152,7 @@ var FullEventRenderer = React.createClass({
         var rendered_more_url, big_link_button;
         if (r.url) {
             rendered_more_url = <span className="small"> <br /> <a href={ r.url } target="_new" title="More information on the event's website">Event Website </a> </span>
-            big_link_button = <a href={ r.url } target="_new" className="btn btn-primary btn-lg btn-block"> More Information <span className="glyphicon glyphicon-new-window"></span></a>
+            big_link_button = <a href={ r.url } target="_new" className="btn btn-primary btn-lg btn-block"> More Information <span className="fa fa-external-link"></span></a>
         }
 
 
@@ -187,12 +187,12 @@ var FullEventRenderer = React.createClass({
 
             <div>{ image }</div>
             <br />
-            <div className="hidden-xs"><MapComponent gallery={ venue_resource } /></div>
+            <div className="hide-on-med-and-down"><MapComponent gallery={ venue_resource } /></div>
             <br />
             <div className="content" dangerouslySetInnerHTML={{__html: r.content}} />
 
             <br />
-            <div className="hidden-lg">{ big_link_button }</div>
+            <div className="hide-on-large-only">{ big_link_button }</div>
             <br />
 
         </div>
