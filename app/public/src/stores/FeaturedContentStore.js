@@ -27,7 +27,7 @@ var FeaturedContentStore = assign({}, EventEmitter.prototype, {
         this.last_poll = Date.now() // TODO: This should maybe only be on success...
 
         $.ajax({
-            url: '/api/featured',
+            url: 'http://api-module.arts-612.appspot.com/api/featured',
             dataType: 'json',
             success:  function (data) {
                 _featured_data = data.results;
@@ -44,7 +44,7 @@ var FeaturedContentStore = assign({}, EventEmitter.prototype, {
 
   getRaw: function() {
     if (!this.last_poll) {
-        this.get_from_server();        
+        this.get_from_server();
     }
     return _featured_data;
   },

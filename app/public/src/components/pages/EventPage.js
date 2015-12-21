@@ -51,7 +51,7 @@ var EventPage = React.createClass({
 
         this.setMeta();
 
-        var url = '/api/events?get_by_slug=' + slug
+        var url = 'http://api-module.arts-612.appspot.com/api/events?get_by_slug=' + slug
 
         $.ajax({
             url: url,

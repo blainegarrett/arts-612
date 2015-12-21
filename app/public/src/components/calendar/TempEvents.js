@@ -17,7 +17,7 @@ var TempEvents = React.createClass({
 
      //date = moment.utc().hour(0).minute(0).second(0);
 
-      return date;  
+      return date;
     },
 
     getInitialState: function() {
@@ -29,7 +29,7 @@ var TempEvents = React.createClass({
             ed_filter: 'reoccurring',
             col_name: 'NOW SHOWING',
             event_data: [],
-            resource_url: '/api/events/upcoming?sort=end&category=ongoing&end=' + target_end_date + '&start=' + target_end_date
+            resource_url: 'http://api-module.arts-612.appspot.com/api/events/upcoming?sort=end&category=ongoing&end=' + target_end_date + '&start=' + target_end_date
         };
     },
 

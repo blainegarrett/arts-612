@@ -102,7 +102,7 @@ var NewHomePage = React.createClass({
         // 3AM CST "today"
 
         var target_end_date = TONIGHT_END_DATE_UTC.format('YYYY-MM-DD[T]HH:mm:ss[Z]');
-        var resource_url =  '/api/events/upcoming?sort=start&category=performance,reception,sale&end=' + target_end_date;
+        var resource_url =  'http://api-module.arts-612.appspot.com/api/events/upcoming?sort=start&category=performance,reception,sale&end=' + target_end_date;
         //var resource_url = '/static/pods.json';
 
         $.ajax({

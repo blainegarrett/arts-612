@@ -16,7 +16,7 @@ var TempUpcoming = React.createClass({
       date = moment.utc(date);
 
       //date = moment().utc().hour(9).minute(0).second(0)
-      return date;  
+      return date;
     },
     getInitialState: function() {
 
@@ -26,8 +26,8 @@ var TempUpcoming = React.createClass({
         return {
             ed_filter: 'timed',
             col_name: 'OPENINGS & EVENTS',
-            event_data: [], 
-            resource_url: '/api/events/upcoming?sort=start&category=performance,reception,sale&end=' + target_end_date
+            event_data: [],
+            resource_url: 'http://api-module.arts-612.appspot.com/api/events/upcoming?sort=start&category=performance,reception,sale&end=' + target_end_date
         };
     },
 

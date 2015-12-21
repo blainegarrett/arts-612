@@ -82,7 +82,7 @@ var GalleryViewPage = React.createClass({
             gallery: null,
             slug: this.props.slug,
             not_found: false,
-            resource_url: '/api/galleries?get_by_slug=' + this.props.params.slug
+            resource_url: 'http://api-module.arts-612.appspot.com/api/galleries?get_by_slug=' + this.props.params.slug
 
         }
     },
@@ -229,7 +229,7 @@ var GalleryIndexPage = React.createClass({
     getInitialState: function () {
         return {
             galleries: [],
-            resource_url: '/api/galleries'
+            resource_url: 'http://api-module.arts-612.appspot.com/api/galleries'
         }
     },
     pageDidMount: function () {

@@ -37,7 +37,7 @@ var WrittenPage = React.createClass({
     getInitialState: function () {
         return {
             articles: [],
-            resource_url: '/api/posts?limit=25&start_date=2015-01-01&is_published=true'
+            resource_url: 'http://api-module.arts-612.appspot.com/api/posts?limit=25&start_date=2015-01-01&is_published=true'
         };
     },
 
@@ -137,7 +137,7 @@ var WrittenArticlePage = React.createClass({
         /* TODO: This should be defaulted to empty object */
 
         return {
-            resource_url: '/api/posts?get_by_slug=' + this.props.params.slug,
+            resource_url: 'http://api-module.arts-612.appspot.com/api/posts?get_by_slug=' + this.props.params.slug,
             content_loaded: false,
             content_not_found: false,
             results: null,
@@ -250,7 +250,7 @@ var BlogPostService = {
     },
 
     get_posts_by_category: function(category_slug) {
-        var resource_url = '/api/posts?category_slug=' + category_slug;
+        var resource_url = 'http://api-module.arts-612.appspot.com/api/posts?category_slug=' + category_slug;
         var service = this;
 
         var promise = new Promise(function(accept, reject) {
@@ -339,7 +339,7 @@ var PostCategoriesService = {
     get_all: function() {
         var service = this;
         var promise = new Promise(function (accept, reject) {
-            ResourceApiService.fetch('/api/post_categories').then(function(resource_data) {
+            ResourceApiService.fetch('http://api-module.arts-612.appspot.com/api/post_categories').then(function(resource_data) {
                 var resources = service.set_resource_multi(resource_data);
                 accept(resources);
 
@@ -351,7 +351,7 @@ var PostCategoriesService = {
         var service = this;
 
         return new Promise(function(accept, reject) {
-            ResourceApiService.fetch('/api/post_categories?get_by_slug=' + slug).then(function(resource_data) {
+            ResourceApiService.fetch('http://api-module.arts-612.appspot.com/api/post_categories?get_by_slug=' + slug).then(function(resource_data) {
                 var resource = service.set_resource(resource_data);
                 accept(resource);
             }, reject);
@@ -390,7 +390,7 @@ var WrittenCategoryPage = React.createClass({
         /* TODO: This should be defaulted to empty object */
 
         return {
-            resource_url: '/api/posts?category_slug=' + this.props.params.category_slug,
+            resource_url: 'http://api-module.arts-612.appspot.com/api/posts?category_slug=' + this.props.params.category_slug,
             content_loaded: false,
             content_not_found: false,
             results: null,
