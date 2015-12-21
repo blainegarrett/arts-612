@@ -70,18 +70,21 @@ var DefaultArticleRenderer = React.createClass({
         }
 
 
-        return <div>
-            { edit_link }
-            <h2>{ article.title }</h2>
-            <p className="blog-post-meta">Posted { published_date }  by <a href={article.author_resource.website} target="_new">{ article.author_resource.firstname } { article.author_resource.lastname }</a></p>
-            { summary }
-            { image }
-            <br />
-            <div className="article-content-container" dangerouslySetInnerHTML={{__html: article.content }}></div>
-            { archive_notice }
-            <br />
+        return (
+            <div>
+                { image }
+                <div className="padded-content">
+                    { edit_link }
+                    <h2>{ article.title }</h2>
+                    <p className="blog-post-meta">Posted { published_date }  by <a href={article.author_resource.website} target="_new">{ article.author_resource.firstname } { article.author_resource.lastname }</a></p>
+                    { summary }
 
-        </div>;
+                    <br />
+                    <div className="article-content-container" dangerouslySetInnerHTML={{__html: article.content }}></div>
+                    { archive_notice }
+                    <br />
+                </div>
+            </div>);
     }
 });
 

@@ -84,8 +84,10 @@ var EventPage = React.createClass({
 
         if (this.state.content_not_found) {
             rendered_content = (<div>
-                <h2>Event Not Found</h2>
-                <p>We were unable to find the requested event. </p>
+                <div className="padded-content">
+                    <h2>Event Not Found</h2>
+                    <p>We were unable to find the requested event. </p>
+                </div>
             </div>);
         }
         else if (this.state.results != undefined) {
@@ -104,8 +106,8 @@ var EventPage = React.createClass({
                     <Separator />
                 </div>
 
-                <div className="col m3 panel-events"><TempUpcoming col_name="'Upcoming" /></div>
-                <div className="col m3 panel-events"><TempEvents col_name="'Now Showing'"  /></div>
+                <div className="col m3 s12 panel-events"><TempUpcoming col_name="'Upcoming" /></div>
+                <div className="col m3 s12 panel-events"><TempEvents col_name="'Now Showing'"  /></div>
             </div>
 
             <Footer />

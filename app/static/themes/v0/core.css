@@ -7,6 +7,15 @@
  */
 
 /* Materialize.css overrides */
+
+
+@media (max-width:1200px) {
+    .padded-content {
+        padding-right: 50px;
+        padding-left: 50px;
+    }
+}
+
 .container {
     width:100%;
     max-width: 1170px;

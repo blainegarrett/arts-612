@@ -43,11 +43,15 @@ var HeaderNav = React.createClass({
     /* TODO: Bind this up to a store and event */
 
     /* Code For Sliding Navs and Featured Widget */
-    closeMenu: function () {
+    closeMenu: function (e) {
         // Do things on Nav Close
         $('body').removeClass('show-menu');
         $(".modal-backdrop").remove();
 
+        if (e) {
+            e.preventDefault();
+        }
+        return false;
         // Emit event that menu closed
     },
 

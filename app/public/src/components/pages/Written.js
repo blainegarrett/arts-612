@@ -20,7 +20,6 @@ var PageShell = React.createClass({
     render: function () {
         return (
             <div className="WrittenPageShell">
-                dfgdgdgdfgdfg
                 { this.props.children }
             </div>
         );
@@ -104,7 +103,7 @@ var WrittenPage = React.createClass({
 
                 <div className="col m6" id="main-content-container">
 
-                    <h2>Written</h2>
+                    <div className="padded-content"><h2>Written</h2></div>
 
                     { articles }
 
@@ -113,8 +112,8 @@ var WrittenPage = React.createClass({
                     </div>
 
                 </div>
-                <div className="col m3 panel-events"><TempUpcoming col_name="'Upcoming" /></div>
-                <div className="col m3 panel-events"><TempEvents col_name="'Now Showing'"  /></div>
+                <div className="col m3 s12 panel-events"><TempUpcoming col_name="'Upcoming" /></div>
+                <div className="col m3 s12 panel-events"><TempEvents col_name="'Now Showing'"  /></div>
             </div>
 
             <Footer />
@@ -191,8 +190,10 @@ var WrittenArticlePage = React.createClass({
 
         if (this.state.content_not_found) {
             rendered_article = (<div>
-                <h2>Article Not Found</h2>
-                <p>We were unable to find this article. If you are looking for an old article, they will be returning in the next few months. </p>
+                <div className="padded-content">
+                    <h2>Article Not Found</h2>
+                    <p>We were unable to find this article. If you are looking for an old article, they will be returning in the next few months. </p>
+                </div>
             </div>);
         }
         else if (this.state.results != undefined) {
@@ -226,8 +227,8 @@ var WrittenArticlePage = React.createClass({
                     </div>
 
                 </div>
-                <div className="col m3 panel-events"><TempUpcoming col_name="'Upcoming" /></div>
-                <div className="col m3 panel-events"><TempEvents col_name="'Now Showing'"  /></div>
+                <div className="col m3 s12 panel-events"><TempUpcoming col_name="'Upcoming" /></div>
+                <div className="col m3 s12 panel-events"><TempEvents col_name="'Now Showing'"  /></div>
             </div>
 
             <Footer />
@@ -490,8 +491,8 @@ var WrittenCategoryPage = React.createClass({
                     </div>
 
                 </div>
-                <div className="col m3 panel-events"><TempUpcoming col_name="'Upcoming" /></div>
-                <div className="col m3 panel-events"><TempEvents col_name="'Now Showing'"  /></div>
+                <div className="col m3 s12 panel-events"><TempUpcoming col_name="'Upcoming" /></div>
+                <div className="col m3 s12 panel-events"><TempEvents col_name="'Now Showing'"  /></div>
             </div>
 
             <Footer />

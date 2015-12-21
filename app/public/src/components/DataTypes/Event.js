@@ -163,33 +163,39 @@ var FullEventRenderer = React.createClass({
 
         return <div>
 
-            { edit_link }
+            <div>{ image }</div>
 
-            <h1>{ r.name }</h1>
-            <p className="lead">
-                { r.summary }
-                { rendered_more_url }
-            </p>
+            <div className="padded-content">
+                { edit_link }
 
-            <div className="row">
+                <h1>{ r.name }</h1>
+                <p className="lead">
+                    { r.summary }
+                    { rendered_more_url }
+                </p>
 
-                <div className="col m6">
-                    <dl>{ eventDates }</dl>
-                    <br />
+                <div className="row">
+
+                    <div className="col m6">
+                        <dl>{ eventDates }</dl>
+                        <br />
+                    </div>
+
+                    <div className="col m6">
+                        { rendered_venue }
+                        <br />
+                    </div>
+
                 </div>
-
-                <div className="col m6">
-                    { rendered_venue }
-                    <br />
-                </div>
-
             </div>
 
-            <div>{ image }</div>
             <br />
             <div className="hide-on-med-and-down"><MapComponent gallery={ venue_resource } /></div>
             <br />
-            <div className="content" dangerouslySetInnerHTML={{__html: r.content}} />
+
+            <div className="padded-content">
+                <div className="content" dangerouslySetInnerHTML={{__html: r.content}} />
+            </div>
 
             <br />
             <div className="hide-on-large-only">{ big_link_button }</div>
