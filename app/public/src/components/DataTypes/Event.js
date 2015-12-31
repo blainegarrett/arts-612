@@ -214,12 +214,7 @@ var MarqueeRenderer = React.createClass({
 
         var resource = this.props.resource;
 
-        for (var i in resource.event_dates) {
-            if (resource.event_dates[i].type == 'timed') {
-                target_event_date = resource.event_dates[i];
-                break
-            }
-        };
+        var target_event_date = this.props.goober.get_goodest_eventdate(resource, this.state.ed_filter);
 
         // TODO: Need a default card image...
         var image_url = '';
@@ -258,12 +253,7 @@ var FeaturedHeroRenderer = React.createClass({
 
         var resource = this.props.resource;
 
-        for (var i in resource.event_dates) {
-            if (resource.event_dates[i].type == 'timed') {
-                target_event_date = resource.event_dates[i];
-                break
-            }
-        };
+        var target_event_date = this.props.goober.get_goodest_eventdate(resource, this.state.ed_filter);
 
         // TODO: Need a default card image...
         var image_url = '';
@@ -347,56 +337,7 @@ var PodRenderer = React.createClass({
         var image = null;
         var image_url = null;
 
-        // Figure out the best event Date to display
-        var sorted_event_dates = e.event_dates.sort(sort_helper);
-
-        var target_event_date = null;
-
-        if (this.state.ed_filter) {
-            for (var i in sorted_event_dates) {
-                if (sorted_event_dates[i].type == this.state.ed_filter) {
-                    target_event_date = sorted_event_dates[i];
-                }
-            };
-
-            // This is mostly for debugging...
-            if (!target_event_date) {
-                target_event_date = e.event_dates[0];
-                console.error('Warning: Failed to find an ed for the below event with a ed.type matching "' + this.state.ed_filter  + '". Defaulting to first found one. ');
-                console.error(this.state);
-            };
-        }
-        else {
-            // No targeted date so lets find the soonest one that hasn't happened yet
-
-            var reoccurring;
-            var now = TONIGHT_END_DATE_UTC;
-            var ed;
-
-            for (var i in sorted_event_dates) {
-                ed = sorted_event_dates[i];
-                if (ed.type == 'timed' && moment(ed.start) > now) {
-                    target_event_date = ed;
-                    break;
-                }
-                if (ed.type == 'reoccurring') {
-                    reoccurring = ed;
-                }
-            }
-
-            if (!target_event_date) {
-                if (reoccurring) {
-                    target_event_date = reoccurring;
-                }
-                else {
-                    // Event is in the past and there are no reoccurring dates??
-                    target_event_date = sorted_event_dates[0]
-                }
-            }
-
-
-            //target_event_date = sorted_event_dates[0];
-        }
+        var target_event_date = this.props.goober.get_goodest_eventdate(e, this.state.ed_filter);
 
         var post_url = '/events/' + e.slug; //e.url;
 
@@ -535,6 +476,60 @@ var DefaultRenderer = React.createClass({
 var Goober = React.createClass({
     /* Goober for Events - Handles listeners, etc */
 
+
+    get_goodest_eventdate: function(e, ed_filter) {
+        // TODO: This should really use this.state.resource
+
+        var target_event_date = null;
+
+        // Figure out the best event Date to display
+        var sorted_event_dates = e.event_dates.sort(sort_helper);
+
+        if (ed_filter) {
+            for (var i in sorted_event_dates) {
+                if (sorted_event_dates[i].type == ed_filter) {
+                    target_event_date = sorted_event_dates[i];
+                }
+            };
+
+            // This is mostly for debugging...
+            if (!target_event_date) {
+                target_event_date = e.event_dates[0];
+                console.error('Warning: Failed to find an ed for the below event with a ed.type matching "' + ed_filter  + '". Defaulting to first found one. ');
+                console.error(this.state);
+            };
+        }
+        else {
+            // No targeted date so lets find the soonest one that hasn't happened yet
+
+            var reoccurring;
+            var now = TONIGHT_END_DATE_UTC;
+            var ed;
+
+            for (var i in sorted_event_dates) {
+                ed = sorted_event_dates[i];
+                if (ed.type == 'timed' && moment(ed.start) > now) {
+                    target_event_date = ed;
+                    break;
+                }
+                if (ed.type == 'reoccurring') {
+                    reoccurring = ed;
+                }
+            }
+
+            if (!target_event_date) {
+                if (reoccurring) {
+                    target_event_date = reoccurring;
+                }
+                else {
+                    // Event is in the past and there are no reoccurring dates??
+                    target_event_date = sorted_event_dates[0]
+                }
+            }
+        }
+        return target_event_date;
+
+    },
     getDefaultProps: function() {
         return { renderer: DefaultRenderer };
     },
@@ -556,7 +551,8 @@ var Goober = React.createClass({
         // Determine which ED we meant to show actually
         var props = {
             resource: this.state.resource,
-            ed_filter: this.state.ed_filter
+            ed_filter: this.state.ed_filter,
+            goober:this
         };
         return React.createElement(this.state.renderer, props);
     }

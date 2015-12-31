@@ -449,7 +449,7 @@ footer {
     height: 0;
     overflow: hidden;
     padding: 52.42% 0 0 0; /* Note padding-top is overridden via JS */
-    background-color: black;
+    background-color: #eee;
     width: 100%;
 }
 
