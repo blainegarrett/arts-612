@@ -188,20 +188,25 @@ dd {
 
 
 
-.module-advert {
-    padding-bottom: 30px;
-}
 
-.sponsor-text {
-    position: absolute;
-    top:0;
-    color: #ffffff;
-    font-size: 14px;
-    line-height: 1.5em;
-    padding-left:10px;
-    opacity: 0.8;
+.module-advert { }
+    .panel-container .module-advert { padding-bottom: 30px; }
 
-}
+    .module-advert .card-header a {
+        display:block;
+        line-height:0px;
+    }
+
+    .sponsor-text {
+        position: absolute;
+        top:0;
+        color: #ffffff;
+        font-size: 14px;
+        line-height: 1.5em;
+        padding-left:10px;
+        opacity: 0.8;
+
+    }
 
 
 body {

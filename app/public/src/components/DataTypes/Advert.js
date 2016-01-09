@@ -21,7 +21,7 @@ var advert_store = [
     }
 ];
 
-var advert_store = [];
+//var advert_store = [];
 
 
 var get_random = function() {
@@ -49,7 +49,7 @@ var PodRenderer = React.createClass({
             return (
                 <div className="card-container module-advert">
                     <div className="card-header">
-                        <div className="sponsor-text">sponsor</div>
+                        <div className="sponsor-text">advertisement</div>
                         <a onClick={linkTo} data-ga-category="advert" data-ga-action="click" data-ga-label={r.advert_label} title={r.advert_description} href={r.goto_url} target="_new">
                             <img className="img-responsive" src={r.image_url} alt={ r.advert_description } />
                         </a>
