@@ -32,12 +32,12 @@ VenuesForm = React.createClass({
                 }.bind(this)
             });
         };
-        
+
     },
 
     getInitialState: function () {
         /* Sets up initial form state */
-        
+
         return {
             save_callback: this.props.save_callback,
             errors: [],
@@ -65,7 +65,7 @@ VenuesForm = React.createClass({
         method = 'POST';
         if (this.state.is_edit) {
             method = 'PUT';
-        }        
+        }
 
         // Send Ajax Payload
         $.ajax({
@@ -86,8 +86,8 @@ VenuesForm = React.createClass({
                 this.setState({errors: error_body.messages}); //messages is always a list
 
                 console.error(this.state.resource_url, status, err.toString());
-                
-            }.bind(this) 
+
+            }.bind(this)
         });
 
     },
@@ -97,7 +97,7 @@ VenuesForm = React.createClass({
          - This may accept a single geo pair OR
          and array for a polygon.
         */
-        
+
         console.log('-------------------------');
         console.log(geo);
         console.log('-------------------------')
@@ -105,11 +105,11 @@ VenuesForm = React.createClass({
         var raw_geo_str = geo.toString(); // if polygone, this will create a comma separated str of values
         //raw_geo_str = raw_geo_str.replace(')', '').replace('(', '')
         this.refs['field.geo'].setValue(raw_geo_str);
-        
+
     },
     geo_listener: function(event) {
         // Helper to generate map and geo coords
-        var search_address = this.refs['field.address'].getValue() + ' ' + this.refs['field.address2'].getValue() + ' ' + this.refs['field.city'].getValue() + ' ' + this.refs['field.state'].getValue();        
+        var search_address = this.refs['field.address'].getValue() + ' ' + this.refs['field.address2'].getValue() + ' ' + this.refs['field.city'].getValue() + ' ' + this.refs['field.state'].getValue();
 
         this.refs.mapObj.search_by_address(search_address, this.set_geo_callback)
 
@@ -123,7 +123,7 @@ VenuesForm = React.createClass({
         }
 
         var title_value = event.target.value;
-        
+
         title_value = title_value.toLowerCase()
             .trim()
             .replace(/[^\w ]+/g, ' ')
@@ -140,7 +140,7 @@ VenuesForm = React.createClass({
 
         var data = this.state.data;
         data.results.primary_image_resource = file_resource;
-        
+
         this.setState({data: data})
     },
     upload_error_callback: function () {
@@ -169,7 +169,6 @@ VenuesForm = React.createClass({
         ];
 
         var img_src = {};
-        console.log(this.state.data.results.primary_image_resource);
 
         if (this.state.data.results.primary_image_resource) {
             img_src = this.state.data.results.primary_image_resource.versions.CARD_SMALL.url;
@@ -186,13 +185,13 @@ VenuesForm = React.createClass({
         }
 
         return <div className="row">
-        
+
         <div className="col-lg-6">
             <form role="form" className="form-horizontal" action="#" onSubmit={this.submitHandler}>
                 { errors }
 
               <img src={ img_src } className="img-responsive" />
-            
+
               <TextField id="name"  ref="field.name" val={this.state.data.results.name } form={this} placeholder="Enter Venue Name" onChangeCallback={this.sluggable_helper} />
               <SlugField id="slug" form={this}  ref="field.slug"  val={this.state.data.results.slug } widget={SlugWidget} url_root="http://mplsart.com/galleries/"/>
 
@@ -226,11 +225,11 @@ VenuesForm = React.createClass({
 
              <GeoPtField id="geo" form={this} ref="field.geo"  val={this.state.data.results.geo } />
             <MapComponent2 ref="mapObj" geo={this.state.data.results.geo } click_callback={this.set_geo_callback} />
-            
+
         </div>
 
     </div>;
-    }    
+    }
 });
 
 module.exports = VenuesForm;

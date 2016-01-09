@@ -10,7 +10,7 @@ GoogleMapsLoader.load(function(google) {
 
 
 var MapComponent2 = React.createClass({
-    
+
     addPolygon: function (coords) {
         // Construct the polygon.
         bermudaTriangle = new google.maps.Polygon({
@@ -28,13 +28,13 @@ var MapComponent2 = React.createClass({
         bermudaTriangle.getBounds = function() {
             // http://stackoverflow.com/a/3082334
             var bounds = new global.googlemapapi.maps.LatLngBounds();
-            
+
             var i;
             for (i = 0; i < coords.length; i++) {
               bounds.extend(coords[i]);
             }
-            
-            
+
+
             return bounds;
         }
 
@@ -52,38 +52,35 @@ var MapComponent2 = React.createClass({
             var map = rc.state.mapObj;
 
             rc.state.click_callback(this.getPath().getArray());
-            console.log(this.getPath().getArray());
-            console.log(e);
         });
-
 
         //map.setCenter(e.latLng);
         //bermudaTriangle.setMap(map);
         //rc.showOnlyMarker(bermudaTriangle);
         return bermudaTriangle;
     },
-    
+
     getInitialState: function() {
 
         var myLatlng;
         var markers = [];
         var polygons = [];
-        
+
         var address_mode = true;
 
         if (this.props.geo && typeof(this.props.geo.push) == 'function') { // ducktype array vs. dict
             if (this.props.geo.length > 1) {
-                address_mode = false;      
+                address_mode = false;
 
 
                 var triangleCoords = this.props.geo.map(function(pt, i){
                     return new global.googlemapapi.maps.LatLng(pt.lat, pt.lon);
                 })
-            
+
                 bermudaTriangle = this.addPolygon(triangleCoords);
 
                 var myLatlng = bermudaTriangle.getBounds().getCenter(); // Should be geometric center
-            
+
                 markers = [];
                 polygons = [bermudaTriangle];
             }
@@ -97,7 +94,7 @@ var MapComponent2 = React.createClass({
                 markers = [marker];
                 polygons = [];
             }
-                  
+
         }
         else {
 
@@ -105,7 +102,7 @@ var MapComponent2 = React.createClass({
                 myLatlng = new global.googlemapapi.maps.LatLng(this.props.geo.lat, this.props.geo.lon)
             }
             else {
-                myLatlng = new global.googlemapapi.maps.LatLng(44.95881500000001, -93.23813799999999);            
+                myLatlng = new global.googlemapapi.maps.LatLng(44.95881500000001, -93.23813799999999);
             }
 
             var marker = new global.googlemapapi.maps.Marker({
@@ -116,7 +113,7 @@ var MapComponent2 = React.createClass({
         }
 
         return {
-            address_mode: address_mode, 
+            address_mode: address_mode,
             click_callback: this.props.click_callback,
             mapDomId: 'map-canvas',
             mapObj: null,
@@ -137,7 +134,6 @@ var MapComponent2 = React.createClass({
         var map = new global.googlemapapi.maps.Map(document.getElementById(rc.state.mapDomId), mapOptions);
         rc.setState({mapObj: map});
 
-        //alert('jive sauce');
         // Map Event Handlers
         global.googlemapapi.maps.event.addListener(map, 'click', function (e) {
             /* Is there already something on the map */
@@ -153,11 +149,11 @@ var MapComponent2 = React.createClass({
                 rc.showOnlyMarker(marker);
             }
             else {
-                
+
                 // Area Mode
-                
+
                 // Add a min polygon to the map
-                
+
                 var clicked_latlng = e.latLng;
                 var clicked_lat = e.latLng.lat();
                 var clicked_lng = e.latLng.lng();
@@ -175,25 +171,25 @@ var MapComponent2 = React.createClass({
                 map.setCenter(e.latLng);
                 bermudaTriangle.setMap(map);
                 rc.showOnlyMarker(bermudaTriangle);
-                
+
                 rc.state.click_callback(e.latLng);
 
                 // TODO: Show only this polygon
-                
+
             }
-              
+
         })
     },
     mode_change_handler: function(e) {
 
-        
+
         for (i in this.state.markers) {
             this.state.markers[i].setMap(null);
         };
 
         var address_mode = !(e.target.value == 'area');
         this.setState({address_mode: address_mode, markers: []});
-        
+
     },
     showOnlyPolygon: function(polygon) {
         for (i in this.state.markers) {
@@ -203,7 +199,7 @@ var MapComponent2 = React.createClass({
             this.state.polygons[i].setMap(null);
         };
 
-        this.setState({polygons: [polygon]});        
+        this.setState({polygons: [polygon]});
     },
 
     showOnlyMarker: function (marker) {
@@ -220,7 +216,7 @@ var MapComponent2 = React.createClass({
     },
 
     search_by_address: function (search_address, callback) {
-        
+
         var rc = this;
 
         var geocoder = new global.googlemapapi.maps.Geocoder();
@@ -229,7 +225,7 @@ var MapComponent2 = React.createClass({
             if (status == google.maps.GeocoderStatus.OK) {
                 var geo = results[0].geometry.location;
                 var raw_geo_str = geo.toString()
-            
+
                 raw_geo_str = raw_geo_str.replace(')', '').replace('(', '')
 
                 //rc.refs['field.geo'].setValue(raw_geo_str);
@@ -253,7 +249,7 @@ var MapComponent2 = React.createClass({
     },
 
     render: function() {
-        
+
         var mapObj = this.state.mapObj;
         if (this.state.markers) {
             for (var i = 0; i < this.state.markers.length; i++ ) {
@@ -276,7 +272,7 @@ var MapComponent2 = React.createClass({
         else {
             area_mode_classes += ' active';
         }
-            
+
 
         return <div>
         <div className="btn-group" data-toggle="buttons">
@@ -286,18 +282,32 @@ var MapComponent2 = React.createClass({
              Address
           </label>
           <label className={area_mode_classes}>
-            <input type="radio" name="map_mode" id="option2" value="area" autoComplete="off" checked={!this.state.address_mode} onChange={ this.mode_change_handler}/> 
+            <input type="radio" name="map_mode" id="option2" value="area" autoComplete="off" checked={!this.state.address_mode} onChange={ this.mode_change_handler}/>
             <span className="glyphicon glyphicon-screenshot"></span>
             Area
           </label>
 
         </div>
-            <div id={ this.state.mapDomId } className="map-large"></div>
+
+
+
+
+            <div className="map-component map-inline map-large map-overlay">
+                <div className="map-canvas-container">
+                    <div id={ this.state.mapDomId } className="map-canvas">
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
         </div>
     }
-    
-    
-    
+
+
+
 });
 
 
@@ -339,14 +349,23 @@ var MapComponent = React.createClass({
                          '</div>'+
                          '</div>'
                });
-              //infowindow.open(map, marker); 
+              //infowindow.open(map, marker);
 
 
-            
-        });        
+
+        });
     },
     render: function () {
-        return <div id='map-canvas' className="map-small"></div>
+        // This is deprecated: remove eventually...
+        return (
+            <div className="map-component map-inline map-small map-overlay">
+                <div className="map-canvas-container">
+                    <div id="map-canvas" className="map-canvas">
+
+                    </div>
+                </div>
+            </div>
+        );
     }
 });
 
