@@ -8,7 +8,7 @@ var MapComponent = require('../maps/Map').MapComponent;
 var LoadingSpinner = require('./../../utils/Layout').LoadingSpinner;
 var TONIGHT_END_DATE_UTC = require('./../../constants').TONIGHT_END_DATE_UTC;
 var PageLink = require('./../../linking').PageLink;
-
+var shortcoder = require('./../../utils/shortcoder');
 
 function sort_helper(ed1, ed2) {
     return moment(ed1.start) - moment(ed2.start)
@@ -194,7 +194,7 @@ var FullEventRenderer = React.createClass({
             <br />
 
             <div className="padded-content">
-                <div className="content" dangerouslySetInnerHTML={{__html: r.content}} />
+                <div className="content">{ shortcoder.parse(r.content) }</div>
             </div>
 
             <br />
