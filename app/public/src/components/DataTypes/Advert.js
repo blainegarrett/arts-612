@@ -21,8 +21,7 @@ var advert_store = [
     }
 ];
 
-//var advert_store = [];
-
+var advert_store = [];
 
 var get_random = function() {
     if (advert_store.length > 0)

@@ -1,5 +1,5 @@
 application: arts-612
-version: ui
+version: master-20160109
 runtime: python27
 api_version: 1
 threadsafe: no
