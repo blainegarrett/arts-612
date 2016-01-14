@@ -59,6 +59,29 @@ var FullEventRenderer = React.createClass({
 
     mixins: [EventRendererMixin],
 
+    delete_confirmation: function(e) {
+
+        if (confirm('Are you sure you want to delete this event?')) {
+            var url = '/api/events/' + this.state.resource.resource_id;
+            $.ajax({
+                url: url,
+                type: 'DELETE',
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                success:  function (data) {
+                    alert('Success. Please reload this page.');
+                }.bind(this),
+                error: function (xhr, status, err) {
+                    alert('There was an issue deleting this event. Please try again.');
+                    console.error(url, status, err.toString());
+                }.bind(this)
+
+            });
+        }
+
+        e.preventDefault();
+    },
     render_empty: function() {
         return <div className="ghost-load">
             <h1>&#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632;&#9632;&#9632; &#9632;&#9632; &#9632; &#9632;&#9632; &#9632;</h1>
@@ -156,9 +179,14 @@ var FullEventRenderer = React.createClass({
         }
 
 
-        var edit_link;
+        var control_links;
         if (settings.is_authenticated) {
-            edit_link = <a href={'/admin/events/' + r.resource_id + '/edit'} target="_blank">edit</a>
+            control_links = (
+                <div>
+                    <a href={'/admin/events/' + r.resource_id + '/edit'}>edit</a> |
+                    <a href="#" onClick={this.delete_confirmation} target="_blank">delete</a>
+                </div>
+            )
         }
 
         return <div>
@@ -166,7 +194,7 @@ var FullEventRenderer = React.createClass({
             <div>{ image }</div>
 
             <div className="padded-content">
-                { edit_link }
+                { control_links }
 
                 <h1>{ r.name }</h1>
                 <p className="lead">

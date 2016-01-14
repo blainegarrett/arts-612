@@ -63,6 +63,21 @@ def _build_event_date(i, event, ed, venue, start, end, is_hours=False):
     return search.Document(doc_id=doc_id, fields=fields)
 
 
+def delete_search_docs(event):
+    """
+    """
+    results = simple_search('event_keystr: %s' % str(event.key.urlsafe()))
+
+    index = get_search_index()
+    doc_ids = []  # Set??
+    for doc in results['index_results']:
+        doc_ids.append(doc.doc_id)
+
+    if doc_ids:
+        index.delete(doc_ids)
+
+    return True
+
 def maybe_up_update_search_index(event):
     """
     On an edit event, we need to build a new set of documents
@@ -110,7 +125,7 @@ def build_index(event):
         # Decide to unfold for gallery hours or not?
         """
         if ed.category == CATEGORY.ONGOING:
-            
+
             hours = venue.hours
             if hours:
 
@@ -127,7 +142,7 @@ def build_index(event):
                 test_dt = ed.start
                 while(test_dt <= ed.end):
                     #logging.error(test_dt.weekday()) # 1 = Monday
-                
+
                     weekday_key = weekday_map[test_dt.weekday()]
                     #logging.error(weekday_key)
 
@@ -137,7 +152,7 @@ def build_index(event):
                         weekd_day_start = test_dt.replace(hour=has_hours[0])
                         weekd_day_end = test_dt.replace(hour=has_hours[1])
 
-                        return_documents.append(_build_event_date(i, event, ed, venue, weekd_day_start, weekd_day_end, is_hours=True))                    
+                        return_documents.append(_build_event_date(i, event, ed, venue, weekd_day_start, weekd_day_end, is_hours=True))
 
                     i += 1
                     test_dt = test_dt + datetime.timedelta(days=1)
@@ -145,7 +160,7 @@ def build_index(event):
 
         i += 1
         return_documents.append(_build_event_date(i, event, ed, venue, ed.start, ed.end))
-        
+
     return return_documents
 
 
@@ -186,7 +201,7 @@ def simple_search(querystring=None, start=None, end=None, category=None, venue_s
                 querystring += ' category: %s' % c
                 x += 1
             querystring += ' ) '
-        else:    
+        else:
             querystring += 'category: %s' % category
 
     #DISTANCE_LIMIT = int(3 * 111) # 3 KM - 3 * 10,000km per 90 degrees
@@ -255,6 +270,6 @@ def unix_time(dt):
 
     # Make it the epoch in central time..
     epoch = datetime.datetime.utcfromtimestamp(0).replace(tzinfo=timezone('UTC'))
-    
+
     delta = dt - epoch
     return delta.total_seconds()

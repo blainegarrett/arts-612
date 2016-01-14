@@ -64,44 +64,53 @@ def create_resource_from_entity(e, verbose=False):
 
 class EventDetailApiHandler(RestHandlerBase):
     """
+    Handler for Event Resource
     """
 
     def get_rules(self):
         return REST_RULES
 
-    def _put(self, slug):
-        # Edit an event
-
-        resource_id = slug
+    def get_event_entity_or_404(self, resource_id):
         key = get_key_from_resource_id(resource_id)
 
         if not key:
-            raise Exception('404 - TODO: Throw legit 404') # or Resource Not Found
-
-        e = key.get()
-
-        e = events_api.edit_event(e, self.cleaned_data)
-        result = create_resource_from_entity(e)
-        self.serve_success(result)
-
-    def _get(self, slug):
-
-        #slug = long(slug)
-        #key = events_api.get_event_key(slug)
-        resource_id = slug
-        key = get_key_from_resource_id(resource_id)
-
-        if not key:
-            raise Exception('404 - TODO: Throw legit 404') # or Resource Not Found
+            raise Exception('404 - TODO: Throw legit 404')  # or Resource Not Found
 
         e = key.get()
         if not e:
-            raise Exception('404 or something')
+            raise Exception('404 - TODO: Throw legit 404')  # or Resource Not Found
+
+        return e
+
+    def _get(self, resource_id):
+        e = self.get_event_entity_or_404(resource_id)
 
         events_api.bulk_dereference_venues(e)
 
         result = create_resource_from_entity(e)
         self.serve_success(result)
+
+    @rest_login_required
+    def _put(self, resource_id):
+        """
+        Edit an event
+        """
+
+        e = self.get_event_entity_or_404(resource_id)
+        e = events_api.edit_event(e, self.cleaned_data)
+
+        result = create_resource_from_entity(e)
+        self.serve_success(result)
+
+    @rest_login_required
+    def _delete(self, resource_id):
+        """
+        Delete an event
+        """
+
+        e = self.get_event_entity_or_404(resource_id)
+        events_api.delete_event(e)
+        self.serve_success([])
 
 
 def coerce_to_category(val):
@@ -322,7 +331,6 @@ class CalendarDetailHandler(BaseHandler):
             image = key.get()
             if image and image.versions['CARD_SMALL']:
                 image_url = image.versions['CARD_SMALL']['url']
-
 
         pagemeta = {
             'title': e.name,

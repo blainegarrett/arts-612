@@ -295,6 +295,23 @@ def edit_event(entity, data):
     return entity
 
 
+def delete_event(entity):
+    """
+    Delete an event
+    TODO: Make this transactional
+    """
+
+    # Delete search api docs
+    event_search.delete_search_docs(entity)
+
+    # Delete the search doc
+    entity.key.delete()
+
+    # Invalidate cache
+    ubercache.cache_invalidate('events')
+    return True
+
+
 def create_event(data):
     """
     Create an event
