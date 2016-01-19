@@ -4,6 +4,47 @@ var React = require('react');
 var GoogleMapsLoader = require('google-maps');
 var linkTo = require('../../linking').linkTo;
 
+
+
+var DesktopMap = React.createClass({
+
+    componentDidMount: function () {
+        /* Construct Map */
+        var c = this;
+
+        /* TODO: Pull this from global settings */
+        GoogleMapsLoader.KEY = 'AIzaSyB4MkGj6-uAll42KklXe3QISTIbhRoJ1Ng';
+        GoogleMapsLoader.load(function(google) {
+            var map, map_center, is_polygon, polygon_verticies, polygon;
+
+
+          map = new google.maps.Map(document.getElementById('map-canvas'), {
+            center: {lat: 44.9994778, lng: -93.2395064},
+            zoom: 15
+          });
+
+          map.setTilt(45);
+
+
+        });
+    },
+    render: function () {
+
+        var styles {
+            width: window.innerWidth,
+            height: window.innerHeight
+        }
+        return (
+            <div className="map-component map-inline map-small">
+                <div className="map-canvas-container">
+                    <div id="map-canvas" className="map-canvas" style={styles}></div>
+                </div>
+            </div>);
+    }
+
+});
+
+
 var MapComponent = React.createClass({
     getInitialState: function () {
         return {
@@ -146,5 +187,6 @@ var MapComponent = React.createClass({
 });
 
 module.exports = {
-    MapComponent: MapComponent
+    MapComponent: MapComponent,
+    DesktopMap: DesktopMap
 }

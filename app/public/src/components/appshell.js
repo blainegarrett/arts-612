@@ -91,7 +91,7 @@ var HeaderNav = React.createClass({
 
                     <div className="navbar-fixed">
                         <nav>
-                            <div className="container">
+                            <div className="containerxx">
                                 <div className="nav-wrapper">
                                         <a id="side_nav_toggle" className="left" title="Show Menu" onClick={ this.toggleNav }><span></span></a>
 
@@ -125,7 +125,7 @@ var App = React.createClass({
 
                 <div id="site-wrapper">
                     <div id="site-canvas">
-                        <div className="container">
+                        <div className="containerxx">
                             <div id="main_content">
                                 { this.props.children }
                             </div>
