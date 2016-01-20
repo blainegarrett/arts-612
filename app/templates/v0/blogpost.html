@@ -1,0 +1,39 @@
+{% extends "templates/v0/layout.html" %}
+
+{% block main_content %}
+
+    <div>
+        <div>
+            {% if entity.primary_image_resource.versions %}
+                <img src="{[{ entity.primary_image_resource.versions.CARD_SMALL.url }]}" class="img-responsive" />
+            {% endif %}
+        </div>
+        <div class="padded-content">
+            <h2>{[{ entity.title }]}</h2>
+
+            <p class="blog-post-meta">
+                <span>Posted </span>
+                <span>{[{ entity.published_date }]}</span>
+                <span>  by </span>
+                <a href="{[{ entity.author_resource.website }]}" target="_new">
+                    <span>{[{ entity.author_resource.firstname }]}</span>
+                    <span> </span>
+                    <span>{[{ entity.author_resource.lastname }]}</span>
+                </a>
+            </p>
+
+
+            <p class="lead">
+                <span>{[{ entity.summary }]} </span>
+            </p>
+
+        </div>
+
+        <div class="padded-content">
+            <div class="content">
+                <p>{[{ entity.content|safe }]}</p>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

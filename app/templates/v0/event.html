@@ -1,0 +1,52 @@
+{% extends "templates/v0/layout.html" %}
+
+{% block main_content %}
+
+    <div>
+        <div>
+            {% if entity.primary_image_resource.versions %}
+                <img src="{[{ entity.primary_image_resource.versions.CARD_SMALL.url }]}" class="img-responsive" />
+            {% endif %}
+        </div>
+        <div class="padded-content">
+            <h1>{[{ entity.name }]}</h1>
+            <p class="lead">
+                <span>{[{ entity.summary }]} </span>
+                <br />
+                <span class="small">
+                    <a href="{[{ entity.url }]}" target="_new" title="More information on the event website">Event Website </a>
+                </span>
+            </p>
+
+            <div class="row">
+                <div class="col m6">
+                    <dl>
+                        {% for ed in entity.event_dates %}
+                            <div class="event-date">
+                                <dt class="event-label" ><span>{[{ ed.label }]}</span></dt>
+                                <dd><span>{[{ ed.start }]} to {[{ ed.end }]}</span></dd>
+                            </div>
+                        {% endfor %}
+                    </dl>
+                </div>
+
+                <div class="col m6">
+                    <div>
+                        <b>{[{ entity.event_dates[0].venue.name }]}</b>
+                        <br />
+                        <span>{[{ entity.event_dates[0].venue.address }]}</span>
+                        <br />
+                        <span>{[{ entity.event_dates[0].venue.city }]}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="padded-content">
+            <div class="content">
+                <p>{[{ entity.content|safe }]}</p>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

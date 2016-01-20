@@ -565,20 +565,14 @@ footer {
     #site-menu .social-icons a:hover { background-color:#2a6496; }
 
 
-/* Initial Loading Spinner */
-.initial-loading-spinner {
-    font-size:100px;
-    position:relative;
-    top:100px;
-    width:100%;
-    text-align:center;
-    margin-left:auto;
-    margin-right:auto;
-    color: #ff0099;
-}
-.preloader-wrapper .spinner-layer {
-    border-color: #ff0099;
-}
+/* Initial Loading Spinner and Serverside rendering */
+.preloader-wrapper .spinner-layer { border-color: #ff0099; }
+
+/*
+.server-preloader { opacity:.25; }
+.initial-loading-spinner { position:absolute; top:0; left:0; width:100%;}
+*/
+
 
 /* Featured Hero Cards */
 

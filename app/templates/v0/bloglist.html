@@ -1,0 +1,28 @@
+{% extends "templates/v0/layout.html" %}
+
+{% block main_content %}
+
+    <div class="padded-content"><h2>Written</h2></div>
+
+    {% for entity in entities %}
+        <div class="card">
+            <div class="card-container">
+                <div class="card-header">
+                    <div class="card-image">
+                        <a title="{[{ entity.title }]}" class="" href="{[{ entity.permalink }]}"></a>
+                    </div>
+                </div>
+
+                <div class="card-content">
+                    <div class="card-title">
+                        <a class="" href="{[{ entity.permalink }]}">{[{ entity.title }]}</a>
+                    </div>
+                    <div class="card-detail">
+                        <span>{[{ entity.summary }]}</span><span> </span>
+                        <b><a title="{[{ entity.title }]}" class="" href="{[{ entity.permalink }]}">Read More...</a></b>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

@@ -43,8 +43,18 @@ class WrittenMainHandler(BaseHandler):
             'image': DEFAULT_POST_IMAGE
         }
 
-        template_values = {'pagemeta': pagemeta}
-        self.render_template('./templates/index.html', template_values)
+        # TEMP: Get List of posts for serverside rendering
+        entities, cursor, more = posts_api.get_posts(limit=25, cursor=None)
+        posts_api.bulk_dereference_posts(entities)
+
+        # Create A set of results based upon this result set - iterator??
+        results = []
+        for e in entities:
+            results.append(Resource(e, REST_RULES).to_dict())
+
+
+        template_values = {'pagemeta': pagemeta, 'entities': results}
+        self.render_template('./templates/v0/bloglist.html', template_values)
 
 
 class WrittenArticleBaseHandler(BaseHandler):
@@ -66,6 +76,22 @@ class WrittenArticleBaseHandler(BaseHandler):
         """
         """
 
+        # e is a 'resource' at this point, which is a dict
+        e = create_resource_from_entity(post)
+
+        # Page Meta
+        image_url = None
+        primary_image_resource = e.get('primary_image_resource')
+        if primary_image_resource:
+            image_url = primary_image_resource['versions']['CARD_SMALL'].get('resource_url')
+
+        pagemeta = {
+            'title': e['title'],
+            'description': e['summary'],
+            'image': image_url
+        }
+
+        '''
         # TODO: Author meta tag
 
         # Resolve Post for Image
@@ -80,9 +106,10 @@ class WrittenArticleBaseHandler(BaseHandler):
             'description': post.summary,
             'image': image_url
         }
+        '''
 
-        template_values = {'pagemeta': pagemeta}
-        self.render_template('./templates/index.html', template_values)
+        template_values = {'pagemeta': pagemeta, 'entity': e}
+        self.render_template('./templates/v0/blogpost.html', template_values)
 
 
 class WrittenCategoryArticleHandler(WrittenArticleBaseHandler):

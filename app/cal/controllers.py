@@ -323,20 +323,20 @@ class CalendarDetailHandler(BaseHandler):
         if not e:
             return self.serve_404('Event Not Found with slug %s' % slug)
 
+        # e is a 'resource' at this point, which is a dict
+        e = create_resource_from_entity(e)
+
         # Page Meta
         image_url = None
-        image_id = e.primary_image_resource_id
-        if image_id:
-            key = get_key_from_resource_id(image_id)
-            image = key.get()
-            if image and image.versions['CARD_SMALL']:
-                image_url = image.versions['CARD_SMALL']['url']
+        primary_image_resource = e.get('primary_image_resource')
+        if primary_image_resource:
+            image_url = primary_image_resource['versions']['CARD_SMALL'].get('resource_url')
 
         pagemeta = {
-            'title': e.name,
-            'description': e.summary,
+            'title': e['name'],
+            'description': e['summary'],
             'image': image_url
         }
 
-        template_values = {'pagemeta': pagemeta}
-        self.render_template('templates/index.html', template_values)
+        template_values = {'pagemeta': pagemeta, 'entity': e}
+        self.render_template('templates/v0/event.html', template_values)

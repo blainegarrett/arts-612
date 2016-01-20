@@ -1,0 +1,35 @@
+{% extends "templates/index.html" %}
+
+{% block body %}
+    <div>
+
+        <div id="header_nav" class="navbar-fixed show-nav" role="navigation" data-reactid=".0.1"><div class="containerxx" data-reactid=".0.1.0"><div class="navbar-fixed" data-reactid=".0.1.0.0"><nav data-reactid=".0.1.0.0.0"><div class="container" data-reactid=".0.1.0.0.0.0"><div class="nav-wrapper" data-reactid=".0.1.0.0.0.0.0"><a id="side_nav_toggle" class="left" title="Show Menu" data-reactid=".0.1.0.0.0.0.0.0"><span data-reactid=".0.1.0.0.0.0.0.0.0"></span></a><a class="brand-logo hide-on-med-and-down left" title="MPLSART.COM Home Page" href="/" data-reactid=".0.1.0.0.0.0.0.1">MPLSART.COM</a><a class="brand-logo center hide-on-large-only" title="MPLSART.COM Home Page" href="/" data-reactid=".0.1.0.0.0.0.0.2">MPLSART.COM</a><ul class="right hide-on-med-and-down" data-reactid=".0.1.0.0.0.0.0.3"><li data-reactid=".0.1.0.0.0.0.0.3.0">&nbsp;</li></ul></div></div><div id="header_nav_cards" data-reactid=".0.1.0.0.0.1"><div class="container" data-reactid=".0.1.0.0.0.1.0"></div></div></nav></div></div></div>
+
+        <div id="site-wrapper">
+            <div id="site-canvas">
+                <div class="container">
+                    <div id="main_content">
+                        <div id="HomePageWrapper">
+
+                            <div class="row">
+                                <div class="col m6">
+                                    {% block main_content %}No Content{% endblock %}
+                                </div>
+
+                                <div class="col m3 m3 s12 panel-events">
+                                    ...
+                                </div>
+                                <div class="col m3 m3 s12 panel-events">
+                                    ...
+                                </div>
+                            </div>
+
+                            <footer id="main-content-footer" data-reactid=".0.2.0.0.0.0.1"><p data-reactid=".0.2.0.0.0.0.1.0">We love art. We love you. © 2016 MPLSART.COM</p></footer>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
