@@ -17,14 +17,104 @@
                                 </div>
 
                                 <div class="col m3 m3 s12 panel-events">
-                                    ...
+
+
+                             <div class="panel-container">
+                                        <div class="panel-header">UPCOMING</div>
+                                        <div class="panel-content">
+                                            <div class="row">
+
+
+                                            {% for resource in upcoming_event_resources %}
+                                                <div class="col s12">
+                                                    <div class="card hoverable">
+                                                        <div class="card-container">
+                                                            <div class="card-header">
+                                                                <div class="card-image fixed-size">
+
+                                                                    {% if resource.primary_image_resource.versions %}
+                                                                        <a data-ga-category="event-pod-click" data-ga-label="image" title="{[{ resource.name }]}" style="padding:52.42% 0 0 0;" class="" href="/events/{[{ resource.slug }]}">
+                                                                            <img src="{[{ resource.primary_image_resource.versions.CARD_SMALL.url }]}" class="img-responsive" title="{[{ resource.name }]}">
+                                                                        </a>
+                                                                    {% endif %}
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="card-content">
+
+                                                                <div class="card-title">
+                                                                    <a data-ga-category="event-pod-click" class="" href="/events/{[{ resource.slug }]}">{[{ resource.name }]}</a>
+                                                                </div>
+                                                                <div class="card-detail event-time">
+                                                                    <span>{[{ resource.event_dates[0].start }]} to {[{ resource.event_dates[0].end }]}</span>
+                                                                </div>
+                                                                <div class="card-detail event-venue-name">{[{ resource.event_dates[0].venue.name }]}</div>
+                                                                <div class="card-detail event-address">{[{ resource.event_dates[0].venue.address }]}, {[{ resource.event_dates[0].venue.city }]}</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            {% endfor %}
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
                                 </div>
                                 <div class="col m3 m3 s12 panel-events">
-                                    ...
+
+
+                                    <div class="panel-container">
+                                        <div class="panel-header">NOW SHOWING</div>
+                                        <div class="panel-content">
+                                            <div class="row">
+
+
+                                            {% for resource in ongoing_event_resources %}
+                                                <div class="col s12">
+                                                    <div class="card hoverable">
+                                                        <div class="card-container">
+                                                            <div class="card-header">
+                                                                <div class="card-image fixed-size">
+
+                                                                    {% if resource.primary_image_resource.versions %}
+                                                                        <a data-ga-category="event-pod-click" data-ga-label="image" title="{[{ resource.name }]}" style="padding:52.42% 0 0 0;" class="" href="/events/{[{ resource.slug }]}">
+                                                                            <img src="{[{ resource.primary_image_resource.versions.CARD_SMALL.url }]}" class="img-responsive" title="{[{ resource.name }]}">
+                                                                        </a>
+                                                                    {% endif %}
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="card-content">
+
+                                                                <div class="card-title">
+                                                                    <a data-ga-category="event-pod-click" class="" href="/events/{[{ resource.slug }]}">{[{ resource.name }]}</a>
+                                                                </div>
+                                                                <div class="card-detail event-time">
+                                                                    <span>{[{ resource.event_dates[0].start }]} to {[{ resource.event_dates[0].end }]}</span>
+                                                                </div>
+                                                                <div class="card-detail event-venue-name">{[{ resource.event_dates[0].venue.name }]}</div>
+                                                                <div class="card-detail event-address">{[{ resource.event_dates[0].venue.address }]}, {[{ resource.event_dates[0].venue.city }]}</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            {% endfor %}
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+
                                 </div>
                             </div>
 
-                            <footer id="main-content-footer" data-reactid=".0.2.0.0.0.0.1"><p data-reactid=".0.2.0.0.0.0.1.0">We love art. We love you. © 2016 MPLSART.COM</p></footer>
+                            <footer id="main-content-footer"><p>We love art. We love you. © 2016 MPLSART.COM</p></footer>
 
                         </div>
                     </div>

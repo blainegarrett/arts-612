@@ -83,7 +83,7 @@ class WrittenArticleBaseHandler(BaseHandler):
         image_url = None
         primary_image_resource = e.get('primary_image_resource')
         if primary_image_resource:
-            image_url = primary_image_resource['versions']['CARD_SMALL'].get('resource_url')
+            image_url = primary_image_resource['versions']['CARD_SMALL']['url']
 
         pagemeta = {
             'title': e['title'],

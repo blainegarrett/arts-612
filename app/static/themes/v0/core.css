@@ -567,12 +567,8 @@ footer {
 
 /* Initial Loading Spinner and Serverside rendering */
 .preloader-wrapper .spinner-layer { border-color: #ff0099; }
-
-/*
-.server-preloader { opacity:.25; }
+.server-preloader { opacity:.10; }
 .initial-loading-spinner { position:absolute; top:0; left:0; width:100%;}
-*/
-
 
 /* Featured Hero Cards */
 

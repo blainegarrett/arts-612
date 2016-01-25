@@ -1,0 +1,35 @@
+{% extends "templates/v0/layout.html" %}
+
+{% block main_content %}
+    {% for entity in entities %}
+        <div class="col s12 m6">
+            <div class="card hoverable">
+                <div class="card-container">
+                    <div class="card-header">
+                        {% if entity.primary_image_resource.versions %}
+                            <div class="card-image fixed-size">
+                                <a data-ga-category="event-pod-click" data-ga-label="image" title="{[{ entity.name }]}" class="" href="/events/{[{ entity.slug }]}">
+                                    <img src="{[{ entity.primary_image_resource.versions.CARD_SMALL.url }]}" class="img-responsive" title="{[{ entity.name }]}">
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="card-content">
+                        <div class="card-title">
+                            <a data-ga-category="event-pod-click" class="" href="/events/{[{ entity.slug }]}">{[{ entity.name }]}</a>
+                        </div>
+
+                        <div class="card-detail event-time">
+                            <span>{[{ entity.event_dates[0].start }]}</span>
+                        </div>
+                        <div class="card-detail event-venue-name">{[{ entity.event_dates[0].venue.name }]}</div>
+                        <div class="card-detail event-address">{[{ entity.event_dates[0].venue.address }]}, {[{ entity.event_dates[0].venue.city }]}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+
+{% endblock %}

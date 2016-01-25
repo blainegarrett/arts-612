@@ -15,8 +15,58 @@ from modules.events.constants import EVENT_KIND
 from modules.events.constants import QUERY_LIMIT
 from modules.events.constants import CATEGORY
 from modules.events.constants import PRIMARY_IMAGE_PROP
+from files.models import FileContainer
 
 from modules.venues.internal import api as venue_api
+
+##########################################################
+#  Super temporary api helper for serverside rendering
+##########################################################
+
+
+def get_upcoming_event_resources():
+
+    import datetime
+    from rest.params import coerce_to_datetime
+
+    params = {}
+    params['category'] = ['performance', 'reception', 'sale']
+    params['end'] = coerce_to_datetime(datetime.datetime.today().strftime('%Y-%m-%dT%H:%M:%SZ'))  # TODO: This isn't 15
+    params['sort'] = 'start'
+    return get_event_resources_for_templates(**params)
+
+
+def get_ongoing_event_resources():
+
+    import datetime
+    from rest.params import coerce_to_datetime
+
+
+    params = {}
+    params['category'] = ['ongoing']
+
+    #end:2016-01-20T06:00:00Z
+    #start:2016-01-20T06:00:00Z
+
+    params['end'] = coerce_to_datetime(datetime.datetime.today().strftime('%Y-%m-%dT%H:%M:%SZ'))  # TODO: This isn't 15
+    params['start'] = coerce_to_datetime(datetime.datetime.today().strftime('%Y-%m-%dT%H:%M:%SZ'))  # TODO: This isn't 15
+
+
+    params['sort'] = 'end'
+    return get_event_resources_for_templates(**params)
+
+
+def get_event_resources_for_templates(*args, **params):
+    from cal.controllers import create_resource_from_entity
+
+    results = []
+    events = generic_search(**params)
+
+    bulk_dereference_events(events)
+
+    for event in events:
+        results.append(create_resource_from_entity(event))
+    return results
 
 
 def bulk_dereference_events(posts):

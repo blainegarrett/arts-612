@@ -1,4 +1,3 @@
-import webapp2
 from framework.controllers import BaseHandler
 
 
@@ -17,15 +16,19 @@ class MainHandler(BaseHandler):
     """
 
     def get(self):
-        
+
         pagemeta = {
             'title': 'MPLSART.COM | Make a Scene',
             'description': 'Find the best art events in Minneapolis and St. Paul',
             'image': 'http://cdn.mplsart.com/assets/social/mplsart_fbimg3.jpg'
         }
 
-        template_values = {'pagemeta': pagemeta}
-        self.render_template('./templates/index.html', template_values)
+        from modules.events.internal import api as events_api
+        results = events_api.get_upcoming_event_resources()
+
+        template_values = {'pagemeta': pagemeta, 'entities': results}
+        self.render_template('./templates/v0/homepage.html', template_values)
+
 
 class AboutMainHandler(BaseHandler):
     """
@@ -40,4 +43,4 @@ class AboutMainHandler(BaseHandler):
         }
 
         template_values = {'pagemeta': pagemeta}
-        self.render_template('./templates/index.html', template_values)
+        self.render_template('./templates/v0/about.html', template_values)
