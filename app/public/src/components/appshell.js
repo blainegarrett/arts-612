@@ -31,7 +31,7 @@ var SlideMenu = React.createClass({
 
                 <p>Est. 2005<br />
                     We love art. We love you.<br />
-                    &copy; 2015 MPLSART.COM
+                    &copy; 2016 MPLSART.COM
                 </p>
             </div>
         );
