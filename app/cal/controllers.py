@@ -158,6 +158,9 @@ class EventsUpcomingHandler(RestHandlerBase):
         params = self.cleaned_params
         params['sort'] = self.cleaned_params.get('sort', 'start')
 
+        import logging
+        logging.error(params)
+
         # Serialize the params for cache key
         key = str(hash(json.dumps(self.params)))
 

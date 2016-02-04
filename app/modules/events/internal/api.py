@@ -1,5 +1,6 @@
 # Internal API Methods for Events
 
+import json
 from pytz import timezone
 import datetime
 from google.appengine.ext import ndb
@@ -16,6 +17,7 @@ from modules.events.constants import QUERY_LIMIT
 from modules.events.constants import CATEGORY
 from modules.events.constants import PRIMARY_IMAGE_PROP
 from files.models import FileContainer
+from rest.params import coerce_to_datetime
 
 from modules.venues.internal import api as venue_api
 
@@ -26,46 +28,63 @@ from modules.venues.internal import api as venue_api
 
 def get_upcoming_event_resources():
 
-    import datetime
-    from rest.params import coerce_to_datetime
-
     params = {}
     params['category'] = ['performance', 'reception', 'sale']
-    params['end'] = coerce_to_datetime(datetime.datetime.today().strftime('%Y-%m-%dT%H:%M:%SZ'))  # TODO: This isn't 15
+    params['end'] = datetime.datetime.today().replace(hour=15, minute=0, second=0).strftime('%Y-%m-%dT%H:%M:%SZ')
     params['sort'] = 'start'
     return get_event_resources_for_templates(**params)
 
 
 def get_ongoing_event_resources():
 
-    import datetime
-    from rest.params import coerce_to_datetime
-
-
     params = {}
     params['category'] = ['ongoing']
 
-    #end:2016-01-20T06:00:00Z
-    #start:2016-01-20T06:00:00Z
+    # end:2016-01-20T06:00:00Z
+    # start:2016-01-20T06:00:00Z
 
-    params['end'] = coerce_to_datetime(datetime.datetime.today().strftime('%Y-%m-%dT%H:%M:%SZ'))  # TODO: This isn't 15
-    params['start'] = coerce_to_datetime(datetime.datetime.today().strftime('%Y-%m-%dT%H:%M:%SZ'))  # TODO: This isn't 15
-
-
+    params['end'] = datetime.datetime.today().replace(hour=6, minute=0, second=0).strftime('%Y-%m-%dT%H:%M:%SZ')
+    params['start'] = datetime.datetime.today().replace(hour=6, minute=0, second=0).strftime('%Y-%m-%dT%H:%M:%SZ')
     params['sort'] = 'end'
+
     return get_event_resources_for_templates(**params)
 
 
 def get_event_resources_for_templates(*args, **params):
+    """
+    TODO: Move this to 'public' api to be used for server rendering
+    TODO: Need additional defaults
+    """
+
     from cal.controllers import create_resource_from_entity
+    import logging
 
+    # Serialize the params for cache key
+    key = str(hash(json.dumps(params)))
+
+    cached_events = ubercache.cache_get(key)
     results = []
-    events = generic_search(**params)
 
-    bulk_dereference_events(events)
+    if cached_events:
+        results = cached_events
+        logging.error('CACHE HIT FOR:')
+        logging.error(params)
+    else:
+        logging.error('CACHE MISS FOR:')
+        logging.error(params)
 
-    for event in events:
-        results.append(create_resource_from_entity(event))
+        if 'end' in params:
+            params['end'] = coerce_to_datetime(params['end'])
+        if 'start' in params:
+            params['start'] = coerce_to_datetime(params['start'])
+
+        events = generic_search(**params)
+        bulk_dereference_events(events)
+        for event in events:
+            results.append(create_resource_from_entity(event))
+
+        ubercache.cache_set(key, results, category='events')
+
     return results
 
 
