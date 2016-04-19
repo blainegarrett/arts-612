@@ -35,6 +35,8 @@ routes = []
 routes.extend([
 
     # Gallery Routes
+    (r'/api/auth', 'controllers.auth.AuthApiHandler'),
+
     (r'/api/galleries/([a-zA-Z0-9-_]+)', 'venues.controllers.GalleryDetailApiHandler'),
     (r'/api/galleries', 'venues.controllers.GalleriesApiHandler'),
 
