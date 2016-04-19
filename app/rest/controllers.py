@@ -24,15 +24,15 @@ class RestHandlerBase(webapp2.RequestHandler):
         Helper Method to determine if referrer is the same as the host
         This is to support 'dumb' REST permissions to prevent attacking REST Services
         """
-        
+
         # If local sdk, allow
         if os.environ['SERVER_SOFTWARE'].startswith('Development'):
             return True
 
-        if not self.request.referer:
-            return False
-
-        return urlparse(self.request.referer)[1] == self.request.host
+        #if not self.request.referer:
+        #    return False
+        #return urlparse(self.request.referer)[1] == self.request.host
+        return True
 
     def get_param_schema(self):
         """
@@ -164,5 +164,12 @@ class RestHandlerBase(webapp2.RequestHandler):
         payload.update({'status': status, 'results': result, 'messages': messages})
 
         self.response.set_status(status)
+        self.response.headers['Access-Control-Allow-Origin'] = '*'
+
+        self.response.headers['Access-Control-Allow-Origin'] = '*'
+        # self.response.headers['Access-Control-Allow-Headers'] = '*'
+        # self.response.headers['Access-Control-Allow-Methods'] = 'POST, OPTIONS'
+
+
         self.response.headers['Content-Type'] = 'application/json'
         self.response.write(json.dumps(payload))
