@@ -1,9 +1,10 @@
 from rest.controllers import RestHandlerBase
 from google.appengine.api import users
 
+
 class AuthApiHandler(RestHandlerBase):
     """
-    Serverside Controller logic for written auth checks
+    Serverside Controller logic for google auth
     """
 
     def get(self):

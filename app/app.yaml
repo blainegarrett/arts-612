@@ -13,20 +13,6 @@ libraries:
 builtins:
   - remote_api: on
 
-#
-#  handlers:
-#  - url: /api.*
-#    script: main.app
-#
-#
-#  - url: /static
-#    static_dir: static
-#    secure: optional
-#
-#  - url: .*
-#    script: main.app
-
-
 skip_files: |
    ^(.*/)?(
    (app\.yaml)|
@@ -41,8 +27,6 @@ skip_files: |
    (.DS_Store)|
    (^docs/.*)|
    (^static/admin/js/react/src/.*)|
-   (^public/src/.*)|
-
    (^external/PIL/.*)|
    (^external/nose/.*)|
    (^external/pip/.*)|
@@ -59,12 +43,6 @@ skip_files: |
 # index files
 handlers:
 
-# This might be garbage?
-- url: /public
-  static_dir: public
-  secure: optional
-
-
 - url: /static
   static_dir: static
   secure: optional
@@ -77,15 +55,6 @@ handlers:
   script: admin.main.app
   secure: optional
   login: admin
-
-#- url: /dash.*
-#  script: dash.main.app
-#  secure: optional
-#  login: admin
-
-- url: /robots\.txt
-  static_files: static/robots.txt
-  upload: static/robots\.txt
 
 - url: /favicon\.ico
   static_files: static/themes/v0/favicon.ico

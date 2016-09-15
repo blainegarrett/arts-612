@@ -3,10 +3,11 @@
 import webapp2
 import json
 import traceback
-import sys, os
+import sys
+import os
 import logging
 
-from urlparse import urlparse
+# from urlparse import urlparse
 from google.appengine.api import users
 
 from rest import errors
@@ -29,9 +30,9 @@ class RestHandlerBase(webapp2.RequestHandler):
         if os.environ['SERVER_SOFTWARE'].startswith('Development'):
             return True
 
-        #if not self.request.referer:
-        #    return False
-        #return urlparse(self.request.referer)[1] == self.request.host
+        # if not self.request.referer:
+        #     return False
+        # return urlparse(self.request.referer)[1] == self.request.host
         return True
 
     def get_param_schema(self):
@@ -49,7 +50,7 @@ class RestHandlerBase(webapp2.RequestHandler):
         param_schema = self.get_param_schema()
         self.cleaned_params = ResourceParams(param_schema).from_dict(self.params)
 
-    def validate_payload(self): # aka Form.clean
+    def validate_payload(self):  # aka Form.clean
         """
         Validate the request payload against the rest rules
         This only works for a single payload entity, not a list...
@@ -70,7 +71,7 @@ class RestHandlerBase(webapp2.RequestHandler):
             self.cleaned_params = {}
 
             # Do basic access checks
-            cur_user = users.get_current_user() # Eventually put this on the request
+            cur_user = users.get_current_user()  # Eventually put this on the request
             if not (self.is_same_origin() or cur_user):
                 raise errors.RestError('Invalid referrer: %s' % self.request.referer)
 
@@ -158,18 +159,30 @@ class RestHandlerBase(webapp2.RequestHandler):
         if (not isinstance(messages, list)):
             messages = [messages]
 
+        self.response.set_status(status)
+
+        # Determine origin bits
+        default_origin = 'http://www.mplsart'
+        domain_whitelist = ['http://localhost:3000', 'http://localhost:8080', 'http://mplsart.com',
+                            'http://www.mplsart.com', 'http://www.digibodies.com', 'http://digibodies.com',
+                            'http://192.168.1.143:8080']
+
+        request_origin = self.request.headers.get('Origin') or self.request.referer
+        origin_in_whitelist = request_origin in domain_whitelist
+
+        response_origin = default_origin
+        if origin_in_whitelist:
+            response_origin = request_origin
 
         # TODO: Validate that extra_fields doesn't contain bad props
         payload = extra_fields
         payload.update({'status': status, 'results': result, 'messages': messages})
 
-        self.response.set_status(status)
-        self.response.headers['Access-Control-Allow-Origin'] = '*'
+        self.response.headers['Access-Control-Allow-Origin'] = response_origin
 
-        self.response.headers['Access-Control-Allow-Origin'] = '*'
         # self.response.headers['Access-Control-Allow-Headers'] = '*'
-        # self.response.headers['Access-Control-Allow-Methods'] = 'POST, OPTIONS'
-
+        self.response.headers['Access-Control-Allow-Methods'] = 'POST, GET'
+        self.response.headers['Access-Control-Allow-Credentials'] = 'true'
 
         self.response.headers['Content-Type'] = 'application/json'
         self.response.write(json.dumps(payload))

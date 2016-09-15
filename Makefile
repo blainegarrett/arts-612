@@ -34,7 +34,7 @@ client-dev:
 	@echo "Run gulp admin-browserify instead."
 
 runserver:
-	dev_appserver.py app --storage_path=../datastores/mplsart.search --datastore_path=../datastores/mplsart.datastore
+	dev_appserver.py app --storage_path=../datastores/mplsart.search --datastore_path=../datastores/mplsart.datastore --port=2000
 
 admin-dev:
 	# Builds the Phase 2 client

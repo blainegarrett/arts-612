@@ -28,19 +28,3 @@ class MainHandler(BaseHandler):
 
         template_values = {'pagemeta': pagemeta, 'entities': results}
         self.render_template('./templates/v0/homepage.html', template_values)
-
-
-class AboutMainHandler(BaseHandler):
-    """
-    About Web Handler
-    """
-
-    def get(self, *args, **kwargs):
-        pagemeta = {
-            'title': 'About MPLSART.COM',
-            'description': 'MPLSART.COM\'s mission is to promote visual art events in the Twin Cities.',
-            'image': 'http://cdn.mplsart.com/assets/social/mplsart_fbimg3.jpg'
-        }
-
-        template_values = {'pagemeta': pagemeta}
-        self.render_template('./templates/v0/about.html', template_values)
